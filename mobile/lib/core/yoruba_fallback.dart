@@ -1,8 +1,6 @@
-import 'package:cupertino_ui/cupertino_ui.dart'
-    show CupertinoLocalizations, GlobalCupertinoLocalizations;
-import 'package:flutter_localizations/flutter_localizations.dart'
-    show GlobalWidgetsLocalizations;
-import 'package:material_ui/material_ui.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 /// Flutter ships no built-in Material/Cupertino strings for Yorùbá (date
 /// pickers, "Cut/Copy/Paste", etc.). These delegates fall back to English for

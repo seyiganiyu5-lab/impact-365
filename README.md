@@ -56,7 +56,7 @@ Every table uses Supabase **Row Level Security**, so the rules hold even if some
 ### 0. Install the tools (once)
 1. [Visual Studio Code](https://code.visualstudio.com/)
 2. [Git](https://git-scm.com/downloads)
-3. [Flutter](https://docs.flutter.dev/get-started/install) (includes Dart). Then run `flutter doctor` and follow its advice (Android Studio for Android, Xcode on a Mac for iOS).
+3. [Flutter](https://docs.flutter.dev/get-started/install) **3.41 or newer** (includes Dart; check with `flutter --version`). Then run `flutter doctor` and follow its advice (Android Studio for Android, Xcode on a Mac for iOS).
 4. [Node.js LTS](https://nodejs.org/) (for the admin website)
 
 ### 1. Open the project in VS Code
