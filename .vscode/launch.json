@@ -1,0 +1,20 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "📱 Mobile app (Flutter)",
+      "type": "dart",
+      "request": "launch",
+      "cwd": "mobile",
+      "program": "lib/main.dart",
+      "args": ["--dart-define-from-file=env.json"]
+    },
+    {
+      "name": "🖥️ Admin website (Next.js)",
+      "type": "node-terminal",
+      "request": "launch",
+      "cwd": "${workspaceFolder}/admin",
+      "command": "npm run dev"
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+# OS / editors
+.DS_Store
+Thumbs.db
+.idea/
+
+# Secrets (never commit real keys)
+.env
+.env.local
+mobile/env.json
