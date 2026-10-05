@@ -643,4 +643,34 @@ class AppLocalizationsYo extends AppLocalizations {
 
   @override
   String get phoneLabel => 'Fóònù';
+
+  @override
+  String get onbSkip => 'Fò ó';
+
+  @override
+  String get onbNext => 'Tókàn';
+
+  @override
+  String get onbStart => 'Bẹ̀rẹ̀';
+
+  @override
+  String get onb1Title => 'Pàdé Ọlọ́run lójoojúmọ́';
+
+  @override
+  String get onb1Text =>
+      'Ní òwúrọ̀, ọ̀sán àti alẹ́, gba ìfọkànsìn kúkúrú tó jinlẹ̀: Ọ̀rọ̀ náà, ìtumọ̀ rẹ̀, àti bí o ṣe lè gbé e lónìí.';
+
+  @override
+  String get onb2Title => 'Gbàdúrà, má ṣe rìn nìkan';
+
+  @override
+  String get onb2Text =>
+      'Gbé àwọn kókó àdúrà rẹ kalẹ̀, ṣe ayẹyẹ àdúrà tí a dáhùn, kí o sì gbé àwọn ẹlòmíràn ró nínú àdúrà. Ṣé o nílò ìrànlọ́wọ́? Ìdílé ìjọ rẹ wà níbí, ní àṣírí pátápátá.';
+
+  @override
+  String get onb3Title => 'Ọjọ́ kan, ipa kan';
+
+  @override
+  String get onb3Text =>
+      'Gba ìpèníjà kékeré kan lójoojúmọ́, kọ ìwé àkọsílẹ̀ rẹ, kí o sì dàgbà díẹ̀díẹ̀: ọjọ́ 365 láti fi àmì ayérayé sílẹ̀.';
 }

@@ -13,6 +13,7 @@ import '../features/inbox/chat_screen.dart';
 import '../features/inbox/inbox_screen.dart';
 import '../features/inbox/new_conversation_screen.dart';
 import '../features/journal/journal_screen.dart';
+import '../features/onboarding/onboarding_screen.dart';
 import '../features/prayer/community_prayers_screen.dart';
 import '../features/prayer/my_prayers_screen.dart';
 import '../features/prayer/prayer_room_screen.dart';
@@ -54,12 +55,23 @@ final appRouter = GoRouter(
     // The splash animation decides by itself when to move on.
     if (state.matchedLocation == '/splash') return null;
     final onAuth = state.matchedLocation == '/auth';
-    if (!signedIn && !onAuth) return '/auth';
+    final onOnboarding = state.matchedLocation == '/onboarding';
+    if (!signedIn && !onAuth && !onOnboarding) return '/auth';
+    if (signedIn && onOnboarding) return '/home';
     if (signedIn && onAuth) return '/home';
     return null;
   },
   routes: [
     GoRoute(path: '/splash', builder: (_, _) => const SplashScreen()),
+    GoRoute(
+      path: '/onboarding',
+      pageBuilder: (_, state) => CustomTransitionPage(
+        key: state.pageKey,
+        child: const OnboardingScreen(),
+        transitionsBuilder: (_, animation, _, child) =>
+            FadeTransition(opacity: animation, child: child),
+      ),
+    ),
     GoRoute(path: '/auth', builder: (_, _) => const AuthScreen()),
 
     // Bottom navigation: Accueil / Parole / Prière / Impact / Profil

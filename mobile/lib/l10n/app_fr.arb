@@ -206,5 +206,15 @@
   "sosVerse": "« Votre Père sait de quoi vous avez besoin. »",
   "sosVerseRef": "Matthieu 6:8",
   "sosMyEmpty": "Tu n'as encore déposé aucune demande.",
-  "phoneLabel": "Téléphone"
+  "phoneLabel": "Téléphone",
+
+  "onbSkip": "Passer",
+  "onbNext": "Suivant",
+  "onbStart": "Commencer",
+  "onb1Title": "Rencontre Dieu chaque jour",
+  "onb1Text": "Matin, après-midi et soir, reçois une dévotion courte et profonde : la Parole, ce qu'elle veut dire, et comment la vivre aujourd'hui.",
+  "onb2Title": "Prie, et ne marche jamais seul",
+  "onb2Text": "Dépose tes sujets de prière, célèbre les exaucements et porte les autres dans la prière. Besoin d'aide ? Ta famille d'église est là, en toute confidentialité.",
+  "onb3Title": "Un jour, un impact",
+  "onb3Text": "Relève chaque jour un petit défi, tiens ton journal et grandis pas à pas : 365 jours pour laisser une empreinte éternelle."
 }

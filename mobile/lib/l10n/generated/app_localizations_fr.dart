@@ -648,4 +648,34 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get phoneLabel => 'Téléphone';
+
+  @override
+  String get onbSkip => 'Passer';
+
+  @override
+  String get onbNext => 'Suivant';
+
+  @override
+  String get onbStart => 'Commencer';
+
+  @override
+  String get onb1Title => 'Rencontre Dieu chaque jour';
+
+  @override
+  String get onb1Text =>
+      'Matin, après-midi et soir, reçois une dévotion courte et profonde : la Parole, ce qu\'elle veut dire, et comment la vivre aujourd\'hui.';
+
+  @override
+  String get onb2Title => 'Prie, et ne marche jamais seul';
+
+  @override
+  String get onb2Text =>
+      'Dépose tes sujets de prière, célèbre les exaucements et porte les autres dans la prière. Besoin d\'aide ? Ta famille d\'église est là, en toute confidentialité.';
+
+  @override
+  String get onb3Title => 'Un jour, un impact';
+
+  @override
+  String get onb3Text =>
+      'Relève chaque jour un petit défi, tiens ton journal et grandis pas à pas : 365 jours pour laisser une empreinte éternelle.';
 }

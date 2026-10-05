@@ -2,9 +2,11 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../core/theme.dart';
 import '../../widgets/common.dart';
+import '../onboarding/onboarding_screen.dart';
 
 /// Animated splash: the ring appears, the gold star shoots into place,
 /// then the name and tagline reveal. Afterwards we go to /home (the router
@@ -65,13 +67,25 @@ class _SplashScreenState extends State<SplashScreen>
     _exit = step(0.90, 1.0, Curves.easeIn);
 
     _c.addStatusListener((status) {
-      if (status == AnimationStatus.completed && mounted) context.go('/home');
+      if (status == AnimationStatus.completed) _goNext();
     });
+  }
+
+  /// First launch → onboarding. Otherwise /home (the router sends
+  /// signed-out users to /auth).
+  Future<void> _goNext() async {
+    final signedIn = Supabase.instance.client.auth.currentSession != null;
+    final seen = signedIn || await OnboardingScreen.isDone();
+    if (mounted) context.go(seen ? '/home' : '/onboarding');
   }
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
+    // Load the onboarding pictures while the animation plays.
+    for (final image in OnboardingScreen.images) {
+      precacheImage(AssetImage(image), context);
+    }
     if (_c.isAnimating || _c.isCompleted) return;
     // Respect the "reduce motion" accessibility setting.
     if (MediaQuery.disableAnimationsOf(context)) {

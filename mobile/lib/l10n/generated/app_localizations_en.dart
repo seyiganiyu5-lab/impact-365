@@ -641,4 +641,34 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get phoneLabel => 'Phone';
+
+  @override
+  String get onbSkip => 'Skip';
+
+  @override
+  String get onbNext => 'Next';
+
+  @override
+  String get onbStart => 'Get started';
+
+  @override
+  String get onb1Title => 'Meet God every day';
+
+  @override
+  String get onb1Text =>
+      'Morning, afternoon and night, receive a short and deep devotion: the Word, what it means, and how to live it today.';
+
+  @override
+  String get onb2Title => 'Pray, and never walk alone';
+
+  @override
+  String get onb2Text =>
+      'Lay down your prayer points, celebrate answered prayers and carry others in prayer. Need help? Your church family is here, in full confidentiality.';
+
+  @override
+  String get onb3Title => 'One day, one impact';
+
+  @override
+  String get onb3Text =>
+      'Take up a small challenge each day, keep your journal and grow step by step: 365 days to leave an eternal mark.';
 }

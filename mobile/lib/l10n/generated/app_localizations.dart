@@ -1263,6 +1263,60 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Phone'**
   String get phoneLabel;
+
+  /// No description provided for @onbSkip.
+  ///
+  /// In en, this message translates to:
+  /// **'Skip'**
+  String get onbSkip;
+
+  /// No description provided for @onbNext.
+  ///
+  /// In en, this message translates to:
+  /// **'Next'**
+  String get onbNext;
+
+  /// No description provided for @onbStart.
+  ///
+  /// In en, this message translates to:
+  /// **'Get started'**
+  String get onbStart;
+
+  /// No description provided for @onb1Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Meet God every day'**
+  String get onb1Title;
+
+  /// No description provided for @onb1Text.
+  ///
+  /// In en, this message translates to:
+  /// **'Morning, afternoon and night, receive a short and deep devotion: the Word, what it means, and how to live it today.'**
+  String get onb1Text;
+
+  /// No description provided for @onb2Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Pray, and never walk alone'**
+  String get onb2Title;
+
+  /// No description provided for @onb2Text.
+  ///
+  /// In en, this message translates to:
+  /// **'Lay down your prayer points, celebrate answered prayers and carry others in prayer. Need help? Your church family is here, in full confidentiality.'**
+  String get onb2Text;
+
+  /// No description provided for @onb3Title.
+  ///
+  /// In en, this message translates to:
+  /// **'One day, one impact'**
+  String get onb3Title;
+
+  /// No description provided for @onb3Text.
+  ///
+  /// In en, this message translates to:
+  /// **'Take up a small challenge each day, keep your journal and grow step by step: 365 days to leave an eternal mark.'**
+  String get onb3Text;
 }
 
 class _AppLocalizationsDelegate
