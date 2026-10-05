@@ -144,10 +144,10 @@ impact-365/
 | Check code | `flutter analyze` | `npm run lint` |
 | Tests / build | `flutter test` | `npm run build` |
 | After editing translations | `flutter gen-l10n` | — |
+| After changing the app icon (`mobile/assets/icon/`) | `dart run flutter_launcher_icons` | — |
 
 ## Next steps (not built yet)
 - Push notifications (Firebase Cloud Messaging) for new devotions, replies and reminders (*Rappels* screen)
 - *Mon groupe* (groups, discussions, group challenges)
 - Audio teaching library (*Lecture audio*) and offline downloads
-- Real logo and images in `mobile/assets/` (the logo is currently drawn in code)
 - Deploying the admin website (e.g. Vercel) and publishing the app to the stores

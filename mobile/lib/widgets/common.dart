@@ -11,8 +11,7 @@ extension L10nX on BuildContext {
     ..showSnackBar(SnackBar(content: Text(message)));
 }
 
-/// "IMPACT-365 — 1 jour 1 impact" logo, drawn in code until the real logo
-/// file is added to assets/.
+/// "IMPACT-365 — 1 jour 1 impact" logo: the mark plus the name.
 class BrandLogo extends StatelessWidget {
   const BrandLogo({super.key, this.light = false, this.size = 44});
 
@@ -55,6 +54,8 @@ class BrandLogo extends StatelessWidget {
   }
 }
 
+/// The IMPACT-365 logo mark (ring + gold star). White on dark backgrounds,
+/// purple on light ones.
 class BrandMark extends StatelessWidget {
   const BrandMark({super.key, this.size = 44, this.light = false});
 
@@ -63,21 +64,14 @@ class BrandMark extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return Image.asset(
+      light
+          ? 'assets/images/logo_mark_white.png'
+          : 'assets/images/logo_mark_purple.png',
       width: size,
       height: size,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        border: Border.all(
-          color: light ? Colors.white : AppColors.purple,
-          width: size * 0.1,
-        ),
-      ),
-      child: Icon(
-        Icons.local_fire_department_rounded,
-        color: AppColors.gold,
-        size: size * 0.55,
-      ),
+      fit: BoxFit.contain,
+      filterQuality: FilterQuality.medium,
     );
   }
 }
