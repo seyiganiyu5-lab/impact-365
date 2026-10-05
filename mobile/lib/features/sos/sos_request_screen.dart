@@ -127,7 +127,12 @@ class _SosRequestScreenState extends State<SosRequestScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(l.sosVerseRef, style: AppText.bodyStrong),
+                      Text(
+                        l.sosVerseRef,
+                        style: AppText.scriptureRef.copyWith(
+                          color: AppColors.goldDark,
+                        ),
+                      ),
                       Text(l.sosVerse, style: AppText.scripture),
                     ],
                   ),

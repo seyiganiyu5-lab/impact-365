@@ -1359,6 +1359,174 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Lamentations 3:22-23'**
   String get welcomeVerseRef;
+
+  /// No description provided for @signInTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome back'**
+  String get signInTitle;
+
+  /// No description provided for @signInSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in to continue your journey with God.'**
+  String get signInSubtitle;
+
+  /// No description provided for @signUpTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Create your account'**
+  String get signUpTitle;
+
+  /// No description provided for @signUpSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Join the Impact-365 family and start today.'**
+  String get signUpSubtitle;
+
+  /// No description provided for @authEmailHint.
+  ///
+  /// In en, this message translates to:
+  /// **'you@email.com'**
+  String get authEmailHint;
+
+  /// No description provided for @authPasswordHint.
+  ///
+  /// In en, this message translates to:
+  /// **'At least 6 characters'**
+  String get authPasswordHint;
+
+  /// No description provided for @authFullNameHint.
+  ///
+  /// In en, this message translates to:
+  /// **'First and last name'**
+  String get authFullNameHint;
+
+  /// No description provided for @authConfirmPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm password'**
+  String get authConfirmPassword;
+
+  /// No description provided for @authConfirmPasswordHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Type your password again'**
+  String get authConfirmPasswordHint;
+
+  /// No description provided for @authForgot.
+  ///
+  /// In en, this message translates to:
+  /// **'Forgot password?'**
+  String get authForgot;
+
+  /// No description provided for @authNoAccountQ.
+  ///
+  /// In en, this message translates to:
+  /// **'Don\'t have an account?'**
+  String get authNoAccountQ;
+
+  /// No description provided for @authHaveAccountQ.
+  ///
+  /// In en, this message translates to:
+  /// **'Already have an account?'**
+  String get authHaveAccountQ;
+
+  /// No description provided for @authErrRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'This field is required'**
+  String get authErrRequired;
+
+  /// No description provided for @authErrEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a valid email address'**
+  String get authErrEmail;
+
+  /// No description provided for @authErrPasswordShort.
+  ///
+  /// In en, this message translates to:
+  /// **'At least 6 characters'**
+  String get authErrPasswordShort;
+
+  /// No description provided for @authErrPasswordMatch.
+  ///
+  /// In en, this message translates to:
+  /// **'Passwords do not match'**
+  String get authErrPasswordMatch;
+
+  /// No description provided for @authErrInvalidCredentials.
+  ///
+  /// In en, this message translates to:
+  /// **'Incorrect email or password.'**
+  String get authErrInvalidCredentials;
+
+  /// No description provided for @authErrEmailTaken.
+  ///
+  /// In en, this message translates to:
+  /// **'An account already exists with this email.'**
+  String get authErrEmailTaken;
+
+  /// No description provided for @authErrNotConfirmed.
+  ///
+  /// In en, this message translates to:
+  /// **'Please confirm your email first — check your inbox.'**
+  String get authErrNotConfirmed;
+
+  /// No description provided for @authErrNetwork.
+  ///
+  /// In en, this message translates to:
+  /// **'No internet connection. Please try again.'**
+  String get authErrNetwork;
+
+  /// No description provided for @authTerms.
+  ///
+  /// In en, this message translates to:
+  /// **'By creating an account, you agree to our terms of use and privacy policy.'**
+  String get authTerms;
+
+  /// No description provided for @authCheckEmailTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Check your inbox'**
+  String get authCheckEmailTitle;
+
+  /// No description provided for @authCheckEmailText.
+  ///
+  /// In en, this message translates to:
+  /// **'We sent a confirmation link to {email}. Open it to activate your account, then sign in.'**
+  String authCheckEmailText(String email);
+
+  /// No description provided for @authBackToSignIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Back to sign in'**
+  String get authBackToSignIn;
+
+  /// No description provided for @authResetTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset your password'**
+  String get authResetTitle;
+
+  /// No description provided for @authResetText.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your email and we will send you a link to choose a new password.'**
+  String get authResetText;
+
+  /// No description provided for @authResetSend.
+  ///
+  /// In en, this message translates to:
+  /// **'Send the link'**
+  String get authResetSend;
+
+  /// No description provided for @authResetSent.
+  ///
+  /// In en, this message translates to:
+  /// **'Link sent! Check your inbox.'**
+  String get authResetSent;
 }
 
 class _AppLocalizationsDelegate

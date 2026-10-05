@@ -310,7 +310,7 @@ class _QuickCard extends StatelessWidget {
                 Expanded(
                   child: Text(
                     subtitle,
-                    style: AppText.labelSmall.copyWith(color: AppColors.muted),
+                    style: AppText.caption.copyWith(color: AppColors.muted),
                   ),
                 ),
                 const Icon(
@@ -401,9 +401,7 @@ class _FaithJourneyCard extends StatelessWidget {
                       const SizedBox(height: 4),
                       Text(
                         days[i - 1].characters.first,
-                        style: AppText.labelSmall.copyWith(
-                          color: Colors.white54,
-                        ),
+                        style: AppText.caption.copyWith(color: Colors.white54),
                       ),
                     ],
                   ),

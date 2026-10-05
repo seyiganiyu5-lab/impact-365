@@ -695,4 +695,96 @@ class AppLocalizationsYo extends AppLocalizations {
 
   @override
   String get welcomeVerseRef => 'Ẹkún Jeremáyà 3:22-23';
+
+  @override
+  String get signInTitle => 'Ẹ kú àbọ̀ padà';
+
+  @override
+  String get signInSubtitle =>
+      'Wọlé láti tẹ̀síwájú nínú ìrìn àjò rẹ pẹ̀lú Ọlọ́run.';
+
+  @override
+  String get signUpTitle => 'Ṣẹ̀dá àkáǹtì rẹ';
+
+  @override
+  String get signUpSubtitle =>
+      'Darapọ̀ mọ́ ìdílé Impact-365 kí o sì bẹ̀rẹ̀ lónìí.';
+
+  @override
+  String get authEmailHint => 'iwo@email.com';
+
+  @override
+  String get authPasswordHint => 'Ó kéré tán lẹ́tà 6';
+
+  @override
+  String get authFullNameHint => 'Orúkọ àti orúkọ ìdílé';
+
+  @override
+  String get authConfirmPassword => 'Jẹ́rìí ọ̀rọ̀ aṣínà';
+
+  @override
+  String get authConfirmPasswordHint => 'Tún ọ̀rọ̀ aṣínà rẹ tẹ̀';
+
+  @override
+  String get authForgot => 'O gbàgbé ọ̀rọ̀ aṣínà?';
+
+  @override
+  String get authNoAccountQ => 'O kò ní àkáǹtì?';
+
+  @override
+  String get authHaveAccountQ => 'O ti ní àkáǹtì?';
+
+  @override
+  String get authErrRequired => 'Àyè yìí pọndandan';
+
+  @override
+  String get authErrEmail => 'Tẹ àdírẹ́sì ímeèlì tó tọ́';
+
+  @override
+  String get authErrPasswordShort => 'Ó kéré tán lẹ́tà 6';
+
+  @override
+  String get authErrPasswordMatch => 'Àwọn ọ̀rọ̀ aṣínà kò bára mu';
+
+  @override
+  String get authErrInvalidCredentials => 'Ímeèlì tàbí ọ̀rọ̀ aṣínà kò tọ́.';
+
+  @override
+  String get authErrEmailTaken => 'Àkáǹtì ti wà pẹ̀lú ímeèlì yìí.';
+
+  @override
+  String get authErrNotConfirmed =>
+      'Jọ̀wọ́ kọ́kọ́ jẹ́rìí ímeèlì rẹ — ṣàyẹ̀wò àpótí ímeèlì rẹ.';
+
+  @override
+  String get authErrNetwork =>
+      'Kò sí ìsopọ̀ íntánẹ́ẹ̀tì. Gbìyànjú lẹ́ẹ̀kan síi.';
+
+  @override
+  String get authTerms =>
+      'Nípa ṣíṣẹ̀dá àkáǹtì, o gbà sí àwọn òfin ìlò àti ìlànà àṣírí wa.';
+
+  @override
+  String get authCheckEmailTitle => 'Ṣàyẹ̀wò àpótí ímeèlì rẹ';
+
+  @override
+  String authCheckEmailText(String email) {
+    return 'A ti fi ìjápọ̀ ìjẹ́rìí ránṣẹ́ sí $email. Ṣí i láti mú àkáǹtì rẹ ṣiṣẹ́, lẹ́yìn náà wọlé.';
+  }
+
+  @override
+  String get authBackToSignIn => 'Padà sí ìwọlé';
+
+  @override
+  String get authResetTitle => 'Tún ọ̀rọ̀ aṣínà rẹ ṣe';
+
+  @override
+  String get authResetText =>
+      'Tẹ ímeèlì rẹ, a ó fi ìjápọ̀ ránṣẹ́ sí ọ láti yan ọ̀rọ̀ aṣínà tuntun.';
+
+  @override
+  String get authResetSend => 'Fi ìjápọ̀ ránṣẹ́';
+
+  @override
+  String get authResetSent => 'A ti fi ìjápọ̀ ránṣẹ́! Ṣàyẹ̀wò àpótí ímeèlì rẹ.';
 }

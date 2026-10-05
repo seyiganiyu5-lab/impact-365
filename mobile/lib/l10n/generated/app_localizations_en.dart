@@ -694,4 +694,93 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get welcomeVerseRef => 'Lamentations 3:22-23';
+
+  @override
+  String get signInTitle => 'Welcome back';
+
+  @override
+  String get signInSubtitle => 'Sign in to continue your journey with God.';
+
+  @override
+  String get signUpTitle => 'Create your account';
+
+  @override
+  String get signUpSubtitle => 'Join the Impact-365 family and start today.';
+
+  @override
+  String get authEmailHint => 'you@email.com';
+
+  @override
+  String get authPasswordHint => 'At least 6 characters';
+
+  @override
+  String get authFullNameHint => 'First and last name';
+
+  @override
+  String get authConfirmPassword => 'Confirm password';
+
+  @override
+  String get authConfirmPasswordHint => 'Type your password again';
+
+  @override
+  String get authForgot => 'Forgot password?';
+
+  @override
+  String get authNoAccountQ => 'Don\'t have an account?';
+
+  @override
+  String get authHaveAccountQ => 'Already have an account?';
+
+  @override
+  String get authErrRequired => 'This field is required';
+
+  @override
+  String get authErrEmail => 'Enter a valid email address';
+
+  @override
+  String get authErrPasswordShort => 'At least 6 characters';
+
+  @override
+  String get authErrPasswordMatch => 'Passwords do not match';
+
+  @override
+  String get authErrInvalidCredentials => 'Incorrect email or password.';
+
+  @override
+  String get authErrEmailTaken => 'An account already exists with this email.';
+
+  @override
+  String get authErrNotConfirmed =>
+      'Please confirm your email first — check your inbox.';
+
+  @override
+  String get authErrNetwork => 'No internet connection. Please try again.';
+
+  @override
+  String get authTerms =>
+      'By creating an account, you agree to our terms of use and privacy policy.';
+
+  @override
+  String get authCheckEmailTitle => 'Check your inbox';
+
+  @override
+  String authCheckEmailText(String email) {
+    return 'We sent a confirmation link to $email. Open it to activate your account, then sign in.';
+  }
+
+  @override
+  String get authBackToSignIn => 'Back to sign in';
+
+  @override
+  String get authResetTitle => 'Reset your password';
+
+  @override
+  String get authResetText =>
+      'Enter your email and we will send you a link to choose a new password.';
+
+  @override
+  String get authResetSend => 'Send the link';
+
+  @override
+  String get authResetSent => 'Link sent! Check your inbox.';
 }

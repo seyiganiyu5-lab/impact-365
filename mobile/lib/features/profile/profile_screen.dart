@@ -226,7 +226,7 @@ class _Stat extends StatelessWidget {
           Text(
             label,
             textAlign: TextAlign.center,
-            style: AppText.labelSmall.copyWith(color: AppColors.muted),
+            style: AppText.caption.copyWith(color: AppColors.muted),
           ),
         ],
       ),

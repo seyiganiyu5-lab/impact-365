@@ -279,7 +279,7 @@ class GoldButton extends StatelessWidget {
                     child: Text(
                       label,
                       textAlign: TextAlign.center,
-                      style: AppText.titleSmall.copyWith(color: Colors.white),
+                      style: AppText.labelLarge.copyWith(color: Colors.white),
                     ),
                   ),
                   Icon(icon, color: Colors.white),

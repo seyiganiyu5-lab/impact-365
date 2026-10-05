@@ -153,7 +153,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                           style: TextButton.styleFrom(
                             foregroundColor: Colors.white,
                           ),
-                          child: Text(l.onbSkip, style: AppText.titleSmall),
+                          child: Text(l.onbSkip, style: AppText.labelLarge),
                         ),
                       ),
                     ],

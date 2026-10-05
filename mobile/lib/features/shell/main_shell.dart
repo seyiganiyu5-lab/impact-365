@@ -88,7 +88,9 @@ class _NavItem extends StatelessWidget {
             label,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: AppText.bodySmall.copyWith(color: color),
+            // Selected tab: label weight; others: regular.
+            style: (selected ? AppText.labelMedium : AppText.bodySmall)
+                .copyWith(color: color),
           ),
           const SizedBox(height: 4),
           AnimatedContainer(

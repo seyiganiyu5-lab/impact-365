@@ -264,9 +264,7 @@ class _WeekProgress extends StatelessWidget {
                     const SizedBox(height: 6),
                     Text(
                       names[i - 1],
-                      style: AppText.labelSmall.copyWith(
-                        color: AppColors.muted,
-                      ),
+                      style: AppText.caption.copyWith(color: AppColors.muted),
                     ),
                   ],
                 ),

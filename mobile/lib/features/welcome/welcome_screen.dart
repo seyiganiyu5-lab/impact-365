@@ -243,7 +243,7 @@ class _WelcomeButton extends StatelessWidget {
           ),
         ),
         // Style on the Text so it keeps the app font from the theme.
-        child: Text(label, style: AppText.titleMedium),
+        child: Text(label, style: AppText.labelLarge.copyWith(fontSize: 17)),
       ),
     );
   }

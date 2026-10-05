@@ -214,7 +214,7 @@ class _Bubble extends StatelessWidget {
                 MaterialLocalizations.of(
                   context,
                 ).formatTimeOfDay(time, alwaysUse24HourFormat: true),
-                style: AppText.labelSmall.copyWith(
+                style: AppText.caption.copyWith(
                   color: mine ? Colors.white60 : AppColors.muted,
                 ),
               ),

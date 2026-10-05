@@ -47,7 +47,10 @@ class AppColors {
 /// Inter is the app font; Source Serif 4 (italic) is used only for Bible
 /// verses so Scripture stands apart from the interface.
 ///
-/// One scale for the whole app — pick the role, not a size:
+/// One scale for the whole app — pick the role, not a size.
+/// Rule: titles are SemiBold/Bold; subtitles, descriptions and captions are
+/// always Regular (usually in [AppColors.muted]); labels (SemiBold) are only
+/// for buttons, chips, tabs and short overlines.
 ///
 /// | Role          | Size/line | Weight | Used for                                  |
 /// |---------------|-----------|--------|-------------------------------------------|
@@ -59,7 +62,8 @@ class AppColors {
 /// | bodyLarge     | 16/24     | 400    | Reading text (devotions, long paragraphs) |
 /// | bodyMedium    | 14/20     | 400    | Default text                              |
 /// | bodyStrong    | 14/20     | 600    | Short emphasised text inside body         |
-/// | bodySmall     | 13/18     | 400    | Secondary text, captions, timestamps      |
+/// | bodySmall     | 13/18     | 400    | Subtitles & secondary text                |
+/// | caption       | 12/16     | 400    | Tiny secondary text: stat labels, times   |
 /// | labelLarge    | 16/20     | 600    | Buttons                                   |
 /// | labelMedium   | 13/16     | 600    | Chips, tabs, navigation, small badges     |
 /// | labelSmall    | 11/14     | 600    | Overlines, tiny badges (tracked)          |
@@ -127,6 +131,12 @@ class AppText {
     fontFamily: fontFamily,
     fontSize: 13,
     height: 18 / 13,
+    fontWeight: FontWeight.w400,
+  );
+  static const caption = TextStyle(
+    fontFamily: fontFamily,
+    fontSize: 12,
+    height: 16 / 12,
     fontWeight: FontWeight.w400,
   );
   static const labelLarge = TextStyle(
@@ -235,6 +245,21 @@ ThemeData buildTheme() {
         borderRadius: BorderRadius.circular(14),
         borderSide: const BorderSide(color: AppColors.purple, width: 1.5),
       ),
+      errorBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(14),
+        borderSide: const BorderSide(color: AppColors.danger),
+      ),
+      focusedErrorBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(14),
+        borderSide: const BorderSide(color: AppColors.danger, width: 1.5),
+      ),
+      errorStyle: AppText.caption.copyWith(color: AppColors.danger),
+      prefixIconColor: WidgetStateColor.resolveWith(
+        (s) => s.contains(WidgetState.focused)
+            ? AppColors.purple
+            : AppColors.muted,
+      ),
+      suffixIconColor: AppColors.muted,
     ),
     filledButtonTheme: FilledButtonThemeData(
       style: FilledButton.styleFrom(

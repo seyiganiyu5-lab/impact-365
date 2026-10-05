@@ -701,4 +701,95 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get welcomeVerseRef => 'Lamentations 3:22-23';
+
+  @override
+  String get signInTitle => 'Content de te revoir';
+
+  @override
+  String get signInSubtitle =>
+      'Connecte-toi pour continuer ton parcours avec Dieu.';
+
+  @override
+  String get signUpTitle => 'Crée ton compte';
+
+  @override
+  String get signUpSubtitle =>
+      'Rejoins la famille Impact-365 et commence dès aujourd\'hui.';
+
+  @override
+  String get authEmailHint => 'ton@email.com';
+
+  @override
+  String get authPasswordHint => 'Au moins 6 caractères';
+
+  @override
+  String get authFullNameHint => 'Prénom et nom';
+
+  @override
+  String get authConfirmPassword => 'Confirmer le mot de passe';
+
+  @override
+  String get authConfirmPasswordHint => 'Retape ton mot de passe';
+
+  @override
+  String get authForgot => 'Mot de passe oublié ?';
+
+  @override
+  String get authNoAccountQ => 'Pas encore de compte ?';
+
+  @override
+  String get authHaveAccountQ => 'Déjà un compte ?';
+
+  @override
+  String get authErrRequired => 'Ce champ est obligatoire';
+
+  @override
+  String get authErrEmail => 'Entre une adresse e-mail valide';
+
+  @override
+  String get authErrPasswordShort => 'Au moins 6 caractères';
+
+  @override
+  String get authErrPasswordMatch => 'Les mots de passe ne correspondent pas';
+
+  @override
+  String get authErrInvalidCredentials => 'E-mail ou mot de passe incorrect.';
+
+  @override
+  String get authErrEmailTaken => 'Un compte existe déjà avec cet e-mail.';
+
+  @override
+  String get authErrNotConfirmed =>
+      'Confirme d\'abord ton e-mail — vérifie ta boîte mail.';
+
+  @override
+  String get authErrNetwork => 'Pas de connexion internet. Réessaie.';
+
+  @override
+  String get authTerms =>
+      'En créant un compte, tu acceptes nos conditions d\'utilisation et notre politique de confidentialité.';
+
+  @override
+  String get authCheckEmailTitle => 'Vérifie ta boîte mail';
+
+  @override
+  String authCheckEmailText(String email) {
+    return 'Nous avons envoyé un lien de confirmation à $email. Ouvre-le pour activer ton compte, puis connecte-toi.';
+  }
+
+  @override
+  String get authBackToSignIn => 'Retour à la connexion';
+
+  @override
+  String get authResetTitle => 'Réinitialiser le mot de passe';
+
+  @override
+  String get authResetText =>
+      'Entre ton e-mail, nous t\'enverrons un lien pour choisir un nouveau mot de passe.';
+
+  @override
+  String get authResetSend => 'Envoyer le lien';
+
+  @override
+  String get authResetSent => 'Lien envoyé ! Vérifie ta boîte mail.';
 }
