@@ -674,4 +674,24 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get onbReplay => 'Replay the introduction';
+
+  @override
+  String get welcomeTitle => 'Welcome to';
+
+  @override
+  String get welcomeSubtitle =>
+      'Begin your spiritual journey one day at a time';
+
+  @override
+  String get welcomeSignIn => 'Sign in';
+
+  @override
+  String get welcomeSignUp => 'Create an account';
+
+  @override
+  String get welcomeVerse =>
+      'The steadfast love of the Lord never ceases; his mercies are new every morning.';
+
+  @override
+  String get welcomeVerseRef => 'Lamentations 3:22-23';
 }

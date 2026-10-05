@@ -9,7 +9,7 @@ import '../onboarding/onboarding_screen.dart';
 
 /// Animated splash: the ring appears, the gold star shoots into place,
 /// then the name and tagline reveal. Afterwards we go to /home (the router
-/// sends signed-out users to /auth).
+/// sends signed-out users to /welcome).
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
@@ -71,7 +71,7 @@ class _SplashScreenState extends State<SplashScreen>
   }
 
   /// First launch → onboarding (for everyone). Otherwise /home; the router
-  /// sends signed-out users to /auth.
+  /// sends signed-out users to /welcome.
   Future<void> _goNext() async {
     final seen = await OnboardingScreen.isDone();
     if (mounted) context.go(seen ? '/home' : '/onboarding');

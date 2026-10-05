@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../core/locale_controller.dart';
@@ -7,7 +8,10 @@ import '../../widgets/common.dart';
 
 /// Sign in / sign up with email + password.
 class AuthScreen extends StatefulWidget {
-  const AuthScreen({super.key});
+  const AuthScreen({super.key, this.signUp = false});
+
+  /// Open directly on "Create my account" instead of "Sign in".
+  final bool signUp;
 
   @override
   State<AuthScreen> createState() => _AuthScreenState();
@@ -17,7 +21,7 @@ class _AuthScreenState extends State<AuthScreen> {
   final _name = TextEditingController();
   final _email = TextEditingController();
   final _password = TextEditingController();
-  bool _signUp = false;
+  late bool _signUp = widget.signUp;
   bool _busy = false;
 
   @override
@@ -69,6 +73,14 @@ class _AuthScreenState extends State<AuthScreen> {
   Widget build(BuildContext context) {
     final l = context.l10n;
     return Scaffold(
+      extendBodyBehindAppBar: true,
+      // Back to the welcome page (the sign-in / sign-up designs come next).
+      appBar: context.canPop()
+          ? AppBar(
+              backgroundColor: Colors.transparent,
+              foregroundColor: Colors.white,
+            )
+          : null,
       body: Container(
         decoration: const BoxDecoration(gradient: AppColors.sunsetGradient),
         child: SafeArea(

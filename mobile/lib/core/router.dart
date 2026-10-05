@@ -26,6 +26,7 @@ import '../features/sos/my_help_requests_screen.dart';
 import '../features/sos/sos_hub_screen.dart';
 import '../features/sos/sos_request_screen.dart';
 import '../features/splash/splash_screen.dart';
+import '../features/welcome/welcome_screen.dart';
 
 /// Re-runs the router redirect whenever the user signs in or out.
 class _AuthListenable extends ChangeNotifier {
@@ -54,10 +55,15 @@ final appRouter = GoRouter(
     final signedIn = Supabase.instance.client.auth.currentSession != null;
     // The splash animation decides by itself when to move on.
     if (state.matchedLocation == '/splash') return null;
-    final onAuth = state.matchedLocation == '/auth';
-    final onOnboarding = state.matchedLocation == '/onboarding';
-    if (!signedIn && !onAuth && !onOnboarding) return '/auth';
-    if (signedIn && onAuth) return '/home';
+    // Pages a signed-out visitor is allowed to see.
+    const publicPages = {'/welcome', '/auth', '/onboarding'};
+    final isPublic = publicPages.contains(state.matchedLocation);
+    if (!signedIn && !isPublic) return '/welcome';
+    if (signedIn &&
+        (state.matchedLocation == '/auth' ||
+            state.matchedLocation == '/welcome')) {
+      return '/home';
+    }
     return null;
   },
   routes: [
@@ -71,7 +77,20 @@ final appRouter = GoRouter(
             FadeTransition(opacity: animation, child: child),
       ),
     ),
-    GoRoute(path: '/auth', builder: (_, _) => const AuthScreen()),
+    GoRoute(
+      path: '/welcome',
+      pageBuilder: (_, state) => CustomTransitionPage(
+        key: state.pageKey,
+        child: const WelcomeScreen(),
+        transitionsBuilder: (_, animation, _, child) =>
+            FadeTransition(opacity: animation, child: child),
+      ),
+    ),
+    GoRoute(
+      path: '/auth',
+      builder: (_, state) =>
+          AuthScreen(signUp: state.uri.queryParameters['mode'] == 'signup'),
+    ),
 
     // Bottom navigation: Accueil / Parole / Prière / Impact / Profil
     StatefulShellRoute.indexedStack(

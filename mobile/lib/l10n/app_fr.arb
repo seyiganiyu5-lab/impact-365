@@ -217,5 +217,12 @@
   "onb2Text": "Dépose tes sujets de prière, célèbre les exaucements et porte les autres dans la prière. Besoin d'aide ? Ta famille d'église est là, en toute confidentialité.",
   "onb3Title": "Un jour, un impact",
   "onb3Text": "Relève chaque jour un petit défi, tiens ton journal et grandis pas à pas : 365 jours pour laisser une empreinte éternelle.",
-  "onbReplay": "Revoir l'introduction"
+  "onbReplay": "Revoir l'introduction",
+
+  "welcomeTitle": "Bienvenue sur",
+  "welcomeSubtitle": "Commence ton parcours spirituel un jour à la fois",
+  "welcomeSignIn": "Se connecter",
+  "welcomeSignUp": "Créer un compte",
+  "welcomeVerse": "Les bontés de l'Éternel ne sont pas épuisées ; elles se renouvellent chaque matin.",
+  "welcomeVerseRef": "Lamentations 3:22-23"
 }

@@ -74,7 +74,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
   Future<void> _finish() async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool(OnboardingScreen.doneKey, true);
-    // /home for signed-in users; the router sends everyone else to /auth.
+    // /home for signed-in users; the router sends everyone else to /welcome.
     if (mounted) context.go('/home');
   }
 

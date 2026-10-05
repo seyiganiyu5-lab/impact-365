@@ -681,4 +681,24 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get onbReplay => 'Revoir l\'introduction';
+
+  @override
+  String get welcomeTitle => 'Bienvenue sur';
+
+  @override
+  String get welcomeSubtitle =>
+      'Commence ton parcours spirituel un jour à la fois';
+
+  @override
+  String get welcomeSignIn => 'Se connecter';
+
+  @override
+  String get welcomeSignUp => 'Créer un compte';
+
+  @override
+  String get welcomeVerse =>
+      'Les bontés de l\'Éternel ne sont pas épuisées ; elles se renouvellent chaque matin.';
+
+  @override
+  String get welcomeVerseRef => 'Lamentations 3:22-23';
 }

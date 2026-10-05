@@ -1323,6 +1323,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Replay the introduction'**
   String get onbReplay;
+
+  /// No description provided for @welcomeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome to'**
+  String get welcomeTitle;
+
+  /// No description provided for @welcomeSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Begin your spiritual journey one day at a time'**
+  String get welcomeSubtitle;
+
+  /// No description provided for @welcomeSignIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in'**
+  String get welcomeSignIn;
+
+  /// No description provided for @welcomeSignUp.
+  ///
+  /// In en, this message translates to:
+  /// **'Create an account'**
+  String get welcomeSignUp;
+
+  /// No description provided for @welcomeVerse.
+  ///
+  /// In en, this message translates to:
+  /// **'The steadfast love of the Lord never ceases; his mercies are new every morning.'**
+  String get welcomeVerse;
+
+  /// No description provided for @welcomeVerseRef.
+  ///
+  /// In en, this message translates to:
+  /// **'Lamentations 3:22-23'**
+  String get welcomeVerseRef;
 }
 
 class _AppLocalizationsDelegate

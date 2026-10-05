@@ -676,4 +676,23 @@ class AppLocalizationsYo extends AppLocalizations {
 
   @override
   String get onbReplay => 'Wo ìfihàn náà lẹ́ẹ̀kan síi';
+
+  @override
+  String get welcomeTitle => 'Ẹ kú àbọ̀ sí';
+
+  @override
+  String get welcomeSubtitle => 'Bẹ̀rẹ̀ ìrìn àjò ẹ̀mí rẹ ní ọjọ́ kan lẹ́ẹ̀kan';
+
+  @override
+  String get welcomeSignIn => 'Wọlé';
+
+  @override
+  String get welcomeSignUp => 'Ṣẹ̀dá àkáǹtì';
+
+  @override
+  String get welcomeVerse =>
+      'Àánú Olúwa kò tán, ìyọ́nú rẹ̀ kò yẹ̀; wọ́n ń di ọ̀tun ní òròòwúrọ̀.';
+
+  @override
+  String get welcomeVerseRef => 'Ẹkún Jeremáyà 3:22-23';
 }
