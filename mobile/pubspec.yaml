@@ -54,6 +54,7 @@ dev_dependencies:
   # rules and activating additional ones.
   flutter_lints: ^6.0.0
   flutter_launcher_icons: ^0.14.4
+  flutter_native_splash: ^2.4.7
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -107,5 +108,13 @@ flutter_launcher_icons:
   ios: true
   image_path: assets/icon/app_icon.png
   remove_alpha_ios: true
-  adaptive_icon_background: "#4B1A88"
+  adaptive_icon_background: "#3B1E7B"
   adaptive_icon_foreground: assets/icon/app_icon_foreground.png
+
+# Native launch screen shown before Flutter starts (run: dart run flutter_native_splash:create).
+# Plain deep purple so it blends into the animated splash screen.
+flutter_native_splash:
+  color: "#3B1E7B"
+  android_12:
+    color: "#3B1E7B"
+    image: assets/icon/splash_android12.png

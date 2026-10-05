@@ -1,20 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-/// Colors taken from the IMPACT-365 mockups.
+/// IMPACT-365 brand colors.
+/// Core palette: deep purple #3B1E7B, gold #D4AF37, warm white #F9F9F6.
+/// The other shades are derived from those three.
 class AppColors {
-  static const purple = Color(0xFF2B1A5E);
-  static const purpleDark = Color(0xFF1C1040);
-  static const purpleLight = Color(0xFF4A3590);
-  static const lavender = Color(0xFFEFEBF7);
-  static const gold = Color(0xFFD9A53A);
-  static const goldLight = Color(0xFFF2D58C);
-  static const cream = Color(0xFFFBF7F1);
-  static const beige = Color(0xFFF3ECE1);
-  static const ink = Color(0xFF1E1640);
-  static const muted = Color(0xFF6E6880);
-  static const border = Color(0xFFEAE4DA);
+  // Core palette
+  static const deepPurple = Color(0xFF3B1E7B);
+  static const gold = Color(0xFFD4AF37);
+  static const warmWhite = Color(0xFFF9F9F6);
+
+  // Shades used across the UI
+  static const purple = deepPurple;
+  static const purpleDark = Color(0xFF26124F);
+  static const purpleLight = Color(0xFF5B3BA3);
+  static const lavender = Color(0xFFEEEAF6);
+  static const goldLight = Color(0xFFEAD58C);
+  static const goldDark = Color(0xFFA8871F);
+  static const cream = warmWhite;
+  static const beige = Color(0xFFF2EFE7);
+  static const ink = Color(0xFF1C1433);
+  static const muted = Color(0xFF6B6680);
+  static const border = Color(0xFFE6E3DA);
   static const danger = Color(0xFFC0392B);
+  static const shadow = Color(0x0F3B1E7B);
 
   static const purpleGradient = LinearGradient(
     begin: Alignment.topLeft,
@@ -23,13 +32,14 @@ class AppColors {
   );
 
   static const goldGradient = LinearGradient(
-    colors: [Color(0xFFE7B54A), Color(0xFFC8912A)],
+    colors: [Color(0xFFE0BF55), Color(0xFFBF9A2A)],
   );
 
   static const sunsetGradient = LinearGradient(
     begin: Alignment.topCenter,
     end: Alignment.bottomCenter,
-    colors: [Color(0xFF2B1A5E), Color(0xFF6B3F7A), Color(0xFFE5A04A)],
+    colors: [purpleDark, deepPurple, Color(0xFF7A4E8C), Color(0xFFD4AF37)],
+    stops: [0, 0.35, 0.75, 1],
   );
 }
 
@@ -45,8 +55,9 @@ ThemeData buildTheme() {
     scaffoldBackgroundColor: AppColors.cream,
   );
 
-  final text = GoogleFonts.outfitTextTheme(base.textTheme)
-      .apply(bodyColor: AppColors.ink, displayColor: AppColors.ink);
+  final text = GoogleFonts.outfitTextTheme(
+    base.textTheme,
+  ).apply(bodyColor: AppColors.ink, displayColor: AppColors.ink);
 
   return base.copyWith(
     textTheme: text,

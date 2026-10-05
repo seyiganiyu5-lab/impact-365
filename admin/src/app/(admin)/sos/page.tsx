@@ -24,7 +24,7 @@ type HelpRequest = {
 
 const STATUS_STYLE: Record<Status, string> = {
   open: "bg-lavender text-purple",
-  in_progress: "bg-gold-light/60 text-[#8a6417]",
+  in_progress: "bg-gold-light/60 text-[#a8871f]",
   resolved: "bg-green-100 text-green-800",
 };
 

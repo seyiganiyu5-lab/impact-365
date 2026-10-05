@@ -24,6 +24,7 @@ import '../features/sos/community_needs_screen.dart';
 import '../features/sos/my_help_requests_screen.dart';
 import '../features/sos/sos_hub_screen.dart';
 import '../features/sos/sos_request_screen.dart';
+import '../features/splash/splash_screen.dart';
 
 /// Re-runs the router redirect whenever the user signs in or out.
 class _AuthListenable extends ChangeNotifier {
@@ -46,16 +47,19 @@ final _rootKey = GlobalKey<NavigatorState>();
 
 final appRouter = GoRouter(
   navigatorKey: _rootKey,
-  initialLocation: '/home',
+  initialLocation: '/splash',
   refreshListenable: _AuthListenable(),
   redirect: (context, state) {
     final signedIn = Supabase.instance.client.auth.currentSession != null;
+    // The splash animation decides by itself when to move on.
+    if (state.matchedLocation == '/splash') return null;
     final onAuth = state.matchedLocation == '/auth';
     if (!signedIn && !onAuth) return '/auth';
     if (signedIn && onAuth) return '/home';
     return null;
   },
   routes: [
+    GoRoute(path: '/splash', builder: (_, _) => const SplashScreen()),
     GoRoute(path: '/auth', builder: (_, _) => const AuthScreen()),
 
     // Bottom navigation: Accueil / Parole / Prière / Impact / Profil

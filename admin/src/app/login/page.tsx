@@ -30,7 +30,7 @@ export default function LoginPage() {
   }
 
   return (
-    <main className="flex min-h-screen items-center justify-center bg-gradient-to-b from-purple via-[#6b3f7a] to-[#e5a04a] p-4">
+    <main className="flex min-h-screen items-center justify-center bg-gradient-to-b from-purple-dark via-[#7a4e8c] to-gold p-4">
       <div className="w-full max-w-md">
         <div className="mb-8 flex items-center justify-between">
           <Logo light />

@@ -99,8 +99,9 @@ class _ChatScreenState extends State<ChatScreen> {
                     }
                     final msgs = snap.data!;
                     if (msgs.any((m) => m.isFromStaff && m.readAt == null)) {
-                      Repo.markStaffMessagesRead(widget.conversationId)
-                          .ignore();
+                      Repo.markStaffMessagesRead(
+                        widget.conversationId,
+                      ).ignore();
                     }
                     return ListView.builder(
                       reverse: true,
@@ -216,8 +217,9 @@ class _Bubble extends StatelessWidget {
             Align(
               alignment: Alignment.bottomRight,
               child: Text(
-                MaterialLocalizations.of(context)
-                    .formatTimeOfDay(time, alwaysUse24HourFormat: true),
+                MaterialLocalizations.of(
+                  context,
+                ).formatTimeOfDay(time, alwaysUse24HourFormat: true),
                 style: TextStyle(
                   color: mine ? Colors.white60 : AppColors.muted,
                   fontSize: 10,

@@ -179,7 +179,7 @@ class _ChallengeCard extends StatelessWidget {
         color: Colors.white,
         gradient: challenge.imageUrl == null
             ? const LinearGradient(
-                colors: [Colors.white, Color(0xFFFFF1DD)],
+                colors: [Colors.white, Color(0xFFF8F0D8)],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
               )
@@ -196,7 +196,7 @@ class _ChallengeCard extends StatelessWidget {
               ),
         boxShadow: const [
           BoxShadow(
-            color: Color(0x0F2B1A5E),
+            color: AppColors.shadow,
             blurRadius: 18,
             offset: Offset(0, 6),
           ),

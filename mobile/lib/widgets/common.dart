@@ -109,7 +109,7 @@ class AppCard extends StatelessWidget {
             borderRadius: radius,
             boxShadow: const [
               BoxShadow(
-                color: Color(0x0F2B1A5E),
+                color: AppColors.shadow,
                 blurRadius: 18,
                 offset: Offset(0, 6),
               ),
@@ -187,7 +187,7 @@ class MenuTile extends StatelessWidget {
                           style: const TextStyle(
                             fontSize: 9,
                             fontWeight: FontWeight.w700,
-                            color: Color(0xFF8A6417),
+                            color: AppColors.goldDark,
                           ),
                         ),
                       ),
@@ -508,8 +508,9 @@ String formatShortDate(BuildContext context, DateTime d) {
   final diff = today.difference(day).inDays;
   if (diff == 0) {
     final t = TimeOfDay.fromDateTime(d.toLocal());
-    return MaterialLocalizations.of(context)
-        .formatTimeOfDay(t, alwaysUse24HourFormat: true);
+    return MaterialLocalizations.of(
+      context,
+    ).formatTimeOfDay(t, alwaysUse24HourFormat: true);
   }
   if (diff == 1) return context.l10n.commonYesterday;
   return MaterialLocalizations.of(context).formatShortMonthDay(d.toLocal());

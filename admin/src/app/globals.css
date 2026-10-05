@@ -1,18 +1,19 @@
 @import "tailwindcss";
 
-/* IMPACT-365 brand colors (same as the mobile app) */
+/* IMPACT-365 brand colors (same as the mobile app):
+   deep purple #3B1E7B, gold #D4AF37, warm white #F9F9F6 */
 @theme inline {
-  --color-purple: #2b1a5e;
-  --color-purple-dark: #1c1040;
-  --color-purple-light: #4a3590;
-  --color-lavender: #efebf7;
-  --color-gold: #d9a53a;
-  --color-gold-light: #f2d58c;
-  --color-cream: #fbf7f1;
-  --color-beige: #f3ece1;
-  --color-ink: #1e1640;
-  --color-muted: #6e6880;
-  --color-line: #eae4da;
+  --color-purple: #3b1e7b;
+  --color-purple-dark: #26124f;
+  --color-purple-light: #5b3ba3;
+  --color-lavender: #eeeaf6;
+  --color-gold: #d4af37;
+  --color-gold-light: #ead58c;
+  --color-cream: #f9f9f6;
+  --color-beige: #f2efe7;
+  --color-ink: #1c1433;
+  --color-muted: #6b6680;
+  --color-line: #e6e3da;
   --font-sans: var(--font-outfit);
 }
 
@@ -23,7 +24,7 @@ body {
 
 /* Small shared building blocks */
 @utility card {
-  @apply rounded-2xl bg-white p-5 shadow-[0_6px_18px_rgba(43,26,94,0.06)];
+  @apply rounded-2xl bg-white p-5 shadow-[0_6px_18px_rgba(59,30,123,0.06)];
 }
 @utility btn {
   @apply inline-flex cursor-pointer items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold transition disabled:cursor-not-allowed disabled:opacity-50;
