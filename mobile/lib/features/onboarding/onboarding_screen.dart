@@ -153,13 +153,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                           style: TextButton.styleFrom(
                             foregroundColor: Colors.white,
                           ),
-                          child: Text(
-                            l.onbSkip,
-                            style: const TextStyle(
-                              fontWeight: FontWeight.w600,
-                              fontSize: 15,
-                            ),
-                          ),
+                          child: Text(l.onbSkip, style: AppText.titleSmall),
                         ),
                       ),
                     ],
@@ -190,29 +184,21 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                       children: [
                         Text(
                           '0${_index + 1} / 0${texts.length}',
-                          style: const TextStyle(
+                          style: AppText.labelMedium.copyWith(
                             color: AppColors.gold,
-                            fontWeight: FontWeight.w700,
                             letterSpacing: 2,
                           ),
                         ),
                         const SizedBox(height: 10),
                         Text(
                           texts[_index].$1,
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 30,
-                            height: 1.15,
-                            fontWeight: FontWeight.w800,
-                          ),
+                          style: AppText.headline.copyWith(color: Colors.white),
                         ),
                         const SizedBox(height: 14),
                         Text(
                           texts[_index].$2,
-                          style: TextStyle(
+                          style: AppText.bodyLarge.copyWith(
                             color: Colors.white.withValues(alpha: 0.85),
-                            fontSize: 16,
-                            height: 1.5,
                           ),
                         ),
                       ],
@@ -294,11 +280,7 @@ class _NextButton extends StatelessWidget {
             children: [
               Text(
                 label,
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.w700,
-                  fontSize: 16,
-                ),
+                style: AppText.titleSmall.copyWith(color: Colors.white),
               ),
               const SizedBox(width: 8),
               const Icon(Icons.arrow_forward_rounded, color: Colors.white),
@@ -350,10 +332,7 @@ class _LanguageButton extends StatelessWidget {
             const SizedBox(width: 6),
             Text(
               controller.languageCode.toUpperCase(),
-              style: const TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.w700,
-              ),
+              style: AppText.labelMedium.copyWith(color: Colors.white),
             ),
           ],
         ),

@@ -79,12 +79,7 @@ class _DevotionScreenState extends State<DevotionScreen> {
                 foregroundColor: Colors.white,
                 title: Text(
                   l.devotionTitle,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w700,
-                    letterSpacing: 0.8,
-                  ),
+                  style: AppText.titleSmall.copyWith(color: Colors.white),
                 ),
                 flexibleSpace: FlexibleSpaceBar(
                   background: _Header(devotion: d),
@@ -177,16 +172,12 @@ class _DevotionScreenState extends State<DevotionScreen> {
                               children: [
                                 Text(
                                   l.devotionQuestionTitle,
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.w700,
-                                    fontSize: 16,
-                                  ),
+                                  style: AppText.titleSmall,
                                 ),
                                 Text(
                                   l.devotionQuestionText,
-                                  style: const TextStyle(
+                                  style: AppText.bodySmall.copyWith(
                                     color: AppColors.muted,
-                                    fontSize: 13,
                                   ),
                                 ),
                               ],
@@ -266,18 +257,14 @@ class _Header extends StatelessWidget {
                 const SizedBox(height: 6),
                 Text(
                   devotion.verseReference,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 24,
-                    fontWeight: FontWeight.w800,
-                  ),
+                  style: AppText.titleLarge.copyWith(color: Colors.white),
                 ),
                 const SizedBox(height: 6),
                 Text(
                   devotion.verseText,
                   maxLines: 4,
                   overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(color: Colors.white, height: 1.4),
+                  style: AppText.scripture.copyWith(color: Colors.white),
                 ),
               ],
             ),
@@ -294,24 +281,18 @@ class _Header extends StatelessWidget {
               children: [
                 Text(
                   dayName.toUpperCase(),
-                  style: const TextStyle(
+                  style: AppText.labelSmall.copyWith(
                     color: AppColors.goldLight,
-                    fontSize: 11,
                   ),
                 ),
                 Text(
                   '${devotion.date.day}',
-                  style: const TextStyle(
-                    color: AppColors.gold,
-                    fontSize: 30,
-                    fontWeight: FontWeight.w800,
-                  ),
+                  style: AppText.headline.copyWith(color: AppColors.gold),
                 ),
                 Text(
                   month.toUpperCase(),
-                  style: const TextStyle(
+                  style: AppText.labelSmall.copyWith(
                     color: AppColors.goldLight,
-                    fontSize: 11,
                   ),
                 ),
               ],
@@ -347,14 +328,14 @@ class _Section extends StatelessWidget {
               children: [
                 Text(
                   title,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.w800,
+                  // Small tracked heading: "CE QUE DIEU DIT".
+                  style: AppText.labelMedium.copyWith(
                     color: AppColors.purple,
-                    letterSpacing: 0.4,
+                    letterSpacing: 0.8,
                   ),
                 ),
                 const SizedBox(height: 6),
-                Text(body, style: const TextStyle(height: 1.45, fontSize: 15)),
+                Text(body, style: AppText.bodyLarge),
               ],
             ),
           ),

@@ -94,17 +94,13 @@ class _AuthScreenState extends State<AuthScreen> {
                   Text(
                     l.authWelcome,
                     textAlign: TextAlign.center,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 26,
-                      fontWeight: FontWeight.w800,
-                    ),
+                    style: AppText.headline.copyWith(color: Colors.white),
                   ),
                   const SizedBox(height: 8),
                   Text(
                     l.authSubtitle,
                     textAlign: TextAlign.center,
-                    style: const TextStyle(color: Colors.white70, fontSize: 15),
+                    style: AppText.bodyLarge.copyWith(color: Colors.white70),
                   ),
                   const SizedBox(height: 28),
                   AppCard(

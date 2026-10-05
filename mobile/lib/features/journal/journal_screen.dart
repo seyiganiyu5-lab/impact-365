@@ -94,7 +94,7 @@ class _JournalScreenState extends State<JournalScreen> {
             Text(l.journalTitle),
             Text(
               formatDay(context, _day),
-              style: const TextStyle(fontSize: 13, color: AppColors.muted),
+              style: AppText.bodySmall.copyWith(color: AppColors.muted),
             ),
           ],
         ),
@@ -145,16 +145,12 @@ class _JournalScreenState extends State<JournalScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              l.journalVerse,
-                              style: const TextStyle(height: 1.4),
-                            ),
+                            Text(l.journalVerse, style: AppText.scripture),
                             const SizedBox(height: 6),
                             Text(
                               l.journalVerseRef,
-                              style: const TextStyle(
+                              style: AppText.scriptureRef.copyWith(
                                 color: AppColors.gold,
-                                fontWeight: FontWeight.w600,
                               ),
                             ),
                           ],
@@ -195,10 +191,8 @@ class _JournalScreenState extends State<JournalScreen> {
                           const SizedBox(width: 8),
                           Text(
                             l.journalGratitude,
-                            style: const TextStyle(
+                            style: AppText.titleSmall.copyWith(
                               color: AppColors.gold,
-                              fontWeight: FontWeight.w700,
-                              fontSize: 16,
                             ),
                           ),
                         ],
@@ -253,19 +247,14 @@ class _Question extends StatelessWidget {
                   children: [
                     Text(
                       title,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.w700,
-                        fontSize: 16,
+                      style: AppText.titleSmall.copyWith(
                         color: AppColors.purple,
                       ),
                     ),
                     const SizedBox(height: 4),
                     Text(
                       hint,
-                      style: const TextStyle(
-                        color: AppColors.muted,
-                        fontSize: 13,
-                      ),
+                      style: AppText.bodySmall.copyWith(color: AppColors.muted),
                     ),
                   ],
                 ),

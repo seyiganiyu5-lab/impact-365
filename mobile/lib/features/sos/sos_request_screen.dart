@@ -52,7 +52,7 @@ class _SosRequestScreenState extends State<SosRequestScreen> {
   @override
   Widget build(BuildContext context) {
     final l = context.l10n;
-    const sectionStyle = TextStyle(fontWeight: FontWeight.w700, fontSize: 16);
+    const sectionStyle = AppText.titleSmall;
     return Scaffold(
       appBar: AppBar(title: Text(l.sosTitle)),
       body: ListView(
@@ -127,14 +127,8 @@ class _SosRequestScreenState extends State<SosRequestScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        l.sosVerseRef,
-                        style: const TextStyle(fontWeight: FontWeight.w700),
-                      ),
-                      Text(
-                        l.sosVerse,
-                        style: const TextStyle(fontStyle: FontStyle.italic),
-                      ),
+                      Text(l.sosVerseRef, style: AppText.bodyStrong),
+                      Text(l.sosVerse, style: AppText.scripture),
                     ],
                   ),
                 ),
@@ -191,10 +185,8 @@ class _CategoryTile extends StatelessWidget {
               Text(
                 categoryLabel(context, category),
                 textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 12,
+                style: AppText.labelMedium.copyWith(
                   color: selected ? Colors.white : AppColors.ink,
-                  fontWeight: FontWeight.w600,
                 ),
               ),
             ],

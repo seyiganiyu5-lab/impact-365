@@ -88,11 +88,7 @@ class _NavItem extends StatelessWidget {
             label,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: TextStyle(
-              color: color,
-              fontSize: 12,
-              fontWeight: selected ? FontWeight.w700 : FontWeight.w500,
-            ),
+            style: AppText.bodySmall.copyWith(color: color),
           ),
           const SizedBox(height: 4),
           AnimatedContainer(

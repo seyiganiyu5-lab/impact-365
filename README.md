@@ -42,6 +42,11 @@ Anything an admin publishes on the website (a devotion, a challenge, an announce
 - **Content** (devotions, challenges): admins fill in whichever languages they have. If a member's language is missing, the app shows French, then English.
 - **Admin website:** French / English switch.
 
+### Typography
+- **Inter** is the font for the whole app and the admin website; **Source Serif 4 (italic)** is used only for Bible verses.
+- The fonts are bundled in `mobile/assets/fonts/`, so they work offline.
+- Every screen uses one type scale, `AppText` in `mobile/lib/core/theme.dart`: display, headline, title (large / medium / small), body (large / medium / small), labels and scripture. Pick a role such as `AppText.titleSmall` rather than a raw font size.
+
 ### Security
 Every table uses Supabase **Row Level Security**, so the rules hold even if someone bypasses the app:
 - A member's **journal** is visible only to that member (not even admins can read it).

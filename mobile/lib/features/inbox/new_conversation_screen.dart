@@ -63,10 +63,7 @@ class _NewConversationScreenState extends State<NewConversationScreen> {
             ),
           ),
           const SizedBox(height: 8),
-          Text(
-            l.chatSubject,
-            style: const TextStyle(fontWeight: FontWeight.w700),
-          ),
+          Text(l.chatSubject, style: AppText.bodyStrong),
           const SizedBox(height: 8),
           TextField(
             controller: _subject,
@@ -74,10 +71,7 @@ class _NewConversationScreenState extends State<NewConversationScreen> {
             decoration: InputDecoration(hintText: l.chatSubjectHint),
           ),
           const SizedBox(height: 8),
-          Text(
-            l.chatFirstMessage,
-            style: const TextStyle(fontWeight: FontWeight.w700),
-          ),
+          Text(l.chatFirstMessage, style: AppText.bodyStrong),
           const SizedBox(height: 8),
           TextField(
             controller: _body,

@@ -53,16 +53,12 @@ class SosHubScreen extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        l.sosConfidential,
-                        style: const TextStyle(fontWeight: FontWeight.w700),
-                      ),
+                      Text(l.sosConfidential, style: AppText.titleSmall),
                       const SizedBox(height: 2),
                       Text(
                         l.sosConfidentialText,
-                        style: const TextStyle(
+                        style: AppText.bodySmall.copyWith(
                           color: AppColors.muted,
-                          fontSize: 13,
                         ),
                       ),
                     ],

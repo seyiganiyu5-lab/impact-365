@@ -105,12 +105,7 @@ class _ImpactScreenState extends State<ImpactScreen> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                l.impactStreak,
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.w700,
-                                ),
-                              ),
+                              Text(l.impactStreak, style: AppText.titleSmall),
                               const SizedBox(height: 8),
                               Row(
                                 children: [
@@ -122,10 +117,7 @@ class _ImpactScreenState extends State<ImpactScreen> {
                                   const SizedBox(width: 6),
                                   Text(
                                     l.daysCount(s.streak),
-                                    style: const TextStyle(
-                                      fontSize: 24,
-                                      fontWeight: FontWeight.w800,
-                                    ),
+                                    style: AppText.titleLarge,
                                   ),
                                 ],
                               ),
@@ -209,20 +201,10 @@ class _ChallengeCard extends StatelessWidget {
           const SizedBox(height: 12),
           Text(
             l.impactChallenge,
-            style: const TextStyle(
-              color: AppColors.gold,
-              fontWeight: FontWeight.w600,
-            ),
+            style: AppText.scriptureRef.copyWith(color: AppColors.gold),
           ),
           const SizedBox(height: 6),
-          Text(
-            challenge.title,
-            style: const TextStyle(
-              fontSize: 21,
-              fontWeight: FontWeight.w800,
-              height: 1.3,
-            ),
-          ),
+          Text(challenge.title, style: AppText.titleLarge),
           if (challenge.description != null) ...[
             const SizedBox(height: 8),
             Text(
@@ -258,10 +240,7 @@ class _WeekProgress extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            l.impactWeek,
-            style: const TextStyle(fontWeight: FontWeight.w700),
-          ),
+          Text(l.impactWeek, style: AppText.titleSmall),
           const SizedBox(height: 12),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -285,8 +264,7 @@ class _WeekProgress extends StatelessWidget {
                     const SizedBox(height: 6),
                     Text(
                       names[i - 1],
-                      style: const TextStyle(
-                        fontSize: 11,
+                      style: AppText.labelSmall.copyWith(
                         color: AppColors.muted,
                       ),
                     ),

@@ -235,11 +235,8 @@ class _SplashScreenState extends State<SplashScreen>
         offset: Offset(0, 18 * (1 - v)),
         child: Text(
           'IMPACT-365',
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 34,
-            fontWeight: FontWeight.w800,
-            // Letters start spread out and close up.
+          style: AppText.display.copyWith(
+            color: Colors.white, // Letters start spread out and close up.
             letterSpacing: 2 + 14 * (1 - v),
           ),
         ),
@@ -258,10 +255,8 @@ class _SplashScreenState extends State<SplashScreen>
           const SizedBox(width: 10),
           Text(
             context.l10n.appTagline,
-            style: const TextStyle(
+            style: AppText.bodyLarge.copyWith(
               color: AppColors.gold,
-              fontSize: 15,
-              fontWeight: FontWeight.w500,
               letterSpacing: 1.2,
             ),
           ),

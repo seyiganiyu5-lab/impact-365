@@ -31,10 +31,7 @@ class LanguageScreen extends StatelessWidget {
                     Expanded(
                       child: Text(
                         LocaleController.displayName(loc.languageCode),
-                        style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                        ),
+                        style: AppText.titleSmall,
                       ),
                     ),
                     if (controller.languageCode == loc.languageCode)

@@ -134,16 +134,13 @@ class _InboxScreenState extends State<InboxScreen> {
                                     Expanded(
                                       child: Text(
                                         a.title,
-                                        style: const TextStyle(
-                                          fontWeight: FontWeight.w700,
-                                        ),
+                                        style: AppText.titleSmall,
                                       ),
                                     ),
                                     Text(
                                       formatShortDate(context, a.createdAt),
-                                      style: const TextStyle(
+                                      style: AppText.bodySmall.copyWith(
                                         color: AppColors.muted,
-                                        fontSize: 12,
                                       ),
                                     ),
                                   ],
@@ -200,18 +197,12 @@ class _ConversationTile extends StatelessWidget {
                         c.subject,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.w700,
-                          fontSize: 15,
-                        ),
+                        style: AppText.titleSmall,
                       ),
                     ),
                     Text(
                       formatShortDate(context, c.lastMessageAt),
-                      style: const TextStyle(
-                        color: AppColors.muted,
-                        fontSize: 12,
-                      ),
+                      style: AppText.bodySmall.copyWith(color: AppColors.muted),
                     ),
                   ],
                 ),
@@ -223,9 +214,8 @@ class _ConversationTile extends StatelessWidget {
                         c.lastMessage ?? '',
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(
+                        style: AppText.bodySmall.copyWith(
                           color: AppColors.muted,
-                          fontSize: 13,
                         ),
                       ),
                     ),
@@ -235,9 +225,8 @@ class _ConversationTile extends StatelessWidget {
                         backgroundColor: AppColors.purple,
                         child: Text(
                           '${c.unread}',
-                          style: const TextStyle(
+                          style: AppText.labelSmall.copyWith(
                             color: Colors.white,
-                            fontSize: 11,
                           ),
                         ),
                       )

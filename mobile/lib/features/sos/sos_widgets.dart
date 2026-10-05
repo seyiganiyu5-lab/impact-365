@@ -56,11 +56,7 @@ class StatusChip extends StatelessWidget {
       ),
       child: Text(
         statusLabel(context, status),
-        style: TextStyle(
-          color: color,
-          fontSize: 11,
-          fontWeight: FontWeight.w700,
-        ),
+        style: AppText.labelSmall.copyWith(color: color),
       ),
     );
   }
@@ -98,16 +94,12 @@ class SosBanner extends StatelessWidget {
               children: [
                 Text(
                   l.sosBannerTitle,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w800,
-                    fontSize: 17,
-                  ),
+                  style: AppText.titleMedium.copyWith(color: Colors.white),
                 ),
                 const SizedBox(height: 6),
                 Text(
                   l.sosBannerText,
-                  style: const TextStyle(color: Colors.white70, fontSize: 13),
+                  style: AppText.bodySmall.copyWith(color: Colors.white70),
                 ),
                 const SizedBox(height: 8),
                 Row(
@@ -121,9 +113,8 @@ class SosBanner extends StatelessWidget {
                     Flexible(
                       child: Text(
                         l.sosBannerTags,
-                        style: const TextStyle(
+                        style: AppText.bodySmall.copyWith(
                           color: AppColors.gold,
-                          fontSize: 12,
                         ),
                       ),
                     ),

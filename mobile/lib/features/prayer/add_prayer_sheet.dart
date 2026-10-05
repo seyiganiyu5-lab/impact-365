@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../core/theme.dart';
 import '../../data/repository.dart';
 import '../../widgets/common.dart';
 
@@ -68,10 +69,7 @@ class _AddPrayerSheetState extends State<_AddPrayerSheet> {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text(
-            l.prayerAdd,
-            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w800),
-          ),
+          Text(l.prayerAdd, style: AppText.titleLarge),
           const SizedBox(height: 16),
           TextField(
             controller: _title,

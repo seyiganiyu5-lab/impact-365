@@ -115,13 +115,7 @@ class _MyPrayersScreenState extends State<MyPrayersScreen> {
                       Row(
                         children: [
                           Expanded(
-                            child: Text(
-                              p.title,
-                              style: const TextStyle(
-                                fontWeight: FontWeight.w700,
-                                fontSize: 16,
-                              ),
-                            ),
+                            child: Text(p.title, style: AppText.titleSmall),
                           ),
                           if (p.isShared)
                             const Icon(
@@ -164,9 +158,8 @@ class _MyPrayersScreenState extends State<MyPrayersScreen> {
                         children: [
                           Text(
                             formatDay(context, p.createdAt.toLocal()),
-                            style: const TextStyle(
+                            style: AppText.bodySmall.copyWith(
                               color: AppColors.muted,
-                              fontSize: 12,
                             ),
                           ),
                           const Spacer(),

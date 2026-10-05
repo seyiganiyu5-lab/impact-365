@@ -52,9 +52,7 @@ class _MyHelpRequestsScreenState extends State<MyHelpRequestsScreen> {
                           Expanded(
                             child: Text(
                               categoryLabel(context, r.category),
-                              style: const TextStyle(
-                                fontWeight: FontWeight.w700,
-                              ),
+                              style: AppText.titleSmall,
                             ),
                           ),
                           StatusChip(status: r.status),
@@ -85,10 +83,7 @@ class _MyHelpRequestsScreenState extends State<MyHelpRequestsScreen> {
                                   children: [
                                     Text(
                                       l.chatLeader,
-                                      style: const TextStyle(
-                                        fontWeight: FontWeight.w700,
-                                        fontSize: 12,
-                                      ),
+                                      style: AppText.labelMedium,
                                     ),
                                     Text(r.staffNote!),
                                   ],
@@ -102,9 +97,8 @@ class _MyHelpRequestsScreenState extends State<MyHelpRequestsScreen> {
                         const SizedBox(height: 10),
                         Text(
                           l.sosOffers(r.offers.length),
-                          style: const TextStyle(
+                          style: AppText.labelMedium.copyWith(
                             color: AppColors.gold,
-                            fontWeight: FontWeight.w700,
                           ),
                         ),
                         for (final o in r.offers)
@@ -126,9 +120,7 @@ class _MyHelpRequestsScreenState extends State<MyHelpRequestsScreen> {
                                         TextSpan(
                                           text:
                                               '${o.helperName ?? l.anonymous}: ',
-                                          style: const TextStyle(
-                                            fontWeight: FontWeight.w600,
-                                          ),
+                                          style: AppText.bodyStrong,
                                         ),
                                         TextSpan(text: o.message),
                                       ],
@@ -142,9 +134,8 @@ class _MyHelpRequestsScreenState extends State<MyHelpRequestsScreen> {
                       const SizedBox(height: 6),
                       Text(
                         formatDay(context, r.createdAt.toLocal()),
-                        style: const TextStyle(
+                        style: AppText.bodySmall.copyWith(
                           color: AppColors.muted,
-                          fontSize: 12,
                         ),
                       ),
                     ],

@@ -74,29 +74,31 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           children: [
                             Text(
                               p.fullName ?? l.homeGreetingDefault,
-                              style: const TextStyle(
+                              style: AppText.titleLarge.copyWith(
                                 color: Colors.white,
-                                fontSize: 20,
-                                fontWeight: FontWeight.w800,
                               ),
                             ),
                             const SizedBox(height: 4),
                             Text(
                               l.profileImpacterSince(s.daysSinceJoin),
-                              style: const TextStyle(
+                              style: AppText.bodySmall.copyWith(
                                 color: AppColors.gold,
-                                fontSize: 13,
                               ),
                             ),
                             const Divider(color: Colors.white24, height: 20),
                             Text.rich(
                               TextSpan(
-                                style: const TextStyle(
+                                style: AppText.bodySmall.copyWith(
                                   color: Colors.white,
-                                  fontSize: 13,
                                 ),
                                 children: [
-                                  TextSpan(text: l.profileVerse),
+                                  TextSpan(
+                                    text: l.profileVerse,
+                                    style: AppText.scripture.copyWith(
+                                      fontSize: 14,
+                                      height: 20 / 14,
+                                    ),
+                                  ),
                                   TextSpan(
                                     text: ' ${l.profileVerseRef}',
                                     style: const TextStyle(
@@ -219,15 +221,12 @@ class _Stat extends StatelessWidget {
         children: [
           IconBubble(icon: icon, light: true, size: 40),
           const SizedBox(height: 8),
-          Text(
-            '$value',
-            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w800),
-          ),
+          Text('$value', style: AppText.titleLarge),
           const SizedBox(height: 2),
           Text(
             label,
             textAlign: TextAlign.center,
-            style: const TextStyle(fontSize: 10, color: AppColors.muted),
+            style: AppText.labelSmall.copyWith(color: AppColors.muted),
           ),
         ],
       ),

@@ -57,13 +57,7 @@ class _WordScreenState extends State<WordScreen> {
                     ),
                   if (past.isNotEmpty) ...[
                     const SizedBox(height: 12),
-                    Text(
-                      l.wordHistory,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.w700,
-                        fontSize: 18,
-                      ),
-                    ),
+                    Text(l.wordHistory, style: AppText.titleMedium),
                     const SizedBox(height: 12),
                     for (final d in past)
                       _SlotTile(
@@ -132,19 +126,12 @@ class _SlotTile extends StatelessWidget {
               children: [
                 Text(
                   '$dateText$label',
-                  style: const TextStyle(
-                    color: AppColors.gold,
-                    fontWeight: FontWeight.w600,
-                    fontSize: 13,
-                  ),
+                  style: AppText.labelMedium.copyWith(color: AppColors.gold),
                 ),
                 const SizedBox(height: 2),
                 Text(
                   d?.verseReference ?? context.l10n.wordNotAvailable,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.w700,
-                    fontSize: 16,
-                  ),
+                  style: AppText.titleSmall,
                 ),
                 if (d?.theme != null)
                   Text(

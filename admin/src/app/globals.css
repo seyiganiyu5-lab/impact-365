@@ -14,7 +14,7 @@
   --color-ink: #1c1433;
   --color-muted: #6b6680;
   --color-line: #e6e3da;
-  --font-sans: var(--font-outfit);
+  --font-sans: var(--font-inter);
 }
 
 body {

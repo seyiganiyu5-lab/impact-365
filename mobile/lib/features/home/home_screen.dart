@@ -98,14 +98,11 @@ class _HomeBody extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 20),
-        Text(
-          l.homeGreeting(name),
-          style: const TextStyle(fontSize: 30, fontWeight: FontWeight.w800),
-        ),
+        Text(l.homeGreeting(name), style: AppText.headline),
         const SizedBox(height: 6),
         Text(
           l.homeSubtitle,
-          style: const TextStyle(color: AppColors.muted, fontSize: 16),
+          style: AppText.bodyLarge.copyWith(color: AppColors.muted),
         ),
         const SizedBox(height: 18),
         Row(
@@ -123,13 +120,7 @@ class _HomeBody extends StatelessWidget {
                     color: AppColors.gold,
                   ),
                   const SizedBox(width: 8),
-                  Text(
-                    l.homeDayCounter(_dayOfYear),
-                    style: const TextStyle(
-                      fontWeight: FontWeight.w700,
-                      fontSize: 16,
-                    ),
-                  ),
+                  Text(l.homeDayCounter(_dayOfYear), style: AppText.titleSmall),
                 ],
               ),
             ),
@@ -141,12 +132,9 @@ class _HomeBody extends StatelessWidget {
               children: [
                 Text(
                   l.homeCurrentStreak,
-                  style: const TextStyle(color: AppColors.muted, fontSize: 12),
+                  style: AppText.bodySmall.copyWith(color: AppColors.muted),
                 ),
-                Text(
-                  l.daysCount(data.stats.streak),
-                  style: const TextStyle(fontWeight: FontWeight.w700),
-                ),
+                Text(l.daysCount(data.stats.streak), style: AppText.titleSmall),
               ],
             ),
           ],
@@ -166,17 +154,14 @@ class _HomeBody extends StatelessWidget {
                       children: [
                         Text(
                           l.homeThemeOfDay,
-                          style: const TextStyle(
+                          style: AppText.bodySmall.copyWith(
                             color: AppColors.muted,
-                            fontSize: 13,
                           ),
                         ),
                         const SizedBox(height: 4),
                         Text(
                           devotion.theme!,
-                          style: const TextStyle(
-                            fontWeight: FontWeight.w700,
-                            fontSize: 17,
+                          style: AppText.titleMedium.copyWith(
                             color: AppColors.purple,
                           ),
                         ),
@@ -193,10 +178,7 @@ class _HomeBody extends StatelessWidget {
             ),
         ],
         const SizedBox(height: 8),
-        Text(
-          l.homeToday,
-          style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 18),
-        ),
+        Text(l.homeToday, style: AppText.titleMedium),
         const SizedBox(height: 12),
         Row(
           children: [
@@ -263,11 +245,7 @@ class _VerseCard extends StatelessWidget {
               Expanded(
                 child: Text(
                   l.homeVerseOfDay,
-                  style: const TextStyle(
-                    color: AppColors.gold,
-                    fontWeight: FontWeight.w600,
-                    fontSize: 16,
-                  ),
+                  style: AppText.titleSmall.copyWith(color: AppColors.gold),
                 ),
               ),
               const Icon(Icons.wb_sunny_rounded, color: AppColors.goldLight),
@@ -276,12 +254,7 @@ class _VerseCard extends StatelessWidget {
           const SizedBox(height: 14),
           Text(
             devotion.verseText,
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 18,
-              height: 1.45,
-              fontWeight: FontWeight.w500,
-            ),
+            style: AppText.scriptureLarge.copyWith(color: Colors.white),
           ),
           const SizedBox(height: 10),
           Text(
@@ -330,17 +303,14 @@ class _QuickCard extends StatelessWidget {
               title,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 13),
+              style: AppText.labelMedium,
             ),
             Row(
               children: [
                 Expanded(
                   child: Text(
                     subtitle,
-                    style: const TextStyle(
-                      color: AppColors.muted,
-                      fontSize: 11,
-                    ),
+                    style: AppText.labelSmall.copyWith(color: AppColors.muted),
                   ),
                 ),
                 const Icon(
@@ -385,11 +355,7 @@ class _FaithJourneyCard extends StatelessWidget {
                 ),
                 Text(
                   '${stats.streak}',
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w800,
-                    fontSize: 20,
-                  ),
+                  style: AppText.titleLarge.copyWith(color: Colors.white),
                 ),
               ],
             ),
@@ -401,16 +367,12 @@ class _FaithJourneyCard extends StatelessWidget {
               children: [
                 Text(
                   l.homeFaithJourney,
-                  style: const TextStyle(
-                    color: AppColors.gold,
-                    fontWeight: FontWeight.w700,
-                    fontSize: 16,
-                  ),
+                  style: AppText.titleSmall.copyWith(color: AppColors.gold),
                 ),
                 const SizedBox(height: 4),
                 Text(
                   l.homeFaithJourneyText,
-                  style: const TextStyle(color: Colors.white70, fontSize: 12),
+                  style: AppText.bodySmall.copyWith(color: Colors.white70),
                 ),
               ],
             ),
@@ -439,9 +401,8 @@ class _FaithJourneyCard extends StatelessWidget {
                       const SizedBox(height: 4),
                       Text(
                         days[i - 1].characters.first,
-                        style: const TextStyle(
+                        style: AppText.labelSmall.copyWith(
                           color: Colors.white54,
-                          fontSize: 9,
                         ),
                       ),
                     ],

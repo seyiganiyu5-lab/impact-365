@@ -37,10 +37,7 @@ class _CommunityNeedsScreenState extends State<CommunityNeedsScreen> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Text(
-              l.sosOffer,
-              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w800),
-            ),
+            Text(l.sosOffer, style: AppText.titleLarge),
             const SizedBox(height: 12),
             CountedField(
               controller: controller,
@@ -99,15 +96,12 @@ class _CommunityNeedsScreenState extends State<CommunityNeedsScreen> {
                               children: [
                                 Text(
                                   categoryLabel(context, n.category),
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.w700,
-                                  ),
+                                  style: AppText.titleSmall,
                                 ),
                                 Text(
                                   n.authorName ?? l.anonymous,
-                                  style: const TextStyle(
+                                  style: AppText.bodySmall.copyWith(
                                     color: AppColors.muted,
-                                    fontSize: 12,
                                   ),
                                 ),
                               ],
@@ -117,16 +111,15 @@ class _CommunityNeedsScreenState extends State<CommunityNeedsScreen> {
                         ],
                       ),
                       const SizedBox(height: 10),
-                      Text(n.description, style: const TextStyle(height: 1.4)),
+                      Text(n.description, style: AppText.bodyMedium),
                       const SizedBox(height: 10),
                       Row(
                         children: [
                           Expanded(
                             child: Text(
                               l.sosOffers(n.offerCount),
-                              style: const TextStyle(
+                              style: AppText.bodySmall.copyWith(
                                 color: AppColors.muted,
-                                fontSize: 12,
                               ),
                             ),
                           ),

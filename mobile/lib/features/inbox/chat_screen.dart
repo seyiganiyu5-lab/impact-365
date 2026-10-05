@@ -81,8 +81,7 @@ class _ChatScreenState extends State<ChatScreen> {
                     Expanded(
                       child: Text(
                         l.chatPrivateNotice,
-                        style: const TextStyle(
-                          fontSize: 12,
+                        style: AppText.bodySmall.copyWith(
                           color: AppColors.purple,
                         ),
                       ),
@@ -199,18 +198,13 @@ class _Bubble extends StatelessWidget {
                 padding: const EdgeInsets.only(bottom: 4),
                 child: Text(
                   context.l10n.chatLeader,
-                  style: const TextStyle(
-                    color: AppColors.gold,
-                    fontWeight: FontWeight.w700,
-                    fontSize: 12,
-                  ),
+                  style: AppText.labelMedium.copyWith(color: AppColors.gold),
                 ),
               ),
             Text(
               message.body,
-              style: TextStyle(
+              style: AppText.bodyMedium.copyWith(
                 color: mine ? Colors.white : AppColors.ink,
-                height: 1.35,
               ),
             ),
             const SizedBox(height: 4),
@@ -220,9 +214,8 @@ class _Bubble extends StatelessWidget {
                 MaterialLocalizations.of(
                   context,
                 ).formatTimeOfDay(time, alwaysUse24HourFormat: true),
-                style: TextStyle(
+                style: AppText.labelSmall.copyWith(
                   color: mine ? Colors.white60 : AppColors.muted,
-                  fontSize: 10,
                 ),
               ),
             ),

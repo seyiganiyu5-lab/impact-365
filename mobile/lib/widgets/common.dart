@@ -162,15 +162,7 @@ class MenuTile extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    Flexible(
-                      child: Text(
-                        title,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.w700,
-                          fontSize: 15,
-                        ),
-                      ),
-                    ),
+                    Flexible(child: Text(title, style: AppText.titleSmall)),
                     if (badge != null) ...[
                       const SizedBox(width: 6),
                       Container(
@@ -184,9 +176,7 @@ class MenuTile extends StatelessWidget {
                         ),
                         child: Text(
                           badge!,
-                          style: const TextStyle(
-                            fontSize: 9,
-                            fontWeight: FontWeight.w700,
+                          style: AppText.labelSmall.copyWith(
                             color: AppColors.goldDark,
                           ),
                         ),
@@ -199,10 +189,7 @@ class MenuTile extends StatelessWidget {
                     padding: const EdgeInsets.only(top: 2),
                     child: Text(
                       subtitle!,
-                      style: const TextStyle(
-                        color: AppColors.muted,
-                        fontSize: 13,
-                      ),
+                      style: AppText.bodySmall.copyWith(color: AppColors.muted),
                     ),
                   ),
               ],
@@ -216,10 +203,7 @@ class MenuTile extends StatelessWidget {
                 color: AppColors.lavender,
                 borderRadius: BorderRadius.circular(10),
               ),
-              child: Text(
-                '$count',
-                style: const TextStyle(fontWeight: FontWeight.w700),
-              ),
+              child: Text('$count', style: AppText.labelMedium),
             ),
           trailing ??
               const Icon(Icons.chevron_right_rounded, color: AppColors.ink),
@@ -295,12 +279,7 @@ class GoldButton extends StatelessWidget {
                     child: Text(
                       label,
                       textAlign: TextAlign.center,
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w700,
-                        letterSpacing: 0.8,
-                        fontSize: 15,
-                      ),
+                      style: AppText.titleSmall.copyWith(color: Colors.white),
                     ),
                   ),
                   Icon(icon, color: Colors.white),
@@ -328,11 +307,7 @@ class ScreenTitle extends StatelessWidget {
         Text(
           title,
           textAlign: TextAlign.center,
-          style: const TextStyle(
-            fontSize: 24,
-            fontWeight: FontWeight.w800,
-            color: AppColors.purple,
-          ),
+          style: AppText.titleLarge.copyWith(color: AppColors.purple),
         ),
         if (subtitle != null)
           Padding(
@@ -340,7 +315,7 @@ class ScreenTitle extends StatelessWidget {
             child: Text(
               subtitle!,
               textAlign: TextAlign.center,
-              style: const TextStyle(color: AppColors.muted, fontSize: 14),
+              style: AppText.bodyMedium.copyWith(color: AppColors.muted),
             ),
           ),
       ],
@@ -375,19 +350,12 @@ class VerseBanner extends StatelessWidget {
               children: [
                 Text(
                   text,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 15,
-                    height: 1.4,
-                  ),
+                  style: AppText.scripture.copyWith(color: Colors.white),
                 ),
                 const SizedBox(height: 8),
                 Text(
                   reference,
-                  style: const TextStyle(
-                    color: AppColors.gold,
-                    fontWeight: FontWeight.w600,
-                  ),
+                  style: AppText.scriptureRef.copyWith(color: AppColors.gold),
                 ),
               ],
             ),
@@ -415,7 +383,7 @@ class EmptyState extends StatelessWidget {
           Text(
             message,
             textAlign: TextAlign.center,
-            style: const TextStyle(color: AppColors.muted, fontSize: 15),
+            style: AppText.bodyLarge.copyWith(color: AppColors.muted),
           ),
         ],
       ),

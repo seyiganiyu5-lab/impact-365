@@ -104,11 +104,8 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                               ],
                             ),
                             textAlign: TextAlign.center,
-                            style: const TextStyle(
+                            style: AppText.display.copyWith(
                               color: AppColors.deepPurple,
-                              fontSize: 34,
-                              height: 1.15,
-                              fontWeight: FontWeight.w700,
                             ),
                           ),
                         ),
@@ -118,10 +115,8 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                           child: Text(
                             l.welcomeSubtitle,
                             textAlign: TextAlign.center,
-                            style: const TextStyle(
+                            style: AppText.bodyMedium.copyWith(
                               color: AppColors.deepPurple,
-                              fontSize: 14,
-                              height: 1.4,
                             ),
                           ),
                         ),
@@ -188,20 +183,14 @@ class _BottomPanel extends StatelessWidget {
                 Text(
                   l.welcomeVerse,
                   textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.white.withValues(alpha: 0.9),
-                    fontSize: 15,
-                    height: 1.5,
-                    fontStyle: FontStyle.italic,
+                  style: AppText.scripture.copyWith(
+                    color: Colors.white.withValues(alpha: 0.92),
                   ),
                 ),
                 const SizedBox(height: 8),
                 Text(
                   l.welcomeVerseRef,
-                  style: const TextStyle(
-                    color: AppColors.gold,
-                    fontWeight: FontWeight.w600,
-                  ),
+                  style: AppText.scriptureRef.copyWith(color: AppColors.gold),
                 ),
                 const Spacer(),
                 _WelcomeButton(
@@ -254,10 +243,7 @@ class _WelcomeButton extends StatelessWidget {
           ),
         ),
         // Style on the Text so it keeps the app font from the theme.
-        child: Text(
-          label,
-          style: const TextStyle(fontSize: 19, fontWeight: FontWeight.w500),
-        ),
+        child: Text(label, style: AppText.titleMedium),
       ),
     );
   }

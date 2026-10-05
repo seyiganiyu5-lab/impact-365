@@ -76,29 +76,21 @@ class _CommunityPrayersScreenState extends State<CommunityPrayersScreen> {
                           const SizedBox(width: 6),
                           Text(
                             p.authorName ?? l.anonymous,
-                            style: const TextStyle(
+                            style: AppText.bodySmall.copyWith(
                               color: AppColors.muted,
-                              fontSize: 13,
                             ),
                           ),
                           const Spacer(),
                           Text(
                             formatShortDate(context, p.createdAt),
-                            style: const TextStyle(
+                            style: AppText.bodySmall.copyWith(
                               color: AppColors.muted,
-                              fontSize: 12,
                             ),
                           ),
                         ],
                       ),
                       const SizedBox(height: 8),
-                      Text(
-                        p.title,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.w700,
-                          fontSize: 16,
-                        ),
-                      ),
+                      Text(p.title, style: AppText.titleSmall),
                       if (p.details != null) ...[
                         const SizedBox(height: 4),
                         Text(p.details!),
@@ -109,9 +101,8 @@ class _CommunityPrayersScreenState extends State<CommunityPrayersScreen> {
                           Expanded(
                             child: Text(
                               l.prayerPrayedCount(count),
-                              style: const TextStyle(
+                              style: AppText.bodySmall.copyWith(
                                 color: AppColors.muted,
-                                fontSize: 13,
                               ),
                             ),
                           ),
