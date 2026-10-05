@@ -166,6 +166,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   onTap: () => _open('/sos'),
                 ),
                 MenuTile(
+                  icon: Icons.slideshow_outlined,
+                  title: l.onbReplay,
+                  onTap: () => context.go('/onboarding'),
+                ),
+                MenuTile(
                   icon: Icons.info_outline,
                   title: l.profileAbout,
                   subtitle: l.profileAboutSub,

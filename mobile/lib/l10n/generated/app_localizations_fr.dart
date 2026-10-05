@@ -678,4 +678,7 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get onb3Text =>
       'Relève chaque jour un petit défi, tiens ton journal et grandis pas à pas : 365 jours pour laisser une empreinte éternelle.';
+
+  @override
+  String get onbReplay => 'Revoir l\'introduction';
 }

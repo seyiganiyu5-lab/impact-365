@@ -2,7 +2,6 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../core/theme.dart';
 import '../../widgets/common.dart';
@@ -71,11 +70,10 @@ class _SplashScreenState extends State<SplashScreen>
     });
   }
 
-  /// First launch → onboarding. Otherwise /home (the router sends
-  /// signed-out users to /auth).
+  /// First launch → onboarding (for everyone). Otherwise /home; the router
+  /// sends signed-out users to /auth.
   Future<void> _goNext() async {
-    final signedIn = Supabase.instance.client.auth.currentSession != null;
-    final seen = signedIn || await OnboardingScreen.isDone();
+    final seen = await OnboardingScreen.isDone();
     if (mounted) context.go(seen ? '/home' : '/onboarding');
   }
 

@@ -673,4 +673,7 @@ class AppLocalizationsYo extends AppLocalizations {
   @override
   String get onb3Text =>
       'Gba ìpèníjà kékeré kan lójoojúmọ́, kọ ìwé àkọsílẹ̀ rẹ, kí o sì dàgbà díẹ̀díẹ̀: ọjọ́ 365 láti fi àmì ayérayé sílẹ̀.';
+
+  @override
+  String get onbReplay => 'Wo ìfihàn náà lẹ́ẹ̀kan síi';
 }

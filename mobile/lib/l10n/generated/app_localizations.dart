@@ -1317,6 +1317,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Take up a small challenge each day, keep your journal and grow step by step: 365 days to leave an eternal mark.'**
   String get onb3Text;
+
+  /// No description provided for @onbReplay.
+  ///
+  /// In en, this message translates to:
+  /// **'Replay the introduction'**
+  String get onbReplay;
 }
 
 class _AppLocalizationsDelegate

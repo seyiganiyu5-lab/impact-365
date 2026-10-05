@@ -671,4 +671,7 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get onb3Text =>
       'Take up a small challenge each day, keep your journal and grow step by step: 365 days to leave an eternal mark.';
+
+  @override
+  String get onbReplay => 'Replay the introduction';
 }

@@ -57,7 +57,6 @@ final appRouter = GoRouter(
     final onAuth = state.matchedLocation == '/auth';
     final onOnboarding = state.matchedLocation == '/onboarding';
     if (!signedIn && !onAuth && !onOnboarding) return '/auth';
-    if (signedIn && onOnboarding) return '/home';
     if (signedIn && onAuth) return '/home';
     return null;
   },
