@@ -79,6 +79,26 @@ That is fine while you test with your own email. Before church members use the a
 
 Gmail allows about 500 emails per day, which is plenty for a church app.
 
+**If the Auth logs show `context deadline exceeded`**, Supabase could not reach Gmail's server in time. Change **Port** to `587`, save, and try again (if you were already on 587, try 465). Then check that *Host* is exactly `smtp.gmail.com` with no spaces. If it still fails, create a new app password and paste it again.
+
+### Option A2: Brevo (free, no domain needed)
+Use this if Gmail keeps timing out.
+1. Create a free account at https://www.brevo.com (300 emails per day).
+2. **Senders, Domains & Dedicated IPs → Senders** → add your Gmail address and confirm it from the email Brevo sends you.
+3. **SMTP & API → SMTP** → generate an SMTP key and note the *Login* shown on that page (it looks like `xxxx@smtp-brevo.com`).
+4. Supabase → **SMTP Settings**:
+
+   | Field | Value |
+   |---|---|
+   | Sender email | your confirmed Gmail address |
+   | Sender name | `IMPACT-365` |
+   | Host | `smtp-relay.brevo.com` |
+   | Port | `587` |
+   | Username | the Brevo SMTP *Login* (not your Gmail address) |
+   | Password | the Brevo SMTP key |
+
+Emails sent "from" a Gmail address through another service sometimes land in spam. Ask testers to check spam and mark the first email "Not spam". A domain (Option B) removes this problem.
+
 ### Option B: later, with your own domain
 When the church buys a domain (e.g. `impact365.org`), use a sender such as **Resend** or **Brevo** with `noreply@impact365.org` for the most professional result. Only the SMTP settings change; nothing in the app changes.
 
@@ -116,4 +136,5 @@ The app should open.
 | "Trop de tentatives" | You hit the email rate limit; wait or raise it (step 5.4). |
 | The app shows an error right after signing in | Run `supabase/verify.sql`: a ❌ line tells you what is missing. |
 | "Ce lien a expiré" | Reset links last one hour and work once. Request a new one. |
-| The button keeps loading, then "Impossible d'envoyer l'e-mail" or "Le serveur met trop de temps" | Supabase cannot connect to your SMTP sender. Open **Logs → Auth** in Supabase to see the exact error. With Gmail: use port `465`, the 16-letter **app password** (no spaces), and the same Gmail address in *Username* and *Sender email*. To check everything else works, temporarily switch custom SMTP off and test with your own email. |
+| The button keeps loading, then "Impossible d'envoyer l'e-mail" or "Le serveur met trop de temps" | Supabase cannot connect to your SMTP sender. Open **Logs → Auth** in Supabase to see the exact error. With Gmail: use the 16-letter **app password** (no spaces), and the same Gmail address in *Username* and *Sender email*. To check everything else works, temporarily switch custom SMTP off and test with your own email. |
+| Auth logs say `context deadline exceeded` | Supabase timed out connecting to the SMTP server. Switch the port (465 ↔ 587). If Gmail still fails, use Brevo (Option A2). |
