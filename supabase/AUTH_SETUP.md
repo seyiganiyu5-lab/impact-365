@@ -52,20 +52,35 @@ Without the redirect URL, email links open a browser page saying "page not found
 
 The body of each email switches language automatically, using the language the person chose in the app (French by default).
 
-## 5. Sending real emails (SMTP) ⚠️ before launch
+## 5. Sending real emails (SMTP)
 
 Supabase's built-in email service is **for testing only**:
-- It only sends to email addresses of people in your Supabase team.
+- It only sends to email addresses of people in your Supabase team (your own address works).
 - It sends only a few emails per hour.
 
-For church members to receive emails, connect your own email sender:
+That is fine while you test with your own email. Before church members use the app, connect a real sender. You do **not** need to buy a domain.
 
-1. Create a free account with an email provider, for example **Resend** (resend.com) or **Brevo** (brevo.com).
-2. Verify your sending domain, or use an address you own, e.g. `noreply@yourchurch.org`.
-3. **Authentication → Emails → SMTP Settings** → *Enable custom SMTP* and enter the host, port, username and password your provider gives you.
-   - Sender email: e.g. `noreply@yourchurch.org`.
-   - Sender name: `IMPACT-365`.
-4. **Authentication → Rate Limits**: raise "emails per hour" (e.g. 100).
+### Option A: a free Gmail account (no domain needed, recommended to start)
+1. Create a Gmail account for the app, e.g. `impact365.app@gmail.com`.
+2. In that Google account: **Security** → turn on **2-Step Verification**.
+3. Then go to https://myaccount.google.com/apppasswords → create an app password named "Supabase". Google shows a 16-letter password: copy it.
+4. Supabase → **Authentication → Emails → SMTP Settings** → *Enable custom SMTP*:
+
+   | Field | Value |
+   |---|---|
+   | Sender email | `impact365.app@gmail.com` |
+   | Sender name | `IMPACT-365` |
+   | Host | `smtp.gmail.com` |
+   | Port | `465` |
+   | Username | `impact365.app@gmail.com` |
+   | Password | the 16-letter app password (no spaces) |
+
+5. **Authentication → Rate Limits** → "emails per hour": set e.g. `50`.
+
+Gmail allows about 500 emails per day, which is plenty for a church app.
+
+### Option B: later, with your own domain
+When the church buys a domain (e.g. `impact365.org`), use a sender such as **Resend** or **Brevo** with `noreply@impact365.org` for the most professional result. Only the SMTP settings change; nothing in the app changes.
 
 ## 6. Test checklist (on your phone)
 
@@ -96,7 +111,7 @@ The app should open.
 | Problem | Fix |
 |---|---|
 | The link opens a browser saying "page not found" or "localhost" | Step 2: add `impact365://**` to Redirect URLs. |
-| No email arrives | Check spam. With the built-in sender, only team members receive emails (step 5). |
+| No email arrives | Check spam. With the built-in sender, only team members receive emails (step 5). With Gmail, check that the app password has no spaces. |
 | "Email not confirmed" when signing in | Open the confirmation email, or use **Renvoyer l'e-mail**. |
 | "Trop de tentatives" | You hit the email rate limit; wait or raise it (step 5.4). |
 | The app shows an error right after signing in | Run `supabase/verify.sql`: a ❌ line tells you what is missing. |
