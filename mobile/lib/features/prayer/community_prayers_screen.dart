@@ -29,10 +29,10 @@ class _CommunityPrayersScreenState extends State<CommunityPrayersScreen> {
     setState(() => _prayed[p.id] = now);
     try {
       await Repo.setIPrayed(p.id, now);
-    } catch (_) {
+    } catch (e) {
       if (mounted) {
         setState(() => _prayed[p.id] = !now);
-        context.toast(context.l10n.commonError);
+        context.toast(context.errorText(e));
       }
     }
   }

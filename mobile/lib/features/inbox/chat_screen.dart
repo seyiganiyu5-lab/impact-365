@@ -38,8 +38,8 @@ class _ChatScreenState extends State<ChatScreen> {
     try {
       await Repo.sendMessage(widget.conversationId, text);
       _input.clear();
-    } catch (_) {
-      if (mounted) context.toast(context.l10n.commonError);
+    } catch (e) {
+      if (mounted) context.toast(context.errorText(e));
     } finally {
       if (mounted) setState(() => _sending = false);
     }

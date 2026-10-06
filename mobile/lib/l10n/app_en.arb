@@ -257,7 +257,7 @@
   "signUpTitle": "Create your account",
   "signUpSubtitle": "Join the Impact-365 family and start today.",
   "authEmailHint": "you@email.com",
-  "authPasswordHint": "At least 6 characters",
+  "authPasswordHint": "At least 8 characters, with letters and numbers",
   "authFullNameHint": "First and last name",
   "authConfirmPassword": "Confirm password",
   "authConfirmPasswordHint": "Type your password again",
@@ -266,7 +266,7 @@
   "authHaveAccountQ": "Already have an account?",
   "authErrRequired": "This field is required",
   "authErrEmail": "Enter a valid email address",
-  "authErrPasswordShort": "At least 6 characters",
+  "authErrPasswordShort": "At least 8 characters",
   "authErrPasswordMatch": "Passwords do not match",
   "authErrInvalidCredentials": "Incorrect email or password.",
   "authErrEmailTaken": "An account already exists with this email.",
@@ -316,6 +316,18 @@
     "placeholders": {
       "email": {
         "type": "String"
+      }
+    }
+  },
+  "authPasswordSignInHint": "Your password",
+  "authErrPasswordWeak": "Use letters and at least one number",
+  "errRateLimit": "You're doing this too often. Please wait a little and try again.",
+  "authErrTooManyCodes": "Too many wrong codes. For your safety, ask for a new code.",
+  "authSignInLocked": "Too many failed attempts. Try again in {seconds} s.",
+  "@authSignInLocked": {
+    "placeholders": {
+      "seconds": {
+        "type": "int"
       }
     }
   }

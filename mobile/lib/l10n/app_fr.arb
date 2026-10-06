@@ -215,7 +215,7 @@
   "signUpTitle": "Crée ton compte",
   "signUpSubtitle": "Rejoins la famille Impact-365 et commence dès aujourd'hui.",
   "authEmailHint": "ton@email.com",
-  "authPasswordHint": "Au moins 6 caractères",
+  "authPasswordHint": "Au moins 8 caractères, avec lettres et chiffres",
   "authFullNameHint": "Prénom et nom",
   "authConfirmPassword": "Confirmer le mot de passe",
   "authConfirmPasswordHint": "Retape ton mot de passe",
@@ -224,7 +224,7 @@
   "authHaveAccountQ": "Déjà un compte ?",
   "authErrRequired": "Ce champ est obligatoire",
   "authErrEmail": "Entre une adresse e-mail valide",
-  "authErrPasswordShort": "Au moins 6 caractères",
+  "authErrPasswordShort": "Au moins 8 caractères",
   "authErrPasswordMatch": "Les mots de passe ne correspondent pas",
   "authErrInvalidCredentials": "E-mail ou mot de passe incorrect.",
   "authErrEmailTaken": "Un compte existe déjà avec cet e-mail.",
@@ -255,5 +255,10 @@
   "authCodeResetTitle": "Entre le code",
   "authCodeResetText": "Nous avons envoyé un code à 6 chiffres à {email}. Entre-le pour choisir un nouveau mot de passe.",
   "authCodeVerify": "Vérifier",
-  "authErrCodeInvalid": "Ce code est incorrect ou a expiré. Vérifie-le ou demandes-en un nouveau."
+  "authErrCodeInvalid": "Ce code est incorrect ou a expiré. Vérifie-le ou demandes-en un nouveau.",
+  "authPasswordSignInHint": "Ton mot de passe",
+  "authErrPasswordWeak": "Utilise des lettres et au moins un chiffre",
+  "errRateLimit": "Tu le fais trop souvent. Patiente un peu puis réessaie.",
+  "authErrTooManyCodes": "Trop de codes incorrects. Pour ta sécurité, demande un nouveau code.",
+  "authSignInLocked": "Trop de tentatives échouées. Réessaie dans {seconds} s."
 }

@@ -43,8 +43,35 @@ void main() {
     await tester.tap(find.text('Créer mon compte'));
     await tester.pump();
     expect(find.text('Entre une adresse e-mail valide'), findsOneWidget);
-    expect(find.text('Au moins 6 caractères'), findsWidgets);
+    expect(find.text('Au moins 8 caractères'), findsOneWidget);
     expect(find.text('Les mots de passe ne correspondent pas'), findsOneWidget);
+  });
+
+  testWidgets('new passwords need 8 characters with letters and a digit', (
+    tester,
+  ) async {
+    await tester.pumpWidget(_app(const AuthScreen(signUp: true)));
+    final fields = find.byType(TextFormField);
+    await tester.enterText(fields.at(0), 'Jean Dupont');
+    await tester.enterText(fields.at(1), 'jean@exemple.com');
+    await tester.enterText(fields.at(2), 'motdepasse');
+    await tester.enterText(fields.at(3), 'motdepasse');
+    await tester.ensureVisible(find.text('Créer mon compte'));
+    await tester.tap(find.text('Créer mon compte'));
+    await tester.pump();
+    expect(
+      find.text('Utilise des lettres et au moins un chiffre'),
+      findsOneWidget,
+    );
+  });
+
+  testWidgets('sign-in accepts older short passwords', (tester) async {
+    await tester.pumpWidget(_app(const AuthScreen()));
+    final fields = find.byType(TextFormField);
+    await tester.enterText(fields.at(0), 'jean@exemple.com');
+    await tester.enterText(fields.at(1), 'abc123');
+    final form = tester.state<FormState>(find.byType(Form));
+    expect(form.validate(), isTrue);
   });
 
   testWidgets('switches between sign-in and sign-up', (tester) async {

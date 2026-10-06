@@ -62,8 +62,8 @@ class _ImpactScreenState extends State<ImpactScreen> {
     try {
       await Repo.completeChallenge(c.id, note: note.text);
       await _refresh();
-    } catch (_) {
-      if (mounted) context.toast(l.commonError);
+    } catch (e) {
+      if (mounted) context.toast(context.errorText(e));
     }
   }
 

@@ -44,9 +44,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       if (!mounted) return;
       context.toast(context.l10n.profileSaved);
       Navigator.pop(context);
-    } catch (_) {
+    } catch (e) {
       if (mounted) {
-        context.toast(context.l10n.commonError);
+        context.toast(context.errorText(e));
         setState(() => _saving = false);
       }
     }

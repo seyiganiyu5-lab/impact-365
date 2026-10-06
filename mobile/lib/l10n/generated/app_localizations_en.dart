@@ -711,7 +711,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get authEmailHint => 'you@email.com';
 
   @override
-  String get authPasswordHint => 'At least 6 characters';
+  String get authPasswordHint =>
+      'At least 8 characters, with letters and numbers';
 
   @override
   String get authFullNameHint => 'First and last name';
@@ -738,7 +739,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get authErrEmail => 'Enter a valid email address';
 
   @override
-  String get authErrPasswordShort => 'At least 6 characters';
+  String get authErrPasswordShort => 'At least 8 characters';
 
   @override
   String get authErrPasswordMatch => 'Passwords do not match';
@@ -848,4 +849,23 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get authErrCodeInvalid =>
       'This code is incorrect or has expired. Check it or ask for a new one.';
+
+  @override
+  String get authPasswordSignInHint => 'Your password';
+
+  @override
+  String get authErrPasswordWeak => 'Use letters and at least one number';
+
+  @override
+  String get errRateLimit =>
+      'You\'re doing this too often. Please wait a little and try again.';
+
+  @override
+  String get authErrTooManyCodes =>
+      'Too many wrong codes. For your safety, ask for a new code.';
+
+  @override
+  String authSignInLocked(int seconds) {
+    return 'Too many failed attempts. Try again in $seconds s.';
+  }
 }

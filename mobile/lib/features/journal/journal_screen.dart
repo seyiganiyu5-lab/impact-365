@@ -44,8 +44,8 @@ class _JournalScreenState extends State<JournalScreen> {
       _q2.text = e.mustChange;
       _q3.text = e.prayFor;
       _gratitude.text = e.gratitude;
-    } catch (_) {
-      if (mounted) context.toast(context.l10n.commonError);
+    } catch (e) {
+      if (mounted) context.toast(context.errorText(e));
     } finally {
       if (mounted) setState(() => _loading = false);
     }
@@ -64,8 +64,8 @@ class _JournalScreenState extends State<JournalScreen> {
         ),
       );
       if (mounted) context.toast(context.l10n.journalSaved);
-    } catch (_) {
-      if (mounted) context.toast(context.l10n.commonError);
+    } catch (e) {
+      if (mounted) context.toast(context.errorText(e));
     } finally {
       if (mounted) setState(() => _saving = false);
     }

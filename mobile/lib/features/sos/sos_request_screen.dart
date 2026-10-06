@@ -41,9 +41,9 @@ class _SosRequestScreenState extends State<SosRequestScreen> {
       if (!mounted) return;
       context.toast(context.l10n.sosSent);
       Navigator.pop(context);
-    } catch (_) {
+    } catch (e) {
       if (mounted) {
-        context.toast(context.l10n.commonError);
+        context.toast(context.errorText(e));
         setState(() => _sending = false);
       }
     }

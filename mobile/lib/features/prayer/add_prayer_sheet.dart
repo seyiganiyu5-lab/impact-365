@@ -47,9 +47,9 @@ class _AddPrayerSheetState extends State<_AddPrayerSheet> {
         anonymous: _shared && _anonymous,
       );
       if (mounted) Navigator.pop(context, true);
-    } catch (_) {
+    } catch (e) {
       if (mounted) {
-        context.toast(context.l10n.commonError);
+        context.toast(context.errorText(e));
         setState(() => _saving = false);
       }
     }

@@ -58,8 +58,8 @@ class _CommunityNeedsScreenState extends State<CommunityNeedsScreen> {
       await Repo.offerHelp(need.id, controller.text.trim());
       if (mounted) context.toast(l.sosOfferSent);
       _refresh();
-    } catch (_) {
-      if (mounted) context.toast(l.commonError);
+    } catch (e) {
+      if (mounted) context.toast(context.errorText(e));
     }
   }
 

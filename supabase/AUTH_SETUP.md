@@ -16,8 +16,9 @@ it in the app, so it works even if they read their email on a computer:
 
 1. **SQL Editor** → run `supabase/migrations/20261004000000_init.sql` (skip it if you already ran it).
 2. **SQL Editor** → run `supabase/migrations/20261006000000_profile_self_heal.sql`.
-3. **SQL Editor** → run `supabase/verify.sql`. Every line must show ✅. It also repairs accounts created before the database was set up.
-4. Make yourself admin (the last check in `verify.sql` shows the exact command).
+3. **SQL Editor** → run `supabase/migrations/20261007000000_security_hardening.sql` (security rules and rate limits, see step 7).
+4. **SQL Editor** → run `supabase/verify.sql`. Every line must show ✅. It also repairs accounts created before the database was set up.
+5. Make yourself admin (the last check in `verify.sql` shows the exact command).
 
 ## 2. URL configuration ⚠️ required
 
@@ -39,8 +40,10 @@ Without the redirect URL, email links open a browser page saying "page not found
 | Enable Email provider | ON |
 | Confirm email | **ON** for the real launch. You can turn it OFF while testing so new accounts work immediately. |
 | Secure email change | ON |
-| Minimum password length | 6 (the app asks for at least 6) |
-| Email OTP Expiration | `3600` (the code is valid for 1 hour) |
+| Secure password change | ON |
+| Minimum password length | **8** (the app asks for at least 8) |
+| Password Requirements | **Letters and digits** (the app asks for the same) |
+| Email OTP Expiration | **`600`** (the code is valid for 10 minutes) |
 | Email OTP Length | **`6`** (the app shows 6 boxes) ⚠️ |
 
 ## 4. Email templates (French / English / Yoruba)
@@ -123,6 +126,44 @@ Run the app with `flutter run --dart-define-from-file=env.json`, then check each
 - [ ] Save a new password → you land on the home screen, and you can sign in with the new password.
 - [ ] Using the same code a second time → "Ce code est incorrect ou a expiré."
 
+## 7. Security and rate limits
+
+### What is already built in
+| Protection | Where |
+|---|---|
+| Every table is locked by Row Level Security: a member only sees and changes their own data; the journal is private even from leaders | Database |
+| Members cannot make themselves leader or admin, edit sent messages, fake a "from the pastor" message, write staff notes, or reach leaders-only requests and private prayers by guessing their id | Database (security migration) |
+| **Rate limits per member:** 10 prayer points per hour (30 per day), 3 Holy SOS per hour (10 per day), 10 offers of help per hour, 3 new conversations per hour (10 per day), 15 chat messages per minute (300 per day), 100 "I prayed" per hour. Leaders and admins are not limited | Database (security migration) |
+| Size limits on every text field | Database |
+| Signed-out visitors cannot write anything | Database |
+| 6-digit codes expire after 10 minutes and work once; after 5 wrong codes the app asks for a new one | Supabase + app |
+| After 5 failed sign-ins, the app waits 30 s before allowing another try, then longer each time (up to 5 min) | App |
+| Passwords: at least 8 characters with letters and digits | Supabase + app |
+| After a password reset, every other phone signed in to the account is signed out | App |
+| The login session is stored encrypted (Android Keystore / iPhone Keychain) and is not copied into phone backups | App |
+| Admin website: blocks being shown inside other sites, only talks to your Supabase project, forces HTTPS once online | Admin website |
+
+### Rate limits in Supabase (do this once)
+**Authentication → Rate Limits.** These protect sign-in, sign-up and codes per IP address (one phone or one Wi-Fi network):
+
+| Setting | Recommended | Why |
+|---|---|---|
+| Rate limit for sending emails | `30` per hour | Stops someone flooding inboxes with codes |
+| Rate limit for sign-ups and sign-ins | `30` per 5 minutes | Stops password guessing. Not lower: members on the church Wi-Fi share one IP address |
+| Rate limit for token verifications | `30` per 5 minutes | Stops guessing 6-digit codes (1,000,000 possibilities, 30 tries per 5 minutes, codes expire after 10 minutes) |
+| Rate limit for token refreshes | keep the default (`150`) | |
+| Rate limit for anonymous users | keep the default | The app doesn't use anonymous sign-in |
+
+### Keep these secret
+- The app and the admin website only use the **publishable (anon) key**. It is safe to ship because the database rules above protect the data.
+- **Never** put the `service_role` / secret key in the app, the admin website, or GitHub. It bypasses every rule.
+- Give the admin role to as few people as possible and ask them to use a strong password they don't use anywhere else.
+
+### Optional extras (later)
+- **Leaked password protection** (Authentication → Attack Protection): refuses passwords that appeared in known data leaks. It needs the Supabase Pro plan.
+- **CAPTCHA** (Authentication → Attack Protection → Cloudflare Turnstile, free): blocks robots on sign-up. The app needs a small change first, so ask before turning it on, otherwise sign-up stops working.
+- **Two-step login for admins** on the admin website.
+
 ## Troubleshooting
 
 | Problem | Fix |
@@ -131,8 +172,9 @@ Run the app with `flutter run --dart-define-from-file=env.json`, then check each
 | No email arrives | Check spam. With the built-in sender, only team members receive emails (step 5). With Gmail, check that the app password has no spaces. |
 | "Email not confirmed" when signing in | Open the confirmation email, or use **Renvoyer l'e-mail**. |
 | "Trop de tentatives" | You hit the email rate limit; wait or raise it (step 5.4). |
+| "Tu le fais trop souvent" in the app | A member reached a rate limit from step 7 (e.g. more than 3 Holy SOS in an hour). It clears by itself. To change a limit, edit the numbers in `20261007000000_security_hardening.sql`, then drop and recreate that trigger. |
 | The app shows an error right after signing in | Run `supabase/verify.sql`: a ❌ line tells you what is missing. |
-| "Ce code est incorrect ou a expiré" | Codes last one hour and work once; after **Renvoyer le code**, only the newest code works. |
+| "Ce code est incorrect ou a expiré" | Codes last 10 minutes and work once; after **Renvoyer le code**, only the newest code works. |
 | The email shows a code with more than 6 digits | Set **Email OTP Length** to `6` (step 3). |
 | The email shows a button instead of a code | Paste the new templates again (step 4). |
 | The button keeps loading, then "Impossible d'envoyer l'e-mail" or "Le serveur met trop de temps" | Supabase cannot connect to your SMTP sender. Open **Logs → Auth** in Supabase to see the exact error. With Gmail: use the 16-letter **app password** (no spaces), and the same Gmail address in *Username* and *Sender email*. To check everything else works, temporarily switch custom SMTP off and test with your own email. |

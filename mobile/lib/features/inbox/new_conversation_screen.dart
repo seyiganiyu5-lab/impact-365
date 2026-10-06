@@ -36,9 +36,9 @@ class _NewConversationScreenState extends State<NewConversationScreen> {
         _body.text.trim(),
       );
       if (mounted) context.pushReplacement('/inbox/$id');
-    } catch (_) {
+    } catch (e) {
       if (mounted) {
-        context.toast(context.l10n.commonError);
+        context.toast(context.errorText(e));
         setState(() => _sending = false);
       }
     }

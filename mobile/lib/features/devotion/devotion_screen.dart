@@ -42,8 +42,8 @@ class _DevotionScreenState extends State<DevotionScreen> {
         _loadedAudio = url;
       }
       await _player.play();
-    } catch (_) {
-      if (mounted) context.toast(context.l10n.commonError);
+    } catch (e) {
+      if (mounted) context.toast(context.errorText(e));
     }
   }
 
@@ -52,8 +52,8 @@ class _DevotionScreenState extends State<DevotionScreen> {
     try {
       await Repo.completeDevotion(d.id);
       if (mounted) setState(() => _completed = true);
-    } catch (_) {
-      if (mounted) context.toast(context.l10n.commonError);
+    } catch (e) {
+      if (mounted) context.toast(context.errorText(e));
     } finally {
       if (mounted) setState(() => _saving = false);
     }

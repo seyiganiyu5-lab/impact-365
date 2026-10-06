@@ -4,6 +4,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'app.dart';
 import 'core/env.dart';
 import 'core/locale_controller.dart';
+import 'core/secure_session_storage.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,6 +18,9 @@ Future<void> main() async {
   await Supabase.initialize(
     url: Env.supabaseUrl,
     publishableKey: Env.supabasePublishableKey,
+    authOptions: FlutterAuthClientOptions(
+      localStorage: SecureSessionStorage(supabaseUrl: Env.supabaseUrl),
+    ),
   );
 
   runApp(const ImpactApp());

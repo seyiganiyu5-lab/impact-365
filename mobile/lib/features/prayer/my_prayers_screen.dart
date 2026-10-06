@@ -59,8 +59,8 @@ class _MyPrayersScreenState extends State<MyPrayersScreen> {
             : controller.text.trim(),
       );
       _refresh();
-    } catch (_) {
-      if (mounted) context.toast(l.commonError);
+    } catch (e) {
+      if (mounted) context.toast(context.errorText(e));
     }
   }
 

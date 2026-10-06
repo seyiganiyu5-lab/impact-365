@@ -43,6 +43,14 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
           .updateUser(UserAttributes(password: _password.text))
           .withAuthTimeout();
       AuthFlow.recoveryPending = false;
+      // Anyone else signed in to this account (another phone) is signed out.
+      try {
+        await Supabase.instance.client.auth
+            .signOut(scope: SignOutScope.others)
+            .withAuthTimeout();
+      } catch (_) {
+        // The password is already changed; this extra step is best effort.
+      }
       if (!mounted) return;
       context.toast(context.l10n.newPasswordDone);
       context.go('/home');
@@ -104,10 +112,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                   hint: l.authPasswordHint,
                   textInputAction: TextInputAction.next,
                   autofillHints: const [AutofillHints.newPassword],
-                  validator: (v) {
-                    if (v == null || v.isEmpty) return l.authErrRequired;
-                    return v.length < 6 ? l.authErrPasswordShort : null;
-                  },
+                  validator: (v) => validateNewPassword(context, v),
                 ),
                 const SizedBox(height: 18),
                 PasswordField(

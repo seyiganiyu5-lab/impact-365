@@ -71,6 +71,21 @@ with checks(item, ok, hint) as (
            where pubname = 'supabase_realtime' and tablename = 'messages'),
          'Database → Publications → supabase_realtime → add "messages"'
 
+  -- Security hardening (20261007000000_security_hardening.sql)
+  union all
+  select 'Security: members cannot edit sent messages',
+         not has_table_privilege('authenticated', 'public.messages', 'UPDATE')
+           and has_column_privilege('authenticated', 'public.messages', 'read_at', 'UPDATE'),
+         'Run supabase/migrations/20261007000000_security_hardening.sql'
+  union all
+  select 'Security: rate limits active (' || count(*) || ' triggers)', count(*) >= 10,
+         'Run supabase/migrations/20261007000000_security_hardening.sql'
+  from pg_trigger where tgname like 'rl\_%'
+  union all
+  select 'Security: signed-out visitors cannot write',
+         not has_table_privilege('anon', 'public.prayer_requests', 'INSERT'),
+         'Run supabase/migrations/20261007000000_security_hardening.sql'
+
   -- Someone can open the admin website
   union all
   select 'At least one admin',

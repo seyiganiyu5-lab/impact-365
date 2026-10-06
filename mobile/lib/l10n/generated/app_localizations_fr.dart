@@ -720,7 +720,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get authEmailHint => 'ton@email.com';
 
   @override
-  String get authPasswordHint => 'Au moins 6 caractères';
+  String get authPasswordHint =>
+      'Au moins 8 caractères, avec lettres et chiffres';
 
   @override
   String get authFullNameHint => 'Prénom et nom';
@@ -747,7 +748,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get authErrEmail => 'Entre une adresse e-mail valide';
 
   @override
-  String get authErrPasswordShort => 'Au moins 6 caractères';
+  String get authErrPasswordShort => 'Au moins 8 caractères';
 
   @override
   String get authErrPasswordMatch => 'Les mots de passe ne correspondent pas';
@@ -859,4 +860,24 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get authErrCodeInvalid =>
       'Ce code est incorrect ou a expiré. Vérifie-le ou demandes-en un nouveau.';
+
+  @override
+  String get authPasswordSignInHint => 'Ton mot de passe';
+
+  @override
+  String get authErrPasswordWeak =>
+      'Utilise des lettres et au moins un chiffre';
+
+  @override
+  String get errRateLimit =>
+      'Tu le fais trop souvent. Patiente un peu puis réessaie.';
+
+  @override
+  String get authErrTooManyCodes =>
+      'Trop de codes incorrects. Pour ta sécurité, demande un nouveau code.';
+
+  @override
+  String authSignInLocked(int seconds) {
+    return 'Trop de tentatives échouées. Réessaie dans $seconds s.';
+  }
 }

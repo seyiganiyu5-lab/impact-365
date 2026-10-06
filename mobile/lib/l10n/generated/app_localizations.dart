@@ -1393,7 +1393,7 @@ abstract class AppLocalizations {
   /// No description provided for @authPasswordHint.
   ///
   /// In en, this message translates to:
-  /// **'At least 6 characters'**
+  /// **'At least 8 characters, with letters and numbers'**
   String get authPasswordHint;
 
   /// No description provided for @authFullNameHint.
@@ -1447,7 +1447,7 @@ abstract class AppLocalizations {
   /// No description provided for @authErrPasswordShort.
   ///
   /// In en, this message translates to:
-  /// **'At least 6 characters'**
+  /// **'At least 8 characters'**
   String get authErrPasswordShort;
 
   /// No description provided for @authErrPasswordMatch.
@@ -1635,6 +1635,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'This code is incorrect or has expired. Check it or ask for a new one.'**
   String get authErrCodeInvalid;
+
+  /// No description provided for @authPasswordSignInHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Your password'**
+  String get authPasswordSignInHint;
+
+  /// No description provided for @authErrPasswordWeak.
+  ///
+  /// In en, this message translates to:
+  /// **'Use letters and at least one number'**
+  String get authErrPasswordWeak;
+
+  /// No description provided for @errRateLimit.
+  ///
+  /// In en, this message translates to:
+  /// **'You\'re doing this too often. Please wait a little and try again.'**
+  String get errRateLimit;
+
+  /// No description provided for @authErrTooManyCodes.
+  ///
+  /// In en, this message translates to:
+  /// **'Too many wrong codes. For your safety, ask for a new code.'**
+  String get authErrTooManyCodes;
+
+  /// No description provided for @authSignInLocked.
+  ///
+  /// In en, this message translates to:
+  /// **'Too many failed attempts. Try again in {seconds} s.'**
+  String authSignInLocked(int seconds);
 }
 
 class _AppLocalizationsDelegate

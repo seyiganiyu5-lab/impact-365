@@ -32,6 +32,12 @@ class _AuthScreenState extends State<AuthScreen> {
   bool _busy = false;
   String? _error;
 
+  /// Failed sign-ins in this app session. After 5, each new failure locks
+  /// the button for longer (30 s, 60 s, ... up to 5 min). Supabase also
+  /// limits sign-ins per IP address on the server.
+  static int _failedSignIns = 0;
+  static DateTime? _lockedUntil;
+
   /// Email a 6-digit code was sent to: after sign-up (confirm the account)
   /// or after "forgot password" ([_codeForRecovery]).
   String? _codeSentTo;
@@ -56,6 +62,11 @@ class _AuthScreenState extends State<AuthScreen> {
   Future<void> _submit() async {
     FocusScope.of(context).unfocus();
     if (!(_formKey.currentState?.validate() ?? false)) return;
+    final locked = _lockedUntil?.difference(DateTime.now()).inSeconds ?? 0;
+    if (!_signUp && locked > 0) {
+      setState(() => _error = context.l10n.authSignInLocked(locked));
+      return;
+    }
     setState(() {
       _busy = true;
       _error = null;
@@ -91,6 +102,8 @@ class _AuthScreenState extends State<AuthScreen> {
         await auth
             .signInWithPassword(email: email, password: _password.text)
             .withAuthTimeout();
+        _failedSignIns = 0;
+        _lockedUntil = null;
       }
       // With a session, the router moves to /home automatically.
     } catch (e) {
@@ -102,10 +115,19 @@ class _AuthScreenState extends State<AuthScreen> {
           _codeForRecovery = false;
         });
       } else {
+        if (!_signUp && isInvalidCredentials(e)) _registerFailedSignIn();
         setState(() => _error = authErrorMessage(context, e));
       }
     } finally {
       if (mounted) setState(() => _busy = false);
+    }
+  }
+
+  void _registerFailedSignIn() {
+    _failedSignIns++;
+    if (_failedSignIns >= 5) {
+      final seconds = (30 << (_failedSignIns - 5)).clamp(30, 300);
+      _lockedUntil = DateTime.now().add(Duration(seconds: seconds));
     }
   }
 
@@ -121,10 +143,11 @@ class _AuthScreenState extends State<AuthScreen> {
     return ok ? null : context.l10n.authErrEmail;
   }
 
-  String? _validPassword(String? v) {
-    if (v == null || v.isEmpty) return context.l10n.authErrRequired;
-    return v.length < 6 ? context.l10n.authErrPasswordShort : null;
-  }
+  // Sign-in only checks the field is filled: older accounts may have
+  // passwords made before the 8-character rule.
+  String? _validPassword(String? v) => _signUp
+      ? validateNewPassword(context, v)
+      : (v == null || v.isEmpty ? context.l10n.authErrRequired : null);
 
   String? _matchesPassword(String? v) {
     if (v == null || v.isEmpty) return context.l10n.authErrRequired;
@@ -262,7 +285,9 @@ class _AuthScreenState extends State<AuthScreen> {
                   PasswordField(
                     label: l.authPassword,
                     controller: _password,
-                    hint: l.authPasswordHint,
+                    hint: _signUp
+                        ? l.authPasswordHint
+                        : l.authPasswordSignInHint,
                     validator: _validPassword,
                     textInputAction: _signUp
                         ? TextInputAction.next
@@ -427,6 +452,12 @@ class _VerifyCodeViewState extends State<_VerifyCodeView> {
   bool _verifying = false;
   String? _error;
 
+  /// After 5 wrong codes the user must ask for a new one. (Supabase also
+  /// limits code checks per IP address, and each code expires.)
+  static const _maxWrongCodes = 5;
+  int _wrongCodes = 0;
+  bool get _blocked => _wrongCodes >= _maxWrongCodes;
+
   @override
   void initState() {
     super.initState();
@@ -452,6 +483,13 @@ class _VerifyCodeViewState extends State<_VerifyCodeView> {
   Future<void> _verify() async {
     final token = _code.text;
     if (token.length != authCodeLength || _verifying) return;
+    if (_blocked) {
+      setState(() {
+        _error = context.l10n.authErrTooManyCodes;
+        _code.clear();
+      });
+      return;
+    }
     FocusScope.of(context).unfocus();
     setState(() {
       _verifying = true;
@@ -477,10 +515,13 @@ class _VerifyCodeViewState extends State<_VerifyCodeView> {
           (e.code == 'otp_expired' ||
               e.code == 'invalid_otp' ||
               e.message.toLowerCase().contains('token'));
+      if (wrongCode) _wrongCodes++;
       setState(() {
-        _error = wrongCode
-            ? context.l10n.authErrCodeInvalid
-            : authErrorMessage(context, e);
+        _error = !wrongCode
+            ? authErrorMessage(context, e)
+            : _blocked
+            ? context.l10n.authErrTooManyCodes
+            : context.l10n.authErrCodeInvalid;
         _code.clear();
       });
     } finally {
@@ -512,6 +553,7 @@ class _VerifyCodeViewState extends State<_VerifyCodeView> {
       context.toast(context.l10n.authResent);
       setState(() {
         _error = null;
+        _wrongCodes = 0;
         _code.clear();
       });
       _startCooldown();
@@ -567,7 +609,7 @@ class _VerifyCodeViewState extends State<_VerifyCodeView> {
           CodeInput(
             controller: _code,
             hasError: _error != null,
-            enabled: !_verifying,
+            enabled: !_verifying && !_blocked,
             onCompleted: (_) => _verify(),
           ),
           if (_error != null) ...[

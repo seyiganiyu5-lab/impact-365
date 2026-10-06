@@ -215,7 +215,7 @@
   "signUpTitle": "Ṣẹ̀dá àkáǹtì rẹ",
   "signUpSubtitle": "Darapọ̀ mọ́ ìdílé Impact-365 kí o sì bẹ̀rẹ̀ lónìí.",
   "authEmailHint": "iwo@email.com",
-  "authPasswordHint": "Ó kéré tán lẹ́tà 6",
+  "authPasswordHint": "Ó kéré tán lẹ́tà 8, pẹ̀lú lẹ́tà àti nọ́ńbà",
   "authFullNameHint": "Orúkọ àti orúkọ ìdílé",
   "authConfirmPassword": "Jẹ́rìí ọ̀rọ̀ aṣínà",
   "authConfirmPasswordHint": "Tún ọ̀rọ̀ aṣínà rẹ tẹ̀",
@@ -224,7 +224,7 @@
   "authHaveAccountQ": "O ti ní àkáǹtì?",
   "authErrRequired": "Àyè yìí pọndandan",
   "authErrEmail": "Tẹ àdírẹ́sì ímeèlì tó tọ́",
-  "authErrPasswordShort": "Ó kéré tán lẹ́tà 6",
+  "authErrPasswordShort": "Ó kéré tán lẹ́tà 8",
   "authErrPasswordMatch": "Àwọn ọ̀rọ̀ aṣínà kò bára mu",
   "authErrInvalidCredentials": "Ímeèlì tàbí ọ̀rọ̀ aṣínà kò tọ́.",
   "authErrEmailTaken": "Àkáǹtì ti wà pẹ̀lú ímeèlì yìí.",
@@ -255,5 +255,10 @@
   "authCodeResetTitle": "Tẹ koodu náà",
   "authCodeResetText": "A ti fi koodu oní-nọ́ńbà mẹ́fà ránṣẹ́ sí {email}. Tẹ̀ ẹ́ láti yan ọ̀rọ̀ aṣínà tuntun.",
   "authCodeVerify": "Jẹ́rìí",
-  "authErrCodeInvalid": "Koodu yìí kò tọ́ tàbí ó ti parí. Ṣàyẹ̀wò rẹ̀ tàbí béèrè tuntun."
+  "authErrCodeInvalid": "Koodu yìí kò tọ́ tàbí ó ti parí. Ṣàyẹ̀wò rẹ̀ tàbí béèrè tuntun.",
+  "authPasswordSignInHint": "Ọ̀rọ̀ aṣínà rẹ",
+  "authErrPasswordWeak": "Lo lẹ́tà àti ó kéré tán nọ́ńbà kan",
+  "errRateLimit": "O ń ṣe èyí léraléra jù. Dúró díẹ̀ kí o sì gbìyànjú lẹ́ẹ̀kan síi.",
+  "authErrTooManyCodes": "Koodu tí kò tọ́ ti pọ̀ jù. Fún ààbò rẹ, béèrè koodu tuntun.",
+  "authSignInLocked": "Ìgbìyànjú tí kò yọrí ti pọ̀ jù. Gbìyànjú lẹ́ẹ̀kan síi ní ìṣẹ́jú-àáyá {seconds}."
 }

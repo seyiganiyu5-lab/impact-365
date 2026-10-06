@@ -714,7 +714,7 @@ class AppLocalizationsYo extends AppLocalizations {
   String get authEmailHint => 'iwo@email.com';
 
   @override
-  String get authPasswordHint => 'Ó kéré tán lẹ́tà 6';
+  String get authPasswordHint => 'Ó kéré tán lẹ́tà 8, pẹ̀lú lẹ́tà àti nọ́ńbà';
 
   @override
   String get authFullNameHint => 'Orúkọ àti orúkọ ìdílé';
@@ -741,7 +741,7 @@ class AppLocalizationsYo extends AppLocalizations {
   String get authErrEmail => 'Tẹ àdírẹ́sì ímeèlì tó tọ́';
 
   @override
-  String get authErrPasswordShort => 'Ó kéré tán lẹ́tà 6';
+  String get authErrPasswordShort => 'Ó kéré tán lẹ́tà 8';
 
   @override
   String get authErrPasswordMatch => 'Àwọn ọ̀rọ̀ aṣínà kò bára mu';
@@ -852,4 +852,23 @@ class AppLocalizationsYo extends AppLocalizations {
   @override
   String get authErrCodeInvalid =>
       'Koodu yìí kò tọ́ tàbí ó ti parí. Ṣàyẹ̀wò rẹ̀ tàbí béèrè tuntun.';
+
+  @override
+  String get authPasswordSignInHint => 'Ọ̀rọ̀ aṣínà rẹ';
+
+  @override
+  String get authErrPasswordWeak => 'Lo lẹ́tà àti ó kéré tán nọ́ńbà kan';
+
+  @override
+  String get errRateLimit =>
+      'O ń ṣe èyí léraléra jù. Dúró díẹ̀ kí o sì gbìyànjú lẹ́ẹ̀kan síi.';
+
+  @override
+  String get authErrTooManyCodes =>
+      'Koodu tí kò tọ́ ti pọ̀ jù. Fún ààbò rẹ, béèrè koodu tuntun.';
+
+  @override
+  String authSignInLocked(int seconds) {
+    return 'Ìgbìyànjú tí kò yọrí ti pọ̀ jù. Gbìyànjú lẹ́ẹ̀kan síi ní ìṣẹ́jú-àáyá $seconds.';
+  }
 }

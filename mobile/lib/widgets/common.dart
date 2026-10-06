@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../core/theme.dart';
 import '../l10n/generated/app_localizations.dart';
@@ -9,6 +10,16 @@ extension L10nX on BuildContext {
   void toast(String message) => ScaffoldMessenger.of(this)
     ..hideCurrentSnackBar()
     ..showSnackBar(SnackBar(content: Text(message)));
+
+  /// Message for a failed save: "too many attempts" when the server's rate
+  /// limit refused it (see the security migration), otherwise generic.
+  String errorText(Object error) {
+    if (error is PostgrestException &&
+        (error.code == 'PT429' || error.message == 'rate_limit')) {
+      return l10n.errRateLimit;
+    }
+    return l10n.commonError;
+  }
 }
 
 /// "IMPACT-365 — 1 jour 1 impact" logo: the mark plus the name.

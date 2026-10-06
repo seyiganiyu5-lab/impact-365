@@ -220,7 +220,7 @@ String authErrorMessage(BuildContext context, Object error) {
     return l.authErrNotConfirmed;
   }
   if (code == 'same_password') return l.authErrSamePassword;
-  if (code == 'weak_password') return l.authErrPasswordShort;
+  if (code == 'weak_password') return l.authErrPasswordWeak;
   if (code.startsWith('over_') || error.statusCode == '429') {
     return l.authErrRateLimit;
   }
@@ -233,6 +233,24 @@ String authErrorMessage(BuildContext context, Object error) {
   }
   return error.message;
 }
+
+/// Password rule for new passwords (sign-up and reset). Keep it in line with
+/// Supabase → Authentication → Sign In / Providers → Email → password
+/// settings: minimum 8 characters, letters and digits.
+String? validateNewPassword(BuildContext context, String? v) {
+  final l = context.l10n;
+  if (v == null || v.isEmpty) return l.authErrRequired;
+  if (v.length < 8) return l.authErrPasswordShort;
+  final hasLetter = RegExp(r'[A-Za-z]').hasMatch(v);
+  final hasDigit = RegExp(r'\d').hasMatch(v);
+  return hasLetter && hasDigit ? null : l.authErrPasswordWeak;
+}
+
+/// True for "wrong email or password".
+bool isInvalidCredentials(Object error) =>
+    error is AuthException &&
+    (error.code == 'invalid_credentials' ||
+        error.message.toLowerCase().contains('invalid login'));
 
 /// True when the error means "this email address is not confirmed yet".
 bool isEmailNotConfirmed(Object error) =>
