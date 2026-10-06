@@ -1495,7 +1495,7 @@ abstract class AppLocalizations {
   /// No description provided for @authCheckEmailText.
   ///
   /// In en, this message translates to:
-  /// **'We sent a confirmation link to {email}. Open it to activate your account, then sign in.'**
+  /// **'We sent a 6-digit code to {email}. Enter it below to activate your account.'**
   String authCheckEmailText(String email);
 
   /// No description provided for @authBackToSignIn.
@@ -1513,25 +1513,25 @@ abstract class AppLocalizations {
   /// No description provided for @authResetText.
   ///
   /// In en, this message translates to:
-  /// **'Enter your email and we will send you a link to choose a new password.'**
+  /// **'Enter your email and we will send you a 6-digit code to choose a new password.'**
   String get authResetText;
 
   /// No description provided for @authResetSend.
   ///
   /// In en, this message translates to:
-  /// **'Send the link'**
+  /// **'Send the code'**
   String get authResetSend;
 
   /// No description provided for @authResetSent.
   ///
   /// In en, this message translates to:
-  /// **'Link sent! Check your inbox.'**
+  /// **'Code sent! Check your inbox.'**
   String get authResetSent;
 
   /// No description provided for @authResend.
   ///
   /// In en, this message translates to:
-  /// **'Resend the email'**
+  /// **'Resend the code'**
   String get authResend;
 
   /// No description provided for @authResendIn.
@@ -1543,7 +1543,7 @@ abstract class AppLocalizations {
   /// No description provided for @authResent.
   ///
   /// In en, this message translates to:
-  /// **'Email sent again!'**
+  /// **'New code sent!'**
   String get authResent;
 
   /// No description provided for @authCheckSpam.
@@ -1611,6 +1611,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'We couldn\'t send the email right now. Please try again later.'**
   String get authErrEmailSend;
+
+  /// No description provided for @authCodeResetTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the code'**
+  String get authCodeResetTitle;
+
+  /// No description provided for @authCodeResetText.
+  ///
+  /// In en, this message translates to:
+  /// **'We sent a 6-digit code to {email}. Enter it to choose a new password.'**
+  String authCodeResetText(String email);
+
+  /// No description provided for @authCodeVerify.
+  ///
+  /// In en, this message translates to:
+  /// **'Verify'**
+  String get authCodeVerify;
+
+  /// No description provided for @authErrCodeInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'This code is incorrect or has expired. Check it or ask for a new one.'**
+  String get authErrCodeInvalid;
 }
 
 class _AppLocalizationsDelegate

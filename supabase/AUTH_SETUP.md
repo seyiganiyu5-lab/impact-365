@@ -3,10 +3,12 @@
 Follow these steps once in your Supabase dashboard. They make sign-up, sign-in,
 email confirmation and **forgot password** work end to end with the app.
 
-How it works: Supabase sends the emails. Their links point to `impact365://…`,
-the app's own link scheme, so tapping the link **opens the app**:
-- `impact365://login-callback`: the account is confirmed and the user is signed in.
-- `impact365://reset-password`: the app opens the **"Nouveau mot de passe"** screen.
+How it works: Supabase sends an email with a **6-digit code**. The person types
+it in the app, so it works even if they read their email on a computer:
+- **Sign up**: the code confirms the account and signs the person in.
+- **Forgot password**: the code opens the **"Nouveau mot de passe"** screen.
+
+(Opening an `impact365://…` link still works too, but the emails now show the code instead.)
 
 ---
 
@@ -38,6 +40,8 @@ Without the redirect URL, email links open a browser page saying "page not found
 | Confirm email | **ON** for the real launch. You can turn it OFF while testing so new accounts work immediately. |
 | Secure email change | ON |
 | Minimum password length | 6 (the app asks for at least 6) |
+| Email OTP Expiration | `3600` (the code is valid for 1 hour) |
+| Email OTP Length | **`6`** (the app shows 6 boxes) ⚠️ |
 
 ## 4. Email templates (French / English / Yoruba)
 
@@ -45,12 +49,12 @@ Without the redirect URL, email links open a browser page saying "page not found
 
 | Template | Subject | File |
 |---|---|---|
-| Confirm signup | `Confirme ton compte IMPACT-365 · Confirm your account` | `supabase/templates/confirmation.html` |
-| Reset password | `Réinitialise ton mot de passe · Reset your password` | `supabase/templates/recovery.html` |
+| Confirm signup | `Ton code IMPACT-365 : {{ .Token }}` | `supabase/templates/confirmation.html` |
+| Reset password | `Code pour ton nouveau mot de passe : {{ .Token }}` | `supabase/templates/recovery.html` |
 | Change email address | `Confirme ta nouvelle adresse · Confirm your new email` | `supabase/templates/email_change.html` |
 | Magic link | `Ton lien de connexion · Your sign-in link` | `supabase/templates/magic_link.html` |
 
-The body of each email switches language automatically, using the language the person chose in the app (French by default).
+`{{ .Token }}` is replaced by the 6-digit code, so it appears in the subject and in the email. The body of each email switches language automatically, using the language the person chose in the app (French by default).
 
 ## 5. Sending real emails (SMTP)
 
@@ -106,25 +110,18 @@ When the church buys a domain (e.g. `impact365.org`), use a sender such as **Res
 
 Run the app with `flutter run --dart-define-from-file=env.json`, then check each item:
 
-- [ ] **Sign up** with a real email → "Vérifie ta boîte mail" appears.
-- [ ] The confirmation email arrives (check spam) and shows the IMPACT-365 design.
-- [ ] Tapping **Confirmer mon e-mail** opens the app and you land on the home screen.
-- [ ] **Renvoyer l'e-mail** works after the 60-second wait.
+- [ ] **Sign up** with a real email → "Vérifie ta boîte mail" appears with 6 boxes.
+- [ ] The email arrives (check spam) with the IMPACT-365 design and a 6-digit code.
+- [ ] Type the code → you land on the home screen.
+- [ ] A wrong code → "Ce code est incorrect ou a expiré."
+- [ ] **Renvoyer le code** works after the 60-second wait (only the newest code works).
 - [ ] **Sign out** (Profile tab) → **sign in** with the same account → home screen.
 - [ ] Wrong password → "E-mail ou mot de passe incorrect."
 - [ ] Signing up again with the same email → "Un compte existe déjà avec cet e-mail."
-- [ ] **Mot de passe oublié ?** → enter your email → "Lien envoyé !"
-- [ ] The reset email arrives; tapping **Choisir un nouveau mot de passe** opens the app on **Nouveau mot de passe**.
+- [ ] **Mot de passe oublié ?** → enter your email → "Code envoyé !" and the 6 boxes appear.
+- [ ] Type the code from the email → **Nouveau mot de passe** opens.
 - [ ] Save a new password → you land on the home screen, and you can sign in with the new password.
-- [ ] Opening the same reset link a second time → "Ce lien a expiré ou a déjà été utilisé."
-
-Open the email links **on the phone where the app is installed**. For security, a reset link only works on the device that asked for it.
-
-To check that the phone recognises the app's links without sending an email, plug in the Android phone and run:
-```bash
-adb shell am start -a android.intent.action.VIEW -d "impact365://login-callback"
-```
-The app should open.
+- [ ] Using the same code a second time → "Ce code est incorrect ou a expiré."
 
 ## Troubleshooting
 
@@ -135,6 +132,8 @@ The app should open.
 | "Email not confirmed" when signing in | Open the confirmation email, or use **Renvoyer l'e-mail**. |
 | "Trop de tentatives" | You hit the email rate limit; wait or raise it (step 5.4). |
 | The app shows an error right after signing in | Run `supabase/verify.sql`: a ❌ line tells you what is missing. |
-| "Ce lien a expiré" | Reset links last one hour and work once. Request a new one. |
+| "Ce code est incorrect ou a expiré" | Codes last one hour and work once; after **Renvoyer le code**, only the newest code works. |
+| The email shows a code with more than 6 digits | Set **Email OTP Length** to `6` (step 3). |
+| The email shows a button instead of a code | Paste the new templates again (step 4). |
 | The button keeps loading, then "Impossible d'envoyer l'e-mail" or "Le serveur met trop de temps" | Supabase cannot connect to your SMTP sender. Open **Logs → Auth** in Supabase to see the exact error. With Gmail: use the 16-letter **app password** (no spaces), and the same Gmail address in *Username* and *Sender email*. To check everything else works, temporarily switch custom SMTP off and test with your own email. |
 | Auth logs say `context deadline exceeded` | Supabase timed out connecting to the SMTP server. Switch the port (465 ↔ 587). If Gmail still fails, use Brevo (Option A2). |

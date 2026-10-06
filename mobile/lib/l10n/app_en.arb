@@ -1,13 +1,11 @@
 {
   "@@locale": "en",
   "appTagline": "1 day 1 impact",
-
   "navHome": "Home",
   "navWord": "Word",
   "navPrayer": "Prayer",
   "navImpact": "Impact",
   "navProfile": "Profile",
-
   "authWelcome": "Welcome to Impact-365",
   "authSubtitle": "A new day. A new encounter with God.",
   "authEmail": "Email",
@@ -19,16 +17,33 @@
   "authHaveAccount": "Already have an account? Sign in",
   "authCheckEmail": "Check your email to confirm your account.",
   "authInvalid": "Please fill in all fields (password: 6 characters minimum).",
-
   "homeGreeting": "Good day, {name}.",
-  "@homeGreeting": { "placeholders": { "name": { "type": "String" } } },
+  "@homeGreeting": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "homeGreetingDefault": "Impacter",
   "homeSubtitle": "A new day.\nA new encounter with God.",
   "homeDayCounter": "Day {day} / 365",
-  "@homeDayCounter": { "placeholders": { "day": { "type": "int" } } },
+  "@homeDayCounter": {
+    "placeholders": {
+      "day": {
+        "type": "int"
+      }
+    }
+  },
   "homeCurrentStreak": "Current streak",
   "daysCount": "{count, plural, =0{0 days} =1{1 day} other{{count} days}}",
-  "@daysCount": { "placeholders": { "count": { "type": "int" } } },
+  "@daysCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "homeVerseOfDay": "Verse of the day",
   "homeStartDevotion": "START MY DEVOTION",
   "homeThemeOfDay": "Theme of the day",
@@ -42,11 +57,9 @@
   "homeFaithJourney": "Faith journey",
   "homeFaithJourneyText": "Your consistency shapes your eternal impact.",
   "homeNoDevotion": "No devotion published yet for today. Come back soon!",
-
   "slotMorning": "Morning",
   "slotAfternoon": "Afternoon",
   "slotNight": "Night",
-
   "devotionTitle": "5 MINUTES WITH GOD",
   "devotionGodSays": "WHAT GOD SAYS",
   "devotionIUnderstand": "WHAT I UNDERSTAND",
@@ -61,7 +74,6 @@
   "wordTodayTitle": "Today's devotions",
   "wordHistory": "Previous days",
   "wordNotAvailable": "Not yet available",
-
   "journalTitle": "My Journal",
   "journalSubtitle": "Take a moment to write.",
   "journalQ1": "1. What is God showing me today?",
@@ -75,7 +87,6 @@
   "journalWriteHere": "Write here...",
   "journalSave": "Save",
   "journalSaved": "Journal saved",
-
   "prayerRoomTitle": "My Prayer Room",
   "prayerRoomSubtitle": "Talk to God. Lay it down. Wait. Receive.",
   "prayerMyTopics": "My prayer points",
@@ -99,9 +110,14 @@
   "prayerCommunityEmpty": "No shared prayer requests right now.",
   "prayerIPrayed": "I prayed",
   "prayerPrayedCount": "{count, plural, =0{Be the first to pray} =1{1 person prayed} other{{count} people prayed}}",
-  "@prayerPrayedCount": { "placeholders": { "count": { "type": "int" } } },
+  "@prayerPrayedCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "anonymous": "Anonymous",
-
   "impactTitle": "Your impact of the day",
   "impactSubtitle": "A small gesture. A great impact.",
   "impactChallenge": "Challenge of the day",
@@ -115,7 +131,6 @@
   "impactNotePrompt": "How did it go? (optional)",
   "weekdaysShort": "Mon,Tue,Wed,Thu,Fri,Sat,Sun",
   "monthsShort": "Jan,Feb,Mar,Apr,May,Jun,Jul,Aug,Sep,Oct,Nov,Dec",
-
   "sosTitle": "Holy SOS",
   "sosSubtitle": "You are not alone. Share your need, we pray and act with you.",
   "sosBannerTitle": "God sees. The family acts.",
@@ -139,7 +154,13 @@
   "sosOfferHint": "Write an encouraging message or explain how you can help...",
   "sosOfferSent": "Thank you! Your offer has been sent.",
   "sosOffers": "{count, plural, =0{No offers yet} =1{1 offer of help} other{{count} offers of help}}",
-  "@sosOffers": { "placeholders": { "count": { "type": "int" } } },
+  "@sosOffers": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "sosEmpty": "No needs shared right now. Praise God!",
   "sosConfidential": "Guaranteed confidentiality",
   "sosConfidentialText": "Every request is treated with dignity, discretion and love by the leaders.",
@@ -153,7 +174,6 @@
   "statusInProgress": "In progress",
   "statusResolved": "Resolved",
   "statusClosed": "Closed",
-
   "inboxTitle": "Messages & Notifications",
   "inboxSubtitle": "Stay connected. Don't miss anything important.",
   "inboxMessages": "Messages",
@@ -170,7 +190,6 @@
   "chatPrivateNotice": "Private conversation with the church leaders.",
   "chatLeader": "Leader",
   "chatClosed": "This conversation has been closed by the leaders.",
-
   "profileTitle": "My Profile",
   "profileSubtitle": "God knows you. Walk with Him.",
   "profileStreak": "Days in a row",
@@ -192,9 +211,14 @@
   "profileSave": "Save",
   "profileSaved": "Profile updated",
   "profileImpacterSince": "Impacter for {days} days",
-  "@profileImpacterSince": { "placeholders": { "days": { "type": "int" } } },
+  "@profileImpacterSince": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
   "newBadge": "NEW",
-
   "commonCancel": "Cancel",
   "commonSubmit": "Submit",
   "commonRetry": "Retry",
@@ -202,7 +226,6 @@
   "commonSeeAll": "See all",
   "commonToday": "Today",
   "commonYesterday": "Yesterday",
-
   "profileVerse": "I can do all things through Christ who strengthens me.",
   "profileVerseRef": "Philippians 4:13",
   "journalVerse": "Meditate on it day and night, so that you may be careful to do everything written in it.",
@@ -213,7 +236,6 @@
   "sosVerseRef": "Matthew 6:8",
   "sosMyEmpty": "You have not submitted any request yet.",
   "phoneLabel": "Phone",
-
   "onbSkip": "Skip",
   "onbNext": "Next",
   "onbStart": "Get started",
@@ -224,14 +246,12 @@
   "onb3Title": "One day, one impact",
   "onb3Text": "Take up a small challenge each day, keep your journal and grow step by step: 365 days to leave an eternal mark.",
   "onbReplay": "Replay the introduction",
-
   "welcomeTitle": "Welcome to",
   "welcomeSubtitle": "Begin your spiritual journey one day at a time",
   "welcomeSignIn": "Sign in",
   "welcomeSignUp": "Create an account",
   "welcomeVerse": "The steadfast love of the Lord never ceases; his mercies are new every morning.",
   "welcomeVerseRef": "Lamentations 3:22-23",
-
   "signInTitle": "Welcome back",
   "signInSubtitle": "Sign in to continue your journey with God.",
   "signUpTitle": "Create your account",
@@ -254,18 +274,29 @@
   "authErrNetwork": "No internet connection. Please try again.",
   "authTerms": "By creating an account, you agree to our terms of use and privacy policy.",
   "authCheckEmailTitle": "Check your inbox",
-  "authCheckEmailText": "We sent a confirmation link to {email}. Open it to activate your account, then sign in.",
-  "@authCheckEmailText": { "placeholders": { "email": { "type": "String" } } },
+  "authCheckEmailText": "We sent a 6-digit code to {email}. Enter it below to activate your account.",
+  "@authCheckEmailText": {
+    "placeholders": {
+      "email": {
+        "type": "String"
+      }
+    }
+  },
   "authBackToSignIn": "Back to sign in",
   "authResetTitle": "Reset your password",
-  "authResetText": "Enter your email and we will send you a link to choose a new password.",
-  "authResetSend": "Send the link",
-  "authResetSent": "Link sent! Check your inbox.",
-
-  "authResend": "Resend the email",
+  "authResetText": "Enter your email and we will send you a 6-digit code to choose a new password.",
+  "authResetSend": "Send the code",
+  "authResetSent": "Code sent! Check your inbox.",
+  "authResend": "Resend the code",
   "authResendIn": "Resend in {seconds} s",
-  "@authResendIn": { "placeholders": { "seconds": { "type": "int" } } },
-  "authResent": "Email sent again!",
+  "@authResendIn": {
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "authResent": "New code sent!",
   "authCheckSpam": "Can't find it? Check your spam or promotions folder.",
   "newPasswordTitle": "New password",
   "newPasswordSubtitle": "Choose a new password for your account.",
@@ -276,5 +307,16 @@
   "authErrRateLimit": "Too many attempts. Please wait a moment and try again.",
   "authErrLinkExpired": "This link has expired or was already used. Please request a new one.",
   "authErrTimeout": "The server is taking too long to answer. Check your connection and try again.",
-  "authErrEmailSend": "We couldn't send the email right now. Please try again later."
+  "authErrEmailSend": "We couldn't send the email right now. Please try again later.",
+  "authCodeResetTitle": "Enter the code",
+  "authCodeResetText": "We sent a 6-digit code to {email}. Enter it to choose a new password.",
+  "authCodeVerify": "Verify",
+  "authErrCodeInvalid": "This code is incorrect or has expired. Check it or ask for a new one.",
+  "@authCodeResetText": {
+    "placeholders": {
+      "email": {
+        "type": "String"
+      }
+    }
+  }
 }

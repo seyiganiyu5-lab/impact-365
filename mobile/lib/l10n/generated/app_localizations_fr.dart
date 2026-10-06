@@ -774,7 +774,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String authCheckEmailText(String email) {
-    return 'Nous avons envoyé un lien de confirmation à $email. Ouvre-le pour activer ton compte, puis connecte-toi.';
+    return 'Nous avons envoyé un code à 6 chiffres à $email. Entre-le ci-dessous pour activer ton compte.';
   }
 
   @override
@@ -785,16 +785,16 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get authResetText =>
-      'Entre ton e-mail, nous t\'enverrons un lien pour choisir un nouveau mot de passe.';
+      'Entre ton e-mail, nous t\'enverrons un code à 6 chiffres pour choisir un nouveau mot de passe.';
 
   @override
-  String get authResetSend => 'Envoyer le lien';
+  String get authResetSend => 'Envoyer le code';
 
   @override
-  String get authResetSent => 'Lien envoyé ! Vérifie ta boîte mail.';
+  String get authResetSent => 'Code envoyé ! Vérifie ta boîte mail.';
 
   @override
-  String get authResend => 'Renvoyer l\'e-mail';
+  String get authResend => 'Renvoyer le code';
 
   @override
   String authResendIn(int seconds) {
@@ -802,7 +802,7 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String get authResent => 'E-mail renvoyé !';
+  String get authResent => 'Nouveau code envoyé !';
 
   @override
   String get authCheckSpam =>
@@ -844,4 +844,19 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get authErrEmailSend =>
       'Impossible d\'envoyer l\'e-mail pour le moment. Réessaie plus tard.';
+
+  @override
+  String get authCodeResetTitle => 'Entre le code';
+
+  @override
+  String authCodeResetText(String email) {
+    return 'Nous avons envoyé un code à 6 chiffres à $email. Entre-le pour choisir un nouveau mot de passe.';
+  }
+
+  @override
+  String get authCodeVerify => 'Vérifier';
+
+  @override
+  String get authErrCodeInvalid =>
+      'Ce code est incorrect ou a expiré. Vérifie-le ou demandes-en un nouveau.';
 }

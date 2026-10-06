@@ -7,7 +7,7 @@
 <title>IMPACT-365</title>
 </head>
 <body style="margin:0;padding:0;background:#F9F9F6;font-family:Inter,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#1C1433;">
-<!-- IMPACT-365 · Confirm signup email. Paste into Supabase → Authentication → Email Templates. -->
+<!-- IMPACT-365 · Confirm signup email. Paste into Supabase → Authentication → Email Templates. Shows the 6-digit code the user types in the app. -->
 <!-- Language follows the user's app language (user metadata "preferred_language": fr / en / yo). -->
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#F9F9F6;padding:32px 16px;">
   <tr><td align="center">
@@ -20,12 +20,12 @@
       <!-- Card -->
       <tr><td style="background:#FFFFFF;border-radius:0 0 20px 20px;padding:36px 32px 32px;">
         <h1 style="margin:0 0 12px;font-size:24px;line-height:30px;font-weight:700;color:#3B1E7B;">{{ if eq .Data.preferred_language "en" }}Welcome to the family!{{ else if eq .Data.preferred_language "yo" }}Ẹ kú àbọ̀ sí ìdílé!{{ else }}Bienvenue dans la famille !{{ end }}</h1>
-        <p style="margin:0 0 28px;font-size:15px;line-height:24px;color:#4A4560;">{{ if eq .Data.preferred_language "en" }}Thank you for joining IMPACT-365. Confirm your email address to activate your account and begin your journey, one day at a time.{{ else if eq .Data.preferred_language "yo" }}O ṣé fún dídarapọ̀ mọ́ IMPACT-365. Jẹ́rìí àdírẹ́sì ímeèlì rẹ láti mú àkáǹtì rẹ ṣiṣẹ́ kí o sì bẹ̀rẹ̀ ìrìn àjò rẹ, ọjọ́ kan lẹ́ẹ̀kan.{{ else }}Merci d’avoir rejoint IMPACT-365. Confirme ton adresse e-mail pour activer ton compte et commencer ton parcours, un jour à la fois.{{ end }}</p>
+        <p style="margin:0 0 28px;font-size:15px;line-height:24px;color:#4A4560;">{{ if eq .Data.preferred_language "en" }}Thank you for joining IMPACT-365. Enter this code in the app to confirm your email address and activate your account.{{ else if eq .Data.preferred_language "yo" }}O ṣé fún dídarapọ̀ mọ́ IMPACT-365. Tẹ koodu yìí sínú ohun èlò náà láti jẹ́rìí àdírẹ́sì ímeèlì rẹ kí o sì mú àkáǹtì rẹ ṣiṣẹ́.{{ else }}Merci d’avoir rejoint IMPACT-365. Entre ce code dans l’application pour confirmer ton adresse e-mail et activer ton compte.{{ end }}</p>
         <table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr><td align="center">
-          <a href="{{ .ConfirmationURL }}" style="display:inline-block;background:#D4AF37;color:#FFFFFF;text-decoration:none;font-size:16px;font-weight:600;padding:15px 32px;border-radius:14px;">{{ if eq .Data.preferred_language "en" }}Confirm my email{{ else if eq .Data.preferred_language "yo" }}Jẹ́rìí ímeèlì mi{{ else }}Confirmer mon e-mail{{ end }}</a>
+          <div style="font-size:12px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:#A8871F;margin-bottom:10px;">{{ if eq .Data.preferred_language "en" }}Your code{{ else if eq .Data.preferred_language "yo" }}Koodu rẹ{{ else }}Ton code{{ end }}</div>
+          <div style="display:inline-block;background:#F3EFFA;border:1.5px solid #D4AF37;border-radius:16px;padding:16px 28px;font-family:'SFMono-Regular',Menlo,Consolas,'Courier New',monospace;font-size:34px;line-height:40px;font-weight:700;letter-spacing:10px;color:#3B1E7B;">{{ .Token }}</div>
         </td></tr></table>
-        <p style="margin:28px 0 0;font-size:13px;line-height:20px;color:#6B6680;">{{ if eq .Data.preferred_language "en" }}Open this link on the phone where the app is installed. If you didn’t create an account, simply ignore this email.{{ else if eq .Data.preferred_language "yo" }}Ṣí ìjápọ̀ yìí lórí fóònù tí ohun èlò náà wà. Tí o kò bá ṣẹ̀dá àkáǹtì, kàn fojú fo ímeèlì yìí.{{ else }}Ouvre ce lien sur le téléphone où l’application est installée. Si tu n’as pas créé de compte, ignore simplement cet e-mail.{{ end }}</p>
-        <p style="margin:16px 0 0;font-size:12px;line-height:18px;color:#9A95A8;">{{ if eq .Data.preferred_language "en" }}Button not working? Open this link on your phone:{{ else if eq .Data.preferred_language "yo" }}Bọ́tìnnì kò ṣiṣẹ́? Ṣí ìjápọ̀ yìí lórí fóònù rẹ:{{ else }}Le bouton ne fonctionne pas ? Ouvre ce lien sur ton téléphone :{{ end }}<br><a href="{{ .ConfirmationURL }}" style="color:#3B1E7B;word-break:break-all;">{{ .ConfirmationURL }}</a></p>
+        <p style="margin:28px 0 0;font-size:13px;line-height:20px;color:#6B6680;">{{ if eq .Data.preferred_language "en" }}This code is valid for one hour. Never share it with anyone. If you didn’t create an account, simply ignore this email.{{ else if eq .Data.preferred_language "yo" }}Koodu yìí wúlò fún wákàtí kan. Má ṣe fi hàn ẹnikẹ́ni. Tí o kò bá ṣẹ̀dá àkáǹtì, kàn fojú fo ímeèlì yìí.{{ else }}Ce code est valable une heure. Ne le partage avec personne. Si tu n’as pas créé de compte, ignore simplement cet e-mail.{{ end }}</p>
       </td></tr>
       <!-- Footer -->
       <tr><td style="padding:24px 16px;text-align:center;">

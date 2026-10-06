@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../core/theme.dart';
@@ -242,4 +243,134 @@ bool isEmailNotConfirmed(Object error) =>
 /// Never let the spinner run forever: give up after 20 seconds.
 extension AuthTimeout<T> on Future<T> {
   Future<T> withAuthTimeout() => timeout(const Duration(seconds: 20));
+}
+
+/// Number of digits in the email codes. Must match Supabase →
+/// Authentication → Sign In / Providers → Email → "Email OTP Length".
+const authCodeLength = 6;
+
+/// Six boxes for the email code. One hidden text field receives the input,
+/// so typing, deleting, pasting and the keyboard's code suggestion all work.
+class CodeInput extends StatefulWidget {
+  const CodeInput({
+    super.key,
+    required this.controller,
+    required this.onCompleted,
+    this.hasError = false,
+    this.enabled = true,
+  });
+
+  final TextEditingController controller;
+  final ValueChanged<String> onCompleted;
+  final bool hasError;
+  final bool enabled;
+
+  @override
+  State<CodeInput> createState() => _CodeInputState();
+}
+
+class _CodeInputState extends State<CodeInput> {
+  final _focus = FocusNode();
+
+  @override
+  void initState() {
+    super.initState();
+    widget.controller.addListener(_changed);
+    _focus.addListener(_changed);
+  }
+
+  @override
+  void didUpdateWidget(CodeInput oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.controller != widget.controller) {
+      oldWidget.controller.removeListener(_changed);
+      widget.controller.addListener(_changed);
+    }
+  }
+
+  @override
+  void dispose() {
+    widget.controller.removeListener(_changed);
+    _focus.dispose();
+    super.dispose();
+  }
+
+  void _changed() {
+    if (mounted) setState(() {});
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final code = widget.controller.text;
+    return Stack(
+      children: [
+        Row(
+          children: [
+            for (var i = 0; i < authCodeLength; i++) ...[
+              if (i > 0) const SizedBox(width: 10),
+              Expanded(child: _box(i, code)),
+            ],
+          ],
+        ),
+        // Invisible field covering the boxes: tapping anywhere focuses it.
+        Positioned.fill(
+          child: Opacity(
+            opacity: 0,
+            child: TextField(
+              key: const ValueKey('code-field'),
+              controller: widget.controller,
+              focusNode: _focus,
+              enabled: widget.enabled,
+              autofocus: true,
+              keyboardType: TextInputType.number,
+              autofillHints: const [AutofillHints.oneTimeCode],
+              maxLength: authCodeLength,
+              showCursor: false,
+              enableInteractiveSelection: false,
+              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+              decoration: const InputDecoration(
+                counterText: '',
+                border: InputBorder.none,
+                enabledBorder: InputBorder.none,
+                focusedBorder: InputBorder.none,
+                filled: false,
+              ),
+              onChanged: (v) {
+                if (v.length == authCodeLength) widget.onCompleted(v);
+              },
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _box(int i, String code) {
+    final filled = i < code.length;
+    final active =
+        _focus.hasFocus &&
+        (i == code.length ||
+            (i == authCodeLength - 1 && code.length == authCodeLength));
+    final borderColor = widget.hasError
+        ? AppColors.danger
+        : active
+        ? AppColors.deepPurple
+        : filled
+        ? AppColors.gold
+        : AppColors.border;
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 150),
+      height: 58,
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(14),
+        border: Border.all(color: borderColor, width: active ? 2 : 1.4),
+      ),
+      child: Text(
+        filled ? code[i] : '',
+        style: AppText.titleLarge.copyWith(color: AppColors.deepPurple),
+      ),
+    );
+  }
 }

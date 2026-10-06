@@ -769,7 +769,7 @@ class AppLocalizationsYo extends AppLocalizations {
 
   @override
   String authCheckEmailText(String email) {
-    return 'A ti fi ìjápọ̀ ìjẹ́rìí ránṣẹ́ sí $email. Ṣí i láti mú àkáǹtì rẹ ṣiṣẹ́, lẹ́yìn náà wọlé.';
+    return 'A ti fi koodu oní-nọ́ńbà mẹ́fà ránṣẹ́ sí $email. Tẹ̀ ẹ́ sísàlẹ̀ láti mú àkáǹtì rẹ ṣiṣẹ́.';
   }
 
   @override
@@ -780,16 +780,16 @@ class AppLocalizationsYo extends AppLocalizations {
 
   @override
   String get authResetText =>
-      'Tẹ ímeèlì rẹ, a ó fi ìjápọ̀ ránṣẹ́ sí ọ láti yan ọ̀rọ̀ aṣínà tuntun.';
+      'Tẹ ímeèlì rẹ, a ó fi koodu oní-nọ́ńbà mẹ́fà ránṣẹ́ sí ọ láti yan ọ̀rọ̀ aṣínà tuntun.';
 
   @override
-  String get authResetSend => 'Fi ìjápọ̀ ránṣẹ́';
+  String get authResetSend => 'Fi koodu ránṣẹ́';
 
   @override
-  String get authResetSent => 'A ti fi ìjápọ̀ ránṣẹ́! Ṣàyẹ̀wò àpótí ímeèlì rẹ.';
+  String get authResetSent => 'A ti fi koodu ránṣẹ́! Ṣàyẹ̀wò àpótí ímeèlì rẹ.';
 
   @override
-  String get authResend => 'Tún ímeèlì náà fi ránṣẹ́';
+  String get authResend => 'Tún koodu náà fi ránṣẹ́';
 
   @override
   String authResendIn(int seconds) {
@@ -797,7 +797,7 @@ class AppLocalizationsYo extends AppLocalizations {
   }
 
   @override
-  String get authResent => 'A ti tún ímeèlì náà fi ránṣẹ́!';
+  String get authResent => 'A ti fi koodu tuntun ránṣẹ́!';
 
   @override
   String get authCheckSpam =>
@@ -837,4 +837,19 @@ class AppLocalizationsYo extends AppLocalizations {
   @override
   String get authErrEmailSend =>
       'A kò lè fi ímeèlì ránṣẹ́ báyìí. Jọ̀wọ́ gbìyànjú lẹ́yìn náà.';
+
+  @override
+  String get authCodeResetTitle => 'Tẹ koodu náà';
+
+  @override
+  String authCodeResetText(String email) {
+    return 'A ti fi koodu oní-nọ́ńbà mẹ́fà ránṣẹ́ sí $email. Tẹ̀ ẹ́ láti yan ọ̀rọ̀ aṣínà tuntun.';
+  }
+
+  @override
+  String get authCodeVerify => 'Jẹ́rìí';
+
+  @override
+  String get authErrCodeInvalid =>
+      'Koodu yìí kò tọ́ tàbí ó ti parí. Ṣàyẹ̀wò rẹ̀ tàbí béèrè tuntun.';
 }

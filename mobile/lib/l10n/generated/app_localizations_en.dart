@@ -765,7 +765,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String authCheckEmailText(String email) {
-    return 'We sent a confirmation link to $email. Open it to activate your account, then sign in.';
+    return 'We sent a 6-digit code to $email. Enter it below to activate your account.';
   }
 
   @override
@@ -776,16 +776,16 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get authResetText =>
-      'Enter your email and we will send you a link to choose a new password.';
+      'Enter your email and we will send you a 6-digit code to choose a new password.';
 
   @override
-  String get authResetSend => 'Send the link';
+  String get authResetSend => 'Send the code';
 
   @override
-  String get authResetSent => 'Link sent! Check your inbox.';
+  String get authResetSent => 'Code sent! Check your inbox.';
 
   @override
-  String get authResend => 'Resend the email';
+  String get authResend => 'Resend the code';
 
   @override
   String authResendIn(int seconds) {
@@ -793,7 +793,7 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get authResent => 'Email sent again!';
+  String get authResent => 'New code sent!';
 
   @override
   String get authCheckSpam =>
@@ -833,4 +833,19 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get authErrEmailSend =>
       'We couldn\'t send the email right now. Please try again later.';
+
+  @override
+  String get authCodeResetTitle => 'Enter the code';
+
+  @override
+  String authCodeResetText(String email) {
+    return 'We sent a 6-digit code to $email. Enter it to choose a new password.';
+  }
+
+  @override
+  String get authCodeVerify => 'Verify';
+
+  @override
+  String get authErrCodeInvalid =>
+      'This code is incorrect or has expired. Check it or ask for a new one.';
 }

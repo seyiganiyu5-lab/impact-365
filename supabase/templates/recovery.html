@@ -7,7 +7,7 @@
 <title>IMPACT-365</title>
 </head>
 <body style="margin:0;padding:0;background:#F9F9F6;font-family:Inter,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#1C1433;">
-<!-- IMPACT-365 · Reset password email. Paste into Supabase → Authentication → Email Templates. -->
+<!-- IMPACT-365 · Reset password email. Paste into Supabase → Authentication → Email Templates. Shows the 6-digit code the user types in the app. -->
 <!-- Language follows the user's app language (user metadata "preferred_language": fr / en / yo). -->
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#F9F9F6;padding:32px 16px;">
   <tr><td align="center">
@@ -20,12 +20,12 @@
       <!-- Card -->
       <tr><td style="background:#FFFFFF;border-radius:0 0 20px 20px;padding:36px 32px 32px;">
         <h1 style="margin:0 0 12px;font-size:24px;line-height:30px;font-weight:700;color:#3B1E7B;">{{ if eq .Data.preferred_language "en" }}Reset your password{{ else if eq .Data.preferred_language "yo" }}Tún ọ̀rọ̀ aṣínà rẹ ṣe{{ else }}Réinitialise ton mot de passe{{ end }}</h1>
-        <p style="margin:0 0 28px;font-size:15px;line-height:24px;color:#4A4560;">{{ if eq .Data.preferred_language "en" }}You asked to change your password. Tap the button below: the app will open so you can choose a new password.{{ else if eq .Data.preferred_language "yo" }}O béèrè láti yí ọ̀rọ̀ aṣínà rẹ padà. Tẹ bọ́tìnnì ìsàlẹ̀ yìí: ohun èlò náà yóò ṣí kí o lè yan ọ̀rọ̀ aṣínà tuntun.{{ else }}Tu as demandé à changer ton mot de passe. Appuie sur le bouton ci-dessous : l’application s’ouvrira pour que tu choisisses un nouveau mot de passe.{{ end }}</p>
+        <p style="margin:0 0 28px;font-size:15px;line-height:24px;color:#4A4560;">{{ if eq .Data.preferred_language "en" }}You asked to change your password. Enter this code in the app, then choose a new password.{{ else if eq .Data.preferred_language "yo" }}O béèrè láti yí ọ̀rọ̀ aṣínà rẹ padà. Tẹ koodu yìí sínú ohun èlò náà, lẹ́yìn náà yan ọ̀rọ̀ aṣínà tuntun.{{ else }}Tu as demandé à changer ton mot de passe. Entre ce code dans l’application, puis choisis un nouveau mot de passe.{{ end }}</p>
         <table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr><td align="center">
-          <a href="{{ .ConfirmationURL }}" style="display:inline-block;background:#3B1E7B;color:#FFFFFF;text-decoration:none;font-size:16px;font-weight:600;padding:15px 32px;border-radius:14px;">{{ if eq .Data.preferred_language "en" }}Choose a new password{{ else if eq .Data.preferred_language "yo" }}Yan ọ̀rọ̀ aṣínà tuntun{{ else }}Choisir un nouveau mot de passe{{ end }}</a>
+          <div style="font-size:12px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:#A8871F;margin-bottom:10px;">{{ if eq .Data.preferred_language "en" }}Your code{{ else if eq .Data.preferred_language "yo" }}Koodu rẹ{{ else }}Ton code{{ end }}</div>
+          <div style="display:inline-block;background:#F3EFFA;border:1.5px solid #D4AF37;border-radius:16px;padding:16px 28px;font-family:'SFMono-Regular',Menlo,Consolas,'Courier New',monospace;font-size:34px;line-height:40px;font-weight:700;letter-spacing:10px;color:#3B1E7B;">{{ .Token }}</div>
         </td></tr></table>
-        <p style="margin:28px 0 0;font-size:13px;line-height:20px;color:#6B6680;">{{ if eq .Data.preferred_language "en" }}This link is valid for one hour and works once, on the phone where you made the request. If this wasn’t you, ignore this email: your password stays the same.{{ else if eq .Data.preferred_language "yo" }}Ìjápọ̀ yìí wúlò fún wákàtí kan, ó sì ń ṣiṣẹ́ lẹ́ẹ̀kan ṣoṣo, lórí fóònù tí o ti béèrè. Tí kì í bá ṣe ìwọ, fojú fo ímeèlì yìí: ọ̀rọ̀ aṣínà rẹ kò ní yí padà.{{ else }}Ce lien est valable une heure et ne fonctionne qu’une fois, sur le téléphone où tu as fait la demande. Si ce n’était pas toi, ignore cet e-mail : ton mot de passe reste inchangé.{{ end }}</p>
-        <p style="margin:16px 0 0;font-size:12px;line-height:18px;color:#9A95A8;">{{ if eq .Data.preferred_language "en" }}Button not working? Open this link on your phone:{{ else if eq .Data.preferred_language "yo" }}Bọ́tìnnì kò ṣiṣẹ́? Ṣí ìjápọ̀ yìí lórí fóònù rẹ:{{ else }}Le bouton ne fonctionne pas ? Ouvre ce lien sur ton téléphone :{{ end }}<br><a href="{{ .ConfirmationURL }}" style="color:#3B1E7B;word-break:break-all;">{{ .ConfirmationURL }}</a></p>
+        <p style="margin:28px 0 0;font-size:13px;line-height:20px;color:#6B6680;">{{ if eq .Data.preferred_language "en" }}This code is valid for one hour and works once. Never share it with anyone. If this wasn’t you, ignore this email: your password stays the same.{{ else if eq .Data.preferred_language "yo" }}Koodu yìí wúlò fún wákàtí kan, ó sì ń ṣiṣẹ́ lẹ́ẹ̀kan ṣoṣo. Má ṣe fi hàn ẹnikẹ́ni. Tí kì í bá ṣe ìwọ, fojú fo ímeèlì yìí: ọ̀rọ̀ aṣínà rẹ kò ní yí padà.{{ else }}Ce code est valable une heure et ne fonctionne qu’une fois. Ne le partage avec personne. Si ce n’était pas toi, ignore cet e-mail : ton mot de passe reste inchangé.{{ end }}</p>
       </td></tr>
       <!-- Footer -->
       <tr><td style="padding:24px 16px;text-align:center;">

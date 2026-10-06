@@ -1,13 +1,11 @@
 {
   "@@locale": "fr",
   "appTagline": "1 jour 1 impact",
-
   "navHome": "Accueil",
   "navWord": "Parole",
   "navPrayer": "Prière",
   "navImpact": "Impact",
   "navProfile": "Profil",
-
   "authWelcome": "Bienvenue sur Impact-365",
   "authSubtitle": "Un nouveau jour. Une nouvelle rencontre avec Dieu.",
   "authEmail": "E-mail",
@@ -19,7 +17,6 @@
   "authHaveAccount": "Déjà un compte ? Connecte-toi",
   "authCheckEmail": "Vérifie ta boîte mail pour confirmer ton compte.",
   "authInvalid": "Remplis tous les champs (mot de passe : 6 caractères minimum).",
-
   "homeGreeting": "Bonjour, {name}.",
   "homeGreetingDefault": "Impacteur",
   "homeSubtitle": "Un nouveau jour.\nUne nouvelle rencontre avec Dieu.",
@@ -39,11 +36,9 @@
   "homeFaithJourney": "Parcours de foi",
   "homeFaithJourneyText": "Ta constance façonne ton impact éternel.",
   "homeNoDevotion": "Aucune dévotion publiée pour aujourd'hui. Reviens bientôt !",
-
   "slotMorning": "Matin",
   "slotAfternoon": "Après-midi",
   "slotNight": "Soir",
-
   "devotionTitle": "5 MINUTES AVEC DIEU",
   "devotionGodSays": "CE QUE DIEU DIT",
   "devotionIUnderstand": "CE QUE JE COMPRENDS",
@@ -58,7 +53,6 @@
   "wordTodayTitle": "Dévotions du jour",
   "wordHistory": "Jours précédents",
   "wordNotAvailable": "Pas encore disponible",
-
   "journalTitle": "Mon Journal",
   "journalSubtitle": "Prends un moment pour écrire.",
   "journalQ1": "1. Qu'est-ce que Dieu me montre aujourd'hui ?",
@@ -72,7 +66,6 @@
   "journalWriteHere": "Écris ici...",
   "journalSave": "Enregistrer",
   "journalSaved": "Journal enregistré",
-
   "prayerRoomTitle": "Ma Prayer Room",
   "prayerRoomSubtitle": "Parle à Dieu. Dépose. Attends. Reçois.",
   "prayerMyTopics": "Mes sujets de prière",
@@ -97,7 +90,6 @@
   "prayerIPrayed": "J'ai prié",
   "prayerPrayedCount": "{count, plural, =0{Sois le premier à prier} =1{1 personne a prié} other{{count} personnes ont prié}}",
   "anonymous": "Anonyme",
-
   "impactTitle": "Ton impact du jour",
   "impactSubtitle": "Un petit geste. Un grand impact.",
   "impactChallenge": "Défi du jour",
@@ -111,7 +103,6 @@
   "impactNotePrompt": "Comment ça s'est passé ? (facultatif)",
   "weekdaysShort": "Lun,Mar,Mer,Jeu,Ven,Sam,Dim",
   "monthsShort": "janv.,févr.,mars,avr.,mai,juin,juil.,août,sept.,oct.,nov.,déc.",
-
   "sosTitle": "Holy SOS",
   "sosSubtitle": "Tu n'es pas seul. Partage ton besoin, nous prions et agissons avec toi.",
   "sosBannerTitle": "Dieu voit. La famille agit.",
@@ -148,7 +139,6 @@
   "statusInProgress": "En cours",
   "statusResolved": "Résolu",
   "statusClosed": "Fermé",
-
   "inboxTitle": "Messages & Notifications",
   "inboxSubtitle": "Reste connecté. Ne manque rien d'important.",
   "inboxMessages": "Messages",
@@ -165,7 +155,6 @@
   "chatPrivateNotice": "Conversation privée avec les responsables de l'église.",
   "chatLeader": "Responsable",
   "chatClosed": "Cette conversation a été clôturée par les responsables.",
-
   "profileTitle": "Mon Profil",
   "profileSubtitle": "Dieu te connaît. Marche avec Lui.",
   "profileStreak": "Jours consécutifs",
@@ -188,7 +177,6 @@
   "profileSaved": "Profil mis à jour",
   "profileImpacterSince": "Impacteur depuis {days} jours",
   "newBadge": "NOUVEAU",
-
   "commonCancel": "Annuler",
   "commonSubmit": "Valider",
   "commonRetry": "Réessayer",
@@ -196,7 +184,6 @@
   "commonSeeAll": "Tout voir",
   "commonToday": "Aujourd'hui",
   "commonYesterday": "Hier",
-
   "profileVerse": "Je puis tout par Celui qui me fortifie.",
   "profileVerseRef": "Philippiens 4:13",
   "journalVerse": "Médite jour et nuit sur cette Parole, afin de mettre en pratique tout ce qui y est écrit.",
@@ -207,7 +194,6 @@
   "sosVerseRef": "Matthieu 6:8",
   "sosMyEmpty": "Tu n'as encore déposé aucune demande.",
   "phoneLabel": "Téléphone",
-
   "onbSkip": "Passer",
   "onbNext": "Suivant",
   "onbStart": "Commencer",
@@ -218,14 +204,12 @@
   "onb3Title": "Un jour, un impact",
   "onb3Text": "Relève chaque jour un petit défi, tiens ton journal et grandis pas à pas : 365 jours pour laisser une empreinte éternelle.",
   "onbReplay": "Revoir l'introduction",
-
   "welcomeTitle": "Bienvenue sur",
   "welcomeSubtitle": "Commence ton parcours spirituel un jour à la fois",
   "welcomeSignIn": "Se connecter",
   "welcomeSignUp": "Créer un compte",
   "welcomeVerse": "Les bontés de l'Éternel ne sont pas épuisées ; elles se renouvellent chaque matin.",
   "welcomeVerseRef": "Lamentations 3:22-23",
-
   "signInTitle": "Content de te revoir",
   "signInSubtitle": "Connecte-toi pour continuer ton parcours avec Dieu.",
   "signUpTitle": "Crée ton compte",
@@ -248,16 +232,15 @@
   "authErrNetwork": "Pas de connexion internet. Réessaie.",
   "authTerms": "En créant un compte, tu acceptes nos conditions d'utilisation et notre politique de confidentialité.",
   "authCheckEmailTitle": "Vérifie ta boîte mail",
-  "authCheckEmailText": "Nous avons envoyé un lien de confirmation à {email}. Ouvre-le pour activer ton compte, puis connecte-toi.",
+  "authCheckEmailText": "Nous avons envoyé un code à 6 chiffres à {email}. Entre-le ci-dessous pour activer ton compte.",
   "authBackToSignIn": "Retour à la connexion",
   "authResetTitle": "Réinitialiser le mot de passe",
-  "authResetText": "Entre ton e-mail, nous t'enverrons un lien pour choisir un nouveau mot de passe.",
-  "authResetSend": "Envoyer le lien",
-  "authResetSent": "Lien envoyé ! Vérifie ta boîte mail.",
-
-  "authResend": "Renvoyer l'e-mail",
+  "authResetText": "Entre ton e-mail, nous t'enverrons un code à 6 chiffres pour choisir un nouveau mot de passe.",
+  "authResetSend": "Envoyer le code",
+  "authResetSent": "Code envoyé ! Vérifie ta boîte mail.",
+  "authResend": "Renvoyer le code",
   "authResendIn": "Renvoyer dans {seconds} s",
-  "authResent": "E-mail renvoyé !",
+  "authResent": "Nouveau code envoyé !",
   "authCheckSpam": "Introuvable ? Regarde dans tes spams ou l'onglet Promotions.",
   "newPasswordTitle": "Nouveau mot de passe",
   "newPasswordSubtitle": "Choisis un nouveau mot de passe pour ton compte.",
@@ -268,5 +251,9 @@
   "authErrRateLimit": "Trop de tentatives. Patiente un instant puis réessaie.",
   "authErrLinkExpired": "Ce lien a expiré ou a déjà été utilisé. Demandes-en un nouveau.",
   "authErrTimeout": "Le serveur met trop de temps à répondre. Vérifie ta connexion et réessaie.",
-  "authErrEmailSend": "Impossible d'envoyer l'e-mail pour le moment. Réessaie plus tard."
+  "authErrEmailSend": "Impossible d'envoyer l'e-mail pour le moment. Réessaie plus tard.",
+  "authCodeResetTitle": "Entre le code",
+  "authCodeResetText": "Nous avons envoyé un code à 6 chiffres à {email}. Entre-le pour choisir un nouveau mot de passe.",
+  "authCodeVerify": "Vérifier",
+  "authErrCodeInvalid": "Ce code est incorrect ou a expiré. Vérifie-le ou demandes-en un nouveau."
 }

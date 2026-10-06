@@ -32,8 +32,10 @@ class _AuthScreenState extends State<AuthScreen> {
   bool _busy = false;
   String? _error;
 
-  /// Set after sign-up when Supabase requires email confirmation.
-  String? _confirmationSentTo;
+  /// Email a 6-digit code was sent to: after sign-up (confirm the account)
+  /// or after "forgot password" ([_codeForRecovery]).
+  String? _codeSentTo;
+  bool _codeForRecovery = false;
 
   @override
   void dispose() {
@@ -80,7 +82,10 @@ class _AuthScreenState extends State<AuthScreen> {
           setState(() => _error = context.l10n.authErrEmailTaken);
         } else if (res.session == null && mounted) {
           // No session yet = the user must confirm their email first.
-          setState(() => _confirmationSentTo = email);
+          setState(() {
+            _codeSentTo = email;
+            _codeForRecovery = false;
+          });
         }
       } else {
         await auth
@@ -91,8 +96,11 @@ class _AuthScreenState extends State<AuthScreen> {
     } catch (e) {
       if (!mounted) return;
       if (isEmailNotConfirmed(e)) {
-        // Show the "check your inbox" view, with a button to resend.
-        setState(() => _confirmationSentTo = email);
+        // Show the code view; the user can ask for a new code there.
+        setState(() {
+          _codeSentTo = email;
+          _codeForRecovery = false;
+        });
       } else {
         setState(() => _error = authErrorMessage(context, e));
       }
@@ -148,11 +156,13 @@ class _AuthScreenState extends State<AuthScreen> {
           SafeArea(
             child: AnimatedSwitcher(
               duration: const Duration(milliseconds: 300),
-              child: _confirmationSentTo != null
-                  ? _CheckEmailView(
-                      email: _confirmationSentTo!,
+              child: _codeSentTo != null
+                  ? _VerifyCodeView(
+                      key: ValueKey('code-$_codeForRecovery'),
+                      email: _codeSentTo!,
+                      recovery: _codeForRecovery,
                       onBack: () => setState(() {
-                        _confirmationSentTo = null;
+                        _codeSentTo = null;
                         _signUp = false;
                       }),
                     )
@@ -363,40 +373,59 @@ class _AuthScreenState extends State<AuthScreen> {
   }
 
   Future<void> _showResetSheet(BuildContext context) async {
-    final sent = await showModalBottomSheet<bool>(
+    final sentTo = await showModalBottomSheet<String>(
       context: context,
       isScrollControlled: true,
       showDragHandle: true,
       backgroundColor: AppColors.warmWhite,
       builder: (_) => _ResetPasswordSheet(initialEmail: _email.text.trim()),
     );
-    if (sent == true && context.mounted) {
+    if (sentTo != null && context.mounted) {
       context.toast(context.l10n.authResetSent);
+      setState(() {
+        _error = null;
+        _codeSentTo = sentTo;
+        _codeForRecovery = true;
+      });
     }
   }
 }
 
 // ---------------------------------------------------------------- widgets
 
-/// Shown after sign-up (or when signing in to an unconfirmed account): the
-/// account must be confirmed by email. Lets the user resend the email.
-class _CheckEmailView extends StatefulWidget {
-  const _CheckEmailView({required this.email, required this.onBack});
+/// Enter the 6-digit code received by email.
+///
+/// - Sign-up ([recovery] false): confirms the account and signs the user in;
+///   the router then opens the home screen.
+/// - Forgot password ([recovery] true): signs the user in with a recovery
+///   session; the router then opens "Nouveau mot de passe".
+class _VerifyCodeView extends StatefulWidget {
+  const _VerifyCodeView({
+    super.key,
+    required this.email,
+    required this.recovery,
+    required this.onBack,
+  });
 
   final String email;
+  final bool recovery;
   final VoidCallback onBack;
 
   @override
-  State<_CheckEmailView> createState() => _CheckEmailViewState();
+  State<_VerifyCodeView> createState() => _VerifyCodeViewState();
 }
 
-class _CheckEmailViewState extends State<_CheckEmailView> {
+class _VerifyCodeViewState extends State<_VerifyCodeView> {
   static const _cooldown = 60;
+
+  final _code = TextEditingController();
 
   /// Seconds before "Resend" is allowed again (Supabase rate-limits emails).
   int _wait = _cooldown;
   Timer? _timer;
   bool _sending = false;
+  bool _verifying = false;
+  String? _error;
 
   @override
   void initState() {
@@ -407,6 +436,7 @@ class _CheckEmailViewState extends State<_CheckEmailView> {
   @override
   void dispose() {
     _timer?.cancel();
+    _code.dispose();
     super.dispose();
   }
 
@@ -419,18 +449,71 @@ class _CheckEmailViewState extends State<_CheckEmailView> {
     });
   }
 
-  Future<void> _resend() async {
-    setState(() => _sending = true);
+  Future<void> _verify() async {
+    final token = _code.text;
+    if (token.length != authCodeLength || _verifying) return;
+    FocusScope.of(context).unfocus();
+    setState(() {
+      _verifying = true;
+      _error = null;
+    });
+    // Set before verifying so the router sends the new recovery session to
+    // "Nouveau mot de passe" rather than to the home screen.
+    if (widget.recovery) AuthFlow.recoveryPending = true;
     try {
       await Supabase.instance.client.auth
-          .resend(
-            type: OtpType.signup,
+          .verifyOTP(
+            type: widget.recovery ? OtpType.recovery : OtpType.signup,
             email: widget.email,
-            emailRedirectTo: AuthLinks.emailConfirmed,
+            token: token,
           )
           .withAuthTimeout();
+      // Signed in: the router moves on by itself.
+    } catch (e) {
+      AuthFlow.recoveryPending = false;
+      if (!mounted) return;
+      final wrongCode =
+          e is AuthException &&
+          (e.code == 'otp_expired' ||
+              e.code == 'invalid_otp' ||
+              e.message.toLowerCase().contains('token'));
+      setState(() {
+        _error = wrongCode
+            ? context.l10n.authErrCodeInvalid
+            : authErrorMessage(context, e);
+        _code.clear();
+      });
+    } finally {
+      if (mounted) setState(() => _verifying = false);
+    }
+  }
+
+  Future<void> _resend() async {
+    setState(() => _sending = true);
+    final auth = Supabase.instance.client.auth;
+    try {
+      if (widget.recovery) {
+        await auth
+            .resetPasswordForEmail(
+              widget.email,
+              redirectTo: AuthLinks.resetPassword,
+            )
+            .withAuthTimeout();
+      } else {
+        await auth
+            .resend(
+              type: OtpType.signup,
+              email: widget.email,
+              emailRedirectTo: AuthLinks.emailConfirmed,
+            )
+            .withAuthTimeout();
+      }
       if (!mounted) return;
       context.toast(context.l10n.authResent);
+      setState(() {
+        _error = null;
+        _code.clear();
+      });
       _startCooldown();
     } catch (e) {
       if (mounted) context.toast(authErrorMessage(context, e));
@@ -442,50 +525,69 @@ class _CheckEmailViewState extends State<_CheckEmailView> {
   @override
   Widget build(BuildContext context) {
     final l = context.l10n;
-    final canResend = _wait <= 0 && !_sending;
-    return Padding(
-      key: const ValueKey('check-email'),
-      padding: const EdgeInsets.all(24),
+    final canResend = _wait <= 0 && !_sending && !_verifying;
+    return SingleChildScrollView(
+      padding: const EdgeInsets.fromLTRB(24, 8, 24, 24),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Spacer(),
+          RoundIconButton(
+            icon: Icons.arrow_back_rounded,
+            onPressed: widget.onBack,
+          ),
+          const SizedBox(height: 28),
           Container(
-            width: 96,
-            height: 96,
+            width: 64,
+            height: 64,
             decoration: const BoxDecoration(
               color: AppColors.lavender,
               shape: BoxShape.circle,
             ),
-            child: const Icon(
-              Icons.mark_email_read_outlined,
+            child: Icon(
+              widget.recovery
+                  ? Icons.lock_reset_rounded
+                  : Icons.mark_email_read_outlined,
               color: AppColors.deepPurple,
-              size: 44,
+              size: 30,
             ),
           ),
-          const SizedBox(height: 28),
+          const SizedBox(height: 20),
           Text(
-            l.authCheckEmailTitle,
-            textAlign: TextAlign.center,
+            widget.recovery ? l.authCodeResetTitle : l.authCheckEmailTitle,
             style: AppText.headline.copyWith(color: AppColors.deepPurple),
-          ),
-          const SizedBox(height: 12),
-          Text(
-            l.authCheckEmailText(widget.email),
-            textAlign: TextAlign.center,
-            style: AppText.bodyMedium.copyWith(color: AppColors.muted),
           ),
           const SizedBox(height: 8),
           Text(
+            widget.recovery
+                ? l.authCodeResetText(widget.email)
+                : l.authCheckEmailText(widget.email),
+            style: AppText.bodyMedium.copyWith(color: AppColors.muted),
+          ),
+          const SizedBox(height: 32),
+          CodeInput(
+            controller: _code,
+            hasError: _error != null,
+            enabled: !_verifying,
+            onCompleted: (_) => _verify(),
+          ),
+          if (_error != null) ...[
+            const SizedBox(height: 12),
+            Text(
+              _error!,
+              style: AppText.bodySmall.copyWith(color: AppColors.danger),
+            ),
+          ],
+          const SizedBox(height: 12),
+          Text(
             l.authCheckSpam,
-            textAlign: TextAlign.center,
             style: AppText.caption.copyWith(color: AppColors.muted),
           ),
-          const Spacer(flex: 2),
+          const SizedBox(height: 28),
           AuthButton(
-            label: l.authBackToSignIn,
+            label: l.authCodeVerify,
             color: AppColors.deepPurple,
-            busy: false,
-            onPressed: widget.onBack,
+            busy: _verifying,
+            onPressed: _verify,
           ),
           const SizedBox(height: 8),
           TextButton(
@@ -533,14 +635,11 @@ class _ResetPasswordSheetState extends State<_ResetPasswordSheet> {
       _error = null;
     });
     try {
+      final email = _email.text.trim();
       await Supabase.instance.client.auth
-          .resetPasswordForEmail(
-            _email.text.trim(),
-            // The email's link opens the app on the "new password" screen.
-            redirectTo: AuthLinks.resetPassword,
-          )
+          .resetPasswordForEmail(email, redirectTo: AuthLinks.resetPassword)
           .withAuthTimeout();
-      if (mounted) Navigator.pop(context, true);
+      if (mounted) Navigator.pop(context, email);
     } catch (e) {
       if (mounted) setState(() => _error = authErrorMessage(context, e));
     } finally {

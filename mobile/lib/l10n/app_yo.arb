@@ -1,13 +1,11 @@
 {
   "@@locale": "yo",
   "appTagline": "Ọjọ́ kan, ipa kan",
-
   "navHome": "Ilé",
   "navWord": "Ọ̀rọ̀",
   "navPrayer": "Àdúrà",
   "navImpact": "Ipa",
   "navProfile": "Profáìlì",
-
   "authWelcome": "Ẹ kú àbọ̀ sí Impact-365",
   "authSubtitle": "Ọjọ́ tuntun. Ìpàdé tuntun pẹ̀lú Ọlọ́run.",
   "authEmail": "Ímeèlì",
@@ -19,7 +17,6 @@
   "authHaveAccount": "O ti ní àkáǹtì? Wọlé",
   "authCheckEmail": "Ṣàyẹ̀wò ímeèlì rẹ láti jẹ́rìí àkáǹtì rẹ.",
   "authInvalid": "Kún gbogbo àyè (ọ̀rọ̀ aṣínà: ó kéré tán lẹ́tà 6).",
-
   "homeGreeting": "Ẹ kú ọjọ́, {name}.",
   "homeGreetingDefault": "Olùfipa",
   "homeSubtitle": "Ọjọ́ tuntun.\nÌpàdé tuntun pẹ̀lú Ọlọ́run.",
@@ -39,11 +36,9 @@
   "homeFaithJourney": "Ìrìn àjò ìgbàgbọ́",
   "homeFaithJourneyText": "Ìdúróṣinṣin rẹ ń ṣe àgbékalẹ̀ ipa ayérayé rẹ.",
   "homeNoDevotion": "Kò sí ìfọkànsìn fún òní síbẹ̀. Padà wá láìpẹ́!",
-
   "slotMorning": "Òwúrọ̀",
   "slotAfternoon": "Ọ̀sán",
   "slotNight": "Alẹ́",
-
   "devotionTitle": "ÌṢẸ́JÚ 5 PẸ̀LÚ ỌLỌ́RUN",
   "devotionGodSays": "OHUN TÍ ỌLỌ́RUN SỌ",
   "devotionIUnderstand": "OHUN TÍ MO LÓYE",
@@ -58,7 +53,6 @@
   "wordTodayTitle": "Àwọn ìfọkànsìn òní",
   "wordHistory": "Àwọn ọjọ́ tó kọjá",
   "wordNotAvailable": "Kò tíì sí",
-
   "journalTitle": "Ìwé Àkọsílẹ̀ Mi",
   "journalSubtitle": "Mú àkókò díẹ̀ láti kọ̀wé.",
   "journalQ1": "1. Kí ni Ọlọ́run ń fi hàn mí lónìí?",
@@ -72,7 +66,6 @@
   "journalWriteHere": "Kọ síbí...",
   "journalSave": "Fipamọ́",
   "journalSaved": "A ti fi àkọsílẹ̀ pamọ́",
-
   "prayerRoomTitle": "Yàrá Àdúrà Mi",
   "prayerRoomSubtitle": "Bá Ọlọ́run sọ̀rọ̀. Gbé e kalẹ̀. Dúró. Gbà á.",
   "prayerMyTopics": "Àwọn kókó àdúrà mi",
@@ -97,7 +90,6 @@
   "prayerIPrayed": "Mo ti gbàdúrà",
   "prayerPrayedCount": "{count, plural, =0{Jẹ́ ẹni àkọ́kọ́ láti gbàdúrà} =1{Ènìyàn 1 ti gbàdúrà} other{Ènìyàn {count} ti gbàdúrà}}",
   "anonymous": "Àìlórúkọ",
-
   "impactTitle": "Ipa rẹ lónìí",
   "impactSubtitle": "Ìṣe kékeré. Ipa ńlá.",
   "impactChallenge": "Ìpèníjà ọjọ́ òní",
@@ -111,7 +103,6 @@
   "impactNotePrompt": "Báwo ló ṣe lọ? (kò pọndandan)",
   "weekdaysShort": "Ajé,Ìsẹ́,Rú,Bọ̀,Ẹtì,Àbá,Àìkú",
   "monthsShort": "Ṣẹ́rẹ́,Èrèlé,Ẹrẹ̀nà,Ìgbé,Ẹ̀bibi,Òkúdu,Agẹmọ,Ògún,Owewe,Ọ̀wàrà,Bélú,Ọ̀pẹ̀",
-
   "sosTitle": "Holy SOS",
   "sosSubtitle": "O kò dá wà. Pín àìní rẹ, a ń gbàdúrà a sì ń ṣiṣẹ́ pẹ̀lú rẹ.",
   "sosBannerTitle": "Ọlọ́run rí i. Ìdílé ń ṣiṣẹ́.",
@@ -148,7 +139,6 @@
   "statusInProgress": "Ń lọ lọ́wọ́",
   "statusResolved": "Ó ti yanjú",
   "statusClosed": "Ó ti tì",
-
   "inboxTitle": "Ìfiránṣẹ́ & Ìkéde",
   "inboxSubtitle": "Dúró ní àsopọ̀. Má ṣe pàdánù ohun pàtàkì.",
   "inboxMessages": "Ìfiránṣẹ́",
@@ -165,7 +155,6 @@
   "chatPrivateNotice": "Ìjíròrò àṣírí pẹ̀lú àwọn olórí ìjọ.",
   "chatLeader": "Olórí",
   "chatClosed": "Àwọn olórí ti ti ìjíròrò yìí.",
-
   "profileTitle": "Profáìlì Mi",
   "profileSubtitle": "Ọlọ́run mọ̀ ọ́. Bá A rìn.",
   "profileStreak": "Ọjọ́ ní ìtẹ̀léra",
@@ -188,7 +177,6 @@
   "profileSaved": "A ti ṣe àtúnṣe profáìlì",
   "profileImpacterSince": "Olùfipa fún ọjọ́ {days}",
   "newBadge": "TUNTUN",
-
   "commonCancel": "Fagilé",
   "commonSubmit": "Fi ránṣẹ́",
   "commonRetry": "Gbìyànjú lẹ́ẹ̀kan síi",
@@ -196,7 +184,6 @@
   "commonSeeAll": "Wo gbogbo rẹ̀",
   "commonToday": "Òní",
   "commonYesterday": "Àná",
-
   "profileVerse": "Mo lè ṣe ohun gbogbo nípasẹ̀ Kírísítì tí ń fún mi ní agbára.",
   "profileVerseRef": "Fílípì 4:13",
   "journalVerse": "Máa ṣe àṣàrò nínú rẹ̀ lọ́sàn-án àti lóru, kí o lè kíyèsí láti ṣe gẹ́gẹ́ bí gbogbo ohun tí a kọ sínú rẹ̀.",
@@ -207,7 +194,6 @@
   "sosVerseRef": "Mátíù 6:8",
   "sosMyEmpty": "O kò tíì fi ìbéèrè kankan sílẹ̀.",
   "phoneLabel": "Fóònù",
-
   "onbSkip": "Fò ó",
   "onbNext": "Tókàn",
   "onbStart": "Bẹ̀rẹ̀",
@@ -218,14 +204,12 @@
   "onb3Title": "Ọjọ́ kan, ipa kan",
   "onb3Text": "Gba ìpèníjà kékeré kan lójoojúmọ́, kọ ìwé àkọsílẹ̀ rẹ, kí o sì dàgbà díẹ̀díẹ̀: ọjọ́ 365 láti fi àmì ayérayé sílẹ̀.",
   "onbReplay": "Wo ìfihàn náà lẹ́ẹ̀kan síi",
-
   "welcomeTitle": "Ẹ kú àbọ̀ sí",
   "welcomeSubtitle": "Bẹ̀rẹ̀ ìrìn àjò ẹ̀mí rẹ ní ọjọ́ kan lẹ́ẹ̀kan",
   "welcomeSignIn": "Wọlé",
   "welcomeSignUp": "Ṣẹ̀dá àkáǹtì",
   "welcomeVerse": "Àánú Olúwa kò tán, ìyọ́nú rẹ̀ kò yẹ̀; wọ́n ń di ọ̀tun ní òròòwúrọ̀.",
   "welcomeVerseRef": "Ẹkún Jeremáyà 3:22-23",
-
   "signInTitle": "Ẹ kú àbọ̀ padà",
   "signInSubtitle": "Wọlé láti tẹ̀síwájú nínú ìrìn àjò rẹ pẹ̀lú Ọlọ́run.",
   "signUpTitle": "Ṣẹ̀dá àkáǹtì rẹ",
@@ -248,16 +232,15 @@
   "authErrNetwork": "Kò sí ìsopọ̀ íntánẹ́ẹ̀tì. Gbìyànjú lẹ́ẹ̀kan síi.",
   "authTerms": "Nípa ṣíṣẹ̀dá àkáǹtì, o gbà sí àwọn òfin ìlò àti ìlànà àṣírí wa.",
   "authCheckEmailTitle": "Ṣàyẹ̀wò àpótí ímeèlì rẹ",
-  "authCheckEmailText": "A ti fi ìjápọ̀ ìjẹ́rìí ránṣẹ́ sí {email}. Ṣí i láti mú àkáǹtì rẹ ṣiṣẹ́, lẹ́yìn náà wọlé.",
+  "authCheckEmailText": "A ti fi koodu oní-nọ́ńbà mẹ́fà ránṣẹ́ sí {email}. Tẹ̀ ẹ́ sísàlẹ̀ láti mú àkáǹtì rẹ ṣiṣẹ́.",
   "authBackToSignIn": "Padà sí ìwọlé",
   "authResetTitle": "Tún ọ̀rọ̀ aṣínà rẹ ṣe",
-  "authResetText": "Tẹ ímeèlì rẹ, a ó fi ìjápọ̀ ránṣẹ́ sí ọ láti yan ọ̀rọ̀ aṣínà tuntun.",
-  "authResetSend": "Fi ìjápọ̀ ránṣẹ́",
-  "authResetSent": "A ti fi ìjápọ̀ ránṣẹ́! Ṣàyẹ̀wò àpótí ímeèlì rẹ.",
-
-  "authResend": "Tún ímeèlì náà fi ránṣẹ́",
+  "authResetText": "Tẹ ímeèlì rẹ, a ó fi koodu oní-nọ́ńbà mẹ́fà ránṣẹ́ sí ọ láti yan ọ̀rọ̀ aṣínà tuntun.",
+  "authResetSend": "Fi koodu ránṣẹ́",
+  "authResetSent": "A ti fi koodu ránṣẹ́! Ṣàyẹ̀wò àpótí ímeèlì rẹ.",
+  "authResend": "Tún koodu náà fi ránṣẹ́",
   "authResendIn": "Tún fi ránṣẹ́ ní ìṣẹ́jú-àáyá {seconds}",
-  "authResent": "A ti tún ímeèlì náà fi ránṣẹ́!",
+  "authResent": "A ti fi koodu tuntun ránṣẹ́!",
   "authCheckSpam": "O kò rí i? Ṣàyẹ̀wò fódà spam tàbí Promotions rẹ.",
   "newPasswordTitle": "Ọ̀rọ̀ aṣínà tuntun",
   "newPasswordSubtitle": "Yan ọ̀rọ̀ aṣínà tuntun fún àkáǹtì rẹ.",
@@ -268,5 +251,9 @@
   "authErrRateLimit": "Ìgbìyànjú ti pọ̀ jù. Dúró díẹ̀ kí o sì gbìyànjú lẹ́ẹ̀kan síi.",
   "authErrLinkExpired": "Ìjápọ̀ yìí ti parí tàbí a ti lò ó. Jọ̀wọ́ béèrè tuntun.",
   "authErrTimeout": "Olùpèsè ń pẹ́ jù láti dáhùn. Ṣàyẹ̀wò ìsopọ̀ rẹ kí o sì gbìyànjú lẹ́ẹ̀kan síi.",
-  "authErrEmailSend": "A kò lè fi ímeèlì ránṣẹ́ báyìí. Jọ̀wọ́ gbìyànjú lẹ́yìn náà."
+  "authErrEmailSend": "A kò lè fi ímeèlì ránṣẹ́ báyìí. Jọ̀wọ́ gbìyànjú lẹ́yìn náà.",
+  "authCodeResetTitle": "Tẹ koodu náà",
+  "authCodeResetText": "A ti fi koodu oní-nọ́ńbà mẹ́fà ránṣẹ́ sí {email}. Tẹ̀ ẹ́ láti yan ọ̀rọ̀ aṣínà tuntun.",
+  "authCodeVerify": "Jẹ́rìí",
+  "authErrCodeInvalid": "Koodu yìí kò tọ́ tàbí ó ti parí. Ṣàyẹ̀wò rẹ̀ tàbí béèrè tuntun."
 }
