@@ -42,6 +42,9 @@ class _WelcomeScreenState extends State<WelcomeScreen>
     final size = MediaQuery.sizeOf(context);
 
     return Scaffold(
+      // No text fields here: don't shrink when a keyboard is still closing
+      // (e.g. coming back from the sign-in page).
+      resizeToAvoidBottomInset: false,
       backgroundColor: AppColors.warmWhite,
       body: Stack(
         children: [
@@ -64,63 +67,65 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                   bottom: false,
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 28),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        _Appear(
-                          animation: _logo,
-                          scaleFrom: 0.8,
-                          child: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(22),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: AppColors.deepPurple.withValues(
-                                    alpha: 0.18,
+                    child: _ShrinkToFit(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          _Appear(
+                            animation: _logo,
+                            scaleFrom: 0.8,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(22),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: AppColors.deepPurple.withValues(
+                                      alpha: 0.18,
+                                    ),
+                                    blurRadius: 22,
+                                    offset: const Offset(0, 8),
                                   ),
-                                  blurRadius: 22,
-                                  offset: const Offset(0, 8),
-                                ),
-                              ],
-                            ),
-                            child: Image.asset(
-                              'assets/images/logo_full.png',
-                              width: 104,
-                              height: 104,
+                                ],
+                              ),
+                              child: Image.asset(
+                                'assets/images/logo_full.png',
+                                width: 104,
+                                height: 104,
+                              ),
                             ),
                           ),
-                        ),
-                        const SizedBox(height: 22),
-                        _Appear(
-                          animation: _title,
-                          child: Text.rich(
-                            TextSpan(
-                              children: [
-                                TextSpan(text: '${l.welcomeTitle}\nIMPACT-'),
-                                const TextSpan(
-                                  text: '365',
-                                  style: TextStyle(color: AppColors.gold),
-                                ),
-                              ],
-                            ),
-                            textAlign: TextAlign.center,
-                            style: AppText.display.copyWith(
-                              color: AppColors.deepPurple,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(height: 18),
-                        _Appear(
-                          animation: _subtitle,
-                          child: Text(
-                            l.welcomeSubtitle,
-                            textAlign: TextAlign.center,
-                            style: AppText.bodyMedium.copyWith(
-                              color: AppColors.deepPurple,
+                          const SizedBox(height: 22),
+                          _Appear(
+                            animation: _title,
+                            child: Text.rich(
+                              TextSpan(
+                                children: [
+                                  TextSpan(text: '${l.welcomeTitle}\nIMPACT-'),
+                                  const TextSpan(
+                                    text: '365',
+                                    style: TextStyle(color: AppColors.gold),
+                                  ),
+                                ],
+                              ),
+                              textAlign: TextAlign.center,
+                              style: AppText.display.copyWith(
+                                color: AppColors.deepPurple,
+                              ),
                             ),
                           ),
-                        ),
-                      ],
+                          const SizedBox(height: 18),
+                          _Appear(
+                            animation: _subtitle,
+                            child: Text(
+                              l.welcomeSubtitle,
+                              textAlign: TextAlign.center,
+                              style: AppText.bodyMedium.copyWith(
+                                color: AppColors.deepPurple,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -174,25 +179,36 @@ class _BottomPanel extends StatelessWidget {
             opacity: buttons,
             child: Column(
               children: [
-                const Icon(
-                  Icons.format_quote_rounded,
-                  color: AppColors.gold,
-                  size: 34,
-                ),
-                const SizedBox(height: 6),
-                Text(
-                  l.welcomeVerse,
-                  textAlign: TextAlign.center,
-                  style: AppText.scripture.copyWith(
-                    color: Colors.white.withValues(alpha: 0.92),
+                Expanded(
+                  child: _ShrinkToFit(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Icon(
+                          Icons.format_quote_rounded,
+                          color: AppColors.gold,
+                          size: 34,
+                        ),
+                        const SizedBox(height: 6),
+                        Text(
+                          l.welcomeVerse,
+                          textAlign: TextAlign.center,
+                          style: AppText.scripture.copyWith(
+                            color: Colors.white.withValues(alpha: 0.92),
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        Text(
+                          l.welcomeVerseRef,
+                          style: AppText.scriptureRef.copyWith(
+                            color: AppColors.gold,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-                const SizedBox(height: 8),
-                Text(
-                  l.welcomeVerseRef,
-                  style: AppText.scriptureRef.copyWith(color: AppColors.gold),
-                ),
-                const Spacer(),
+                const SizedBox(height: 20),
                 _WelcomeButton(
                   label: l.welcomeSignIn,
                   background: Colors.white,
@@ -297,6 +313,26 @@ class _Appear extends StatelessWidget {
         );
       },
       child: child,
+    );
+  }
+}
+
+/// Centers [child] and scales it down (never up) when the space is too
+/// small, so the layout never overflows on small phones.
+class _ShrinkToFit extends StatelessWidget {
+  const _ShrinkToFit({required this.child});
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(
+      builder: (context, constraints) => Center(
+        child: FittedBox(
+          fit: BoxFit.scaleDown,
+          child: SizedBox(width: constraints.maxWidth, child: child),
+        ),
+      ),
     );
   }
 }

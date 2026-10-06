@@ -88,6 +88,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
     ];
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: AppColors.purpleDark,
       body: Stack(
         fit: StackFit.expand,

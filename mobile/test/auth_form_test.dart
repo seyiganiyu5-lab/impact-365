@@ -49,10 +49,30 @@ void main() {
   testWidgets('switches between sign-in and sign-up', (tester) async {
     await tester.pumpWidget(_app(const AuthScreen()));
     expect(find.byType(TextFormField), findsNWidgets(2));
-    await tester.ensureVisible(find.text('Créer un compte'));
-    await tester.tap(find.text('Créer un compte'));
+    await tester.ensureVisible(
+      find.textContaining('Créer un compte', findRichText: true),
+    );
+    await tester.tapOnText(find.textRange.ofSubstring('Créer un compte'));
     await tester.pumpAndSettle();
     expect(find.text('Crée ton compte'), findsOneWidget);
     expect(find.byType(TextFormField), findsNWidgets(4));
+  });
+
+  testWidgets('footer is one centred sentence, even on narrow phones', (
+    tester,
+  ) async {
+    tester.view.physicalSize = const Size(320, 700) * 3;
+    tester.view.devicePixelRatio = 3;
+    addTearDown(tester.view.reset);
+    await tester.pumpWidget(_app(const AuthScreen()));
+    final footer = find.textContaining(
+      'Pas encore de compte ?',
+      findRichText: true,
+    );
+    expect(footer, findsOneWidget);
+    final rect = tester.getRect(footer);
+    // Spans the content width (24 px side padding) so text is centred.
+    expect(rect.left, 24);
+    expect(rect.right, 320 - 24);
   });
 }

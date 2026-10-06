@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -184,7 +185,12 @@ class _AuthScreenState extends State<AuthScreen> {
             if (Navigator.canPop(context))
               _RoundIconButton(
                 icon: Icons.arrow_back_rounded,
-                onPressed: () => Navigator.maybePop(context),
+                onPressed: () {
+                  // Close the keyboard first so the previous page doesn't
+                  // have to re-layout while it slides away.
+                  FocusScope.of(context).unfocus();
+                  Navigator.maybePop(context);
+                },
               )
             else
               const SizedBox(height: 44),
@@ -348,28 +354,12 @@ class _AuthScreenState extends State<AuthScreen> {
             ],
             const SizedBox(height: 28),
 
-            // Switch between sign in and sign up.
-            Center(
-              child: Wrap(
-                crossAxisAlignment: WrapCrossAlignment.center,
-                children: [
-                  Text(
-                    _signUp ? l.authHaveAccountQ : l.authNoAccountQ,
-                    style: AppText.bodyMedium.copyWith(color: AppColors.muted),
-                  ),
-                  TextButton(
-                    onPressed: _busy ? null : _toggleMode,
-                    style: TextButton.styleFrom(
-                      foregroundColor: AppColors.deepPurple,
-                      padding: const EdgeInsets.symmetric(horizontal: 6),
-                    ),
-                    child: Text(
-                      _signUp ? l.welcomeSignIn : l.welcomeSignUp,
-                      style: AppText.labelMedium.copyWith(fontSize: 14),
-                    ),
-                  ),
-                ],
-              ),
+            // Switch between sign in and sign up: one centred sentence,
+            // the link part is tappable.
+            _SwitchModeLink(
+              question: _signUp ? l.authHaveAccountQ : l.authNoAccountQ,
+              action: _signUp ? l.welcomeSignIn : l.welcomeSignUp,
+              onTap: _busy ? null : _toggleMode,
             ),
           ],
         ),
@@ -725,6 +715,56 @@ class _ResetPasswordSheetState extends State<_ResetPasswordSheet> {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+/// "Pas encore de compte ? Créer un compte" as one paragraph.
+class _SwitchModeLink extends StatefulWidget {
+  const _SwitchModeLink({
+    required this.question,
+    required this.action,
+    required this.onTap,
+  });
+
+  final String question;
+  final String action;
+  final VoidCallback? onTap;
+
+  @override
+  State<_SwitchModeLink> createState() => _SwitchModeLinkState();
+}
+
+class _SwitchModeLinkState extends State<_SwitchModeLink> {
+  final _recognizer = TapGestureRecognizer();
+
+  @override
+  void dispose() {
+    _recognizer.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    _recognizer.onTap = widget.onTap;
+    return Container(
+      width: double.infinity,
+      // Comfortable tap area around the sentence.
+      padding: const EdgeInsets.symmetric(vertical: 12),
+      child: Text.rich(
+        TextSpan(
+          style: AppText.bodyMedium.copyWith(color: AppColors.muted),
+          children: [
+            TextSpan(text: '${widget.question} '),
+            TextSpan(
+              text: widget.action,
+              recognizer: _recognizer,
+              style: AppText.bodyStrong.copyWith(color: AppColors.deepPurple),
+            ),
+          ],
+        ),
+        textAlign: TextAlign.center,
       ),
     );
   }
