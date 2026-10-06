@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -202,6 +203,7 @@ String authErrorMessage(BuildContext context, Object error) {
   if (error is SocketException || error is AuthRetryableFetchException) {
     return l.authErrNetwork;
   }
+  if (error is TimeoutException) return l.authErrTimeout;
   if (error is! AuthException) return l.commonError;
   final code = error.code ?? '';
   final msg = error.message.toLowerCase();
@@ -221,6 +223,10 @@ String authErrorMessage(BuildContext context, Object error) {
   if (code.startsWith('over_') || error.statusCode == '429') {
     return l.authErrRateLimit;
   }
+  // Supabase could not send the email (usually wrong SMTP settings).
+  if (msg.contains('sending') && msg.contains('email')) {
+    return l.authErrEmailSend;
+  }
   if (code == 'otp_expired' || code == 'flow_state_expired') {
     return l.authErrLinkExpired;
   }
@@ -232,3 +238,8 @@ bool isEmailNotConfirmed(Object error) =>
     error is AuthException &&
     (error.code == 'email_not_confirmed' ||
         error.message.toLowerCase().contains('not confirmed'));
+
+/// Never let the spinner run forever: give up after 20 seconds.
+extension AuthTimeout<T> on Future<T> {
+  Future<T> withAuthTimeout() => timeout(const Duration(seconds: 20));
+}

@@ -266,5 +266,7 @@
   "newPasswordDone": "A ti ṣe àtúnṣe ọ̀rọ̀ aṣínà. Ẹ kú àbọ̀ padà!",
   "authErrSamePassword": "Ọ̀rọ̀ aṣínà tuntun gbọ́dọ̀ yàtọ̀ sí ti àtijọ́.",
   "authErrRateLimit": "Ìgbìyànjú ti pọ̀ jù. Dúró díẹ̀ kí o sì gbìyànjú lẹ́ẹ̀kan síi.",
-  "authErrLinkExpired": "Ìjápọ̀ yìí ti parí tàbí a ti lò ó. Jọ̀wọ́ béèrè tuntun."
+  "authErrLinkExpired": "Ìjápọ̀ yìí ti parí tàbí a ti lò ó. Jọ̀wọ́ béèrè tuntun.",
+  "authErrTimeout": "Olùpèsè ń pẹ́ jù láti dáhùn. Ṣàyẹ̀wò ìsopọ̀ rẹ kí o sì gbìyànjú lẹ́ẹ̀kan síi.",
+  "authErrEmailSend": "A kò lè fi ímeèlì ránṣẹ́ báyìí. Jọ̀wọ́ gbìyànjú lẹ́yìn náà."
 }

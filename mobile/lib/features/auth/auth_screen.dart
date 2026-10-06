@@ -62,16 +62,18 @@ class _AuthScreenState extends State<AuthScreen> {
     final email = _email.text.trim();
     try {
       if (_signUp) {
-        final res = await auth.signUp(
-          email: email,
-          password: _password.text,
-          // The confirmation email's link opens the app (see AuthLinks).
-          emailRedirectTo: AuthLinks.emailConfirmed,
-          data: {
-            'full_name': _name.text.trim(),
-            'preferred_language': LocaleController.instance.languageCode,
-          },
-        );
+        final res = await auth
+            .signUp(
+              email: email,
+              password: _password.text,
+              // The confirmation email's link opens the app (see AuthLinks).
+              emailRedirectTo: AuthLinks.emailConfirmed,
+              data: {
+                'full_name': _name.text.trim(),
+                'preferred_language': LocaleController.instance.languageCode,
+              },
+            )
+            .withAuthTimeout();
         // With email confirmation on, Supabase answers "success" with no
         // identities when the address is already registered.
         if (res.user?.identities?.isEmpty ?? false) {
@@ -81,7 +83,9 @@ class _AuthScreenState extends State<AuthScreen> {
           setState(() => _confirmationSentTo = email);
         }
       } else {
-        await auth.signInWithPassword(email: email, password: _password.text);
+        await auth
+            .signInWithPassword(email: email, password: _password.text)
+            .withAuthTimeout();
       }
       // With a session, the router moves to /home automatically.
     } catch (e) {
@@ -418,11 +422,13 @@ class _CheckEmailViewState extends State<_CheckEmailView> {
   Future<void> _resend() async {
     setState(() => _sending = true);
     try {
-      await Supabase.instance.client.auth.resend(
-        type: OtpType.signup,
-        email: widget.email,
-        emailRedirectTo: AuthLinks.emailConfirmed,
-      );
+      await Supabase.instance.client.auth
+          .resend(
+            type: OtpType.signup,
+            email: widget.email,
+            emailRedirectTo: AuthLinks.emailConfirmed,
+          )
+          .withAuthTimeout();
       if (!mounted) return;
       context.toast(context.l10n.authResent);
       _startCooldown();
@@ -527,11 +533,13 @@ class _ResetPasswordSheetState extends State<_ResetPasswordSheet> {
       _error = null;
     });
     try {
-      await Supabase.instance.client.auth.resetPasswordForEmail(
-        _email.text.trim(),
-        // The email's link opens the app on the "new password" screen.
-        redirectTo: AuthLinks.resetPassword,
-      );
+      await Supabase.instance.client.auth
+          .resetPasswordForEmail(
+            _email.text.trim(),
+            // The email's link opens the app on the "new password" screen.
+            redirectTo: AuthLinks.resetPassword,
+          )
+          .withAuthTimeout();
       if (mounted) Navigator.pop(context, true);
     } catch (e) {
       if (mounted) setState(() => _error = authErrorMessage(context, e));

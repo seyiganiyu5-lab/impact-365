@@ -836,4 +836,12 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get authErrLinkExpired =>
       'Ce lien a expiré ou a déjà été utilisé. Demandes-en un nouveau.';
+
+  @override
+  String get authErrTimeout =>
+      'Le serveur met trop de temps à répondre. Vérifie ta connexion et réessaie.';
+
+  @override
+  String get authErrEmailSend =>
+      'Impossible d\'envoyer l\'e-mail pour le moment. Réessaie plus tard.';
 }

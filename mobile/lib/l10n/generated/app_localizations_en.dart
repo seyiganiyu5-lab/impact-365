@@ -825,4 +825,12 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get authErrLinkExpired =>
       'This link has expired or was already used. Please request a new one.';
+
+  @override
+  String get authErrTimeout =>
+      'The server is taking too long to answer. Check your connection and try again.';
+
+  @override
+  String get authErrEmailSend =>
+      'We couldn\'t send the email right now. Please try again later.';
 }

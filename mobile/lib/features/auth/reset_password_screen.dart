@@ -39,9 +39,9 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
       _error = null;
     });
     try {
-      await Supabase.instance.client.auth.updateUser(
-        UserAttributes(password: _password.text),
-      );
+      await Supabase.instance.client.auth
+          .updateUser(UserAttributes(password: _password.text))
+          .withAuthTimeout();
       AuthFlow.recoveryPending = false;
       if (!mounted) return;
       context.toast(context.l10n.newPasswordDone);

@@ -116,3 +116,4 @@ The app should open.
 | "Trop de tentatives" | You hit the email rate limit; wait or raise it (step 5.4). |
 | The app shows an error right after signing in | Run `supabase/verify.sql`: a ❌ line tells you what is missing. |
 | "Ce lien a expiré" | Reset links last one hour and work once. Request a new one. |
+| The button keeps loading, then "Impossible d'envoyer l'e-mail" or "Le serveur met trop de temps" | Supabase cannot connect to your SMTP sender. Open **Logs → Auth** in Supabase to see the exact error. With Gmail: use port `465`, the 16-letter **app password** (no spaces), and the same Gmail address in *Username* and *Sender email*. To check everything else works, temporarily switch custom SMTP off and test with your own email. |

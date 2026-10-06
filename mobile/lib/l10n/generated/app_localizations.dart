@@ -1599,6 +1599,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'This link has expired or was already used. Please request a new one.'**
   String get authErrLinkExpired;
+
+  /// No description provided for @authErrTimeout.
+  ///
+  /// In en, this message translates to:
+  /// **'The server is taking too long to answer. Check your connection and try again.'**
+  String get authErrTimeout;
+
+  /// No description provided for @authErrEmailSend.
+  ///
+  /// In en, this message translates to:
+  /// **'We couldn\'t send the email right now. Please try again later.'**
+  String get authErrEmailSend;
 }
 
 class _AppLocalizationsDelegate

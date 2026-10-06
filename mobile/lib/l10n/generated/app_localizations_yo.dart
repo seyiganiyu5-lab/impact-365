@@ -829,4 +829,12 @@ class AppLocalizationsYo extends AppLocalizations {
   @override
   String get authErrLinkExpired =>
       'Ìjápọ̀ yìí ti parí tàbí a ti lò ó. Jọ̀wọ́ béèrè tuntun.';
+
+  @override
+  String get authErrTimeout =>
+      'Olùpèsè ń pẹ́ jù láti dáhùn. Ṣàyẹ̀wò ìsopọ̀ rẹ kí o sì gbìyànjú lẹ́ẹ̀kan síi.';
+
+  @override
+  String get authErrEmailSend =>
+      'A kò lè fi ímeèlì ránṣẹ́ báyìí. Jọ̀wọ́ gbìyànjú lẹ́yìn náà.';
 }
