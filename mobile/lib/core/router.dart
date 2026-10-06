@@ -4,7 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../widgets/common.dart';
+import 'auth_links.dart';
+
 import '../features/auth/auth_screen.dart';
+import '../features/auth/reset_password_screen.dart';
 import '../features/devotion/devotion_screen.dart';
 import '../features/devotion/word_screen.dart';
 import '../features/home/home_screen.dart';
@@ -28,11 +32,26 @@ import '../features/sos/sos_request_screen.dart';
 import '../features/splash/splash_screen.dart';
 import '../features/welcome/welcome_screen.dart';
 
-/// Re-runs the router redirect whenever the user signs in or out.
+/// Re-runs the router redirect whenever the auth state changes, and
+/// remembers when a password-reset link was opened.
 class _AuthListenable extends ChangeNotifier {
   _AuthListenable() {
     _sub = Supabase.instance.client.auth.onAuthStateChange.listen(
-      (_) => notifyListeners(),
+      (state) {
+        if (state.event == AuthChangeEvent.passwordRecovery) {
+          AuthFlow.recoveryPending = true;
+        } else if (state.event == AuthChangeEvent.signedOut) {
+          AuthFlow.recoveryPending = false;
+        }
+        notifyListeners();
+      },
+      // A confirmation / reset link that is expired or already used.
+      onError: (Object error) {
+        final context = _rootKey.currentContext;
+        if (context != null && context.mounted) {
+          context.toast(context.l10n.authErrLinkExpired);
+        }
+      },
     );
   }
 
@@ -53,8 +72,14 @@ final appRouter = GoRouter(
   refreshListenable: _AuthListenable(),
   redirect: (context, state) {
     final signedIn = Supabase.instance.client.auth.currentSession != null;
+    final location = state.matchedLocation;
     // The splash animation decides by itself when to move on.
-    if (state.matchedLocation == '/splash') return null;
+    if (location == '/splash') return null;
+    // Opened a password-reset link: choose a new password first.
+    if (AuthFlow.recoveryPending && signedIn) {
+      return location == '/reset-password' ? null : '/reset-password';
+    }
+    if (location == '/reset-password' && !signedIn) return '/welcome';
     // Pages a signed-out visitor is allowed to see.
     const publicPages = {'/welcome', '/auth', '/onboarding'};
     final isPublic = publicPages.contains(state.matchedLocation);
@@ -68,6 +93,10 @@ final appRouter = GoRouter(
   },
   routes: [
     GoRoute(path: '/splash', builder: (_, _) => const SplashScreen()),
+    GoRoute(
+      path: '/reset-password',
+      builder: (_, _) => const ResetPasswordScreen(),
+    ),
     GoRoute(
       path: '/onboarding',
       pageBuilder: (_, state) => CustomTransitionPage(

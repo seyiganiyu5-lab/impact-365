@@ -3,6 +3,7 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../core/auth_links.dart';
 import '../../core/theme.dart';
 import '../../widgets/common.dart';
 import '../onboarding/onboarding_screen.dart';
@@ -73,6 +74,11 @@ class _SplashScreenState extends State<SplashScreen>
   /// First launch → onboarding (for everyone). Otherwise /home; the router
   /// sends signed-out users to /welcome.
   Future<void> _goNext() async {
+    // Opened from a password-reset email: go straight to the new password.
+    if (AuthFlow.recoveryPending) {
+      if (mounted) context.go('/reset-password');
+      return;
+    }
     final seen = await OnboardingScreen.isDone();
     if (mounted) context.go(seen ? '/home' : '/onboarding');
   }

@@ -18,8 +18,28 @@ class Repo {
   // ---------------------------------------------------------------- Profile
 
   static Future<Profile> myProfile() async {
-    final row = await _db.from('profiles').select().eq('id', _uid).single();
-    return Profile.fromJson(row);
+    final row = await _db
+        .from('profiles')
+        .select()
+        .eq('id', _uid)
+        .maybeSingle();
+    if (row != null) return Profile.fromJson(row);
+
+    // No profile yet (account created before the database was set up):
+    // create it from the sign-up details.
+    final meta = _db.auth.currentUser?.userMetadata ?? const {};
+    final created = await _db
+        .from('profiles')
+        .insert({
+          'id': _uid,
+          'full_name':
+              meta['full_name'] ??
+              _db.auth.currentUser?.email?.split('@').first,
+          'preferred_language': _lang,
+        })
+        .select()
+        .single();
+    return Profile.fromJson(created);
   }
 
   static Future<void> updateProfile({String? fullName, String? phone}) => _db

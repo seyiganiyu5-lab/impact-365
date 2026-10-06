@@ -253,5 +253,18 @@
   "authResetTitle": "Réinitialiser le mot de passe",
   "authResetText": "Entre ton e-mail, nous t'enverrons un lien pour choisir un nouveau mot de passe.",
   "authResetSend": "Envoyer le lien",
-  "authResetSent": "Lien envoyé ! Vérifie ta boîte mail."
+  "authResetSent": "Lien envoyé ! Vérifie ta boîte mail.",
+
+  "authResend": "Renvoyer l'e-mail",
+  "authResendIn": "Renvoyer dans {seconds} s",
+  "authResent": "E-mail renvoyé !",
+  "authCheckSpam": "Introuvable ? Regarde dans tes spams ou l'onglet Promotions.",
+  "newPasswordTitle": "Nouveau mot de passe",
+  "newPasswordSubtitle": "Choisis un nouveau mot de passe pour ton compte.",
+  "newPasswordLabel": "Nouveau mot de passe",
+  "newPasswordSave": "Enregistrer mon mot de passe",
+  "newPasswordDone": "Mot de passe mis à jour. Content de te revoir !",
+  "authErrSamePassword": "Le nouveau mot de passe doit être différent de l'ancien.",
+  "authErrRateLimit": "Trop de tentatives. Patiente un instant puis réessaie.",
+  "authErrLinkExpired": "Ce lien a expiré ou a déjà été utilisé. Demandes-en un nouveau."
 }

@@ -76,14 +76,9 @@ To see new work later, run `git pull` (or use the **Source Control** tab → *Pu
 
 ### 2. Create the Supabase project
 1. Go to [supabase.com](https://supabase.com), create a free account, then a **New project**.
-2. Open **SQL Editor** → *New query*, paste the whole contents of
-   [`supabase/migrations/20261004000000_init.sql`](supabase/migrations/20261004000000_init.sql) and click **Run**.
-3. Optional but recommended: run [`supabase/seed.sql`](supabase/seed.sql) the same way. It adds sample devotions, a challenge and an announcement for **today**.
-4. Go to **Project Settings → API Keys** and copy:
-   - the **Project URL** (`https://xxxx.supabase.co`)
-   - the **Publishable key** (`sb_publishable_...`; the older *anon* key also works)
-
-> While testing, you can turn off **Authentication → Sign In / Providers → Email → Confirm email** so new accounts work immediately.
+2. **Project Settings → API Keys**: copy the **Project URL** and the **Publishable key** (you need them in steps 3 and 4).
+3. Follow **[`supabase/AUTH_SETUP.md`](supabase/AUTH_SETUP.md)**. It covers the database scripts, the setup check (`supabase/verify.sql`), the email links that open the app, the branded email templates, real email sending (SMTP), and a test checklist for sign-up, sign-in and forgot password.
+4. Optional: run [`supabase/seed.sql`](supabase/seed.sql) in the SQL Editor to add sample devotions, a challenge and an announcement for **today**.
 
 ### 3. Run the admin website
 ```bash

@@ -1,12 +1,14 @@
-import 'dart:io';
+import 'dart:async';
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../core/auth_links.dart';
 import '../../core/locale_controller.dart';
 import '../../core/theme.dart';
 import '../../widgets/common.dart';
+import 'auth_widgets.dart';
 
 /// Sign in / create account. Opened from the welcome page.
 class AuthScreen extends StatefulWidget {
@@ -63,47 +65,36 @@ class _AuthScreenState extends State<AuthScreen> {
         final res = await auth.signUp(
           email: email,
           password: _password.text,
+          // The confirmation email's link opens the app (see AuthLinks).
+          emailRedirectTo: AuthLinks.emailConfirmed,
           data: {
             'full_name': _name.text.trim(),
             'preferred_language': LocaleController.instance.languageCode,
           },
         );
-        // No session yet = email confirmation is switched on in Supabase.
-        if (res.session == null && mounted) {
+        // With email confirmation on, Supabase answers "success" with no
+        // identities when the address is already registered.
+        if (res.user?.identities?.isEmpty ?? false) {
+          setState(() => _error = context.l10n.authErrEmailTaken);
+        } else if (res.session == null && mounted) {
+          // No session yet = the user must confirm their email first.
           setState(() => _confirmationSentTo = email);
         }
       } else {
         await auth.signInWithPassword(email: email, password: _password.text);
       }
       // With a session, the router moves to /home automatically.
-    } on AuthException catch (e) {
-      setState(() => _error = _messageFor(e));
-    } on SocketException {
-      setState(() => _error = context.l10n.authErrNetwork);
-    } catch (_) {
-      setState(() => _error = context.l10n.commonError);
+    } catch (e) {
+      if (!mounted) return;
+      if (isEmailNotConfirmed(e)) {
+        // Show the "check your inbox" view, with a button to resend.
+        setState(() => _confirmationSentTo = email);
+      } else {
+        setState(() => _error = authErrorMessage(context, e));
+      }
     } finally {
       if (mounted) setState(() => _busy = false);
     }
-  }
-
-  String _messageFor(AuthException e) {
-    final l = context.l10n;
-    final code = e.code ?? '';
-    final msg = e.message.toLowerCase();
-    if (e is AuthRetryableFetchException) return l.authErrNetwork;
-    if (code == 'invalid_credentials' || msg.contains('invalid login')) {
-      return l.authErrInvalidCredentials;
-    }
-    if (code == 'user_already_exists' ||
-        code == 'email_exists' ||
-        msg.contains('already registered')) {
-      return l.authErrEmailTaken;
-    }
-    if (code == 'email_not_confirmed' || msg.contains('not confirmed')) {
-      return l.authErrNotConfirmed;
-    }
-    return e.message;
   }
 
   // ------------------------------------------------------------ validators
@@ -183,7 +174,7 @@ class _AuthScreenState extends State<AuthScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             if (Navigator.canPop(context))
-              _RoundIconButton(
+              RoundIconButton(
                 icon: Icons.arrow_back_rounded,
                 onPressed: () {
                   // Close the keyboard first so the previous page doesn't
@@ -233,7 +224,7 @@ class _AuthScreenState extends State<AuthScreen> {
               child: Column(
                 children: [
                   if (_signUp) ...[
-                    _Field(
+                    AuthField(
                       label: l.authFullName,
                       controller: _name,
                       hint: l.authFullNameHint,
@@ -244,7 +235,7 @@ class _AuthScreenState extends State<AuthScreen> {
                     ),
                     const SizedBox(height: 18),
                   ],
-                  _Field(
+                  AuthField(
                     label: l.authEmail,
                     controller: _email,
                     hint: l.authEmailHint,
@@ -254,7 +245,7 @@ class _AuthScreenState extends State<AuthScreen> {
                     autofillHints: const [AutofillHints.email],
                   ),
                   const SizedBox(height: 18),
-                  _PasswordField(
+                  PasswordField(
                     label: l.authPassword,
                     controller: _password,
                     hint: l.authPasswordHint,
@@ -271,7 +262,7 @@ class _AuthScreenState extends State<AuthScreen> {
                   ),
                   if (_signUp) ...[
                     const SizedBox(height: 18),
-                    _PasswordField(
+                    PasswordField(
                       label: l.authConfirmPassword,
                       controller: _confirm,
                       hint: l.authConfirmPasswordHint,
@@ -337,7 +328,7 @@ class _AuthScreenState extends State<AuthScreen> {
             ),
             const SizedBox(height: 12),
 
-            _PrimaryButton(
+            AuthButton(
               label: _signUp ? l.authSignUp : l.authSignIn,
               color: accent,
               busy: _busy,
@@ -383,197 +374,69 @@ class _AuthScreenState extends State<AuthScreen> {
 
 // ---------------------------------------------------------------- widgets
 
-/// Label above + text field.
-class _Field extends StatelessWidget {
-  const _Field({
-    required this.label,
-    required this.controller,
-    required this.hint,
-    required this.icon,
-    this.validator,
-    this.keyboardType,
-    this.textCapitalization = TextCapitalization.none,
-    this.autofillHints,
-  });
-
-  final String label;
-  final TextEditingController controller;
-  final String hint;
-  final IconData icon;
-  final String? Function(String?)? validator;
-  final TextInputType? keyboardType;
-  final TextCapitalization textCapitalization;
-  final Iterable<String>? autofillHints;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(label, style: AppText.labelMedium.copyWith(color: AppColors.ink)),
-        const SizedBox(height: 8),
-        TextFormField(
-          controller: controller,
-          validator: validator,
-          keyboardType: keyboardType,
-          textCapitalization: textCapitalization,
-          autocorrect: false,
-          autofillHints: autofillHints,
-          textInputAction: TextInputAction.next,
-          style: AppText.bodyLarge.copyWith(color: AppColors.ink),
-          decoration: InputDecoration(
-            hintText: hint,
-            prefixIcon: Icon(icon, size: 20),
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class _PasswordField extends StatefulWidget {
-  const _PasswordField({
-    required this.label,
-    required this.controller,
-    required this.hint,
-    this.validator,
-    this.textInputAction,
-    this.onSubmitted,
-    this.autofillHints,
-  });
-
-  final String label;
-  final TextEditingController controller;
-  final String hint;
-  final String? Function(String?)? validator;
-  final TextInputAction? textInputAction;
-  final ValueChanged<String>? onSubmitted;
-  final Iterable<String>? autofillHints;
-
-  @override
-  State<_PasswordField> createState() => _PasswordFieldState();
-}
-
-class _PasswordFieldState extends State<_PasswordField> {
-  bool _hidden = true;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          widget.label,
-          style: AppText.labelMedium.copyWith(color: AppColors.ink),
-        ),
-        const SizedBox(height: 8),
-        TextFormField(
-          controller: widget.controller,
-          validator: widget.validator,
-          obscureText: _hidden,
-          autocorrect: false,
-          enableSuggestions: false,
-          autofillHints: widget.autofillHints,
-          textInputAction: widget.textInputAction,
-          onFieldSubmitted: widget.onSubmitted,
-          style: AppText.bodyLarge.copyWith(color: AppColors.ink),
-          decoration: InputDecoration(
-            hintText: widget.hint,
-            prefixIcon: const Icon(Icons.lock_outline_rounded, size: 20),
-            suffixIcon: IconButton(
-              onPressed: () => setState(() => _hidden = !_hidden),
-              icon: Icon(
-                _hidden
-                    ? Icons.visibility_outlined
-                    : Icons.visibility_off_outlined,
-                size: 20,
-              ),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class _PrimaryButton extends StatelessWidget {
-  const _PrimaryButton({
-    required this.label,
-    required this.color,
-    required this.busy,
-    required this.onPressed,
-  });
-
-  final String label;
-  final Color color;
-  final bool busy;
-  final VoidCallback onPressed;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
-      height: 56,
-      child: FilledButton(
-        onPressed: busy ? null : onPressed,
-        style: FilledButton.styleFrom(
-          backgroundColor: color,
-          disabledBackgroundColor: color.withValues(alpha: 0.7),
-          foregroundColor: Colors.white,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
-          ),
-          elevation: 0,
-        ),
-        child: busy
-            ? const SizedBox(
-                width: 22,
-                height: 22,
-                child: CircularProgressIndicator(
-                  strokeWidth: 2.4,
-                  color: Colors.white,
-                ),
-              )
-            : Text(label, style: AppText.labelLarge),
-      ),
-    );
-  }
-}
-
-class _RoundIconButton extends StatelessWidget {
-  const _RoundIconButton({required this.icon, required this.onPressed});
-
-  final IconData icon;
-  final VoidCallback onPressed;
-
-  @override
-  Widget build(BuildContext context) {
-    return Material(
-      color: Colors.white,
-      shape: const CircleBorder(side: BorderSide(color: AppColors.border)),
-      child: InkWell(
-        customBorder: const CircleBorder(),
-        onTap: onPressed,
-        child: SizedBox(
-          width: 44,
-          height: 44,
-          child: Icon(icon, color: AppColors.ink, size: 22),
-        ),
-      ),
-    );
-  }
-}
-
-/// Shown after sign-up when the account must be confirmed by email.
-class _CheckEmailView extends StatelessWidget {
+/// Shown after sign-up (or when signing in to an unconfirmed account): the
+/// account must be confirmed by email. Lets the user resend the email.
+class _CheckEmailView extends StatefulWidget {
   const _CheckEmailView({required this.email, required this.onBack});
 
   final String email;
   final VoidCallback onBack;
 
   @override
+  State<_CheckEmailView> createState() => _CheckEmailViewState();
+}
+
+class _CheckEmailViewState extends State<_CheckEmailView> {
+  static const _cooldown = 60;
+
+  /// Seconds before "Resend" is allowed again (Supabase rate-limits emails).
+  int _wait = _cooldown;
+  Timer? _timer;
+  bool _sending = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _startCooldown();
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
+  }
+
+  void _startCooldown() {
+    _timer?.cancel();
+    setState(() => _wait = _cooldown);
+    _timer = Timer.periodic(const Duration(seconds: 1), (t) {
+      if (_wait <= 1) t.cancel();
+      if (mounted) setState(() => _wait--);
+    });
+  }
+
+  Future<void> _resend() async {
+    setState(() => _sending = true);
+    try {
+      await Supabase.instance.client.auth.resend(
+        type: OtpType.signup,
+        email: widget.email,
+        emailRedirectTo: AuthLinks.emailConfirmed,
+      );
+      if (!mounted) return;
+      context.toast(context.l10n.authResent);
+      _startCooldown();
+    } catch (e) {
+      if (mounted) context.toast(authErrorMessage(context, e));
+    } finally {
+      if (mounted) setState(() => _sending = false);
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     final l = context.l10n;
+    final canResend = _wait <= 0 && !_sending;
     return Padding(
       key: const ValueKey('check-email'),
       padding: const EdgeInsets.all(24),
@@ -601,16 +464,34 @@ class _CheckEmailView extends StatelessWidget {
           ),
           const SizedBox(height: 12),
           Text(
-            l.authCheckEmailText(email),
+            l.authCheckEmailText(widget.email),
             textAlign: TextAlign.center,
             style: AppText.bodyMedium.copyWith(color: AppColors.muted),
           ),
+          const SizedBox(height: 8),
+          Text(
+            l.authCheckSpam,
+            textAlign: TextAlign.center,
+            style: AppText.caption.copyWith(color: AppColors.muted),
+          ),
           const Spacer(flex: 2),
-          _PrimaryButton(
+          AuthButton(
             label: l.authBackToSignIn,
             color: AppColors.deepPurple,
             busy: false,
-            onPressed: onBack,
+            onPressed: widget.onBack,
+          ),
+          const SizedBox(height: 8),
+          TextButton(
+            onPressed: canResend ? _resend : null,
+            style: TextButton.styleFrom(
+              foregroundColor: AppColors.deepPurple,
+              minimumSize: const Size.fromHeight(48),
+            ),
+            child: Text(
+              _wait > 0 ? l.authResendIn(_wait) : l.authResend,
+              style: AppText.labelMedium.copyWith(fontSize: 14),
+            ),
           ),
         ],
       ),
@@ -648,12 +529,12 @@ class _ResetPasswordSheetState extends State<_ResetPasswordSheet> {
     try {
       await Supabase.instance.client.auth.resetPasswordForEmail(
         _email.text.trim(),
+        // The email's link opens the app on the "new password" screen.
+        redirectTo: AuthLinks.resetPassword,
       );
       if (mounted) Navigator.pop(context, true);
-    } on AuthException catch (e) {
-      setState(() => _error = e.message);
-    } catch (_) {
-      setState(() => _error = context.l10n.authErrNetwork);
+    } catch (e) {
+      if (mounted) setState(() => _error = authErrorMessage(context, e));
     } finally {
       if (mounted) setState(() => _busy = false);
     }
@@ -685,7 +566,7 @@ class _ResetPasswordSheetState extends State<_ResetPasswordSheet> {
               style: AppText.bodyMedium.copyWith(color: AppColors.muted),
             ),
             const SizedBox(height: 24),
-            _Field(
+            AuthField(
               label: l.authEmail,
               controller: _email,
               hint: l.authEmailHint,
@@ -707,7 +588,7 @@ class _ResetPasswordSheetState extends State<_ResetPasswordSheet> {
               ),
             ],
             const SizedBox(height: 24),
-            _PrimaryButton(
+            AuthButton(
               label: l.authResetSend,
               color: AppColors.deepPurple,
               busy: _busy,

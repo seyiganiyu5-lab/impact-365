@@ -787,4 +787,46 @@ class AppLocalizationsYo extends AppLocalizations {
 
   @override
   String get authResetSent => 'A ti fi ìjápọ̀ ránṣẹ́! Ṣàyẹ̀wò àpótí ímeèlì rẹ.';
+
+  @override
+  String get authResend => 'Tún ímeèlì náà fi ránṣẹ́';
+
+  @override
+  String authResendIn(int seconds) {
+    return 'Tún fi ránṣẹ́ ní ìṣẹ́jú-àáyá $seconds';
+  }
+
+  @override
+  String get authResent => 'A ti tún ímeèlì náà fi ránṣẹ́!';
+
+  @override
+  String get authCheckSpam =>
+      'O kò rí i? Ṣàyẹ̀wò fódà spam tàbí Promotions rẹ.';
+
+  @override
+  String get newPasswordTitle => 'Ọ̀rọ̀ aṣínà tuntun';
+
+  @override
+  String get newPasswordSubtitle => 'Yan ọ̀rọ̀ aṣínà tuntun fún àkáǹtì rẹ.';
+
+  @override
+  String get newPasswordLabel => 'Ọ̀rọ̀ aṣínà tuntun';
+
+  @override
+  String get newPasswordSave => 'Fi ọ̀rọ̀ aṣínà mi pamọ́';
+
+  @override
+  String get newPasswordDone => 'A ti ṣe àtúnṣe ọ̀rọ̀ aṣínà. Ẹ kú àbọ̀ padà!';
+
+  @override
+  String get authErrSamePassword =>
+      'Ọ̀rọ̀ aṣínà tuntun gbọ́dọ̀ yàtọ̀ sí ti àtijọ́.';
+
+  @override
+  String get authErrRateLimit =>
+      'Ìgbìyànjú ti pọ̀ jù. Dúró díẹ̀ kí o sì gbìyànjú lẹ́ẹ̀kan síi.';
+
+  @override
+  String get authErrLinkExpired =>
+      'Ìjápọ̀ yìí ti parí tàbí a ti lò ó. Jọ̀wọ́ béèrè tuntun.';
 }

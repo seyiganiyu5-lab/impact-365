@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>IMPACT-365</title>
+</head>
+<body style="margin:0;padding:0;background:#F9F9F6;font-family:Inter,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#1C1433;">
+<!-- IMPACT-365 · Change email address email. Paste into Supabase → Authentication → Email Templates. -->
+<!-- Language follows the user's app language (user metadata "preferred_language": fr / en / yo). -->
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#F9F9F6;padding:32px 16px;">
+  <tr><td align="center">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:520px;">
+      <!-- Header -->
+      <tr><td style="background:#3B1E7B;border-radius:20px 20px 0 0;padding:28px 32px;text-align:center;">
+        <div style="font-size:24px;font-weight:800;letter-spacing:1px;color:#FFFFFF;">IMPACT-365</div>
+        <div style="font-size:13px;color:#D4AF37;margin-top:4px;">— {{ if eq .Data.preferred_language "en" }}1 day 1 impact{{ else if eq .Data.preferred_language "yo" }}Ọjọ́ kan, ipa kan{{ else }}1 jour 1 impact{{ end }} —</div>
+      </td></tr>
+      <!-- Card -->
+      <tr><td style="background:#FFFFFF;border-radius:0 0 20px 20px;padding:36px 32px 32px;">
+        <h1 style="margin:0 0 12px;font-size:24px;line-height:30px;font-weight:700;color:#3B1E7B;">{{ if eq .Data.preferred_language "en" }}Confirm your new address{{ else if eq .Data.preferred_language "yo" }}Jẹ́rìí àdírẹ́sì tuntun rẹ{{ else }}Confirme ta nouvelle adresse{{ end }}</h1>
+        <p style="margin:0 0 28px;font-size:15px;line-height:24px;color:#4A4560;">{{ if eq .Data.preferred_language "en" }}You asked to use <strong>{{ .NewEmail }}</strong> for your IMPACT-365 account. Confirm this change with the button below.{{ else if eq .Data.preferred_language "yo" }}O béèrè láti lo <strong>{{ .NewEmail }}</strong> fún àkáǹtì IMPACT-365 rẹ. Jẹ́rìí àyípadà yìí pẹ̀lú bọ́tìnnì ìsàlẹ̀ yìí.{{ else }}Tu as demandé à utiliser <strong>{{ .NewEmail }}</strong> pour ton compte IMPACT-365. Confirme ce changement avec le bouton ci-dessous.{{ end }}</p>
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr><td align="center">
+          <a href="{{ .ConfirmationURL }}" style="display:inline-block;background:#3B1E7B;color:#FFFFFF;text-decoration:none;font-size:16px;font-weight:600;padding:15px 32px;border-radius:14px;">{{ if eq .Data.preferred_language "en" }}Confirm the change{{ else if eq .Data.preferred_language "yo" }}Jẹ́rìí àyípadà náà{{ else }}Confirmer le changement{{ end }}</a>
+        </td></tr></table>
+        <p style="margin:28px 0 0;font-size:13px;line-height:20px;color:#6B6680;">{{ if eq .Data.preferred_language "en" }}If you didn’t ask for this change, ignore this email and your current address stays active.{{ else if eq .Data.preferred_language "yo" }}Tí o kò bá béèrè àyípadà yìí, fojú fo ímeèlì yìí, àdírẹ́sì rẹ lọ́wọ́lọ́wọ́ yóò máa ṣiṣẹ́.{{ else }}Si tu n’as pas demandé ce changement, ignore cet e-mail et ton adresse actuelle restera active.{{ end }}</p>
+        <p style="margin:16px 0 0;font-size:12px;line-height:18px;color:#9A95A8;">{{ if eq .Data.preferred_language "en" }}Button not working? Open this link on your phone:{{ else if eq .Data.preferred_language "yo" }}Bọ́tìnnì kò ṣiṣẹ́? Ṣí ìjápọ̀ yìí lórí fóònù rẹ:{{ else }}Le bouton ne fonctionne pas ? Ouvre ce lien sur ton téléphone :{{ end }}<br><a href="{{ .ConfirmationURL }}" style="color:#3B1E7B;word-break:break-all;">{{ .ConfirmationURL }}</a></p>
+      </td></tr>
+      <!-- Footer -->
+      <tr><td style="padding:24px 16px;text-align:center;">
+        <div style="font-family:Georgia,'Times New Roman',serif;font-style:italic;font-size:14px;line-height:22px;color:#6B6680;">{{ if eq .Data.preferred_language "en" }}“The steadfast love of the Lord never ceases.”{{ else if eq .Data.preferred_language "yo" }}“Àánú Olúwa kò tán.”{{ else }}« Les bontés de l’Éternel ne sont pas épuisées. »{{ end }}</div>
+        <div style="font-size:12px;font-weight:600;color:#A8871F;margin-top:6px;">{{ if eq .Data.preferred_language "yo" }}Ẹkún Jeremáyà 3:22{{ else }}Lamentations 3:22{{ end }}</div>
+        <div style="font-size:12px;color:#9A95A8;margin-top:16px;">{{ if eq .Data.preferred_language "en" }}You received this email because of your IMPACT-365 account.{{ else if eq .Data.preferred_language "yo" }}O gba ímeèlì yìí nítorí àkáǹtì IMPACT-365 rẹ.{{ else }}Tu reçois cet e-mail en lien avec ton compte IMPACT-365.{{ end }}</div>
+      </td></tr>
+    </table>
+  </td></tr>
+</table>
+</body>
+</html>

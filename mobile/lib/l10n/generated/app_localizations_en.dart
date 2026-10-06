@@ -783,4 +783,46 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get authResetSent => 'Link sent! Check your inbox.';
+
+  @override
+  String get authResend => 'Resend the email';
+
+  @override
+  String authResendIn(int seconds) {
+    return 'Resend in $seconds s';
+  }
+
+  @override
+  String get authResent => 'Email sent again!';
+
+  @override
+  String get authCheckSpam =>
+      'Can\'t find it? Check your spam or promotions folder.';
+
+  @override
+  String get newPasswordTitle => 'New password';
+
+  @override
+  String get newPasswordSubtitle => 'Choose a new password for your account.';
+
+  @override
+  String get newPasswordLabel => 'New password';
+
+  @override
+  String get newPasswordSave => 'Save my new password';
+
+  @override
+  String get newPasswordDone => 'Password updated. Welcome back!';
+
+  @override
+  String get authErrSamePassword =>
+      'Your new password must be different from the old one.';
+
+  @override
+  String get authErrRateLimit =>
+      'Too many attempts. Please wait a moment and try again.';
+
+  @override
+  String get authErrLinkExpired =>
+      'This link has expired or was already used. Please request a new one.';
 }

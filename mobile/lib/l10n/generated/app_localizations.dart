@@ -1527,6 +1527,78 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Link sent! Check your inbox.'**
   String get authResetSent;
+
+  /// No description provided for @authResend.
+  ///
+  /// In en, this message translates to:
+  /// **'Resend the email'**
+  String get authResend;
+
+  /// No description provided for @authResendIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Resend in {seconds} s'**
+  String authResendIn(int seconds);
+
+  /// No description provided for @authResent.
+  ///
+  /// In en, this message translates to:
+  /// **'Email sent again!'**
+  String get authResent;
+
+  /// No description provided for @authCheckSpam.
+  ///
+  /// In en, this message translates to:
+  /// **'Can\'t find it? Check your spam or promotions folder.'**
+  String get authCheckSpam;
+
+  /// No description provided for @newPasswordTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'New password'**
+  String get newPasswordTitle;
+
+  /// No description provided for @newPasswordSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a new password for your account.'**
+  String get newPasswordSubtitle;
+
+  /// No description provided for @newPasswordLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'New password'**
+  String get newPasswordLabel;
+
+  /// No description provided for @newPasswordSave.
+  ///
+  /// In en, this message translates to:
+  /// **'Save my new password'**
+  String get newPasswordSave;
+
+  /// No description provided for @newPasswordDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Password updated. Welcome back!'**
+  String get newPasswordDone;
+
+  /// No description provided for @authErrSamePassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Your new password must be different from the old one.'**
+  String get authErrSamePassword;
+
+  /// No description provided for @authErrRateLimit.
+  ///
+  /// In en, this message translates to:
+  /// **'Too many attempts. Please wait a moment and try again.'**
+  String get authErrRateLimit;
+
+  /// No description provided for @authErrLinkExpired.
+  ///
+  /// In en, this message translates to:
+  /// **'This link has expired or was already used. Please request a new one.'**
+  String get authErrLinkExpired;
 }
 
 class _AppLocalizationsDelegate

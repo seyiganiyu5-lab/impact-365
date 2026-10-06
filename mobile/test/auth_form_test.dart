@@ -3,6 +3,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:impact365/core/theme.dart';
 import 'package:impact365/features/auth/auth_screen.dart';
+import 'package:impact365/features/auth/reset_password_screen.dart';
 import 'package:impact365/l10n/generated/app_localizations.dart';
 
 Widget _app(Widget child) => MaterialApp(
@@ -74,5 +75,20 @@ void main() {
     // Spans the content width (24 px side padding) so text is centred.
     expect(rect.left, 24);
     expect(rect.right, 320 - 24);
+  });
+
+  testWidgets('new-password screen validates before saving', (tester) async {
+    await tester.pumpWidget(_app(const ResetPasswordScreen()));
+    expect(find.text('Nouveau mot de passe'), findsWidgets);
+    await tester.tap(find.text('Enregistrer mon mot de passe'));
+    await tester.pump();
+    expect(find.text('Ce champ est obligatoire'), findsNWidgets(2));
+
+    final fields = find.byType(TextFormField);
+    await tester.enterText(fields.at(0), 'abcdef');
+    await tester.enterText(fields.at(1), 'abcdeg');
+    await tester.tap(find.text('Enregistrer mon mot de passe'));
+    await tester.pump();
+    expect(find.text('Les mots de passe ne correspondent pas'), findsOneWidget);
   });
 }

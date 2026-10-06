@@ -253,5 +253,18 @@
   "authResetTitle": "Tún ọ̀rọ̀ aṣínà rẹ ṣe",
   "authResetText": "Tẹ ímeèlì rẹ, a ó fi ìjápọ̀ ránṣẹ́ sí ọ láti yan ọ̀rọ̀ aṣínà tuntun.",
   "authResetSend": "Fi ìjápọ̀ ránṣẹ́",
-  "authResetSent": "A ti fi ìjápọ̀ ránṣẹ́! Ṣàyẹ̀wò àpótí ímeèlì rẹ."
+  "authResetSent": "A ti fi ìjápọ̀ ránṣẹ́! Ṣàyẹ̀wò àpótí ímeèlì rẹ.",
+
+  "authResend": "Tún ímeèlì náà fi ránṣẹ́",
+  "authResendIn": "Tún fi ránṣẹ́ ní ìṣẹ́jú-àáyá {seconds}",
+  "authResent": "A ti tún ímeèlì náà fi ránṣẹ́!",
+  "authCheckSpam": "O kò rí i? Ṣàyẹ̀wò fódà spam tàbí Promotions rẹ.",
+  "newPasswordTitle": "Ọ̀rọ̀ aṣínà tuntun",
+  "newPasswordSubtitle": "Yan ọ̀rọ̀ aṣínà tuntun fún àkáǹtì rẹ.",
+  "newPasswordLabel": "Ọ̀rọ̀ aṣínà tuntun",
+  "newPasswordSave": "Fi ọ̀rọ̀ aṣínà mi pamọ́",
+  "newPasswordDone": "A ti ṣe àtúnṣe ọ̀rọ̀ aṣínà. Ẹ kú àbọ̀ padà!",
+  "authErrSamePassword": "Ọ̀rọ̀ aṣínà tuntun gbọ́dọ̀ yàtọ̀ sí ti àtijọ́.",
+  "authErrRateLimit": "Ìgbìyànjú ti pọ̀ jù. Dúró díẹ̀ kí o sì gbìyànjú lẹ́ẹ̀kan síi.",
+  "authErrLinkExpired": "Ìjápọ̀ yìí ti parí tàbí a ti lò ó. Jọ̀wọ́ béèrè tuntun."
 }

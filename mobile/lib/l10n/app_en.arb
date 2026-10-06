@@ -260,5 +260,19 @@
   "authResetTitle": "Reset your password",
   "authResetText": "Enter your email and we will send you a link to choose a new password.",
   "authResetSend": "Send the link",
-  "authResetSent": "Link sent! Check your inbox."
+  "authResetSent": "Link sent! Check your inbox.",
+
+  "authResend": "Resend the email",
+  "authResendIn": "Resend in {seconds} s",
+  "@authResendIn": { "placeholders": { "seconds": { "type": "int" } } },
+  "authResent": "Email sent again!",
+  "authCheckSpam": "Can't find it? Check your spam or promotions folder.",
+  "newPasswordTitle": "New password",
+  "newPasswordSubtitle": "Choose a new password for your account.",
+  "newPasswordLabel": "New password",
+  "newPasswordSave": "Save my new password",
+  "newPasswordDone": "Password updated. Welcome back!",
+  "authErrSamePassword": "Your new password must be different from the old one.",
+  "authErrRateLimit": "Too many attempts. Please wait a moment and try again.",
+  "authErrLinkExpired": "This link has expired or was already used. Please request a new one."
 }
