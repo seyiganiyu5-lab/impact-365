@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../core/theme.dart';
 import '../../data/models.dart';
@@ -27,25 +30,66 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
   late Future<_HomeData> _future = _load();
+  bool _lastLoadFailed = false;
+  StreamSubscription<AuthState>? _authSub;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+    // If loading failed because the connection dropped, try again by
+    // itself once the login session is refreshed (connection is back).
+    _authSub = Supabase.instance.client.auth.onAuthStateChange.listen((state) {
+      if (_lastLoadFailed &&
+          (state.event == AuthChangeEvent.tokenRefreshed ||
+              state.event == AuthChangeEvent.signedIn)) {
+        _refresh();
+      }
+    }, onError: (_) {});
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    _authSub?.cancel();
+    super.dispose();
+  }
+
+  // ...and when the user comes back to the app.
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed && _lastLoadFailed) _refresh();
+  }
 
   Future<_HomeData> _load() async {
-    final results = await Future.wait([
-      Repo.myProfile(),
-      Repo.myStats(),
-      Repo.todayDevotions(),
-    ]);
-    return _HomeData(
-      results[0] as Profile,
-      results[1] as UserStats,
-      results[2] as List<Devotion>,
-    );
+    try {
+      final results = await Future.wait([
+        Repo.myProfile(),
+        Repo.myStats(),
+        Repo.todayDevotions(),
+      ]);
+      _lastLoadFailed = false;
+      return _HomeData(
+        results[0] as Profile,
+        results[1] as UserStats,
+        results[2] as List<Devotion>,
+      );
+    } catch (_) {
+      _lastLoadFailed = true;
+      rethrow;
+    }
   }
 
   Future<void> _refresh() async {
+    if (!mounted) return;
     setState(() => _future = _load());
-    await _future;
+    try {
+      await _future;
+    } catch (_) {
+      // Shown by AsyncView with a "Réessayer" button.
+    }
   }
 
   @override

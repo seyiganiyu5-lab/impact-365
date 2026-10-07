@@ -45,11 +45,15 @@ class _AuthListenable extends ChangeNotifier {
         }
         notifyListeners();
       },
-      // A confirmation / reset link that is expired or already used.
+      // The stream also reports background problems, such as a failed
+      // session refresh while offline. Only an email link that is expired
+      // or already used deserves a message here.
       onError: (Object error) {
         final context = _rootKey.currentContext;
-        if (context != null && context.mounted) {
+        if (_isExpiredLinkError(error) && context != null && context.mounted) {
           context.toast(context.l10n.authErrLinkExpired);
+        } else {
+          debugPrint('Auth stream error (no message shown): $error');
         }
       },
     );
@@ -63,6 +67,16 @@ class _AuthListenable extends ChangeNotifier {
     super.dispose();
   }
 }
+
+bool _isExpiredLinkError(Object error) =>
+    error is AuthPKCEGrantCodeExchangeError ||
+    (error is AuthException &&
+        const {
+          'otp_expired',
+          'flow_state_expired',
+          'flow_state_not_found',
+          'bad_code_verifier',
+        }.contains(error.code));
 
 final _rootKey = GlobalKey<NavigatorState>();
 

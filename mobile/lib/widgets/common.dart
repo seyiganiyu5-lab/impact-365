@@ -1,3 +1,7 @@
+import 'dart:async';
+import 'dart:io';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -11,16 +15,30 @@ extension L10nX on BuildContext {
     ..hideCurrentSnackBar()
     ..showSnackBar(SnackBar(content: Text(message)));
 
-  /// Message for a failed save: "too many attempts" when the server's rate
-  /// limit refused it (see the security migration), otherwise generic.
+  /// Message for a failed request: "too many attempts" when the server's
+  /// rate limit refused it, "no internet" when it never reached the server,
+  /// otherwise generic.
   String errorText(Object error) {
     if (error is PostgrestException &&
         (error.code == 'PT429' || error.message == 'rate_limit')) {
       return l10n.errRateLimit;
     }
+    if (isOfflineError(error)) return l10n.authErrNetwork;
     return l10n.commonError;
   }
 }
+
+/// True when the request never reached Supabase (no internet, Wi-Fi without
+/// connection, server unreachable).
+bool isOfflineError(Object error) =>
+    error is SocketException ||
+    error is TimeoutException ||
+    error is HandshakeException ||
+    error is AuthRetryableFetchException ||
+    // package:http's ClientException ("Failed host lookup", "Connection
+    // closed", ...) is not a direct dependency, so match it by name.
+    error.runtimeType.toString() == 'ClientException' ||
+    error.toString().contains('Failed host lookup');
 
 /// "IMPACT-365 — 1 jour 1 impact" logo: the mark plus the name.
 class BrandLogo extends StatelessWidget {
@@ -436,7 +454,22 @@ class AsyncView<T> extends StatelessWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text(context.l10n.commonError, textAlign: TextAlign.center),
+                  Text(
+                    context.errorText(snap.error!),
+                    textAlign: TextAlign.center,
+                  ),
+                  // Developer builds only: the technical reason, to help
+                  // fix problems. Members never see this.
+                  if (kDebugMode) ...[
+                    const SizedBox(height: 8),
+                    Text(
+                      '${snap.error}',
+                      textAlign: TextAlign.center,
+                      maxLines: 4,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppText.caption.copyWith(color: AppColors.muted),
+                    ),
+                  ],
                   if (onRetry != null)
                     TextButton(
                       onPressed: onRetry,
