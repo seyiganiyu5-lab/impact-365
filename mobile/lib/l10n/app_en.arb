@@ -330,5 +330,30 @@
         "type": "int"
       }
     }
+  },
+  "homeHello": "Hello {name} 👋",
+  "homeTagline": "A new day,\na new impact.",
+  "homeReadAgain": "READ MY DEVOTION AGAIN",
+  "homeDevotionSoon": "Devotion coming soon",
+  "homeWeekDays": "Days",
+  "homeStreakTitle": "{count, plural, =0{Light your flame today} =1{1 day in a row} other{{count} days in a row}}",
+  "homeStreakText": "Complete a devotion or a challenge every day to keep your flame burning.",
+  "homeStreakTooltip": "Your streak",
+  "homeBookmarkAdded": "Devotion saved",
+  "homeBookmarkRemoved": "Removed from your saved devotions",
+  "homeBookmarkTooltip": "Save this devotion",
+  "@homeHello": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "@homeStreakTitle": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   }
 }

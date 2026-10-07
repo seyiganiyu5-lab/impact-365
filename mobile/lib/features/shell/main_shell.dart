@@ -22,6 +22,8 @@ class MainShell extends StatelessWidget {
     ];
 
     return Scaffold(
+      // The home page is purple from top to bottom, behind the bar too.
+      backgroundColor: shell.currentIndex == 0 ? AppColors.deepPurple : null,
       body: shell,
       bottomNavigationBar: SafeArea(
         minimum: const EdgeInsets.fromLTRB(12, 0, 12, 8),
@@ -30,6 +32,8 @@ class MainShell extends StatelessWidget {
           decoration: BoxDecoration(
             color: AppColors.purple,
             borderRadius: BorderRadius.circular(24),
+            // Only visible on the purple home page.
+            border: Border.all(color: Colors.white.withValues(alpha: 0.14)),
             boxShadow: const [
               BoxShadow(
                 color: Color(0x333B1E7B),

@@ -131,6 +131,7 @@ class UserStats {
     this.prayersOpen = 0,
     this.daysSinceJoin = 1,
     this.weekChallengeDays = const {},
+    this.weekActivity = const [0, 0, 0, 0, 0, 0, 0],
   });
 
   final int streak;
@@ -143,6 +144,12 @@ class UserStats {
   /// ISO weekdays (1 = Monday) on which a challenge was completed this week.
   final Set<int> weekChallengeDays;
 
+  /// Devotions + challenges completed on each day of this week (Monday first).
+  final List<int> weekActivity;
+
+  /// Days of this week with at least one devotion or challenge.
+  int get activeDaysThisWeek => weekActivity.where((n) => n > 0).length;
+
   factory UserStats.fromJson(Map<String, dynamic> j) => UserStats(
     streak: j['streak'] as int? ?? 0,
     devotionsCompleted: j['devotions_completed'] as int? ?? 0,
@@ -153,6 +160,10 @@ class UserStats {
     weekChallengeDays: ((j['week_challenges'] as List?) ?? [])
         .cast<int>()
         .toSet(),
+    weekActivity: [
+      for (final n in ((j['week_activity'] as List?) ?? const []).take(7))
+        (n as num).toInt(),
+    ].followedBy(List.filled(7, 0)).take(7).toList(),
   );
 }
 

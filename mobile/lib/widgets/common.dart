@@ -427,11 +427,15 @@ class AsyncView<T> extends StatelessWidget {
     required this.future,
     required this.builder,
     this.onRetry,
+    this.onDark = false,
   });
 
   final Future<T> future;
   final Widget Function(BuildContext context, T data) builder;
   final VoidCallback? onRetry;
+
+  /// Light spinner and text, for pages with a purple background.
+  final bool onDark;
 
   @override
   Widget build(BuildContext context) {
@@ -439,45 +443,66 @@ class AsyncView<T> extends StatelessWidget {
       future: future,
       builder: (context, snap) {
         if (snap.connectionState != ConnectionState.done) {
-          return const Center(
+          return Center(
             child: Padding(
-              padding: EdgeInsets.all(32),
-              child: CircularProgressIndicator(color: AppColors.purple),
+              padding: const EdgeInsets.all(32),
+              child: CircularProgressIndicator(
+                color: onDark ? AppColors.gold : AppColors.purple,
+              ),
             ),
           );
         }
         if (snap.hasError) {
           debugPrint('AsyncView error: ${snap.error}');
-          return Center(
-            child: Padding(
-              padding: const EdgeInsets.all(32),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    context.errorText(snap.error!),
-                    textAlign: TextAlign.center,
+          // ListView so pull-to-refresh also works on the error screen.
+          return ListView(
+            physics: const AlwaysScrollableScrollPhysics(),
+            children: [
+              SizedBox(
+                height: MediaQuery.sizeOf(context).height * 0.6,
+                child: Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(32),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          context.errorText(snap.error!),
+                          textAlign: TextAlign.center,
+                          style: AppText.bodyLarge.copyWith(
+                            color: onDark ? Colors.white : AppColors.ink,
+                          ),
+                        ),
+                        // Developer builds only: the technical reason, to help
+                        // fix problems. Members never see this.
+                        if (kDebugMode) ...[
+                          const SizedBox(height: 8),
+                          Text(
+                            '${snap.error}',
+                            textAlign: TextAlign.center,
+                            maxLines: 4,
+                            overflow: TextOverflow.ellipsis,
+                            style: AppText.caption.copyWith(
+                              color: onDark ? Colors.white54 : AppColors.muted,
+                            ),
+                          ),
+                        ],
+                        if (onRetry != null)
+                          TextButton(
+                            onPressed: onRetry,
+                            style: onDark
+                                ? TextButton.styleFrom(
+                                    foregroundColor: AppColors.gold,
+                                  )
+                                : null,
+                            child: Text(context.l10n.commonRetry),
+                          ),
+                      ],
+                    ),
                   ),
-                  // Developer builds only: the technical reason, to help
-                  // fix problems. Members never see this.
-                  if (kDebugMode) ...[
-                    const SizedBox(height: 8),
-                    Text(
-                      '${snap.error}',
-                      textAlign: TextAlign.center,
-                      maxLines: 4,
-                      overflow: TextOverflow.ellipsis,
-                      style: AppText.caption.copyWith(color: AppColors.muted),
-                    ),
-                  ],
-                  if (onRetry != null)
-                    TextButton(
-                      onPressed: onRetry,
-                      child: Text(context.l10n.commonRetry),
-                    ),
-                ],
+                ),
               ),
-            ),
+            ],
           );
         }
         return builder(context, snap.data as T);

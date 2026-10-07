@@ -871,4 +871,49 @@ class AppLocalizationsYo extends AppLocalizations {
   String authSignInLocked(int seconds) {
     return 'Ìgbìyànjú tí kò yọrí ti pọ̀ jù. Gbìyànjú lẹ́ẹ̀kan síi ní ìṣẹ́jú-àáyá $seconds.';
   }
+
+  @override
+  String homeHello(String name) {
+    return 'Báwo ni $name 👋';
+  }
+
+  @override
+  String get homeTagline => 'Ọjọ́ tuntun,\nipa tuntun.';
+
+  @override
+  String get homeReadAgain => 'TÚN ÌFỌKÀNSÌN MI KÀ';
+
+  @override
+  String get homeDevotionSoon => 'Ìfọkànsìn ń bọ̀ láìpẹ́';
+
+  @override
+  String get homeWeekDays => 'Ọjọ́';
+
+  @override
+  String homeStreakTitle(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Ọjọ́ $count léraléra',
+      one: 'Ọjọ́ 1 léraléra',
+      zero: 'Tan iná rẹ lónìí',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get homeStreakText =>
+      'Ṣe ìfọkànsìn tàbí ìpèníjà kan lójoojúmọ́ kí iná rẹ má baà kú.';
+
+  @override
+  String get homeStreakTooltip => 'Ọ̀wọ́ rẹ';
+
+  @override
+  String get homeBookmarkAdded => 'A ti fi ìfọkànsìn pamọ́';
+
+  @override
+  String get homeBookmarkRemoved => 'A ti yọ ọ́ kúrò nínú àwọn tí o fi pamọ́';
+
+  @override
+  String get homeBookmarkTooltip => 'Fi ìfọkànsìn yìí pamọ́';
 }

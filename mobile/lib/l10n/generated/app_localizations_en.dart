@@ -868,4 +868,49 @@ class AppLocalizationsEn extends AppLocalizations {
   String authSignInLocked(int seconds) {
     return 'Too many failed attempts. Try again in $seconds s.';
   }
+
+  @override
+  String homeHello(String name) {
+    return 'Hello $name 👋';
+  }
+
+  @override
+  String get homeTagline => 'A new day,\na new impact.';
+
+  @override
+  String get homeReadAgain => 'READ MY DEVOTION AGAIN';
+
+  @override
+  String get homeDevotionSoon => 'Devotion coming soon';
+
+  @override
+  String get homeWeekDays => 'Days';
+
+  @override
+  String homeStreakTitle(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count days in a row',
+      one: '1 day in a row',
+      zero: 'Light your flame today',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get homeStreakText =>
+      'Complete a devotion or a challenge every day to keep your flame burning.';
+
+  @override
+  String get homeStreakTooltip => 'Your streak';
+
+  @override
+  String get homeBookmarkAdded => 'Devotion saved';
+
+  @override
+  String get homeBookmarkRemoved => 'Removed from your saved devotions';
+
+  @override
+  String get homeBookmarkTooltip => 'Save this devotion';
 }

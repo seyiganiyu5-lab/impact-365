@@ -260,5 +260,16 @@
   "authErrPasswordWeak": "Lo lẹ́tà àti ó kéré tán nọ́ńbà kan",
   "errRateLimit": "O ń ṣe èyí léraléra jù. Dúró díẹ̀ kí o sì gbìyànjú lẹ́ẹ̀kan síi.",
   "authErrTooManyCodes": "Koodu tí kò tọ́ ti pọ̀ jù. Fún ààbò rẹ, béèrè koodu tuntun.",
-  "authSignInLocked": "Ìgbìyànjú tí kò yọrí ti pọ̀ jù. Gbìyànjú lẹ́ẹ̀kan síi ní ìṣẹ́jú-àáyá {seconds}."
+  "authSignInLocked": "Ìgbìyànjú tí kò yọrí ti pọ̀ jù. Gbìyànjú lẹ́ẹ̀kan síi ní ìṣẹ́jú-àáyá {seconds}.",
+  "homeHello": "Báwo ni {name} 👋",
+  "homeTagline": "Ọjọ́ tuntun,\nipa tuntun.",
+  "homeReadAgain": "TÚN ÌFỌKÀNSÌN MI KÀ",
+  "homeDevotionSoon": "Ìfọkànsìn ń bọ̀ láìpẹ́",
+  "homeWeekDays": "Ọjọ́",
+  "homeStreakTitle": "{count, plural, =0{Tan iná rẹ lónìí} =1{Ọjọ́ 1 léraléra} other{Ọjọ́ {count} léraléra}}",
+  "homeStreakText": "Ṣe ìfọkànsìn tàbí ìpèníjà kan lójoojúmọ́ kí iná rẹ má baà kú.",
+  "homeStreakTooltip": "Ọ̀wọ́ rẹ",
+  "homeBookmarkAdded": "A ti fi ìfọkànsìn pamọ́",
+  "homeBookmarkRemoved": "A ti yọ ọ́ kúrò nínú àwọn tí o fi pamọ́",
+  "homeBookmarkTooltip": "Fi ìfọkànsìn yìí pamọ́"
 }

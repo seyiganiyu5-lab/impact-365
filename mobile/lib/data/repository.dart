@@ -89,6 +89,28 @@ class Repo {
         .toList();
   }
 
+  /// Which of [ids] the member saved with the bookmark button.
+  static Future<Set<String>> bookmarkedDevotionIds(List<String> ids) async {
+    if (ids.isEmpty) return {};
+    final rows = await _db
+        .from('devotion_bookmarks')
+        .select('devotion_id')
+        .eq('user_id', _uid)
+        .inFilter('devotion_id', ids);
+    return rows.map((r) => r['devotion_id'] as String).toSet();
+  }
+
+  static Future<void> setDevotionBookmark(String id, bool saved) => saved
+      ? _db.from('devotion_bookmarks').upsert({
+          'user_id': _uid,
+          'devotion_id': id,
+        })
+      : _db
+            .from('devotion_bookmarks')
+            .delete()
+            .eq('user_id', _uid)
+            .eq('devotion_id', id);
+
   static Future<List<Devotion>> todayDevotions() async {
     final rows = await _db
         .from('devotions')

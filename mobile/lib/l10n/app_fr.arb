@@ -260,5 +260,16 @@
   "authErrPasswordWeak": "Utilise des lettres et au moins un chiffre",
   "errRateLimit": "Tu le fais trop souvent. Patiente un peu puis réessaie.",
   "authErrTooManyCodes": "Trop de codes incorrects. Pour ta sécurité, demande un nouveau code.",
-  "authSignInLocked": "Trop de tentatives échouées. Réessaie dans {seconds} s."
+  "authSignInLocked": "Trop de tentatives échouées. Réessaie dans {seconds} s.",
+  "homeHello": "Bonjour {name} 👋",
+  "homeTagline": "Une nouvelle journée,\nun nouvel impact.",
+  "homeReadAgain": "RELIRE MA DÉVOTION",
+  "homeDevotionSoon": "Dévotion bientôt disponible",
+  "homeWeekDays": "Jours",
+  "homeStreakTitle": "{count, plural, =0{Allume ta flamme aujourd'hui} =1{1 jour d'affilée} other{{count} jours d'affilée}}",
+  "homeStreakText": "Fais une dévotion ou un défi chaque jour pour garder ta flamme allumée.",
+  "homeStreakTooltip": "Ta série",
+  "homeBookmarkAdded": "Dévotion enregistrée",
+  "homeBookmarkRemoved": "Retirée de tes dévotions enregistrées",
+  "homeBookmarkTooltip": "Enregistrer la dévotion"
 }

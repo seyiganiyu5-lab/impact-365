@@ -1665,6 +1665,72 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Too many failed attempts. Try again in {seconds} s.'**
   String authSignInLocked(int seconds);
+
+  /// No description provided for @homeHello.
+  ///
+  /// In en, this message translates to:
+  /// **'Hello {name} 👋'**
+  String homeHello(String name);
+
+  /// No description provided for @homeTagline.
+  ///
+  /// In en, this message translates to:
+  /// **'A new day,\na new impact.'**
+  String get homeTagline;
+
+  /// No description provided for @homeReadAgain.
+  ///
+  /// In en, this message translates to:
+  /// **'READ MY DEVOTION AGAIN'**
+  String get homeReadAgain;
+
+  /// No description provided for @homeDevotionSoon.
+  ///
+  /// In en, this message translates to:
+  /// **'Devotion coming soon'**
+  String get homeDevotionSoon;
+
+  /// No description provided for @homeWeekDays.
+  ///
+  /// In en, this message translates to:
+  /// **'Days'**
+  String get homeWeekDays;
+
+  /// No description provided for @homeStreakTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{Light your flame today} =1{1 day in a row} other{{count} days in a row}}'**
+  String homeStreakTitle(int count);
+
+  /// No description provided for @homeStreakText.
+  ///
+  /// In en, this message translates to:
+  /// **'Complete a devotion or a challenge every day to keep your flame burning.'**
+  String get homeStreakText;
+
+  /// No description provided for @homeStreakTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Your streak'**
+  String get homeStreakTooltip;
+
+  /// No description provided for @homeBookmarkAdded.
+  ///
+  /// In en, this message translates to:
+  /// **'Devotion saved'**
+  String get homeBookmarkAdded;
+
+  /// No description provided for @homeBookmarkRemoved.
+  ///
+  /// In en, this message translates to:
+  /// **'Removed from your saved devotions'**
+  String get homeBookmarkRemoved;
+
+  /// No description provided for @homeBookmarkTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Save this devotion'**
+  String get homeBookmarkTooltip;
 }
 
 class _AppLocalizationsDelegate
