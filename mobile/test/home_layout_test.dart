@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -124,4 +125,25 @@ void main() {
       lessThan(greetingBefore.dy),
     );
   });
+
+  for (final lang in ['fr', 'en', 'yo']) {
+    testWidgets('shortcut labels share one size and are never cut ($lang)', (
+      tester,
+    ) async {
+      tester.view.physicalSize = const Size(360, 1400) * 3;
+      tester.view.devicePixelRatio = 3;
+      addTearDown(tester.view.reset);
+      await tester.pumpWidget(homeApp(lang, sampleHome()));
+      final l = await AppLocalizations.delegate.load(Locale(lang));
+      final labels = [l.homeYourWord, l.homeYourPrayer, l.homeYourImpact];
+      final sizes = <double?>{};
+      for (final label in labels) {
+        final finder = find.text(label);
+        sizes.add(tester.widget<Text>(finder).style?.fontSize);
+        final paragraph = tester.renderObject<RenderParagraph>(finder);
+        expect(paragraph.didExceedMaxLines, isFalse, reason: label);
+      }
+      expect(sizes, hasLength(1));
+    });
+  }
 }

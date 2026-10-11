@@ -226,29 +226,49 @@ class HomeBody extends StatelessWidget {
                 style: AppText.titleMedium.copyWith(color: Colors.white),
               ),
               const SizedBox(height: 12),
-              IntrinsicHeight(
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    _TodayCard(
-                      emoji: '📖',
-                      label: l.homeYourWord,
-                      onTap: () => context.go('/word'),
+              LayoutBuilder(
+                builder: (context, box) {
+                  final labels = [
+                    l.homeYourWord,
+                    l.homeYourPrayer,
+                    l.homeYourImpact,
+                  ];
+                  // One size for all three labels: the largest that lets
+                  // the longest one fit, so they always match.
+                  final cardWidth = (box.maxWidth - 2 * _TodayCard.gap) / 3;
+                  final style = _TodayCard.labelSizeFor(
+                    context,
+                    labels,
+                    cardWidth - _TodayCard.reserved,
+                  );
+                  return IntrinsicHeight(
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        _TodayCard(
+                          emoji: '📖',
+                          label: labels[0],
+                          style: style,
+                          onTap: () => context.go('/word'),
+                        ),
+                        const SizedBox(width: _TodayCard.gap),
+                        _TodayCard(
+                          emoji: '🙏',
+                          label: labels[1],
+                          style: style,
+                          onTap: () => context.go('/prayer'),
+                        ),
+                        const SizedBox(width: _TodayCard.gap),
+                        _TodayCard(
+                          emoji: '🤝',
+                          label: labels[2],
+                          style: style,
+                          onTap: () => context.go('/impact'),
+                        ),
+                      ],
                     ),
-                    const SizedBox(width: 10),
-                    _TodayCard(
-                      emoji: '🙏',
-                      label: l.homeYourPrayer,
-                      onTap: () => context.go('/prayer'),
-                    ),
-                    const SizedBox(width: 10),
-                    _TodayCard(
-                      emoji: '🤝',
-                      label: l.homeYourImpact,
-                      onTap: () => context.go('/impact'),
-                    ),
-                  ],
-                ),
+                  );
+                },
               ),
             ],
           ),
@@ -933,12 +953,48 @@ class _TodayCard extends StatelessWidget {
   const _TodayCard({
     required this.emoji,
     required this.label,
+    required this.style,
     required this.onTap,
   });
 
   final String emoji;
   final String label;
+  final TextStyle style;
   final VoidCallback onTap;
+
+  static const gap = 10.0;
+
+  /// Card padding (10 + 6) + space (3) + arrow (16) + 1 px safety margin:
+  /// the width the label can't use.
+  static const reserved = 36.0;
+
+  /// Regular body-small style, shrunk evenly (never below 11) when the
+  /// longest label would not fit in [available] pixels.
+  static TextStyle labelSizeFor(
+    BuildContext context,
+    List<String> labels,
+    double available,
+  ) {
+    final base = AppText.bodySmall.copyWith(color: AppColors.ink);
+    // Measure exactly as Text will draw it (inherited letter spacing etc.).
+    final measured = DefaultTextStyle.of(context).style.merge(base);
+    final scaler = MediaQuery.textScalerOf(context);
+    var widest = 0.0;
+    for (final label in labels) {
+      final painter = TextPainter(
+        text: TextSpan(text: label, style: measured),
+        textDirection: Directionality.of(context),
+        textScaler: scaler,
+        maxLines: 1,
+      )..layout();
+      widest = math.max(widest, painter.width);
+      painter.dispose();
+    }
+    if (widest <= available || widest == 0) return base;
+    final size = (base.fontSize! * available / widest).clamp(11.0, 13.0);
+    // Round down to half a pixel so the longest label surely fits.
+    return base.copyWith(fontSize: (size * 2).floorToDouble() / 2);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -952,7 +1008,7 @@ class _TodayCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(18),
           onTap: onTap,
           child: Padding(
-            padding: const EdgeInsets.fromLTRB(10, 14, 8, 10),
+            padding: const EdgeInsets.fromLTRB(10, 14, 6, 10),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -963,25 +1019,18 @@ class _TodayCard extends StatelessWidget {
                 Row(
                   children: [
                     Expanded(
-                      // Shrinks slightly instead of cutting the word on
-                      // small phones ("Ton impact").
-                      child: FittedBox(
-                        fit: BoxFit.scaleDown,
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          label,
-                          maxLines: 1,
-                          style: AppText.bodySmall.copyWith(
-                            color: AppColors.ink,
-                          ),
-                        ),
+                      child: Text(
+                        label,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: style,
                       ),
                     ),
-                    const SizedBox(width: 4),
+                    const SizedBox(width: 3),
                     const Icon(
                       Icons.arrow_circle_right_outlined,
                       color: AppColors.gold,
-                      size: 20,
+                      size: 16,
                     ),
                   ],
                 ),
