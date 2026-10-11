@@ -525,6 +525,9 @@ class _DevotionHeroState extends State<_DevotionHero> {
     };
   }
 
+  /// Width / height of assets/images/home_hero.jpg (1409 × 736).
+  static const photoAspect = 1409 / 736;
+
   IconData _slotIcon(DevotionSlot slot) => switch (slot) {
     DevotionSlot.morning => Icons.wb_twilight_rounded,
     DevotionSlot.afternoon => Icons.wb_sunny_rounded,
@@ -552,7 +555,8 @@ class _DevotionHeroState extends State<_DevotionHero> {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(27),
         child: AspectRatio(
-          aspectRatio: 1.3,
+          // Same shape as the photo, so it is shown whole (not zoomed).
+          aspectRatio: _DevotionHeroState.photoAspect,
           child: Stack(
             fit: StackFit.expand,
             children: [
@@ -567,41 +571,38 @@ class _DevotionHeroState extends State<_DevotionHero> {
                 )
               else
                 const Image(image: fallback, fit: BoxFit.cover),
-              // Soft purple veil so the verse and the button stay readable
-              // on any photo.
+              // Purple veil, darker on the left where the verse sits, so the
+              // text stays readable and the sunrise stays bright.
               const DecoratedBox(
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
+                    begin: Alignment.centerLeft,
+                    end: Alignment.centerRight,
                     colors: [
-                      Color(0x331A0B3D),
-                      Color(0x591A0B3D),
                       Color(0xB31A0B3D),
+                      Color(0x661A0B3D),
+                      Color(0x0D1A0B3D),
                     ],
-                    stops: [0, 0.45, 1],
+                    stops: [0, 0.55, 1],
                   ),
                 ),
               ),
               // Verse of the day: today's devotion verse, or Psalm 118:24
               // while nothing is published.
               Positioned(
-                left: 20,
-                right: 20,
-                top: 66,
-                bottom: 78,
-                child: Center(
-                  child: _HeroVerse(
-                    text: devotion?.verseText ?? l.homeFallbackVerse,
-                    reference:
-                        devotion?.verseReference ?? l.homeFallbackVerseRef,
-                  ),
+                left: 16,
+                right: 16,
+                top: 50,
+                bottom: 54,
+                child: _HeroVerse(
+                  text: devotion?.verseText ?? l.homeFallbackVerse,
+                  reference: devotion?.verseReference ?? l.homeFallbackVerseRef,
                 ),
               ),
               if (devotion != null)
                 Positioned(
-                  top: 14,
-                  left: 14,
+                  top: 12,
+                  left: 12,
                   child: _GlassChip(
                     icon: _slotIcon(devotion.slot),
                     label: _slotLabel(context, devotion.slot),
@@ -609,8 +610,8 @@ class _DevotionHeroState extends State<_DevotionHero> {
                 ),
               if (devotion != null)
                 Positioned(
-                  top: 10,
-                  right: 10,
+                  top: 8,
+                  right: 8,
                   child: Tooltip(
                     message: l.homeBookmarkTooltip,
                     child: Material(
@@ -624,14 +625,14 @@ class _DevotionHeroState extends State<_DevotionHero> {
                         customBorder: const CircleBorder(),
                         onTap: _toggleSaved,
                         child: SizedBox(
-                          width: 44,
-                          height: 44,
+                          width: 40,
+                          height: 40,
                           child: Icon(
                             _saved
                                 ? Icons.bookmark_rounded
                                 : Icons.bookmark_border_rounded,
                             color: _saved ? AppColors.gold : Colors.white,
-                            size: 24,
+                            size: 22,
                           ),
                         ),
                       ),
@@ -639,9 +640,9 @@ class _DevotionHeroState extends State<_DevotionHero> {
                   ),
                 ),
               Positioned(
-                left: 14,
-                right: 14,
-                bottom: 14,
+                left: 12,
+                right: 12,
+                bottom: 12,
                 child: Align(
                   alignment: Alignment.centerRight,
                   // Opens the Parole tab (today's devotions and the
@@ -670,37 +671,52 @@ class _HeroVerse extends StatelessWidget {
   final String reference;
 
   static const _shadow = [
-    Shadow(color: Color(0x99000000), blurRadius: 12, offset: Offset(0, 2)),
+    Shadow(color: Color(0x99000000), blurRadius: 10, offset: Offset(0, 1)),
   ];
+
+  static const _verseStyle = TextStyle(
+    fontFamily: 'SourceSerif4',
+    fontStyle: FontStyle.italic,
+    fontSize: 14.5,
+    height: 1.3,
+    color: Colors.white,
+    shadows: _shadow,
+  );
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Flexible(
-          child: Text(
-            context.l10n.homeVerseQuote(text),
-            textAlign: TextAlign.center,
-            maxLines: 4,
-            overflow: TextOverflow.ellipsis,
-            style: AppText.scripture.copyWith(
-              color: Colors.white,
-              height: 1.35,
-              shadows: _shadow,
+    final refStyle = AppText.scriptureRef.copyWith(
+      color: AppColors.gold,
+      fontSize: 12,
+      letterSpacing: 0.3,
+      shadows: _shadow,
+    );
+    return LayoutBuilder(
+      builder: (context, box) {
+        // As many verse lines as fit under the reference (1 to 4).
+        final scaler = MediaQuery.textScalerOf(context);
+        final lineHeight = scaler.scale(14.5) * 1.3;
+        final refHeight = scaler.scale(12) * 1.4 + 4;
+        final lines = ((box.maxHeight - refHeight) / lineHeight).floor().clamp(
+          1,
+          4,
+        );
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            // Reference first, then the verse.
+            Text(reference, maxLines: 1, style: refStyle),
+            const SizedBox(height: 4),
+            Text(
+              context.l10n.homeVerseQuote(text),
+              maxLines: lines,
+              overflow: TextOverflow.ellipsis,
+              style: _verseStyle,
             ),
-          ),
-        ),
-        const SizedBox(height: 8),
-        Text(
-          reference,
-          textAlign: TextAlign.center,
-          style: AppText.scriptureRef.copyWith(
-            color: AppColors.gold,
-            shadows: _shadow,
-          ),
-        ),
-      ],
+          ],
+        );
+      },
     );
   }
 }
@@ -720,42 +736,42 @@ class _StartButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       color: AppColors.gold,
-      borderRadius: BorderRadius.circular(16),
-      elevation: 4,
+      borderRadius: BorderRadius.circular(12),
+      elevation: 3,
       shadowColor: const Color(0x66000000),
       child: InkWell(
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(12),
         onTap: onPressed,
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(18, 13, 12, 13),
+          padding: const EdgeInsets.fromLTRB(14, 9, 8, 9),
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
               if (done) ...[
                 const Icon(
                   Icons.check_circle_rounded,
-                  size: 18,
+                  size: 15,
                   color: Colors.white,
                 ),
-                const SizedBox(width: 6),
+                const SizedBox(width: 5),
               ],
               Flexible(
                 child: Text(
                   label,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: AppText.labelMedium.copyWith(
+                  style: AppText.labelSmall.copyWith(
                     color: Colors.white,
-                    fontSize: 14,
+                    fontSize: 12,
                     letterSpacing: 0.4,
                   ),
                 ),
               ),
-              const SizedBox(width: 6),
+              const SizedBox(width: 2),
               const Icon(
                 Icons.chevron_right_rounded,
                 color: Colors.white,
-                size: 24,
+                size: 18,
               ),
             ],
           ),
