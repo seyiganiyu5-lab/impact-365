@@ -104,4 +104,24 @@ void main() {
     expect(find.text('7/7'), findsOneWidget);
     expect(find.text('Jour 182 / 365'), findsOneWidget);
   });
+
+  testWidgets('logo header stays fixed while the page scrolls', (tester) async {
+    tester.view.physicalSize = const Size(360, 640) * 3;
+    tester.view.devicePixelRatio = 3;
+    addTearDown(tester.view.reset);
+    await tester.pumpWidget(homeApp('fr', sampleHome()));
+    final logoBefore = tester.getTopLeft(find.text('IMPACT-365'));
+    final greetingBefore = tester.getTopLeft(
+      find.textContaining('Bonjour Jean', skipOffstage: false),
+    );
+    await tester.drag(find.byType(ListView), const Offset(0, -80));
+    await tester.pump(const Duration(milliseconds: 500));
+    expect(tester.getTopLeft(find.text('IMPACT-365')), logoBefore);
+    expect(
+      tester
+          .getTopLeft(find.textContaining('Bonjour Jean', skipOffstage: false))
+          .dy,
+      lessThan(greetingBefore.dy),
+    );
+  });
 }

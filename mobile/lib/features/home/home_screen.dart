@@ -152,87 +152,103 @@ class HomeBody extends StatelessWidget {
         ? l.homeGreetingDefault
         : data.profile.firstName;
 
-    return ListView(
-      physics: const AlwaysScrollableScrollPhysics(),
-      // The page scrolls behind the floating bar; the last cards still
-      // end above it.
-      padding: EdgeInsets.fromLTRB(
-        20,
-        8,
-        20,
-        28 + MediaQuery.paddingOf(context).bottom,
-      ),
+    return Column(
       children: [
-        // Streak · logo · notifications
-        Row(
-          children: [
-            _StreakChip(streak: data.stats.streak),
-            const Spacer(),
-            IconButton(
-              onPressed: () => context.push('/inbox'),
-              icon: const Icon(
-                Icons.notifications_none_rounded,
-                size: 28,
-                color: Colors.white,
-              ),
-            ),
-          ],
-        ),
-        const _HomeLogo(),
-        const SizedBox(height: 24),
-
-        // Greeting: subtitle regular, tagline bold.
-        Text(
-          l.homeHello(name),
-          style: AppText.bodyLarge.copyWith(color: Colors.white70),
-        ),
-        const SizedBox(height: 6),
-        Text(
-          l.homeTagline,
-          style: AppText.headline.copyWith(color: Colors.white, height: 1.2),
-        ),
-        const SizedBox(height: 18),
-        _JourneyProgress(day: _journeyDay),
-        const SizedBox(height: 20),
-
-        _DevotionHero(
-          devotion: data.current,
-          initiallySaved:
-              data.current != null &&
-              data.bookmarked.contains(data.current!.id),
-          onSavedChanged: (id, saved) =>
-              saved ? data.bookmarked.add(id) : data.bookmarked.remove(id),
-          onReturn: onReturn,
-        ),
-        const SizedBox(height: 16),
-        _FaithJourneyCard(stats: data.stats),
-        const SizedBox(height: 24),
-
-        Text(
-          l.homeToday,
-          style: AppText.titleMedium.copyWith(color: Colors.white),
-        ),
-        const SizedBox(height: 12),
-        IntrinsicHeight(
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+        // Fixed header: streak · notifications, then the logo with the
+        // name and tagline. Only what is below scrolls.
+        Padding(
+          padding: const EdgeInsets.fromLTRB(20, 8, 20, 8),
+          child: Column(
             children: [
-              _TodayCard(
-                emoji: '📖',
-                label: l.homeYourWord,
-                onTap: () => context.go('/word'),
+              Row(
+                children: [
+                  _StreakChip(streak: data.stats.streak),
+                  const Spacer(),
+                  IconButton(
+                    onPressed: () => context.push('/inbox'),
+                    icon: const Icon(
+                      Icons.notifications_none_rounded,
+                      size: 28,
+                      color: Colors.white,
+                    ),
+                  ),
+                ],
               ),
-              const SizedBox(width: 10),
-              _TodayCard(
-                emoji: '🙏',
-                label: l.homeYourPrayer,
-                onTap: () => context.go('/prayer'),
+              const _HomeLogo(),
+            ],
+          ),
+        ),
+        Expanded(
+          child: ListView(
+            physics: const AlwaysScrollableScrollPhysics(),
+            // The page scrolls behind the floating bar; the last cards still
+            // end above it.
+            padding: EdgeInsets.fromLTRB(
+              20,
+              16,
+              20,
+              28 + MediaQuery.paddingOf(context).bottom,
+            ),
+            children: [
+              // Greeting: subtitle regular, tagline bold.
+              Text(
+                l.homeHello(name),
+                style: AppText.bodyLarge.copyWith(color: Colors.white70),
               ),
-              const SizedBox(width: 10),
-              _TodayCard(
-                emoji: '🤝',
-                label: l.homeYourImpact,
-                onTap: () => context.go('/impact'),
+              const SizedBox(height: 6),
+              Text(
+                l.homeTagline,
+                style: AppText.headline.copyWith(
+                  color: Colors.white,
+                  height: 1.2,
+                ),
+              ),
+              const SizedBox(height: 18),
+              _JourneyProgress(day: _journeyDay),
+              const SizedBox(height: 20),
+
+              _DevotionHero(
+                devotion: data.current,
+                initiallySaved:
+                    data.current != null &&
+                    data.bookmarked.contains(data.current!.id),
+                onSavedChanged: (id, saved) => saved
+                    ? data.bookmarked.add(id)
+                    : data.bookmarked.remove(id),
+                onReturn: onReturn,
+              ),
+              const SizedBox(height: 16),
+              _FaithJourneyCard(stats: data.stats),
+              const SizedBox(height: 24),
+
+              Text(
+                l.homeToday,
+                style: AppText.titleMedium.copyWith(color: Colors.white),
+              ),
+              const SizedBox(height: 12),
+              IntrinsicHeight(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    _TodayCard(
+                      emoji: '📖',
+                      label: l.homeYourWord,
+                      onTap: () => context.go('/word'),
+                    ),
+                    const SizedBox(width: 10),
+                    _TodayCard(
+                      emoji: '🙏',
+                      label: l.homeYourPrayer,
+                      onTap: () => context.go('/prayer'),
+                    ),
+                    const SizedBox(width: 10),
+                    _TodayCard(
+                      emoji: '🤝',
+                      label: l.homeYourImpact,
+                      onTap: () => context.go('/impact'),
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
