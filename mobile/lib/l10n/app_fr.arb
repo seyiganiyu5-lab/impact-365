@@ -271,5 +271,8 @@
   "homeStreakTooltip": "Ta série",
   "homeBookmarkAdded": "Dévotion enregistrée",
   "homeBookmarkRemoved": "Retirée de tes dévotions enregistrées",
-  "homeBookmarkTooltip": "Enregistrer la dévotion"
+  "homeBookmarkTooltip": "Enregistrer la dévotion",
+  "homeFallbackVerse": "C'est ici la journée que l'Éternel a faite : qu'elle soit pour nous un sujet d'allégresse et de joie !",
+  "homeFallbackVerseRef": "Psaume 118:24",
+  "homeVerseQuote": "« {text} »"
 }

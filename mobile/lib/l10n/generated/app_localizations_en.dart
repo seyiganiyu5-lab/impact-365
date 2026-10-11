@@ -913,4 +913,16 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get homeBookmarkTooltip => 'Save this devotion';
+
+  @override
+  String get homeFallbackVerse =>
+      'This is the day which the Lord hath made; we will rejoice and be glad in it.';
+
+  @override
+  String get homeFallbackVerseRef => 'Psalm 118:24';
+
+  @override
+  String homeVerseQuote(String text) {
+    return '“$text”';
+  }
 }

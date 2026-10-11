@@ -552,7 +552,7 @@ class _DevotionHeroState extends State<_DevotionHero> {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(27),
         child: AspectRatio(
-          aspectRatio: 1.6,
+          aspectRatio: 1.3,
           child: Stack(
             fit: StackFit.expand,
             children: [
@@ -567,14 +567,34 @@ class _DevotionHeroState extends State<_DevotionHero> {
                 )
               else
                 const Image(image: fallback, fit: BoxFit.cover),
-              // Darker at the bottom so the button always stands out.
+              // Soft purple veil so the verse and the button stay readable
+              // on any photo.
               const DecoratedBox(
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
-                    colors: [Color(0x00000000), Color(0x8C1A0B3D)],
-                    stops: [0.45, 1],
+                    colors: [
+                      Color(0x331A0B3D),
+                      Color(0x591A0B3D),
+                      Color(0xB31A0B3D),
+                    ],
+                    stops: [0, 0.45, 1],
+                  ),
+                ),
+              ),
+              // Verse of the day: today's devotion verse, or Psalm 118:24
+              // while nothing is published.
+              Positioned(
+                left: 20,
+                right: 20,
+                top: 66,
+                bottom: 78,
+                child: Center(
+                  child: _HeroVerse(
+                    text: devotion?.verseText ?? l.homeFallbackVerse,
+                    reference:
+                        devotion?.verseReference ?? l.homeFallbackVerseRef,
                   ),
                 ),
               ),
@@ -624,27 +644,63 @@ class _DevotionHeroState extends State<_DevotionHero> {
                 bottom: 14,
                 child: Align(
                   alignment: Alignment.centerRight,
-                  child: devotion == null
-                      ? _GlassChip(
-                          icon: Icons.schedule_rounded,
-                          label: l.homeDevotionSoon,
-                        )
-                      : _StartButton(
-                          label: devotion.completed
-                              ? l.homeReadAgain
-                              : l.homeStartDevotion,
-                          done: devotion.completed,
-                          onPressed: () async {
-                            await context.push('/devotion/${devotion.id}');
-                            widget.onReturn();
-                          },
-                        ),
+                  // Opens the Parole tab (today's devotions and the
+                  // previous ones).
+                  child: _StartButton(
+                    label: devotion?.completed ?? false
+                        ? l.homeReadAgain
+                        : l.homeStartDevotion,
+                    done: devotion?.completed ?? false,
+                    onPressed: () => context.go('/word'),
+                  ),
                 ),
               ),
             ],
           ),
         ),
       ),
+    );
+  }
+}
+
+class _HeroVerse extends StatelessWidget {
+  const _HeroVerse({required this.text, required this.reference});
+
+  final String text;
+  final String reference;
+
+  static const _shadow = [
+    Shadow(color: Color(0x99000000), blurRadius: 12, offset: Offset(0, 2)),
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Flexible(
+          child: Text(
+            context.l10n.homeVerseQuote(text),
+            textAlign: TextAlign.center,
+            maxLines: 4,
+            overflow: TextOverflow.ellipsis,
+            style: AppText.scripture.copyWith(
+              color: Colors.white,
+              height: 1.35,
+              shadows: _shadow,
+            ),
+          ),
+        ),
+        const SizedBox(height: 8),
+        Text(
+          reference,
+          textAlign: TextAlign.center,
+          style: AppText.scriptureRef.copyWith(
+            color: AppColors.gold,
+            shadows: _shadow,
+          ),
+        ),
+      ],
     );
   }
 }

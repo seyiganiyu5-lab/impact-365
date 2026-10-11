@@ -3,6 +3,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:go_router/go_router.dart';
 import 'package:impact365/core/theme.dart';
 import 'package:impact365/core/yoruba_fallback.dart';
 import 'package:impact365/data/models.dart';
@@ -146,4 +147,53 @@ void main() {
       expect(sizes, hasLength(1));
     });
   }
+
+  testWidgets('photo shows today\'s verse, or Psalm 118:24 when none', (
+    tester,
+  ) async {
+    tester.view.physicalSize = const Size(393, 1400) * 3;
+    tester.view.devicePixelRatio = 3;
+    addTearDown(tester.view.reset);
+    await tester.pumpWidget(homeApp('fr', sampleHome()));
+    expect(find.text('«\u00a0Cherchez premièrement le royaume…\u00a0»'), findsOneWidget);
+    expect(find.text('Matthieu 6:33'), findsOneWidget);
+
+    await tester.pumpWidget(homeApp('fr', sampleHome(withDevotion: false)));
+    expect(find.textContaining("C'est ici la journée"), findsOneWidget);
+    expect(find.text('Psaume 118:24'), findsOneWidget);
+  });
+
+  testWidgets('devotion button opens the Parole tab', (tester) async {
+    tester.view.physicalSize = const Size(393, 1400) * 3;
+    tester.view.devicePixelRatio = 3;
+    addTearDown(tester.view.reset);
+    final router = GoRouter(
+      routes: [
+        GoRoute(
+          path: '/',
+          builder: (_, _) => Scaffold(
+            body: HomeBody(data: sampleHome(), onReturn: () {}),
+          ),
+        ),
+        GoRoute(path: '/word', builder: (_, _) => const Text('PAROLE')),
+      ],
+    );
+    await tester.pumpWidget(
+      MaterialApp.router(
+        routerConfig: router,
+        theme: buildTheme(),
+        locale: const Locale('fr'),
+        supportedLocales: const [Locale('fr')],
+        localizationsDelegates: const [
+          AppLocalizations.delegate,
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+      ),
+    );
+    await tester.tap(find.text('COMMENCER MA DÉVOTION'));
+    await tester.pumpAndSettle();
+    expect(find.text('PAROLE'), findsOneWidget);
+  });
 }

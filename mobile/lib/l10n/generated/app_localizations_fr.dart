@@ -925,4 +925,16 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get homeBookmarkTooltip => 'Enregistrer la dévotion';
+
+  @override
+  String get homeFallbackVerse =>
+      'C\'est ici la journée que l\'Éternel a faite : qu\'elle soit pour nous un sujet d\'allégresse et de joie !';
+
+  @override
+  String get homeFallbackVerseRef => 'Psaume 118:24';
+
+  @override
+  String homeVerseQuote(String text) {
+    return '« $text »';
+  }
 }

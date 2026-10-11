@@ -355,5 +355,15 @@
         "type": "int"
       }
     }
+  },
+  "homeFallbackVerse": "This is the day which the Lord hath made; we will rejoice and be glad in it.",
+  "homeFallbackVerseRef": "Psalm 118:24",
+  "homeVerseQuote": "“{text}”",
+  "@homeVerseQuote": {
+    "placeholders": {
+      "text": {
+        "type": "String"
+      }
+    }
   }
 }

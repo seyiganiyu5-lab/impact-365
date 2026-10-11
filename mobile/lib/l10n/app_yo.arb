@@ -271,5 +271,8 @@
   "homeStreakTooltip": "Ọ̀wọ́ rẹ",
   "homeBookmarkAdded": "A ti fi ìfọkànsìn pamọ́",
   "homeBookmarkRemoved": "A ti yọ ọ́ kúrò nínú àwọn tí o fi pamọ́",
-  "homeBookmarkTooltip": "Fi ìfọkànsìn yìí pamọ́"
+  "homeBookmarkTooltip": "Fi ìfọkànsìn yìí pamọ́",
+  "homeFallbackVerse": "Èyí ni ọjọ́ tí Olúwa dá; àwa ó máa yọ̀, inú wa ó sì máa dùn nínú rẹ̀.",
+  "homeFallbackVerseRef": "Orin Dáfídì 118:24",
+  "homeVerseQuote": "“{text}”"
 }

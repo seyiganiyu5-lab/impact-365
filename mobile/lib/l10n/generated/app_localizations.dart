@@ -1731,6 +1731,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Save this devotion'**
   String get homeBookmarkTooltip;
+
+  /// No description provided for @homeFallbackVerse.
+  ///
+  /// In en, this message translates to:
+  /// **'This is the day which the Lord hath made; we will rejoice and be glad in it.'**
+  String get homeFallbackVerse;
+
+  /// No description provided for @homeFallbackVerseRef.
+  ///
+  /// In en, this message translates to:
+  /// **'Psalm 118:24'**
+  String get homeFallbackVerseRef;
+
+  /// No description provided for @homeVerseQuote.
+  ///
+  /// In en, this message translates to:
+  /// **'“{text}”'**
+  String homeVerseQuote(String text);
 }
 
 class _AppLocalizationsDelegate

@@ -916,4 +916,16 @@ class AppLocalizationsYo extends AppLocalizations {
 
   @override
   String get homeBookmarkTooltip => 'Fi ìfọkànsìn yìí pamọ́';
+
+  @override
+  String get homeFallbackVerse =>
+      'Èyí ni ọjọ́ tí Olúwa dá; àwa ó máa yọ̀, inú wa ó sì máa dùn nínú rẹ̀.';
+
+  @override
+  String get homeFallbackVerseRef => 'Orin Dáfídì 118:24';
+
+  @override
+  String homeVerseQuote(String text) {
+    return '“$text”';
+  }
 }
