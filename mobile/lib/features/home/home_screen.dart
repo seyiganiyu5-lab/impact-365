@@ -989,24 +989,33 @@ class _WeekRingPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    const stroke = 6.0;
-    final ring = (Offset.zero & size).deflate(stroke / 2);
-    const gap = 0.16;
+    const stroke = 5.0;
+    // Visible space between two segments, in pixels.
+    const gapPx = 4.0;
+    final radius = (math.min(size.width, size.height) - stroke) / 2;
+    final ring = Rect.fromCircle(
+      center: size.center(Offset.zero),
+      radius: radius,
+    );
     const sweep = 2 * math.pi / 7;
+    // Rounded ends stick out by stroke / 2 on each side, so leave room for
+    // them; otherwise neighbouring segments touch.
+    final gap = (gapPx + stroke) / radius;
+    final track = Paint()
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = stroke
+      ..strokeCap = StrokeCap.round;
     for (var i = 0; i < 7; i++) {
-      final paint = Paint()
-        ..style = PaintingStyle.stroke
-        ..strokeWidth = stroke
-        ..strokeCap = StrokeCap.round
-        ..color = i < active
-            ? AppColors.gold
-            : Colors.white.withValues(alpha: 0.18);
+      track.color = i < active
+          ? AppColors.gold
+          : Colors.white.withValues(alpha: 0.2);
+      // Segment i is centred on its own slot, starting at the top.
       canvas.drawArc(
         ring,
         -math.pi / 2 + i * sweep + gap / 2,
         sweep - gap,
         false,
-        paint,
+        track,
       );
     }
   }
