@@ -970,4 +970,32 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get wordInfoText =>
       'Every day, a devotion is waiting for you in the morning, at midday and in the evening. Each one has a verse, what God says, what you understand and what you will do.';
+
+  @override
+  String get weekdaysLong =>
+      'Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday';
+
+  @override
+  String get devotionAudioSoon => 'AUDIO COMING SOON';
+
+  @override
+  String get devotionMenuSave => 'Save this devotion';
+
+  @override
+  String get devotionMenuUnsave => 'Remove from saved';
+
+  @override
+  String get devotionMenuCopy => 'Copy the verse';
+
+  @override
+  String get devotionCopied => 'Verse copied';
+
+  @override
+  String get devotionMenuAsk => 'Ask a leader a question';
+
+  @override
+  String get devotionMore => 'More options';
+
+  @override
+  String get devotionNotFound => 'This devotion could not be found.';
 }

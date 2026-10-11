@@ -228,7 +228,7 @@ class WordBody extends StatelessWidget {
                     : const Icon(Icons.chevron_right_rounded),
                 onTap: () async {
                   Navigator.pop(sheetContext);
-                  await context.push('/devotion/${d.id}');
+                  await context.push('/word/devotion/${d.id}');
                   onReturn();
                 },
               ),
@@ -299,7 +299,7 @@ class _SlotCard extends StatelessWidget {
               context.toast(l.wordNotYet);
               return;
             }
-            await context.push('/devotion/${d.id}');
+            await context.push('/word/devotion/${d.id}');
             onReturn();
           },
           child: Ink(

@@ -982,4 +982,32 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get wordInfoText =>
       'Chaque jour, une dévotion t\'attend le matin, à midi et le soir. Chacune contient un verset, ce que Dieu dit, ce que tu comprends et ce que tu fais.';
+
+  @override
+  String get weekdaysLong =>
+      'Lundi,Mardi,Mercredi,Jeudi,Vendredi,Samedi,Dimanche';
+
+  @override
+  String get devotionAudioSoon => 'AUDIO BIENTÔT DISPONIBLE';
+
+  @override
+  String get devotionMenuSave => 'Enregistrer la dévotion';
+
+  @override
+  String get devotionMenuUnsave => 'Retirer des enregistrées';
+
+  @override
+  String get devotionMenuCopy => 'Copier le verset';
+
+  @override
+  String get devotionCopied => 'Verset copié';
+
+  @override
+  String get devotionMenuAsk => 'Poser une question à un responsable';
+
+  @override
+  String get devotionMore => 'Plus d\'options';
+
+  @override
+  String get devotionNotFound => 'Cette dévotion est introuvable.';
 }

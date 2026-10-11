@@ -288,5 +288,14 @@
   "wordNow": "Maintenant",
   "wordInfoTooltip": "À propos des dévotions",
   "wordInfoTitle": "Trois rendez-vous avec Dieu",
-  "wordInfoText": "Chaque jour, une dévotion t'attend le matin, à midi et le soir. Chacune contient un verset, ce que Dieu dit, ce que tu comprends et ce que tu fais."
+  "wordInfoText": "Chaque jour, une dévotion t'attend le matin, à midi et le soir. Chacune contient un verset, ce que Dieu dit, ce que tu comprends et ce que tu fais.",
+  "weekdaysLong": "Lundi,Mardi,Mercredi,Jeudi,Vendredi,Samedi,Dimanche",
+  "devotionAudioSoon": "AUDIO BIENTÔT DISPONIBLE",
+  "devotionMenuSave": "Enregistrer la dévotion",
+  "devotionMenuUnsave": "Retirer des enregistrées",
+  "devotionMenuCopy": "Copier le verset",
+  "devotionCopied": "Verset copié",
+  "devotionMenuAsk": "Poser une question à un responsable",
+  "devotionMore": "Plus d'options",
+  "devotionNotFound": "Cette dévotion est introuvable."
 }

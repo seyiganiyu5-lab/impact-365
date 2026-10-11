@@ -379,5 +379,14 @@
   "wordNow": "Now",
   "wordInfoTooltip": "About the devotions",
   "wordInfoTitle": "Three moments with God",
-  "wordInfoText": "Every day, a devotion is waiting for you in the morning, at midday and in the evening. Each one has a verse, what God says, what you understand and what you will do."
+  "wordInfoText": "Every day, a devotion is waiting for you in the morning, at midday and in the evening. Each one has a verse, what God says, what you understand and what you will do.",
+  "weekdaysLong": "Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday",
+  "devotionAudioSoon": "AUDIO COMING SOON",
+  "devotionMenuSave": "Save this devotion",
+  "devotionMenuUnsave": "Remove from saved",
+  "devotionMenuCopy": "Copy the verse",
+  "devotionCopied": "Verse copied",
+  "devotionMenuAsk": "Ask a leader a question",
+  "devotionMore": "More options",
+  "devotionNotFound": "This devotion could not be found."
 }

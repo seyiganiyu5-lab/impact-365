@@ -288,5 +288,14 @@
   "wordNow": "Báyìí",
   "wordInfoTooltip": "Nípa àwọn ìfọkànsìn",
   "wordInfoTitle": "Ìpàdé mẹ́ta pẹ̀lú Ọlọ́run",
-  "wordInfoText": "Lójoojúmọ́, ìfọkànsìn kan ń dúró dè ọ́ ní òwúrọ̀, ní ọ̀sán àti ní alẹ́. Ọ̀kọ̀ọ̀kan ní ẹsẹ Bíbélì kan, ohun tí Ọlọ́run sọ, ohun tí ó yé ọ àti ohun tí o máa ṣe."
+  "wordInfoText": "Lójoojúmọ́, ìfọkànsìn kan ń dúró dè ọ́ ní òwúrọ̀, ní ọ̀sán àti ní alẹ́. Ọ̀kọ̀ọ̀kan ní ẹsẹ Bíbélì kan, ohun tí Ọlọ́run sọ, ohun tí ó yé ọ àti ohun tí o máa ṣe.",
+  "weekdaysLong": "Ọjọ́ Ajé,Ọjọ́ Ìsẹ́gun,Ọjọ́rú,Ọjọ́bọ̀,Ọjọ́ Ẹtì,Ọjọ́ Àbámẹ́ta,Ọjọ́ Àìkú",
+  "devotionAudioSoon": "OHÙN Ń BỌ̀ LÁÌPẸ́",
+  "devotionMenuSave": "Fi ìfọkànsìn yìí pamọ́",
+  "devotionMenuUnsave": "Yọ ọ́ kúrò nínú àwọn tí o fi pamọ́",
+  "devotionMenuCopy": "Ṣe àdàkọ ẹsẹ Bíbélì",
+  "devotionCopied": "A ti ṣe àdàkọ ẹsẹ náà",
+  "devotionMenuAsk": "Béèrè ìbéèrè lọ́wọ́ olórí",
+  "devotionMore": "Àwọn àṣàyàn míì",
+  "devotionNotFound": "A kò rí ìfọkànsìn yìí."
 }

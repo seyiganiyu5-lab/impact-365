@@ -146,7 +146,18 @@ final appRouter = GoRouter(
         ),
         StatefulShellBranch(
           routes: [
-            GoRoute(path: '/word', builder: (_, _) => const WordScreen()),
+            GoRoute(
+              path: '/word',
+              builder: (_, _) => const WordScreen(),
+              routes: [
+                // Inside the Parole tab, so the bottom bar stays visible.
+                GoRoute(
+                  path: 'devotion/:id',
+                  builder: (_, s) =>
+                      DevotionScreen(id: s.pathParameters['id']!),
+                ),
+              ],
+            ),
           ],
         ),
         StatefulShellBranch(
@@ -171,10 +182,10 @@ final appRouter = GoRouter(
     ),
 
     // Full-screen pages pushed on top of the tabs
+    // Old address, kept so existing links still work.
     GoRoute(
-      parentNavigatorKey: _rootKey,
       path: '/devotion/:id',
-      builder: (_, s) => DevotionScreen(id: s.pathParameters['id']!),
+      redirect: (_, s) => '/word/devotion/${s.pathParameters['id']}',
     ),
     GoRoute(
       parentNavigatorKey: _rootKey,

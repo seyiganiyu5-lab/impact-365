@@ -40,7 +40,7 @@ Widget wordApp(String lang, List<Devotion> data) {
         ),
       ),
       GoRoute(
-        path: '/devotion/:id',
+        path: '/word/devotion/:id',
         builder: (_, s) => Text('DEVOTION ${s.pathParameters['id']}'),
       ),
     ],

@@ -973,4 +973,32 @@ class AppLocalizationsYo extends AppLocalizations {
   @override
   String get wordInfoText =>
       'Lójoojúmọ́, ìfọkànsìn kan ń dúró dè ọ́ ní òwúrọ̀, ní ọ̀sán àti ní alẹ́. Ọ̀kọ̀ọ̀kan ní ẹsẹ Bíbélì kan, ohun tí Ọlọ́run sọ, ohun tí ó yé ọ àti ohun tí o máa ṣe.';
+
+  @override
+  String get weekdaysLong =>
+      'Ọjọ́ Ajé,Ọjọ́ Ìsẹ́gun,Ọjọ́rú,Ọjọ́bọ̀,Ọjọ́ Ẹtì,Ọjọ́ Àbámẹ́ta,Ọjọ́ Àìkú';
+
+  @override
+  String get devotionAudioSoon => 'OHÙN Ń BỌ̀ LÁÌPẸ́';
+
+  @override
+  String get devotionMenuSave => 'Fi ìfọkànsìn yìí pamọ́';
+
+  @override
+  String get devotionMenuUnsave => 'Yọ ọ́ kúrò nínú àwọn tí o fi pamọ́';
+
+  @override
+  String get devotionMenuCopy => 'Ṣe àdàkọ ẹsẹ Bíbélì';
+
+  @override
+  String get devotionCopied => 'A ti ṣe àdàkọ ẹsẹ náà';
+
+  @override
+  String get devotionMenuAsk => 'Béèrè ìbéèrè lọ́wọ́ olórí';
+
+  @override
+  String get devotionMore => 'Àwọn àṣàyàn míì';
+
+  @override
+  String get devotionNotFound => 'A kò rí ìfọkànsìn yìí.';
 }

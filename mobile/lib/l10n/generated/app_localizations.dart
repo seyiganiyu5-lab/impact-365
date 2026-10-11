@@ -1833,6 +1833,60 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Every day, a devotion is waiting for you in the morning, at midday and in the evening. Each one has a verse, what God says, what you understand and what you will do.'**
   String get wordInfoText;
+
+  /// No description provided for @weekdaysLong.
+  ///
+  /// In en, this message translates to:
+  /// **'Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday'**
+  String get weekdaysLong;
+
+  /// No description provided for @devotionAudioSoon.
+  ///
+  /// In en, this message translates to:
+  /// **'AUDIO COMING SOON'**
+  String get devotionAudioSoon;
+
+  /// No description provided for @devotionMenuSave.
+  ///
+  /// In en, this message translates to:
+  /// **'Save this devotion'**
+  String get devotionMenuSave;
+
+  /// No description provided for @devotionMenuUnsave.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove from saved'**
+  String get devotionMenuUnsave;
+
+  /// No description provided for @devotionMenuCopy.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy the verse'**
+  String get devotionMenuCopy;
+
+  /// No description provided for @devotionCopied.
+  ///
+  /// In en, this message translates to:
+  /// **'Verse copied'**
+  String get devotionCopied;
+
+  /// No description provided for @devotionMenuAsk.
+  ///
+  /// In en, this message translates to:
+  /// **'Ask a leader a question'**
+  String get devotionMenuAsk;
+
+  /// No description provided for @devotionMore.
+  ///
+  /// In en, this message translates to:
+  /// **'More options'**
+  String get devotionMore;
+
+  /// No description provided for @devotionNotFound.
+  ///
+  /// In en, this message translates to:
+  /// **'This devotion could not be found.'**
+  String get devotionNotFound;
 }
 
 class _AppLocalizationsDelegate
