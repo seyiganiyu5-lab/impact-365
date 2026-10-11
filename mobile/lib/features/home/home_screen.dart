@@ -154,7 +154,14 @@ class HomeBody extends StatelessWidget {
 
     return ListView(
       physics: const AlwaysScrollableScrollPhysics(),
-      padding: const EdgeInsets.fromLTRB(20, 8, 20, 28),
+      // The page scrolls behind the floating bar; the last cards still
+      // end above it.
+      padding: EdgeInsets.fromLTRB(
+        20,
+        8,
+        20,
+        28 + MediaQuery.paddingOf(context).bottom,
+      ),
       children: [
         // Streak · logo · notifications
         Row(

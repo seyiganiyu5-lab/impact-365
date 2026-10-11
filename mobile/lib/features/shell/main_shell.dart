@@ -22,8 +22,11 @@ class MainShell extends StatelessWidget {
     ];
 
     return Scaffold(
-      // The home page is purple from top to bottom, behind the bar too.
-      backgroundColor: shell.currentIndex == 0 ? AppColors.deepPurple : null,
+      // Each page draws behind the floating bar (no separate strip under
+      // it). Pages keep their content above it through the bottom padding
+      // this adds (SafeArea / MediaQuery.paddingOf).
+      extendBody: true,
+      backgroundColor: Colors.transparent,
       body: shell,
       bottomNavigationBar: SafeArea(
         minimum: const EdgeInsets.fromLTRB(12, 0, 12, 8),
