@@ -592,8 +592,8 @@ class _DevotionHeroState extends State<_DevotionHero> {
               Positioned(
                 left: 16,
                 right: 16,
-                top: 50,
-                bottom: 54,
+                top: 48,
+                bottom: 52,
                 child: _HeroVerse(
                   text: devotion?.verseText ?? l.homeFallbackVerse,
                   reference: devotion?.verseReference ?? l.homeFallbackVerseRef,
@@ -703,7 +703,8 @@ class _HeroVerse extends StatelessWidget {
         );
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.center,
+          // Starts just under the slot chip (not centred).
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             // Reference first, then the verse.
             Text(reference, maxLines: 1, style: refStyle),
@@ -831,89 +832,92 @@ class _FaithJourneyCard extends StatelessWidget {
     final today = DateTime.now().weekday; // 1 = Monday
     final active = stats.activeDaysThisWeek;
 
+    // One row, as in the design: ring · title and text · week bars.
     return Container(
-      padding: const EdgeInsets.fromLTRB(16, 16, 16, 14),
+      padding: const EdgeInsets.fromLTRB(12, 14, 14, 12),
       decoration: BoxDecoration(
         color: Colors.white.withValues(alpha: 0.06),
         borderRadius: BorderRadius.circular(20),
         border: Border.all(color: Colors.white.withValues(alpha: 0.22)),
       ),
-      child: Column(
+      child: Row(
         children: [
-          // Ring ("6/7 Jours") + title and encouragement.
-          Row(
-            children: [
-              SizedBox(
-                width: 68,
-                height: 68,
-                child: CustomPaint(
-                  painter: _WeekRingPainter(active: active),
-                  child: Center(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(
-                          '$active/7',
-                          style: AppText.titleMedium.copyWith(
-                            color: Colors.white,
-                            height: 1.1,
-                          ),
-                        ),
-                        Text(
-                          l.homeWeekDays,
-                          style: AppText.caption.copyWith(
-                            color: Colors.white70,
-                            fontSize: 11,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(width: 14),
-              Expanded(
+          SizedBox(
+            width: 64,
+            height: 64,
+            child: CustomPaint(
+              painter: _WeekRingPainter(active: active),
+              child: Center(
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      l.homeFaithJourney,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: AppText.titleSmall.copyWith(color: AppColors.gold),
+                      '$active/7',
+                      style: AppText.titleMedium.copyWith(
+                        color: Colors.white,
+                        fontSize: 17,
+                        height: 1.1,
+                      ),
                     ),
-                    const SizedBox(height: 4),
                     Text(
-                      l.homeFaithJourneyText,
-                      style: AppText.bodySmall.copyWith(color: Colors.white70),
+                      l.homeWeekDays,
+                      style: AppText.caption.copyWith(
+                        color: Colors.white70,
+                        fontSize: 10,
+                      ),
                     ),
                   ],
                 ),
               ),
-            ],
+            ),
           ),
-          const SizedBox(height: 14),
-          Divider(height: 1, color: Colors.white.withValues(alpha: 0.12)),
-          const SizedBox(height: 12),
-
-          // This week, Monday → Sunday: one bar per day, today in gold.
-          SizedBox(
-            height: 82,
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
+          const SizedBox(width: 10),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                for (var i = 0; i < 7; i++)
-                  Expanded(
-                    child: _DayBar(
-                      letter: letters[i],
-                      count: stats.weekActivity[i],
-                      index: i,
-                      isToday: i + 1 == today,
-                      isFuture: i + 1 > today,
-                    ),
+                // Stays on one line: shrinks a little on narrow phones.
+                FittedBox(
+                  fit: BoxFit.scaleDown,
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    l.homeFaithJourney,
+                    maxLines: 1,
+                    style: AppText.titleSmall.copyWith(color: AppColors.gold),
                   ),
+                ),
+                const SizedBox(height: 3),
+                Text(
+                  l.homeFaithJourneyText,
+                  maxLines: 3,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppText.caption.copyWith(
+                    color: Colors.white70,
+                    fontSize: 11,
+                    height: 1.3,
+                  ),
+                ),
               ],
             ),
+          ),
+          const SizedBox(width: 8),
+          // This week, Monday → Sunday: bars rise evenly, today in gold.
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              for (var i = 0; i < 7; i++)
+                Padding(
+                  padding: EdgeInsets.only(left: i == 0 ? 0 : 4),
+                  child: _DayBar(
+                    letter: letters[i],
+                    count: stats.weekActivity[i],
+                    index: i,
+                    isToday: i + 1 == today,
+                    isFuture: i + 1 > today,
+                  ),
+                ),
+            ],
           ),
         ],
       ),
@@ -943,8 +947,8 @@ class _DayBar extends StatelessWidget {
     // As in the design: bars rise evenly from Monday to Sunday. The colour
     // tells the story: gold = today, light = a day with a devotion or
     // challenge done, dim = nothing done (faint for days still to come).
-    const minHeight = 18.0;
-    const maxHeight = 48.0;
+    const minHeight = 14.0;
+    const maxHeight = 38.0;
     final height = minHeight + (maxHeight - minHeight) * index / 6;
     final color = isToday
         ? AppColors.gold
@@ -953,34 +957,24 @@ class _DayBar extends StatelessWidget {
         : Colors.white.withValues(alpha: isFuture ? 0.08 : 0.18);
 
     return Column(
-      mainAxisAlignment: MainAxisAlignment.end,
+      mainAxisSize: MainAxisSize.min,
       children: [
         AnimatedContainer(
           duration: const Duration(milliseconds: 400),
           curve: Curves.easeOutCubic,
-          width: 16,
+          width: 9,
           height: height,
           decoration: BoxDecoration(
             color: color,
-            borderRadius: BorderRadius.circular(6),
+            borderRadius: BorderRadius.circular(3),
           ),
         ),
-        const SizedBox(height: 6),
+        const SizedBox(height: 4),
         Text(
           letter,
           style: (isToday ? AppText.labelSmall : AppText.caption).copyWith(
             color: isToday ? AppColors.gold : Colors.white60,
-            fontSize: 11,
-          ),
-        ),
-        const SizedBox(height: 2),
-        // Small dot under today.
-        Container(
-          width: 4,
-          height: 4,
-          decoration: BoxDecoration(
-            color: isToday ? AppColors.gold : Colors.transparent,
-            shape: BoxShape.circle,
+            fontSize: 10,
           ),
         ),
       ],
