@@ -720,100 +720,159 @@ class _FaithJourneyCard extends StatelessWidget {
         .toList();
     final today = DateTime.now().weekday; // 1 = Monday
     final active = stats.activeDaysThisWeek;
+    final busiest = math.max(1, stats.weekActivity.reduce(math.max));
 
     return Container(
-      padding: const EdgeInsets.all(14),
+      padding: const EdgeInsets.fromLTRB(16, 16, 16, 14),
       decoration: BoxDecoration(
         color: Colors.white.withValues(alpha: 0.06),
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: Colors.white.withValues(alpha: 0.28)),
+        border: Border.all(color: Colors.white.withValues(alpha: 0.22)),
       ),
-      child: Row(
+      child: Column(
         children: [
-          // "6/7 Jours" ring: one segment per day of the week.
-          SizedBox(
-            width: 76,
-            height: 76,
-            child: CustomPaint(
-              painter: _WeekRingPainter(active: active),
-              child: Center(
+          // Ring ("6/7 Jours") + title and encouragement.
+          Row(
+            children: [
+              SizedBox(
+                width: 68,
+                height: 68,
+                child: CustomPaint(
+                  painter: _WeekRingPainter(active: active),
+                  child: Center(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          '$active/7',
+                          style: AppText.titleMedium.copyWith(
+                            color: Colors.white,
+                            height: 1.1,
+                          ),
+                        ),
+                        Text(
+                          l.homeWeekDays,
+                          style: AppText.caption.copyWith(
+                            color: Colors.white70,
+                            fontSize: 11,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(width: 14),
+              Expanded(
                 child: Column(
-                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      '$active/7',
-                      style: AppText.titleLarge.copyWith(
-                        color: Colors.white,
-                        height: 1.1,
-                      ),
+                      l.homeFaithJourney,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppText.titleSmall.copyWith(color: AppColors.gold),
                     ),
+                    const SizedBox(height: 4),
                     Text(
-                      l.homeWeekDays,
-                      style: AppText.caption.copyWith(color: Colors.white70),
+                      l.homeFaithJourneyText,
+                      style: AppText.bodySmall.copyWith(color: Colors.white70),
                     ),
                   ],
                 ),
               ),
-            ),
+            ],
           ),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+          const SizedBox(height: 14),
+          Divider(height: 1, color: Colors.white.withValues(alpha: 0.12)),
+          const SizedBox(height: 12),
+
+          // This week, Monday → Sunday: one bar per day, today in gold.
+          SizedBox(
+            height: 82,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                Text(
-                  l.homeFaithJourney,
-                  style: AppText.titleSmall.copyWith(color: AppColors.gold),
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  l.homeFaithJourneyText,
-                  style: AppText.caption.copyWith(color: Colors.white70),
-                ),
+                for (var i = 0; i < 7; i++)
+                  Expanded(
+                    child: _DayBar(
+                      letter: letters[i],
+                      count: stats.weekActivity[i],
+                      fraction: stats.weekActivity[i] / busiest,
+                      isToday: i + 1 == today,
+                      isFuture: i + 1 > today,
+                    ),
+                  ),
               ],
             ),
           ),
-          const SizedBox(width: 8),
-          // Activity per day, Monday → Sunday; today in gold.
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              for (var i = 0; i < 7; i++)
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 2.5),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      AnimatedContainer(
-                        duration: const Duration(milliseconds: 400),
-                        width: 11,
-                        height: 18.0 + math.min(stats.weekActivity[i], 4) * 8,
-                        decoration: BoxDecoration(
-                          color: i + 1 == today
-                              ? AppColors.gold
-                              : stats.weekActivity[i] > 0
-                              ? AppColors.lavender.withValues(alpha: 0.75)
-                              : Colors.white.withValues(alpha: 0.16),
-                          borderRadius: BorderRadius.circular(3),
-                        ),
-                      ),
-                      const SizedBox(height: 4),
-                      Text(
-                        letters[i],
-                        style: AppText.caption.copyWith(
-                          color: i + 1 == today
-                              ? AppColors.gold
-                              : Colors.white60,
-                          fontSize: 10,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-            ],
-          ),
         ],
       ),
+    );
+  }
+}
+
+class _DayBar extends StatelessWidget {
+  const _DayBar({
+    required this.letter,
+    required this.count,
+    required this.fraction,
+    required this.isToday,
+    required this.isFuture,
+  });
+
+  final String letter;
+  final int count;
+  final double fraction;
+  final bool isToday;
+  final bool isFuture;
+
+  @override
+  Widget build(BuildContext context) {
+    // Empty days keep a short stub so the week always reads as 7 days.
+    const minHeight = 8.0;
+    const maxHeight = 48.0;
+    final height = count == 0
+        ? minHeight
+        : minHeight + (maxHeight - minHeight) * fraction;
+    final color = isToday
+        ? AppColors.gold
+        : count > 0
+        ? AppColors.lavender
+        : Colors.white.withValues(alpha: isFuture ? 0.08 : 0.18);
+
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        AnimatedContainer(
+          duration: const Duration(milliseconds: 400),
+          curve: Curves.easeOutCubic,
+          width: 16,
+          height: height,
+          decoration: BoxDecoration(
+            color: color,
+            borderRadius: BorderRadius.circular(6),
+          ),
+        ),
+        const SizedBox(height: 6),
+        Text(
+          letter,
+          style: (isToday ? AppText.labelSmall : AppText.caption).copyWith(
+            color: isToday ? AppColors.gold : Colors.white60,
+            fontSize: 11,
+          ),
+        ),
+        const SizedBox(height: 2),
+        // Small dot under today.
+        Container(
+          width: 4,
+          height: 4,
+          decoration: BoxDecoration(
+            color: isToday ? AppColors.gold : Colors.transparent,
+            shape: BoxShape.circle,
+          ),
+        ),
+      ],
     );
   }
 }
@@ -887,17 +946,25 @@ class _TodayCard extends StatelessWidget {
                 Row(
                   children: [
                     Expanded(
-                      child: Text(
-                        label,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: AppText.bodySmall.copyWith(color: AppColors.ink),
+                      // Shrinks slightly instead of cutting the word on
+                      // small phones ("Ton impact").
+                      child: FittedBox(
+                        fit: BoxFit.scaleDown,
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          label,
+                          maxLines: 1,
+                          style: AppText.bodySmall.copyWith(
+                            color: AppColors.ink,
+                          ),
+                        ),
                       ),
                     ),
+                    const SizedBox(width: 4),
                     const Icon(
                       Icons.arrow_circle_right_outlined,
                       color: AppColors.gold,
-                      size: 22,
+                      size: 20,
                     ),
                   ],
                 ),

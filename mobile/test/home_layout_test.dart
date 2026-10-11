@@ -73,7 +73,9 @@ void main() {
       ('no devotion yet', sampleHome(withDevotion: false)),
     ]) {
       testWidgets('home fits a small phone: $name ($lang)', (tester) async {
-        tester.view.physicalSize = const Size(360, 720) * 3;
+        // Tall enough that every card is built (lazy list), but small-phone
+        // width.
+        tester.view.physicalSize = const Size(360, 1400) * 3;
         tester.view.devicePixelRatio = 3;
         addTearDown(tester.view.reset);
         await tester.pumpWidget(homeApp(lang, data));
