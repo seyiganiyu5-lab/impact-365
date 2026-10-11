@@ -274,5 +274,19 @@
   "homeBookmarkTooltip": "Fi ìfọkànsìn yìí pamọ́",
   "homeFallbackVerse": "Èyí ni ọjọ́ tí Olúwa dá; àwa ó máa yọ̀, inú wa ó sì máa dùn nínú rẹ̀.",
   "homeFallbackVerseRef": "Orin Dáfídì 118:24",
-  "homeVerseQuote": "“{text}”"
+  "homeVerseQuote": "“{text}”",
+  "wordTitle": "Ọ̀rọ̀ Ọlọ́run",
+  "wordVerse": "Ọ̀rọ̀ rẹ ni fìtílà fún ẹsẹ̀ mi, àti ìmọ́lẹ̀ sí ipa ọ̀nà mi.",
+  "wordMorning": "Òwúrọ̀",
+  "wordMidday": "Ọ̀sán",
+  "wordEvening": "Alẹ́",
+  "wordMorningText": "Oúnjẹ òòjọ́ fún ọjọ́ tuntun",
+  "wordMiddayText": "Ìsinmi lẹ́gbẹ̀ẹ́ omi tó parọ́rọ́",
+  "wordEveningText": "Àṣàrò fún alẹ́ àlàáfíà",
+  "wordNotYet": "Ìfọkànsìn yìí kò tíì sí. Padà wá ní àsìkò díẹ̀ sí i!",
+  "wordDone": "O ti kà á",
+  "wordNow": "Báyìí",
+  "wordInfoTooltip": "Nípa àwọn ìfọkànsìn",
+  "wordInfoTitle": "Ìpàdé mẹ́ta pẹ̀lú Ọlọ́run",
+  "wordInfoText": "Lójoojúmọ́, ìfọkànsìn kan ń dúró dè ọ́ ní òwúrọ̀, ní ọ̀sán àti ní alẹ́. Ọ̀kọ̀ọ̀kan ní ẹsẹ Bíbélì kan, ohun tí Ọlọ́run sọ, ohun tí ó yé ọ àti ohun tí o máa ṣe."
 }

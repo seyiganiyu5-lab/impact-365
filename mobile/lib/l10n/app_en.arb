@@ -365,5 +365,19 @@
         "type": "String"
       }
     }
-  }
+  },
+  "wordTitle": "The Word",
+  "wordVerse": "Thy word is a lamp unto my feet, and a light unto my path.",
+  "wordMorning": "Morning",
+  "wordMidday": "Midday",
+  "wordEvening": "Evening",
+  "wordMorningText": "Daily bread for a new day",
+  "wordMiddayText": "A pause beside still waters",
+  "wordEveningText": "Meditations for a peaceful night",
+  "wordNotYet": "This devotion isn't available yet. Come back a little later!",
+  "wordDone": "Already read",
+  "wordNow": "Now",
+  "wordInfoTooltip": "About the devotions",
+  "wordInfoTitle": "Three moments with God",
+  "wordInfoText": "Every day, a devotion is waiting for you in the morning, at midday and in the evening. Each one has a verse, what God says, what you understand and what you will do."
 }

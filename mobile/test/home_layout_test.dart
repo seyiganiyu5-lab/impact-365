@@ -155,7 +155,10 @@ void main() {
     tester.view.devicePixelRatio = 3;
     addTearDown(tester.view.reset);
     await tester.pumpWidget(homeApp('fr', sampleHome()));
-    expect(find.text('«\u00a0Cherchez premièrement le royaume…\u00a0»'), findsOneWidget);
+    expect(
+      find.text('«\u00a0Cherchez premièrement le royaume…\u00a0»'),
+      findsOneWidget,
+    );
     expect(find.text('Matthieu 6:33'), findsOneWidget);
 
     await tester.pumpWidget(homeApp('fr', sampleHome(withDevotion: false)));

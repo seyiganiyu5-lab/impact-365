@@ -925,4 +925,49 @@ class AppLocalizationsEn extends AppLocalizations {
   String homeVerseQuote(String text) {
     return '“$text”';
   }
+
+  @override
+  String get wordTitle => 'The Word';
+
+  @override
+  String get wordVerse =>
+      'Thy word is a lamp unto my feet, and a light unto my path.';
+
+  @override
+  String get wordMorning => 'Morning';
+
+  @override
+  String get wordMidday => 'Midday';
+
+  @override
+  String get wordEvening => 'Evening';
+
+  @override
+  String get wordMorningText => 'Daily bread for a new day';
+
+  @override
+  String get wordMiddayText => 'A pause beside still waters';
+
+  @override
+  String get wordEveningText => 'Meditations for a peaceful night';
+
+  @override
+  String get wordNotYet =>
+      'This devotion isn\'t available yet. Come back a little later!';
+
+  @override
+  String get wordDone => 'Already read';
+
+  @override
+  String get wordNow => 'Now';
+
+  @override
+  String get wordInfoTooltip => 'About the devotions';
+
+  @override
+  String get wordInfoTitle => 'Three moments with God';
+
+  @override
+  String get wordInfoText =>
+      'Every day, a devotion is waiting for you in the morning, at midday and in the evening. Each one has a verse, what God says, what you understand and what you will do.';
 }

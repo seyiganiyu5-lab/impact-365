@@ -1749,6 +1749,90 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'“{text}”'**
   String homeVerseQuote(String text);
+
+  /// No description provided for @wordTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'The Word'**
+  String get wordTitle;
+
+  /// No description provided for @wordVerse.
+  ///
+  /// In en, this message translates to:
+  /// **'Thy word is a lamp unto my feet, and a light unto my path.'**
+  String get wordVerse;
+
+  /// No description provided for @wordMorning.
+  ///
+  /// In en, this message translates to:
+  /// **'Morning'**
+  String get wordMorning;
+
+  /// No description provided for @wordMidday.
+  ///
+  /// In en, this message translates to:
+  /// **'Midday'**
+  String get wordMidday;
+
+  /// No description provided for @wordEvening.
+  ///
+  /// In en, this message translates to:
+  /// **'Evening'**
+  String get wordEvening;
+
+  /// No description provided for @wordMorningText.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily bread for a new day'**
+  String get wordMorningText;
+
+  /// No description provided for @wordMiddayText.
+  ///
+  /// In en, this message translates to:
+  /// **'A pause beside still waters'**
+  String get wordMiddayText;
+
+  /// No description provided for @wordEveningText.
+  ///
+  /// In en, this message translates to:
+  /// **'Meditations for a peaceful night'**
+  String get wordEveningText;
+
+  /// No description provided for @wordNotYet.
+  ///
+  /// In en, this message translates to:
+  /// **'This devotion isn\'t available yet. Come back a little later!'**
+  String get wordNotYet;
+
+  /// No description provided for @wordDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Already read'**
+  String get wordDone;
+
+  /// No description provided for @wordNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Now'**
+  String get wordNow;
+
+  /// No description provided for @wordInfoTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'About the devotions'**
+  String get wordInfoTooltip;
+
+  /// No description provided for @wordInfoTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Three moments with God'**
+  String get wordInfoTitle;
+
+  /// No description provided for @wordInfoText.
+  ///
+  /// In en, this message translates to:
+  /// **'Every day, a devotion is waiting for you in the morning, at midday and in the evening. Each one has a verse, what God says, what you understand and what you will do.'**
+  String get wordInfoText;
 }
 
 class _AppLocalizationsDelegate

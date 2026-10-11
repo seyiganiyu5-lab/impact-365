@@ -274,5 +274,19 @@
   "homeBookmarkTooltip": "Enregistrer la dévotion",
   "homeFallbackVerse": "C'est ici la journée que l'Éternel a faite : qu'elle soit pour nous un sujet d'allégresse et de joie !",
   "homeFallbackVerseRef": "Psaume 118:24",
-  "homeVerseQuote": "« {text} »"
+  "homeVerseQuote": "« {text} »",
+  "wordTitle": "La Parole",
+  "wordVerse": "La Parole de Dieu est une lampe à mes pieds et une lumière sur mon sentier.",
+  "wordMorning": "Matin",
+  "wordMidday": "Midi",
+  "wordEvening": "Soir",
+  "wordMorningText": "Pain quotidien pour un jour nouveau",
+  "wordMiddayText": "La pause auprès des eaux paisibles",
+  "wordEveningText": "Méditations pour une nuit paisible",
+  "wordNotYet": "Cette dévotion n'est pas encore disponible. Reviens un peu plus tard !",
+  "wordDone": "Déjà lue",
+  "wordNow": "Maintenant",
+  "wordInfoTooltip": "À propos des dévotions",
+  "wordInfoTitle": "Trois rendez-vous avec Dieu",
+  "wordInfoText": "Chaque jour, une dévotion t'attend le matin, à midi et le soir. Chacune contient un verset, ce que Dieu dit, ce que tu comprends et ce que tu fais."
 }

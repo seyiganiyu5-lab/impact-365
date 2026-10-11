@@ -937,4 +937,49 @@ class AppLocalizationsFr extends AppLocalizations {
   String homeVerseQuote(String text) {
     return '« $text »';
   }
+
+  @override
+  String get wordTitle => 'La Parole';
+
+  @override
+  String get wordVerse =>
+      'La Parole de Dieu est une lampe à mes pieds et une lumière sur mon sentier.';
+
+  @override
+  String get wordMorning => 'Matin';
+
+  @override
+  String get wordMidday => 'Midi';
+
+  @override
+  String get wordEvening => 'Soir';
+
+  @override
+  String get wordMorningText => 'Pain quotidien pour un jour nouveau';
+
+  @override
+  String get wordMiddayText => 'La pause auprès des eaux paisibles';
+
+  @override
+  String get wordEveningText => 'Méditations pour une nuit paisible';
+
+  @override
+  String get wordNotYet =>
+      'Cette dévotion n\'est pas encore disponible. Reviens un peu plus tard !';
+
+  @override
+  String get wordDone => 'Déjà lue';
+
+  @override
+  String get wordNow => 'Maintenant';
+
+  @override
+  String get wordInfoTooltip => 'À propos des dévotions';
+
+  @override
+  String get wordInfoTitle => 'Trois rendez-vous avec Dieu';
+
+  @override
+  String get wordInfoText =>
+      'Chaque jour, une dévotion t\'attend le matin, à midi et le soir. Chacune contient un verset, ce que Dieu dit, ce que tu comprends et ce que tu fais.';
 }

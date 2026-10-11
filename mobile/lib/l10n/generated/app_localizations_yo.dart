@@ -928,4 +928,49 @@ class AppLocalizationsYo extends AppLocalizations {
   String homeVerseQuote(String text) {
     return '“$text”';
   }
+
+  @override
+  String get wordTitle => 'Ọ̀rọ̀ Ọlọ́run';
+
+  @override
+  String get wordVerse =>
+      'Ọ̀rọ̀ rẹ ni fìtílà fún ẹsẹ̀ mi, àti ìmọ́lẹ̀ sí ipa ọ̀nà mi.';
+
+  @override
+  String get wordMorning => 'Òwúrọ̀';
+
+  @override
+  String get wordMidday => 'Ọ̀sán';
+
+  @override
+  String get wordEvening => 'Alẹ́';
+
+  @override
+  String get wordMorningText => 'Oúnjẹ òòjọ́ fún ọjọ́ tuntun';
+
+  @override
+  String get wordMiddayText => 'Ìsinmi lẹ́gbẹ̀ẹ́ omi tó parọ́rọ́';
+
+  @override
+  String get wordEveningText => 'Àṣàrò fún alẹ́ àlàáfíà';
+
+  @override
+  String get wordNotYet =>
+      'Ìfọkànsìn yìí kò tíì sí. Padà wá ní àsìkò díẹ̀ sí i!';
+
+  @override
+  String get wordDone => 'O ti kà á';
+
+  @override
+  String get wordNow => 'Báyìí';
+
+  @override
+  String get wordInfoTooltip => 'Nípa àwọn ìfọkànsìn';
+
+  @override
+  String get wordInfoTitle => 'Ìpàdé mẹ́ta pẹ̀lú Ọlọ́run';
+
+  @override
+  String get wordInfoText =>
+      'Lójoojúmọ́, ìfọkànsìn kan ń dúró dè ọ́ ní òwúrọ̀, ní ọ̀sán àti ní alẹ́. Ọ̀kọ̀ọ̀kan ní ẹsẹ Bíbélì kan, ohun tí Ọlọ́run sọ, ohun tí ó yé ọ àti ohun tí o máa ṣe.';
 }
