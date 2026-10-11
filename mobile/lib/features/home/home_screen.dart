@@ -736,7 +736,6 @@ class _FaithJourneyCard extends StatelessWidget {
         .toList();
     final today = DateTime.now().weekday; // 1 = Monday
     final active = stats.activeDaysThisWeek;
-    final busiest = math.max(1, stats.weekActivity.reduce(math.max));
 
     return Container(
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 14),
@@ -814,7 +813,7 @@ class _FaithJourneyCard extends StatelessWidget {
                     child: _DayBar(
                       letter: letters[i],
                       count: stats.weekActivity[i],
-                      fraction: stats.weekActivity[i] / busiest,
+                      index: i,
                       isToday: i + 1 == today,
                       isFuture: i + 1 > today,
                     ),
@@ -832,25 +831,27 @@ class _DayBar extends StatelessWidget {
   const _DayBar({
     required this.letter,
     required this.count,
-    required this.fraction,
+    required this.index,
     required this.isToday,
     required this.isFuture,
   });
 
   final String letter;
   final int count;
-  final double fraction;
+
+  /// 0 = Monday … 6 = Sunday.
+  final int index;
   final bool isToday;
   final bool isFuture;
 
   @override
   Widget build(BuildContext context) {
-    // Empty days keep a short stub so the week always reads as 7 days.
-    const minHeight = 8.0;
+    // As in the design: bars rise evenly from Monday to Sunday. The colour
+    // tells the story: gold = today, light = a day with a devotion or
+    // challenge done, dim = nothing done (faint for days still to come).
+    const minHeight = 18.0;
     const maxHeight = 48.0;
-    final height = count == 0
-        ? minHeight
-        : minHeight + (maxHeight - minHeight) * fraction;
+    final height = minHeight + (maxHeight - minHeight) * index / 6;
     final color = isToday
         ? AppColors.gold
         : count > 0
