@@ -17,7 +17,9 @@ class MyHelpRequestsScreen extends StatefulWidget {
 class _MyHelpRequestsScreenState extends State<MyHelpRequestsScreen> {
   late Future<List<MyHelpRequest>> _future = Repo.myHelpRequests();
 
-  void _refresh() => setState(() => _future = Repo.myHelpRequests());
+  void _refresh() => setState(() {
+    _future = Repo.myHelpRequests();
+  });
 
   @override
   Widget build(BuildContext context) {

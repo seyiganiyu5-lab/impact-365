@@ -19,7 +19,9 @@ class _InboxScreenState extends State<InboxScreen> {
   late Future<List<Conversation>> _conversations = Repo.myConversations();
   late final Future<List<Announcement>> _announcements = Repo.announcements();
 
-  void _refresh() => setState(() => _conversations = Repo.myConversations());
+  void _refresh() => setState(() {
+    _conversations = Repo.myConversations();
+  });
 
   @override
   Widget build(BuildContext context) {

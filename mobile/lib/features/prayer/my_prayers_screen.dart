@@ -22,7 +22,9 @@ class _MyPrayersScreenState extends State<MyPrayersScreen> {
   Future<List<PrayerRequest>> _load() =>
       Repo.myPrayers(answered: widget.answered);
 
-  void _refresh() => setState(() => _future = _load());
+  void _refresh() => setState(() {
+    _future = _load();
+  });
 
   Future<void> _markAnswered(PrayerRequest p) async {
     final l = context.l10n;

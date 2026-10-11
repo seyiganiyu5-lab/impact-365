@@ -18,7 +18,9 @@ class PrayerRoomScreen extends StatefulWidget {
 class _PrayerRoomScreenState extends State<PrayerRoomScreen> {
   late Future<UserStats> _stats = Repo.myStats();
 
-  void _refresh() => setState(() => _stats = Repo.myStats());
+  void _refresh() => setState(() {
+    _stats = Repo.myStats();
+  });
 
   Future<void> _open(String path) async {
     await context.push(path);

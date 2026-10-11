@@ -18,7 +18,9 @@ class _WordScreenState extends State<WordScreen> {
   late Future<List<Devotion>> _future = Repo.recentDevotions();
 
   Future<void> _refresh() async {
-    setState(() => _future = Repo.recentDevotions());
+    setState(() {
+      _future = Repo.recentDevotions();
+    });
     await _future;
   }
 

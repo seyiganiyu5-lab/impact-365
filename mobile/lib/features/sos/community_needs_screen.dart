@@ -17,7 +17,9 @@ class CommunityNeedsScreen extends StatefulWidget {
 class _CommunityNeedsScreenState extends State<CommunityNeedsScreen> {
   late Future<List<HelpNeed>> _future = Repo.communityNeeds();
 
-  void _refresh() => setState(() => _future = Repo.communityNeeds());
+  void _refresh() => setState(() {
+    _future = Repo.communityNeeds();
+  });
 
   Future<void> _offer(HelpNeed need) async {
     final l = context.l10n;

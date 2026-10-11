@@ -29,7 +29,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return _ProfileData(r[0] as Profile, r[1] as UserStats);
   }
 
-  void _refresh() => setState(() => _future = _load());
+  void _refresh() => setState(() {
+    _future = _load();
+  });
 
   Future<void> _open(String path) async {
     await context.push(path);

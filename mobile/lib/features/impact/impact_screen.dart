@@ -28,7 +28,9 @@ class _ImpactScreenState extends State<ImpactScreen> {
   }
 
   Future<void> _refresh() async {
-    setState(() => _future = _load());
+    setState(() {
+      _future = _load();
+    });
     await _future;
   }
 
