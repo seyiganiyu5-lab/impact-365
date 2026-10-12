@@ -17,8 +17,9 @@ it in the app, so it works even if they read their email on a computer:
 1. **SQL Editor** → run `supabase/migrations/20261004000000_init.sql` (skip it if you already ran it).
 2. **SQL Editor** → run `supabase/migrations/20261006000000_profile_self_heal.sql`.
 3. **SQL Editor** → run `supabase/migrations/20261007000000_security_hardening.sql` (security rules and rate limits, see step 7).
-4. **SQL Editor** → run `supabase/verify.sql`. Every line must show ✅. It also repairs accounts created before the database was set up.
-5. Make yourself admin (the last check in `verify.sql` shows the exact command).
+4. **SQL Editor** → run `supabase/migrations/20261012000000_social_sign_in.sql` (names and photos from Google / Apple, see step 8).
+5. **SQL Editor** → run `supabase/verify.sql`. Every line must show ✅. It also repairs accounts created before the database was set up.
+6. Make yourself admin (the last check in `verify.sql` shows the exact command).
 
 ## 2. URL configuration ⚠️ required
 
@@ -164,6 +165,43 @@ Run the app with `flutter run --dart-define-from-file=env.json`, then check each
 - **CAPTCHA** (Authentication → Attack Protection → Cloudflare Turnstile, free): blocks robots on sign-up. The app needs a small change first, so ask before turning it on, otherwise sign-up stops working.
 - **Two-step login for admins** on the admin website.
 
+## 8. Sign in with Google and Apple
+
+The sign-in and sign-up screens have **Google** and **Apple** buttons. Tapping one opens Google's or Apple's page in the browser; after the person accepts, they come straight back to the app, signed in. It is the same button for signing in and for creating an account. If someone already has an account with the same email address, it becomes the same account.
+
+Each button only works once its provider is switched on in Supabase. Until then, tapping it shows an error page from Supabase.
+
+### Google (free)
+1. Go to https://console.cloud.google.com and create a project, e.g. `IMPACT-365`.
+2. **Google Auth Platform → Branding** (also called *OAuth consent screen*): app name `IMPACT-365`, your support email, and the logo if you like. **Audience**: *External*.
+   - While the app is in *Testing*, only the Google accounts you add under **Test users** can sign in. Click **Publish app** when church members start using it.
+3. **Clients → Create client**:
+   - Application type: **Web application**, name `Supabase`.
+   - **Authorized redirect URIs → Add URI**: paste the **Callback URL** shown in Supabase → Authentication → Sign In / Providers → **Google**. It looks like `https://YOUR-PROJECT-REF.supabase.co/auth/v1/callback`.
+   - Click **Create** and copy the **Client ID** and **Client secret**.
+4. Supabase → Authentication → Sign In / Providers → **Google** → turn it **on**, paste the Client ID and Client secret → **Save**.
+5. Test: tap **Google** in the app, choose your account, and you should land on the home screen.
+
+### Apple (needs an Apple Developer account, $99 per year)
+Apple requires a paid **Apple Developer Program** membership. You will need it anyway to publish the app on the App Store, and Apple's rules say an iPhone app that offers Google sign-in must also offer Apple sign-in.
+
+1. https://developer.apple.com/account → **Certificates, Identifiers & Profiles**.
+2. **Identifiers → App IDs**: create (or open) the app's ID, e.g. `com.impact365.app`, and tick **Sign in with Apple**.
+3. **Identifiers → Services IDs**: create one, e.g. `com.impact365.signin`. Tick **Sign in with Apple → Configure**:
+   - Primary App ID: the App ID from step 2.
+   - Domains: `YOUR-PROJECT-REF.supabase.co`
+   - Return URLs: the **Callback URL** from Supabase → Authentication → Sign In / Providers → **Apple**.
+4. **Keys → +**: tick **Sign in with Apple**, save, and download the `.p8` file (you can only download it once). Note the **Key ID** and your **Team ID** (top right of the page).
+5. Supabase → Authentication → Sign In / Providers → **Apple** → turn it **on**:
+   - **Client IDs**: the Services ID from step 3 (add the App ID from step 2 too, separated by a comma).
+   - **Secret Key**: Supabase's Apple guide has a small tool that turns the `.p8` file, Key ID, Team ID and Services ID into this secret.
+   - Click **Save**.
+6. ⚠️ Apple's secret expires after **6 months**. Put a reminder in your calendar to generate a new one, or Apple sign-in stops working.
+
+Notes:
+- People who choose *Hide my email* at Apple get a private relay address; their name may be missing, so the app uses the first part of the email until they edit their profile.
+- The app saves the person's chosen language (French, English or Yoruba) the first time they sign in with Google or Apple.
+
 ## Troubleshooting
 
 | Problem | Fix |
@@ -174,6 +212,9 @@ Run the app with `flutter run --dart-define-from-file=env.json`, then check each
 | "Trop de tentatives" | You hit the email rate limit; wait or raise it (step 5.4). |
 | "Tu le fais trop souvent" in the app | A member reached a rate limit from step 7 (e.g. more than 3 Holy SOS in an hour). It clears by itself. To change a limit, edit the numbers in `20261007000000_security_hardening.sql`, then drop and recreate that trigger. |
 | The app shows an error right after signing in | Run `supabase/verify.sql`: a ❌ line tells you what is missing. |
+| Tapping Google or Apple opens a page saying *"Unsupported provider"* or *"provider is not enabled"* | Turn that provider on in Supabase (step 8). |
+| After choosing the Google account, the browser shows an error instead of coming back to the app | In Google Cloud, the **Authorized redirect URI** must be exactly Supabase's Callback URL; and `impact365://**` must be in Supabase's Redirect URLs (step 2). |
+| "Access blocked: this app's request is invalid" or "app not verified" at Google | Add your Google account as a **Test user**, or **Publish app** in Google Auth Platform (step 8). |
 | "Ce code est incorrect ou a expiré" | Codes last 10 minutes and work once; after **Renvoyer le code**, only the newest code works. |
 | The email shows a code with more than 6 digits | Set **Email OTP Length** to `6` (step 3). |
 | The email shows a button instead of a code | Paste the new templates again (step 4). |

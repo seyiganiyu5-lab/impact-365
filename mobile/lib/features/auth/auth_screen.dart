@@ -32,6 +32,9 @@ class _AuthScreenState extends State<AuthScreen> {
   bool _busy = false;
   String? _error;
 
+  /// Google / Apple sign-in being opened (spinner on that button).
+  OAuthProvider? _oauthBusy;
+
   /// Failed sign-ins in this app session. After 5, each new failure locks
   /// the button for longer (30 s, 60 s, ... up to 5 min). Supabase also
   /// limits sign-ins per IP address on the server.
@@ -120,6 +123,44 @@ class _AuthScreenState extends State<AuthScreen> {
       }
     } finally {
       if (mounted) setState(() => _busy = false);
+    }
+  }
+
+  /// Google / Apple: opens their sign-in page in the browser. When the
+  /// person accepts, they come back to the app through
+  /// impact365://login-callback, already signed in, and the router opens
+  /// the home screen. Works the same for "sign in" and "create account".
+  Future<void> _signInWith(OAuthProvider provider) async {
+    if (_busy || _oauthBusy != null) return;
+    FocusScope.of(context).unfocus();
+    setState(() {
+      _oauthBusy = provider;
+      _error = null;
+    });
+    try {
+      final opened = await Supabase.instance.client.auth
+          .signInWithOAuth(
+            provider,
+            redirectTo: AuthLinks.emailConfirmed,
+            // Google: always let people pick which account to use.
+            queryParams: provider == OAuthProvider.google
+                ? const {'prompt': 'select_account'}
+                : null,
+          )
+          .withAuthTimeout();
+      if (!opened && mounted) {
+        setState(() => _error = context.l10n.authErrOAuth);
+      }
+    } catch (e) {
+      if (mounted) {
+        setState(
+          () => _error = isOfflineError(e)
+              ? context.l10n.authErrNetwork
+              : context.l10n.authErrOAuth,
+        );
+      }
+    } finally {
+      if (mounted) setState(() => _oauthBusy = null);
     }
   }
 
@@ -382,7 +423,31 @@ class _AuthScreenState extends State<AuthScreen> {
                 style: AppText.caption.copyWith(color: AppColors.muted),
               ),
             ],
-            const SizedBox(height: 28),
+            const SizedBox(height: 24),
+
+            // Google / Apple
+            _OrDivider(label: l.authOrContinue),
+            const SizedBox(height: 16),
+            Row(
+              children: [
+                Expanded(
+                  child: SocialButton.google(
+                    semanticLabel: l.authGoogleSemantics,
+                    busy: _oauthBusy == OAuthProvider.google,
+                    onPressed: () => _signInWith(OAuthProvider.google),
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: SocialButton.apple(
+                    semanticLabel: l.authAppleSemantics,
+                    busy: _oauthBusy == OAuthProvider.apple,
+                    onPressed: () => _signInWith(OAuthProvider.apple),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 20),
 
             // Switch between sign in and sign up: one centred sentence,
             // the link part is tappable.
@@ -746,6 +811,30 @@ class _ResetPasswordSheetState extends State<_ResetPasswordSheet> {
           ],
         ),
       ),
+    );
+  }
+}
+
+/// "──── ou continuer avec ────"
+class _OrDivider extends StatelessWidget {
+  const _OrDivider({required this.label});
+
+  final String label;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        const Expanded(child: Divider(color: AppColors.border)),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12),
+          child: Text(
+            label,
+            style: AppText.bodySmall.copyWith(color: AppColors.muted),
+          ),
+        ),
+        const Expanded(child: Divider(color: AppColors.border)),
+      ],
     );
   }
 }

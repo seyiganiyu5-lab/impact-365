@@ -392,3 +392,85 @@ class _CodeInputState extends State<CodeInput> {
     );
   }
 }
+
+/// "Google" (white, official G logo) or "Apple" (black, Apple logo) button.
+class SocialButton extends StatelessWidget {
+  const SocialButton.google({
+    super.key,
+    required this.semanticLabel,
+    required this.busy,
+    required this.onPressed,
+  }) : _apple = false;
+
+  const SocialButton.apple({
+    super.key,
+    required this.semanticLabel,
+    required this.busy,
+    required this.onPressed,
+  }) : _apple = true;
+
+  final bool _apple;
+  final String semanticLabel;
+  final bool busy;
+  final VoidCallback onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    final background = _apple ? Colors.black : Colors.white;
+    final foreground = _apple ? Colors.white : AppColors.ink;
+    return Semantics(
+      button: true,
+      label: semanticLabel,
+      excludeSemantics: true,
+      child: SizedBox(
+        height: 52,
+        child: OutlinedButton(
+          onPressed: busy ? null : onPressed,
+          style: OutlinedButton.styleFrom(
+            backgroundColor: background,
+            disabledBackgroundColor: background,
+            foregroundColor: foreground,
+            side: BorderSide(color: _apple ? Colors.black : AppColors.border),
+            padding: const EdgeInsets.symmetric(horizontal: 12),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16),
+            ),
+          ),
+          child: busy
+              ? SizedBox(
+                  width: 20,
+                  height: 20,
+                  child: CircularProgressIndicator(
+                    strokeWidth: 2.2,
+                    color: foreground,
+                  ),
+                )
+              : Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    if (_apple)
+                      const Icon(Icons.apple, size: 24, color: Colors.white)
+                    else
+                      Image.asset(
+                        'assets/images/google_g.png',
+                        width: 20,
+                        height: 20,
+                      ),
+                    const SizedBox(width: 10),
+                    Flexible(
+                      child: FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: Text(
+                          _apple ? 'Apple' : 'Google',
+                          maxLines: 1,
+                          style: AppText.labelLarge.copyWith(color: foreground),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+        ),
+      ),
+    );
+  }
+}

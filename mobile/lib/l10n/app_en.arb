@@ -257,7 +257,7 @@
   "signUpTitle": "Create your account",
   "signUpSubtitle": "Join the Impact-365 family and start today.",
   "authEmailHint": "you@email.com",
-  "authPasswordHint": "At least 8 characters, with letters and numbers",
+  "authPasswordHint": "Min. 8 characters, letters and numbers",
   "authFullNameHint": "First and last name",
   "authConfirmPassword": "Confirm password",
   "authConfirmPasswordHint": "Type your password again",
@@ -388,5 +388,9 @@
   "devotionCopied": "Verse copied",
   "devotionMenuAsk": "Ask a leader a question",
   "devotionMore": "More options",
-  "devotionNotFound": "This devotion could not be found."
+  "devotionNotFound": "This devotion could not be found.",
+  "authOrContinue": "or continue with",
+  "authErrOAuth": "We couldn't open the sign-in page. Check your internet connection and try again.",
+  "authGoogleSemantics": "Continue with Google",
+  "authAppleSemantics": "Continue with Apple"
 }

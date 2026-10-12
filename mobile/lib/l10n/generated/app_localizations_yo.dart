@@ -714,7 +714,7 @@ class AppLocalizationsYo extends AppLocalizations {
   String get authEmailHint => 'iwo@email.com';
 
   @override
-  String get authPasswordHint => 'Ó kéré tán lẹ́tà 8, pẹ̀lú lẹ́tà àti nọ́ńbà';
+  String get authPasswordHint => 'Ó kéré tán 8, lẹ́tà àti nọ́ńbà';
 
   @override
   String get authFullNameHint => 'Orúkọ àti orúkọ ìdílé';
@@ -1001,4 +1001,17 @@ class AppLocalizationsYo extends AppLocalizations {
 
   @override
   String get devotionNotFound => 'A kò rí ìfọkànsìn yìí.';
+
+  @override
+  String get authOrContinue => 'tàbí tẹ̀síwájú pẹ̀lú';
+
+  @override
+  String get authErrOAuth =>
+      'A kò lè ṣí ojú-ìwé ìwọlé. Ṣàyẹ̀wò íntánẹ́ẹ̀tì rẹ kí o sì gbìyànjú lẹ́ẹ̀kan síi.';
+
+  @override
+  String get authGoogleSemantics => 'Tẹ̀síwájú pẹ̀lú Google';
+
+  @override
+  String get authAppleSemantics => 'Tẹ̀síwájú pẹ̀lú Apple';
 }

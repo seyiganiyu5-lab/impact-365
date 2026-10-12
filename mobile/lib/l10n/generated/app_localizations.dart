@@ -1393,7 +1393,7 @@ abstract class AppLocalizations {
   /// No description provided for @authPasswordHint.
   ///
   /// In en, this message translates to:
-  /// **'At least 8 characters, with letters and numbers'**
+  /// **'Min. 8 characters, letters and numbers'**
   String get authPasswordHint;
 
   /// No description provided for @authFullNameHint.
@@ -1887,6 +1887,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'This devotion could not be found.'**
   String get devotionNotFound;
+
+  /// No description provided for @authOrContinue.
+  ///
+  /// In en, this message translates to:
+  /// **'or continue with'**
+  String get authOrContinue;
+
+  /// No description provided for @authErrOAuth.
+  ///
+  /// In en, this message translates to:
+  /// **'We couldn\'t open the sign-in page. Check your internet connection and try again.'**
+  String get authErrOAuth;
+
+  /// No description provided for @authGoogleSemantics.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue with Google'**
+  String get authGoogleSemantics;
+
+  /// No description provided for @authAppleSemantics.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue with Apple'**
+  String get authAppleSemantics;
 }
 
 class _AppLocalizationsDelegate

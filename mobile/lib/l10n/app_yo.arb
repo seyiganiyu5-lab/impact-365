@@ -215,7 +215,7 @@
   "signUpTitle": "Ṣẹ̀dá àkáǹtì rẹ",
   "signUpSubtitle": "Darapọ̀ mọ́ ìdílé Impact-365 kí o sì bẹ̀rẹ̀ lónìí.",
   "authEmailHint": "iwo@email.com",
-  "authPasswordHint": "Ó kéré tán lẹ́tà 8, pẹ̀lú lẹ́tà àti nọ́ńbà",
+  "authPasswordHint": "Ó kéré tán 8, lẹ́tà àti nọ́ńbà",
   "authFullNameHint": "Orúkọ àti orúkọ ìdílé",
   "authConfirmPassword": "Jẹ́rìí ọ̀rọ̀ aṣínà",
   "authConfirmPasswordHint": "Tún ọ̀rọ̀ aṣínà rẹ tẹ̀",
@@ -297,5 +297,9 @@
   "devotionCopied": "A ti ṣe àdàkọ ẹsẹ náà",
   "devotionMenuAsk": "Béèrè ìbéèrè lọ́wọ́ olórí",
   "devotionMore": "Àwọn àṣàyàn míì",
-  "devotionNotFound": "A kò rí ìfọkànsìn yìí."
+  "devotionNotFound": "A kò rí ìfọkànsìn yìí.",
+  "authOrContinue": "tàbí tẹ̀síwájú pẹ̀lú",
+  "authErrOAuth": "A kò lè ṣí ojú-ìwé ìwọlé. Ṣàyẹ̀wò íntánẹ́ẹ̀tì rẹ kí o sì gbìyànjú lẹ́ẹ̀kan síi.",
+  "authGoogleSemantics": "Tẹ̀síwájú pẹ̀lú Google",
+  "authAppleSemantics": "Tẹ̀síwájú pẹ̀lú Apple"
 }

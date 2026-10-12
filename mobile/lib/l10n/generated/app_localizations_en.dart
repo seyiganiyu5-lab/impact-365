@@ -711,8 +711,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get authEmailHint => 'you@email.com';
 
   @override
-  String get authPasswordHint =>
-      'At least 8 characters, with letters and numbers';
+  String get authPasswordHint => 'Min. 8 characters, letters and numbers';
 
   @override
   String get authFullNameHint => 'First and last name';
@@ -998,4 +997,17 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get devotionNotFound => 'This devotion could not be found.';
+
+  @override
+  String get authOrContinue => 'or continue with';
+
+  @override
+  String get authErrOAuth =>
+      'We couldn\'t open the sign-in page. Check your internet connection and try again.';
+
+  @override
+  String get authGoogleSemantics => 'Continue with Google';
+
+  @override
+  String get authAppleSemantics => 'Continue with Apple';
 }

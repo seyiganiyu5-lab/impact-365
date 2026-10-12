@@ -118,4 +118,20 @@ void main() {
     await tester.pump();
     expect(find.text('Les mots de passe ne correspondent pas'), findsOneWidget);
   });
+
+  testWidgets('Google and Apple buttons on sign-in and sign-up', (
+    tester,
+  ) async {
+    tester.view.physicalSize = const Size(360, 640) * 3;
+    tester.view.devicePixelRatio = 3;
+    addTearDown(tester.view.reset);
+    for (final signUp in [false, true]) {
+      await tester.pumpWidget(_app(AuthScreen(signUp: signUp)));
+      await tester.pump();
+      expect(find.text('ou continuer avec'), findsOneWidget);
+      expect(find.bySemanticsLabel('Continuer avec Google'), findsOneWidget);
+      expect(find.bySemanticsLabel('Continuer avec Apple'), findsOneWidget);
+      expect(tester.takeException(), isNull);
+    }
+  });
 }

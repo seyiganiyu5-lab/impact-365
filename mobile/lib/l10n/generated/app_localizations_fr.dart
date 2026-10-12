@@ -720,8 +720,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get authEmailHint => 'ton@email.com';
 
   @override
-  String get authPasswordHint =>
-      'Au moins 8 caractères, avec lettres et chiffres';
+  String get authPasswordHint => '8 caractères min., lettres et chiffres';
 
   @override
   String get authFullNameHint => 'Prénom et nom';
@@ -1010,4 +1009,17 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get devotionNotFound => 'Cette dévotion est introuvable.';
+
+  @override
+  String get authOrContinue => 'ou continuer avec';
+
+  @override
+  String get authErrOAuth =>
+      'Impossible d\'ouvrir la connexion. Vérifie ta connexion internet et réessaie.';
+
+  @override
+  String get authGoogleSemantics => 'Continuer avec Google';
+
+  @override
+  String get authAppleSemantics => 'Continuer avec Apple';
 }

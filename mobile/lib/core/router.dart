@@ -6,6 +6,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../widgets/common.dart';
 import 'auth_links.dart';
+import 'locale_controller.dart';
 
 import '../features/auth/auth_screen.dart';
 import '../features/auth/reset_password_screen.dart';
@@ -38,6 +39,9 @@ class _AuthListenable extends ChangeNotifier {
   _AuthListenable() {
     _sub = Supabase.instance.client.auth.onAuthStateChange.listen(
       (state) {
+        if (state.event == AuthChangeEvent.signedIn) {
+          unawaited(_rememberLanguage());
+        }
         if (state.event == AuthChangeEvent.passwordRecovery) {
           AuthFlow.recoveryPending = true;
         } else if (state.event == AuthChangeEvent.signedOut) {
@@ -77,6 +81,24 @@ bool _isExpiredLinkError(Object error) =>
           'flow_state_not_found',
           'bad_code_verifier',
         }.contains(error.code));
+
+/// Google / Apple accounts arrive without the language picked in the app:
+/// save it once so the app and the emails use it.
+Future<void> _rememberLanguage() async {
+  final auth = Supabase.instance.client.auth;
+  final user = auth.currentUser;
+  if (user == null || user.userMetadata?['preferred_language'] != null) return;
+  final code = LocaleController.instance.languageCode;
+  try {
+    await auth.updateUser(UserAttributes(data: {'preferred_language': code}));
+    await Supabase.instance.client
+        .from('profiles')
+        .update({'preferred_language': code})
+        .eq('id', user.id);
+  } catch (_) {
+    // Not important enough to bother the user; they can change it in Profil.
+  }
+}
 
 final _rootKey = GlobalKey<NavigatorState>();
 
