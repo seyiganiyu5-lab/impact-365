@@ -68,7 +68,7 @@ Supabase's built-in email service is **for testing only**:
 
 That is fine while you test with your own email. Before church members use the app, connect a real sender. You do **not** need to buy a domain.
 
-### Option A: a free Gmail account (no domain needed, recommended to start)
+### Option A: a free Gmail account (no domain needed)
 1. Create a Gmail account for the app, e.g. `impact365.app@gmail.com`.
 2. In that Google account: **Security** → turn on **2-Step Verification**.
 3. Then go to https://myaccount.google.com/apppasswords → create an app password named "Supabase". Google shows a 16-letter password: copy it.
@@ -107,8 +107,51 @@ Use this if Gmail keeps timing out.
 
 Emails sent "from" a Gmail address through another service sometimes land in spam. Ask testers to check spam and mark the first email "Not spam". A domain (Option B) removes this problem.
 
-### Option B: later, with your own domain
-When the church buys a domain (e.g. `impact365.org`), use a sender such as **Resend** or **Brevo** with `noreply@impact365.org` for the most professional result. Only the SMTP settings change; nothing in the app changes.
+### Option B: with the church domain `impact365jours.com` (recommended)
+Emails come from `noreply@impact365jours.com`: more professional and less likely to land in spam. Only the SMTP settings change; nothing in the app changes.
+
+**1. Create a Resend account** (free: 3,000 emails per month, 100 per day)
+- Go to https://resend.com and sign up with the app's Gmail.
+
+**2. Add the domain in Resend**
+- **Domains → Add domain** → type `impact365jours.com` → Region: **Ireland (eu-west-1)** → **Add**.
+- Resend shows a list of records (Type, Name, Content). Keep this page open.
+
+**3. Copy those records into the domain's DNS** (where the domain was bought)
+- Cloudflare: **dash.cloudflare.com** → click `impact365jours.com` → **DNS → Records → Add record**.
+- Add each record from Resend exactly as shown:
+  - **Type**: the same as in Resend (`TXT` or `MX`).
+  - **Name**: the same as in Resend (for example `resend._domainkey`, or `send`).
+  - **Content / Value**: copy-paste from Resend (use the copy button, don't type it).
+  - **Priority** (MX only): the number Resend shows, usually `10`.
+  - **Proxy status**: **DNS only** (grey cloud), if Cloudflare asks.
+- Also add this record (it tells mail services the domain is protected):
+  - Type `TXT`, Name `_dmarc`, Content `v=DMARC1; p=none;`
+
+**4. Verify**
+- Back in Resend, click **Verify DNS Records**. It usually turns green within minutes (sometimes up to a few hours). Wait until the domain shows **Verified**.
+
+**5. Create a key for Supabase**
+- Resend → **API Keys → Create API key** → name `Supabase`, Permission **Sending access**, Domain `impact365jours.com` → **Add**.
+- Copy the key (it starts with `re_`). Resend shows it only once.
+
+**6. Put it in Supabase**
+Supabase → **Authentication → Emails → SMTP Settings** → *Enable custom SMTP*:
+
+| Field | Value |
+|---|---|
+| Sender email | `noreply@impact365jours.com` |
+| Sender name | `IMPACT-365` |
+| Host | `smtp.resend.com` |
+| Port | `465` |
+| Username | `resend` |
+| Password | the Resend key (`re_…`) |
+
+Click **Save**. Then **Authentication → Rate Limits → emails per hour**: `30`.
+
+**7. Test**: in the app, tap **Mot de passe oublié ?** with your email. The email should arrive from `noreply@impact365jours.com`.
+
+**Optional: a contact address.** Cloudflare → `impact365jours.com` → **Email → Email Routing** → turn it on and create `contact@impact365jours.com` forwarding to the app's Gmail (free). People can then write to the church at that address.
 
 ## 6. Test checklist (on your phone)
 
