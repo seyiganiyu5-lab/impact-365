@@ -301,5 +301,21 @@
   "authOrContinue": "tàbí tẹ̀síwájú pẹ̀lú",
   "authErrOAuth": "A kò lè ṣí ojú-ìwé ìwọlé. Ṣàyẹ̀wò íntánẹ́ẹ̀tì rẹ kí o sì gbìyànjú lẹ́ẹ̀kan síi.",
   "authGoogleSemantics": "Tẹ̀síwájú pẹ̀lú Google",
-  "authAppleSemantics": "Tẹ̀síwájú pẹ̀lú Apple"
+  "authAppleSemantics": "Tẹ̀síwájú pẹ̀lú Apple",
+  "profilePassword": "Ọ̀rọ̀ aṣínà",
+  "profilePasswordSub": "Yí ọ̀rọ̀ aṣínà rẹ padà",
+  "profileDeleteAccount": "Pa àkáǹtì mi rẹ́",
+  "profileDeleteAccountSub": "Pa àkáǹtì rẹ àti àwọn ìwífún rẹ rẹ́ pátápátá",
+  "changePwTitle": "Yí ọ̀rọ̀ aṣínà padà",
+  "changePwIntro": "Fún ààbò rẹ, a ó fi koodu oní-nọ́ńbà mẹ́fà ránṣẹ́ sí {email}.",
+  "changePwSendCode": "Fi koodu ránṣẹ́",
+  "changePwCodeLabel": "Koodu tí o gbà nínú ímeèlì",
+  "changePwDone": "A ti yí ọ̀rọ̀ aṣínà rẹ padà.",
+  "deleteTitle": "Pa àkáǹtì rẹ rẹ́?",
+  "deleteText": "Àkáǹtì rẹ àti gbogbo ìwífún rẹ (ìwé ìrántí, àdúrà, ìbéèrè ìrànlọ́wọ́, ìjíròrò) ni a ó pa rẹ́ pátápátá. A kò lè dá a padà.",
+  "deleteTypeToConfirm": "Láti jẹ́rìí, kọ {word} sísàlẹ̀.",
+  "deleteWord": "DELETE",
+  "deleteConfirm": "Pa á rẹ́ pátápátá",
+  "deleteDone": "A ti pa àkáǹtì rẹ rẹ́. Ọlọ́run bù kún ọ!",
+  "deleteErrLastAdmin": "Ìwọ nìkan ni alábòójútó. Yan alábòójútó mìíràn kí o tó pa àkáǹtì rẹ rẹ́."
 }

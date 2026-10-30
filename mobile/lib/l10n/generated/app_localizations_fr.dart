@@ -1022,4 +1022,59 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get authAppleSemantics => 'Continuer avec Apple';
+
+  @override
+  String get profilePassword => 'Mot de passe';
+
+  @override
+  String get profilePasswordSub => 'Changer ton mot de passe';
+
+  @override
+  String get profileDeleteAccount => 'Supprimer mon compte';
+
+  @override
+  String get profileDeleteAccountSub =>
+      'Effacer définitivement ton compte et tes données';
+
+  @override
+  String get changePwTitle => 'Changer le mot de passe';
+
+  @override
+  String changePwIntro(String email) {
+    return 'Pour ta sécurité, nous allons envoyer un code à 6 chiffres à $email.';
+  }
+
+  @override
+  String get changePwSendCode => 'Envoyer le code';
+
+  @override
+  String get changePwCodeLabel => 'Code reçu par e-mail';
+
+  @override
+  String get changePwDone => 'Ton mot de passe a été changé.';
+
+  @override
+  String get deleteTitle => 'Supprimer ton compte ?';
+
+  @override
+  String get deleteText =>
+      'Ton compte et toutes tes données (journal, prières, demandes d\'aide, conversations) seront effacés définitivement. Cette action est irréversible.';
+
+  @override
+  String deleteTypeToConfirm(String word) {
+    return 'Pour confirmer, écris $word ci-dessous.';
+  }
+
+  @override
+  String get deleteWord => 'SUPPRIMER';
+
+  @override
+  String get deleteConfirm => 'Supprimer définitivement';
+
+  @override
+  String get deleteDone => 'Ton compte a été supprimé. Que Dieu te bénisse !';
+
+  @override
+  String get deleteErrLastAdmin =>
+      'Tu es le seul administrateur. Nomme un autre administrateur avant de supprimer ton compte.';
 }

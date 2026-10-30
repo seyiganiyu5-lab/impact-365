@@ -18,8 +18,9 @@ it in the app, so it works even if they read their email on a computer:
 2. **SQL Editor** → run `supabase/migrations/20261006000000_profile_self_heal.sql`.
 3. **SQL Editor** → run `supabase/migrations/20261007000000_security_hardening.sql` (security rules and rate limits, see step 7).
 4. **SQL Editor** → run `supabase/migrations/20261012000000_social_sign_in.sql` (names and photos from Google / Apple, see step 8).
-5. **SQL Editor** → run `supabase/verify.sql`. Every line must show ✅. It also repairs accounts created before the database was set up.
-6. Make yourself admin (the last check in `verify.sql` shows the exact command).
+5. **SQL Editor** → run `supabase/migrations/20261030000000_delete_account.sql` ("Supprimer mon compte" in Profil).
+6. **SQL Editor** → run `supabase/verify.sql`. Every line must show ✅. It also repairs accounts created before the database was set up.
+7. Make yourself admin (the last check in `verify.sql` shows the exact command).
 
 ## 2. URL configuration ⚠️ required
 
@@ -56,6 +57,7 @@ Without the redirect URL, email links open a browser page saying "page not found
 | Confirm signup | `Ton code IMPACT-365 : {{ .Token }}` | `supabase/templates/confirmation.html` |
 | Reset password | `Code pour ton nouveau mot de passe : {{ .Token }}` | `supabase/templates/recovery.html` |
 | Change email address | `Confirme ta nouvelle adresse · Confirm your new email` | `supabase/templates/email_change.html` |
+| Reauthentication | `Ton code IMPACT-365 : {{ .Token }}` | `supabase/templates/reauthentication.html` (used by Profil → Mot de passe) |
 | Magic link | `Ton lien de connexion · Your sign-in link` | `supabase/templates/magic_link.html` |
 
 `{{ .Token }}` is replaced by the 6-digit code, so it appears in the subject and in the email. The body of each email switches language automatically, using the language the person chose in the app (French by default).
@@ -170,6 +172,8 @@ Run the app with `flutter run --dart-define-from-file=env.json`, then check each
 - [ ] Type the code from the email → **Nouveau mot de passe** opens.
 - [ ] Save a new password → you land on the home screen, and you can sign in with the new password.
 - [ ] Using the same code a second time → "Ce code est incorrect ou a expiré."
+- [ ] **Profil → Mot de passe** → "Envoyer le code" → type the code and a new password → "Ton mot de passe a été changé."
+- [ ] **Profil → Supprimer mon compte** (with a test account!) → type SUPPRIMER → the account is gone and you are back on the welcome page.
 
 ## 7. Security and rate limits
 
@@ -214,6 +218,8 @@ Run the app with `flutter run --dart-define-from-file=env.json`, then check each
 The sign-in and sign-up screens have **Google** and **Apple** buttons. Tapping one opens Google's or Apple's page in the browser; after the person accepts, they come straight back to the app, signed in. It is the same button for signing in and for creating an account. If someone already has an account with the same email address, it becomes the same account.
 
 Each button only works once its provider is switched on in Supabase. Until then, tapping it shows an error page from Supabase.
+
+The **Apple button is hidden** until you turn it on: in `mobile/env.json`, set `"ENABLE_APPLE_SIGN_IN": true` (after the Apple steps below), then stop and re-run the app.
 
 ### Google (free)
 1. Go to https://console.cloud.google.com and create a project, e.g. `IMPACT-365`.

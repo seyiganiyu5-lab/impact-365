@@ -301,5 +301,21 @@
   "authOrContinue": "ou continuer avec",
   "authErrOAuth": "Impossible d'ouvrir la connexion. Vérifie ta connexion internet et réessaie.",
   "authGoogleSemantics": "Continuer avec Google",
-  "authAppleSemantics": "Continuer avec Apple"
+  "authAppleSemantics": "Continuer avec Apple",
+  "profilePassword": "Mot de passe",
+  "profilePasswordSub": "Changer ton mot de passe",
+  "profileDeleteAccount": "Supprimer mon compte",
+  "profileDeleteAccountSub": "Effacer définitivement ton compte et tes données",
+  "changePwTitle": "Changer le mot de passe",
+  "changePwIntro": "Pour ta sécurité, nous allons envoyer un code à 6 chiffres à {email}.",
+  "changePwSendCode": "Envoyer le code",
+  "changePwCodeLabel": "Code reçu par e-mail",
+  "changePwDone": "Ton mot de passe a été changé.",
+  "deleteTitle": "Supprimer ton compte ?",
+  "deleteText": "Ton compte et toutes tes données (journal, prières, demandes d'aide, conversations) seront effacés définitivement. Cette action est irréversible.",
+  "deleteTypeToConfirm": "Pour confirmer, écris {word} ci-dessous.",
+  "deleteWord": "SUPPRIMER",
+  "deleteConfirm": "Supprimer définitivement",
+  "deleteDone": "Ton compte a été supprimé. Que Dieu te bénisse !",
+  "deleteErrLastAdmin": "Tu es le seul administrateur. Nomme un autre administrateur avant de supprimer ton compte."
 }

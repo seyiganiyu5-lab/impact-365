@@ -1014,4 +1014,59 @@ class AppLocalizationsYo extends AppLocalizations {
 
   @override
   String get authAppleSemantics => 'Tẹ̀síwájú pẹ̀lú Apple';
+
+  @override
+  String get profilePassword => 'Ọ̀rọ̀ aṣínà';
+
+  @override
+  String get profilePasswordSub => 'Yí ọ̀rọ̀ aṣínà rẹ padà';
+
+  @override
+  String get profileDeleteAccount => 'Pa àkáǹtì mi rẹ́';
+
+  @override
+  String get profileDeleteAccountSub =>
+      'Pa àkáǹtì rẹ àti àwọn ìwífún rẹ rẹ́ pátápátá';
+
+  @override
+  String get changePwTitle => 'Yí ọ̀rọ̀ aṣínà padà';
+
+  @override
+  String changePwIntro(String email) {
+    return 'Fún ààbò rẹ, a ó fi koodu oní-nọ́ńbà mẹ́fà ránṣẹ́ sí $email.';
+  }
+
+  @override
+  String get changePwSendCode => 'Fi koodu ránṣẹ́';
+
+  @override
+  String get changePwCodeLabel => 'Koodu tí o gbà nínú ímeèlì';
+
+  @override
+  String get changePwDone => 'A ti yí ọ̀rọ̀ aṣínà rẹ padà.';
+
+  @override
+  String get deleteTitle => 'Pa àkáǹtì rẹ rẹ́?';
+
+  @override
+  String get deleteText =>
+      'Àkáǹtì rẹ àti gbogbo ìwífún rẹ (ìwé ìrántí, àdúrà, ìbéèrè ìrànlọ́wọ́, ìjíròrò) ni a ó pa rẹ́ pátápátá. A kò lè dá a padà.';
+
+  @override
+  String deleteTypeToConfirm(String word) {
+    return 'Láti jẹ́rìí, kọ $word sísàlẹ̀.';
+  }
+
+  @override
+  String get deleteWord => 'DELETE';
+
+  @override
+  String get deleteConfirm => 'Pa á rẹ́ pátápátá';
+
+  @override
+  String get deleteDone => 'A ti pa àkáǹtì rẹ rẹ́. Ọlọ́run bù kún ọ!';
+
+  @override
+  String get deleteErrLastAdmin =>
+      'Ìwọ nìkan ni alábòójútó. Yan alábòójútó mìíràn kí o tó pa àkáǹtì rẹ rẹ́.';
 }

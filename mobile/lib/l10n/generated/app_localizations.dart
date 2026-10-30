@@ -1911,6 +1911,102 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Continue with Apple'**
   String get authAppleSemantics;
+
+  /// No description provided for @profilePassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Password'**
+  String get profilePassword;
+
+  /// No description provided for @profilePasswordSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Change your password'**
+  String get profilePasswordSub;
+
+  /// No description provided for @profileDeleteAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete my account'**
+  String get profileDeleteAccount;
+
+  /// No description provided for @profileDeleteAccountSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Permanently erase your account and your data'**
+  String get profileDeleteAccountSub;
+
+  /// No description provided for @changePwTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Change password'**
+  String get changePwTitle;
+
+  /// No description provided for @changePwIntro.
+  ///
+  /// In en, this message translates to:
+  /// **'For your security, we will send a 6-digit code to {email}.'**
+  String changePwIntro(String email);
+
+  /// No description provided for @changePwSendCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Send the code'**
+  String get changePwSendCode;
+
+  /// No description provided for @changePwCodeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Code received by email'**
+  String get changePwCodeLabel;
+
+  /// No description provided for @changePwDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Your password has been changed.'**
+  String get changePwDone;
+
+  /// No description provided for @deleteTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete your account?'**
+  String get deleteTitle;
+
+  /// No description provided for @deleteText.
+  ///
+  /// In en, this message translates to:
+  /// **'Your account and all your data (journal, prayers, help requests, conversations) will be permanently erased. This cannot be undone.'**
+  String get deleteText;
+
+  /// No description provided for @deleteTypeToConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'To confirm, type {word} below.'**
+  String deleteTypeToConfirm(String word);
+
+  /// No description provided for @deleteWord.
+  ///
+  /// In en, this message translates to:
+  /// **'DELETE'**
+  String get deleteWord;
+
+  /// No description provided for @deleteConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete permanently'**
+  String get deleteConfirm;
+
+  /// No description provided for @deleteDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Your account has been deleted. God bless you!'**
+  String get deleteDone;
+
+  /// No description provided for @deleteErrLastAdmin.
+  ///
+  /// In en, this message translates to:
+  /// **'You are the only administrator. Make someone else an administrator before deleting your account.'**
+  String get deleteErrLastAdmin;
 }
 
 class _AppLocalizationsDelegate

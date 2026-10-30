@@ -1010,4 +1010,59 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get authAppleSemantics => 'Continue with Apple';
+
+  @override
+  String get profilePassword => 'Password';
+
+  @override
+  String get profilePasswordSub => 'Change your password';
+
+  @override
+  String get profileDeleteAccount => 'Delete my account';
+
+  @override
+  String get profileDeleteAccountSub =>
+      'Permanently erase your account and your data';
+
+  @override
+  String get changePwTitle => 'Change password';
+
+  @override
+  String changePwIntro(String email) {
+    return 'For your security, we will send a 6-digit code to $email.';
+  }
+
+  @override
+  String get changePwSendCode => 'Send the code';
+
+  @override
+  String get changePwCodeLabel => 'Code received by email';
+
+  @override
+  String get changePwDone => 'Your password has been changed.';
+
+  @override
+  String get deleteTitle => 'Delete your account?';
+
+  @override
+  String get deleteText =>
+      'Your account and all your data (journal, prayers, help requests, conversations) will be permanently erased. This cannot be undone.';
+
+  @override
+  String deleteTypeToConfirm(String word) {
+    return 'To confirm, type $word below.';
+  }
+
+  @override
+  String get deleteWord => 'DELETE';
+
+  @override
+  String get deleteConfirm => 'Delete permanently';
+
+  @override
+  String get deleteDone => 'Your account has been deleted. God bless you!';
+
+  @override
+  String get deleteErrLastAdmin =>
+      'You are the only administrator. Make someone else an administrator before deleting your account.';
 }

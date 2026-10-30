@@ -50,6 +50,9 @@ class Repo {
   static Future<void> savePreferredLanguage(String code) =>
       _db.from('profiles').update({'preferred_language': code}).eq('id', _uid);
 
+  /// Deletes the signed-in member's account and all their data.
+  static Future<void> deleteMyAccount() => _db.rpc('delete_my_account');
+
   static Future<UserStats> myStats() async {
     final res = await _db.rpc('my_stats');
     return UserStats.fromJson(Map<String, dynamic>.from(res as Map));

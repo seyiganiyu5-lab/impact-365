@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>IMPACT-365</title>
+</head>
+<body style="margin:0;padding:0;background:#F9F9F6;font-family:Inter,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#1C1433;">
+<!-- IMPACT-365 · Reauthentication email (change password from the Profil tab). Paste into Supabase → Authentication → Email Templates. Shows the 6-digit code the user types in the app. -->
+<!-- Language follows the user's app language (user metadata "preferred_language": fr / en / yo). -->
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#F9F9F6;padding:32px 16px;">
+  <tr><td align="center">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:520px;">
+      <!-- Header -->
+      <tr><td style="background:#3B1E7B;border-radius:20px 20px 0 0;padding:28px 32px;text-align:center;">
+        <div style="font-size:24px;font-weight:800;letter-spacing:1px;color:#FFFFFF;">IMPACT-365</div>
+        <div style="font-size:13px;color:#D4AF37;margin-top:4px;">— {{ if eq .Data.preferred_language "en" }}1 day 1 impact{{ else if eq .Data.preferred_language "yo" }}Ọjọ́ kan, ipa kan{{ else }}1 jour 1 impact{{ end }} —</div>
+      </td></tr>
+      <!-- Card -->
+      <tr><td style="background:#FFFFFF;border-radius:0 0 20px 20px;padding:36px 32px 32px;">
+        <h1 style="margin:0 0 12px;font-size:24px;line-height:30px;font-weight:700;color:#3B1E7B;">{{ if eq .Data.preferred_language "en" }}Change your password{{ else if eq .Data.preferred_language "yo" }}Yí ọ̀rọ̀ aṣínà rẹ padà{{ else }}Changer ton mot de passe{{ end }}</h1>
+        <p style="margin:0 0 28px;font-size:15px;line-height:24px;color:#4A4560;">{{ if eq .Data.preferred_language "en" }}You asked to change your password in the app. Enter this code to confirm it's really you.{{ else if eq .Data.preferred_language "yo" }}O béèrè láti yí ọ̀rọ̀ aṣínà rẹ padà nínú ohun èlò náà. Tẹ koodu yìí láti jẹ́rìí pé ìwọ ni.{{ else }}Tu as demandé à changer ton mot de passe dans l’application. Entre ce code pour confirmer que c’est bien toi.{{ end }}</p>
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr><td align="center">
+          <div style="font-size:12px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:#A8871F;margin-bottom:10px;">{{ if eq .Data.preferred_language "en" }}Your code{{ else if eq .Data.preferred_language "yo" }}Koodu rẹ{{ else }}Ton code{{ end }}</div>
+          <div style="display:inline-block;background:#F3EFFA;border:1.5px solid #D4AF37;border-radius:16px;padding:16px 28px;font-family:'SFMono-Regular',Menlo,Consolas,'Courier New',monospace;font-size:34px;line-height:40px;font-weight:700;letter-spacing:10px;color:#3B1E7B;">{{ .Token }}</div>
+        </td></tr></table>
+        <p style="margin:28px 0 0;font-size:13px;line-height:20px;color:#6B6680;">{{ if eq .Data.preferred_language "en" }}This code is valid for 10 minutes and works once. Never share it with anyone. If this wasn’t you, ignore this email and change your password.{{ else if eq .Data.preferred_language "yo" }}Koodu yìí wúlò fún ìṣẹ́jú mẹ́wàá, ó sì ń ṣiṣẹ́ lẹ́ẹ̀kan ṣoṣo. Má ṣe fi hàn ẹnikẹ́ni. Tí kì í bá ṣe ìwọ, fojú fo ímeèlì yìí kí o sì yí ọ̀rọ̀ aṣínà rẹ padà.{{ else }}Ce code est valable 10 minutes et ne fonctionne qu’une fois. Ne le partage avec personne. Si ce n’était pas toi, ignore cet e-mail et change ton mot de passe.{{ end }}</p>
+      </td></tr>
+      <!-- Footer -->
+      <tr><td style="padding:24px 16px;text-align:center;">
+        <div style="font-family:Georgia,'Times New Roman',serif;font-style:italic;font-size:14px;line-height:22px;color:#6B6680;">{{ if eq .Data.preferred_language "en" }}“The steadfast love of the Lord never ceases.”{{ else if eq .Data.preferred_language "yo" }}“Àánú Olúwa kò tán.”{{ else }}« Les bontés de l’Éternel ne sont pas épuisées. »{{ end }}</div>
+        <div style="font-size:12px;font-weight:600;color:#A8871F;margin-top:6px;">{{ if eq .Data.preferred_language "yo" }}Ẹkún Jeremáyà 3:22{{ else }}Lamentations 3:22{{ end }}</div>
+        <div style="font-size:12px;color:#9A95A8;margin-top:16px;">{{ if eq .Data.preferred_language "en" }}You received this email because of your IMPACT-365 account.{{ else if eq .Data.preferred_language "yo" }}O gba ímeèlì yìí nítorí àkáǹtì IMPACT-365 rẹ.{{ else }}Tu reçois cet e-mail en lien avec ton compte IMPACT-365.{{ end }}</div>
+      </td></tr>
+    </table>
+  </td></tr>
+</table>
+</body>
+</html>

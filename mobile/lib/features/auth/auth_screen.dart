@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../core/auth_links.dart';
+import '../../core/env.dart';
 import '../../core/locale_controller.dart';
 import '../../core/theme.dart';
 import '../../widgets/common.dart';
@@ -12,10 +13,17 @@ import 'auth_widgets.dart';
 
 /// Sign in / create account. Opened from the welcome page.
 class AuthScreen extends StatefulWidget {
-  const AuthScreen({super.key, this.signUp = false});
+  const AuthScreen({
+    super.key,
+    this.signUp = false,
+    this.showApple = Env.appleSignIn,
+  });
 
   /// Open directly on "Create my account" instead of "Sign in".
   final bool signUp;
+
+  /// Show the Apple button (off until Sign in with Apple is set up).
+  final bool showApple;
 
   @override
   State<AuthScreen> createState() => _AuthScreenState();
@@ -437,14 +445,16 @@ class _AuthScreenState extends State<AuthScreen> {
                     onPressed: () => _signInWith(OAuthProvider.google),
                   ),
                 ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: SocialButton.apple(
-                    semanticLabel: l.authAppleSemantics,
-                    busy: _oauthBusy == OAuthProvider.apple,
-                    onPressed: () => _signInWith(OAuthProvider.apple),
+                if (widget.showApple) ...[
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: SocialButton.apple(
+                      semanticLabel: l.authAppleSemantics,
+                      busy: _oauthBusy == OAuthProvider.apple,
+                      onPressed: () => _signInWith(OAuthProvider.apple),
+                    ),
                   ),
-                ),
+                ],
               ],
             ),
             const SizedBox(height: 20),

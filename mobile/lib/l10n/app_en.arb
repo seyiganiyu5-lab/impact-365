@@ -392,5 +392,35 @@
   "authOrContinue": "or continue with",
   "authErrOAuth": "We couldn't open the sign-in page. Check your internet connection and try again.",
   "authGoogleSemantics": "Continue with Google",
-  "authAppleSemantics": "Continue with Apple"
+  "authAppleSemantics": "Continue with Apple",
+  "profilePassword": "Password",
+  "profilePasswordSub": "Change your password",
+  "profileDeleteAccount": "Delete my account",
+  "profileDeleteAccountSub": "Permanently erase your account and your data",
+  "changePwTitle": "Change password",
+  "changePwIntro": "For your security, we will send a 6-digit code to {email}.",
+  "changePwSendCode": "Send the code",
+  "changePwCodeLabel": "Code received by email",
+  "changePwDone": "Your password has been changed.",
+  "deleteTitle": "Delete your account?",
+  "deleteText": "Your account and all your data (journal, prayers, help requests, conversations) will be permanently erased. This cannot be undone.",
+  "deleteTypeToConfirm": "To confirm, type {word} below.",
+  "deleteWord": "DELETE",
+  "deleteConfirm": "Delete permanently",
+  "deleteDone": "Your account has been deleted. God bless you!",
+  "deleteErrLastAdmin": "You are the only administrator. Make someone else an administrator before deleting your account.",
+  "@changePwIntro": {
+    "placeholders": {
+      "email": {
+        "type": "String"
+      }
+    }
+  },
+  "@deleteTypeToConfirm": {
+    "placeholders": {
+      "word": {
+        "type": "String"
+      }
+    }
+  }
 }

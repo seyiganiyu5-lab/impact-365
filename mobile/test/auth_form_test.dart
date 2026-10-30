@@ -126,12 +126,21 @@ void main() {
     tester.view.devicePixelRatio = 3;
     addTearDown(tester.view.reset);
     for (final signUp in [false, true]) {
-      await tester.pumpWidget(_app(AuthScreen(signUp: signUp)));
+      await tester.pumpWidget(
+        _app(AuthScreen(signUp: signUp, showApple: true)),
+      );
       await tester.pump();
       expect(find.text('ou continuer avec'), findsOneWidget);
       expect(find.bySemanticsLabel('Continuer avec Google'), findsOneWidget);
       expect(find.bySemanticsLabel('Continuer avec Apple'), findsOneWidget);
       expect(tester.takeException(), isNull);
     }
+  });
+
+  testWidgets('Apple button hidden until it is set up', (tester) async {
+    await tester.pumpWidget(_app(const AuthScreen()));
+    await tester.pump();
+    expect(find.bySemanticsLabel('Continuer avec Google'), findsOneWidget);
+    expect(find.bySemanticsLabel('Continuer avec Apple'), findsNothing);
   });
 }

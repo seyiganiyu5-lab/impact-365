@@ -22,6 +22,7 @@ import '../features/onboarding/onboarding_screen.dart';
 import '../features/prayer/community_prayers_screen.dart';
 import '../features/prayer/my_prayers_screen.dart';
 import '../features/prayer/prayer_room_screen.dart';
+import '../features/profile/change_password_screen.dart';
 import '../features/profile/edit_profile_screen.dart';
 import '../features/profile/language_screen.dart';
 import '../features/profile/profile_screen.dart';
@@ -265,6 +266,11 @@ final appRouter = GoRouter(
       parentNavigatorKey: _rootKey,
       path: '/inbox/:id',
       builder: (_, s) => ChatScreen(conversationId: s.pathParameters['id']!),
+    ),
+    GoRoute(
+      parentNavigatorKey: _rootKey,
+      path: '/profile/password',
+      builder: (_, _) => const ChangePasswordScreen(),
     ),
     GoRoute(
       parentNavigatorKey: _rootKey,
