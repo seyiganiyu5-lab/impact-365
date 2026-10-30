@@ -119,13 +119,14 @@ Emails come from `noreply@impact365jours.com`: more professional and less likely
 
 **3. Copy those records into the domain's DNS** (where the domain was bought)
 - Cloudflare: **dash.cloudflare.com** → click `impact365jours.com` → **DNS → Records → Add record**.
-- Add each record from Resend exactly as shown:
-  - **Type**: the same as in Resend (`TXT` or `MX`).
-  - **Name**: the same as in Resend (for example `resend._domainkey`, or `send`).
-  - **Content / Value**: copy-paste from Resend (use the copy button, don't type it).
+- Resend groups the records as **DKIM**, **Enable Sending** and **DMARC**: add all of them. Skip **Enable Receiving** if it is listed.
+- Add each record exactly as Resend shows it (the types can be `TXT`, `MX` or `CNAME` depending on the account):
+  - **Type**: the same as in Resend.
+  - **Name**: only the part before `.impact365jours.com` (for example `send` or `resend._domainkey`); Cloudflare adds the domain itself.
+  - **Content / Value / Target**: copy-paste from Resend (use the copy button, don't type it).
   - **Priority** (MX only): the number Resend shows, usually `10`.
-  - **Proxy status**: **DNS only** (grey cloud), if Cloudflare asks.
-- Also add this record (it tells mail services the domain is protected):
+  - **Proxy status**: **DNS only** (grey cloud). A proxied (orange) CNAME breaks the verification.
+- If Resend shows no DMARC record, add it yourself (it tells mail services the domain is protected):
   - Type `TXT`, Name `_dmarc`, Content `v=DMARC1; p=none;`
 
 **4. Verify**
