@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'transitions.dart';
+
 /// IMPACT-365 brand colors.
 /// Core palette: deep purple #3B1E7B, gold #D4AF37, warm white #F9F9F6.
 /// The other shades are derived from those three.
@@ -213,6 +215,13 @@ ThemeData buildTheme() {
       surface: AppColors.cream,
     ),
     scaffoldBackgroundColor: AppColors.cream,
+    // Quick WhatsApp-like page changes (see core/transitions.dart).
+    pageTransitionsTheme: const PageTransitionsTheme(
+      builders: {
+        TargetPlatform.android: QuickSlidePageTransitionsBuilder(),
+        TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
+      },
+    ),
   );
 
   final text = AppText.textTheme(AppColors.ink);

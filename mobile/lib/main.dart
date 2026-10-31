@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'app.dart';
+import 'core/auth_links.dart';
 import 'core/env.dart';
 import 'core/locale_controller.dart';
 import 'core/secure_session_storage.dart';
@@ -9,6 +10,7 @@ import 'core/secure_session_storage.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await LocaleController.init();
+  await AuthFlow.load();
 
   if (!Env.isConfigured) {
     runApp(const _MissingConfigApp());

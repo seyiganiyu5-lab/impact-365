@@ -11,9 +11,13 @@ import '../../widgets/common.dart';
 /// "5 MINUTES AVEC DIEU": one devotion — verse, what God says, what I
 /// understand, what I do.
 class DevotionScreen extends StatefulWidget {
-  const DevotionScreen({super.key, required this.id});
+  const DevotionScreen({super.key, required this.id, this.initial});
 
   final String id;
+
+  /// The devotion already on screen in Parole: shown at once (no loading);
+  /// only the bookmark state is fetched in the background.
+  final Devotion? initial;
 
   @override
   State<DevotionScreen> createState() => _DevotionScreenState();
@@ -37,6 +41,13 @@ class _DevotionScreenState extends State<DevotionScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final initial = widget.initial;
+    if (initial != null) {
+      return Scaffold(
+        backgroundColor: AppColors.warmWhite,
+        body: DevotionView(devotion: initial, checkSaved: true),
+      );
+    }
     return Scaffold(
       backgroundColor: AppColors.warmWhite,
       body: AsyncView<(Devotion?, bool)>(
@@ -71,10 +82,14 @@ class DevotionView extends StatefulWidget {
     super.key,
     required this.devotion,
     this.initiallySaved = false,
+    this.checkSaved = false,
   });
 
   final Devotion devotion;
   final bool initiallySaved;
+
+  /// Look up in the background whether this devotion is saved.
+  final bool checkSaved;
 
   @override
   State<DevotionView> createState() => _DevotionViewState();
@@ -94,6 +109,21 @@ class _DevotionViewState extends State<DevotionView> {
   static const _sheetOverlap = 40.0;
 
   Devotion get d => widget.devotion;
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.checkSaved) _loadSaved();
+  }
+
+  Future<void> _loadSaved() async {
+    try {
+      final ids = await Repo.bookmarkedDevotionIds([d.id]);
+      if (mounted) setState(() => _saved = ids.isNotEmpty);
+    } catch (_) {
+      // Bookmarks are optional.
+    }
+  }
 
   @override
   void dispose() {

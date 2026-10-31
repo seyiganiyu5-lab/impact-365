@@ -41,7 +41,11 @@ Widget wordApp(String lang, List<Devotion> data) {
       ),
       GoRoute(
         path: '/word/devotion/:id',
-        builder: (_, s) => Text('DEVOTION ${s.pathParameters['id']}'),
+        // "+data" when the devotion is handed over (opens without loading).
+        builder: (_, s) => Text(
+          'DEVOTION ${s.pathParameters['id']}'
+          '${s.extra is Devotion ? ' +data' : ''}',
+        ),
       ),
     ],
   );
@@ -103,7 +107,7 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.text('Matin'));
     await tester.pumpAndSettle();
-    expect(find.text('DEVOTION m'), findsOneWidget);
+    expect(find.text('DEVOTION m +data'), findsOneWidget);
   });
 
   testWidgets('moment not published yet explains why', (tester) async {
@@ -121,6 +125,6 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.byType(ListTile).first);
     await tester.pumpAndSettle();
-    expect(find.text('DEVOTION old'), findsOneWidget);
+    expect(find.text('DEVOTION old +data'), findsOneWidget);
   });
 }

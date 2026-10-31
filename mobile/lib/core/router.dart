@@ -4,12 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../data/models.dart';
 import '../widgets/common.dart';
 import 'auth_links.dart';
+import 'transitions.dart';
 import 'locale_controller.dart';
 
 import '../features/auth/auth_screen.dart';
 import '../features/auth/reset_password_screen.dart';
+import '../features/auth/signing_in_screen.dart';
 import '../features/devotion/devotion_screen.dart';
 import '../features/devotion/word_screen.dart';
 import '../features/home/home_screen.dart';
@@ -42,6 +45,7 @@ class _AuthListenable extends ChangeNotifier {
       (state) {
         if (state.event == AuthChangeEvent.signedIn) {
           unawaited(_rememberLanguage());
+          unawaited(AuthFlow.clearOAuth());
         }
         if (state.event == AuthChangeEvent.passwordRecovery) {
           AuthFlow.recoveryPending = true;
@@ -55,7 +59,16 @@ class _AuthListenable extends ChangeNotifier {
       // or already used deserves a message here.
       onError: (Object error) {
         final context = _rootKey.currentContext;
-        if (_isExpiredLinkError(error) && context != null && context.mounted) {
+        if (AuthFlow.oauthPending) {
+          // Google / Apple refused or the sign-in link failed.
+          unawaited(AuthFlow.clearOAuth());
+          notifyListeners();
+          if (context != null && context.mounted) {
+            context.toast(context.l10n.authErrOAuth);
+          }
+        } else if (_isExpiredLinkError(error) &&
+            context != null &&
+            context.mounted) {
           context.toast(context.l10n.authErrLinkExpired);
         } else {
           debugPrint('Auth stream error (no message shown): $error');
@@ -117,6 +130,12 @@ final appRouter = GoRouter(
       return location == '/reset-password' ? null : '/reset-password';
     }
     if (location == '/reset-password' && !signedIn) return '/welcome';
+    // Google / Apple sign-in in progress: "Connexion en cours…", never the
+    // welcome or sign-in page (also after Android restarts the app).
+    if (!signedIn && AuthFlow.oauthPending) {
+      return location == '/signing-in' ? null : '/signing-in';
+    }
+    if (location == '/signing-in') return signedIn ? '/home' : '/welcome';
     // Pages a signed-out visitor is allowed to see.
     const publicPages = {'/welcome', '/auth', '/onboarding'};
     final isPublic = publicPages.contains(state.matchedLocation);
@@ -129,33 +148,32 @@ final appRouter = GoRouter(
     return null;
   },
   routes: [
-    GoRoute(path: '/splash', builder: (_, _) => const SplashScreen()),
+    GoRoute(
+      path: '/splash',
+      pageBuilder: (_, s) => instantPage(s, const SplashScreen()),
+    ),
+    GoRoute(
+      path: '/signing-in',
+      pageBuilder: (_, s) => fadePage(s, const SigningInScreen()),
+    ),
     GoRoute(
       path: '/reset-password',
-      builder: (_, _) => const ResetPasswordScreen(),
+      pageBuilder: (_, s) => appPage(s, const ResetPasswordScreen()),
     ),
     GoRoute(
       path: '/onboarding',
-      pageBuilder: (_, state) => CustomTransitionPage(
-        key: state.pageKey,
-        child: const OnboardingScreen(),
-        transitionsBuilder: (_, animation, _, child) =>
-            FadeTransition(opacity: animation, child: child),
-      ),
+      pageBuilder: (_, s) => fadePage(s, const OnboardingScreen()),
     ),
     GoRoute(
       path: '/welcome',
-      pageBuilder: (_, state) => CustomTransitionPage(
-        key: state.pageKey,
-        child: const WelcomeScreen(),
-        transitionsBuilder: (_, animation, _, child) =>
-            FadeTransition(opacity: animation, child: child),
-      ),
+      pageBuilder: (_, s) => fadePage(s, const WelcomeScreen()),
     ),
     GoRoute(
       path: '/auth',
-      builder: (_, state) =>
-          AuthScreen(signUp: state.uri.queryParameters['mode'] == 'signup'),
+      pageBuilder: (_, state) => appPage(
+        state,
+        AuthScreen(signUp: state.uri.queryParameters['mode'] == 'signup'),
+      ),
     ),
 
     // Bottom navigation: Accueil / Parole / Prière / Impact / Profil
@@ -164,20 +182,29 @@ final appRouter = GoRouter(
       branches: [
         StatefulShellBranch(
           routes: [
-            GoRoute(path: '/home', builder: (_, _) => const HomeScreen()),
+            GoRoute(
+              path: '/home',
+              pageBuilder: (_, s) => instantPage(s, const HomeScreen()),
+            ),
           ],
         ),
         StatefulShellBranch(
           routes: [
             GoRoute(
               path: '/word',
-              builder: (_, _) => const WordScreen(),
+              pageBuilder: (_, s) => instantPage(s, const WordScreen()),
               routes: [
                 // Inside the Parole tab, so the bottom bar stays visible.
                 GoRoute(
                   path: 'devotion/:id',
-                  builder: (_, s) =>
-                      DevotionScreen(id: s.pathParameters['id']!),
+                  pageBuilder: (_, s) => appPage(
+                    s,
+                    DevotionScreen(
+                      id: s.pathParameters['id']!,
+                      // Opened from Parole: shown at once, no loading.
+                      initial: s.extra is Devotion ? s.extra as Devotion : null,
+                    ),
+                  ),
                 ),
               ],
             ),
@@ -187,18 +214,24 @@ final appRouter = GoRouter(
           routes: [
             GoRoute(
               path: '/prayer',
-              builder: (_, _) => const PrayerRoomScreen(),
+              pageBuilder: (_, s) => instantPage(s, const PrayerRoomScreen()),
             ),
           ],
         ),
         StatefulShellBranch(
           routes: [
-            GoRoute(path: '/impact', builder: (_, _) => const ImpactScreen()),
+            GoRoute(
+              path: '/impact',
+              pageBuilder: (_, s) => instantPage(s, const ImpactScreen()),
+            ),
           ],
         ),
         StatefulShellBranch(
           routes: [
-            GoRoute(path: '/profile', builder: (_, _) => const ProfileScreen()),
+            GoRoute(
+              path: '/profile',
+              pageBuilder: (_, s) => instantPage(s, const ProfileScreen()),
+            ),
           ],
         ),
       ],
@@ -213,74 +246,76 @@ final appRouter = GoRouter(
     GoRoute(
       parentNavigatorKey: _rootKey,
       path: '/journal',
-      builder: (_, _) => const JournalScreen(),
+      pageBuilder: (_, s) => appPage(s, const JournalScreen()),
     ),
     GoRoute(
       parentNavigatorKey: _rootKey,
       path: '/prayers/mine',
-      builder: (_, _) => const MyPrayersScreen(answered: false),
+      pageBuilder: (_, s) => appPage(s, const MyPrayersScreen(answered: false)),
     ),
     GoRoute(
       parentNavigatorKey: _rootKey,
       path: '/prayers/answered',
-      builder: (_, _) => const MyPrayersScreen(answered: true),
+      pageBuilder: (_, s) => appPage(s, const MyPrayersScreen(answered: true)),
     ),
     GoRoute(
       parentNavigatorKey: _rootKey,
       path: '/prayers/community',
-      builder: (_, _) => const CommunityPrayersScreen(),
+      pageBuilder: (_, s) => appPage(s, const CommunityPrayersScreen()),
     ),
     GoRoute(
       parentNavigatorKey: _rootKey,
       path: '/sos',
-      builder: (_, _) => const SosHubScreen(),
+      pageBuilder: (_, s) => appPage(s, const SosHubScreen()),
     ),
     GoRoute(
       parentNavigatorKey: _rootKey,
       path: '/sos/new',
-      builder: (_, _) => const SosRequestScreen(),
+      pageBuilder: (_, s) => appPage(s, const SosRequestScreen()),
     ),
     GoRoute(
       parentNavigatorKey: _rootKey,
       path: '/sos/needs',
-      builder: (_, _) => const CommunityNeedsScreen(),
+      pageBuilder: (_, s) => appPage(s, const CommunityNeedsScreen()),
     ),
     GoRoute(
       parentNavigatorKey: _rootKey,
       path: '/sos/mine',
-      builder: (_, _) => const MyHelpRequestsScreen(),
+      pageBuilder: (_, s) => appPage(s, const MyHelpRequestsScreen()),
     ),
     GoRoute(
       parentNavigatorKey: _rootKey,
       path: '/inbox',
-      builder: (_, _) => const InboxScreen(),
+      pageBuilder: (_, s) => appPage(s, const InboxScreen()),
     ),
     GoRoute(
       parentNavigatorKey: _rootKey,
       path: '/inbox/new',
-      builder: (_, s) => NewConversationScreen(
-        initialSubject: s.uri.queryParameters['subject'],
+      pageBuilder: (_, s) => appPage(
+        s,
+        NewConversationScreen(initialSubject: s.uri.queryParameters['subject']),
       ),
     ),
     GoRoute(
       parentNavigatorKey: _rootKey,
       path: '/inbox/:id',
-      builder: (_, s) => ChatScreen(conversationId: s.pathParameters['id']!),
+      pageBuilder: (_, s) =>
+          appPage(s, ChatScreen(conversationId: s.pathParameters['id']!)),
     ),
     GoRoute(
       parentNavigatorKey: _rootKey,
       path: '/profile/password',
-      builder: (_, _) => const ChangePasswordScreen(),
+      pageBuilder: (_, s) => appPage(s, const ChangePasswordScreen()),
     ),
     GoRoute(
       parentNavigatorKey: _rootKey,
       path: '/profile/edit',
-      builder: (_, _) => const EditProfileScreen(),
+      pageBuilder: (_, s) => appPage(s, const EditProfileScreen()),
     ),
     GoRoute(
       parentNavigatorKey: _rootKey,
       path: '/profile/language',
-      builder: (_, _) => const LanguageScreen(),
+      pageBuilder: (_, s) => appPage(s, const LanguageScreen()),
     ),
   ],
 );
