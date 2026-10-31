@@ -282,6 +282,13 @@ class Repo {
     return rows.map(HelpNeed.fromJson).toList();
   }
 
+  /// The member closes their own request ("Mon besoin est comblé").
+  static Future<void> resolveMyHelpRequest(String id) => _db
+      .from('help_requests')
+      .update({'status': 'resolved'})
+      .eq('id', id)
+      .eq('user_id', _uid);
+
   static Future<void> offerHelp(String requestId, String message) => _db
       .from('help_offers')
       .insert({'request_id': requestId, 'helper_id': _uid, 'message': message});

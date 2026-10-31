@@ -2205,6 +2205,132 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Administrator'**
   String get roleAdmin;
+
+  /// No description provided for @sosStepType.
+  ///
+  /// In en, this message translates to:
+  /// **'What kind of need?'**
+  String get sosStepType;
+
+  /// No description provided for @sosStepDescribe.
+  ///
+  /// In en, this message translates to:
+  /// **'Describe your need'**
+  String get sosStepDescribe;
+
+  /// No description provided for @sosStepPrivacy.
+  ///
+  /// In en, this message translates to:
+  /// **'Who can see your request?'**
+  String get sosStepPrivacy;
+
+  /// No description provided for @sosAnonymousTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Stay anonymous'**
+  String get sosAnonymousTitle;
+
+  /// No description provided for @sosAnonymousSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Your name won\'t be shown to the community.'**
+  String get sosAnonymousSub;
+
+  /// No description provided for @sosLeadersOnlyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Leaders only'**
+  String get sosLeadersOnlyTitle;
+
+  /// No description provided for @sosLeadersOnlySub.
+  ///
+  /// In en, this message translates to:
+  /// **'The community won\'t see your request.'**
+  String get sosLeadersOnlySub;
+
+  /// No description provided for @sosDescribeRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Write a few words about your need.'**
+  String get sosDescribeRequired;
+
+  /// No description provided for @sosSentTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Request sent 🙏'**
+  String get sosSentTitle;
+
+  /// No description provided for @sosSentText.
+  ///
+  /// In en, this message translates to:
+  /// **'We are praying for you. Leaders and the family will answer you here.'**
+  String get sosSentText;
+
+  /// No description provided for @sosSeeMyRequests.
+  ///
+  /// In en, this message translates to:
+  /// **'See my requests'**
+  String get sosSeeMyRequests;
+
+  /// No description provided for @sosFilterAll.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get sosFilterAll;
+
+  /// No description provided for @sosOffered.
+  ///
+  /// In en, this message translates to:
+  /// **'Help offered'**
+  String get sosOffered;
+
+  /// No description provided for @sosHelperDefault.
+  ///
+  /// In en, this message translates to:
+  /// **'A brother / a sister'**
+  String get sosHelperDefault;
+
+  /// No description provided for @sosMarkResolved.
+  ///
+  /// In en, this message translates to:
+  /// **'My need is met'**
+  String get sosMarkResolved;
+
+  /// No description provided for @sosResolveTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Mark as resolved?'**
+  String get sosResolveTitle;
+
+  /// No description provided for @sosResolveText.
+  ///
+  /// In en, this message translates to:
+  /// **'Your request will no longer be visible to the community. Glory to God!'**
+  String get sosResolveText;
+
+  /// No description provided for @sosResolvedToast.
+  ///
+  /// In en, this message translates to:
+  /// **'Glory to God! Your request is marked as resolved.'**
+  String get sosResolvedToast;
+
+  /// No description provided for @sosNewRequest.
+  ///
+  /// In en, this message translates to:
+  /// **'New request'**
+  String get sosNewRequest;
+
+  /// No description provided for @sosOfferRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Write a short message before sending.'**
+  String get sosOfferRequired;
+
+  /// No description provided for @sosLeaderReply.
+  ///
+  /// In en, this message translates to:
+  /// **'Reply from a leader'**
+  String get sosLeaderReply;
 }
 
 class _AppLocalizationsDelegate

@@ -1173,4 +1173,70 @@ class AppLocalizationsYo extends AppLocalizations {
 
   @override
   String get roleAdmin => 'Alábòójútó';
+
+  @override
+  String get sosStepType => 'Irú àìní wo?';
+
+  @override
+  String get sosStepDescribe => 'Ṣàpèjúwe àìní rẹ';
+
+  @override
+  String get sosStepPrivacy => 'Ta ló lè rí ìbéèrè rẹ?';
+
+  @override
+  String get sosAnonymousTitle => 'Fi orúkọ pamọ́';
+
+  @override
+  String get sosAnonymousSub => 'A kò ní fi orúkọ rẹ hàn àwùjọ.';
+
+  @override
+  String get sosLeadersOnlyTitle => 'Àwọn olórí nìkan';
+
+  @override
+  String get sosLeadersOnlySub => 'Àwùjọ kò ní rí ìbéèrè rẹ.';
+
+  @override
+  String get sosDescribeRequired => 'Kọ ọ̀rọ̀ díẹ̀ nípa àìní rẹ.';
+
+  @override
+  String get sosSentTitle => 'A ti fi ìbéèrè ránṣẹ́ 🙏';
+
+  @override
+  String get sosSentText =>
+      'A ń gbàdúrà fún ọ. Àwọn olórí àti ìdílé yóò dá ọ lóhùn níbí.';
+
+  @override
+  String get sosSeeMyRequests => 'Wo àwọn ìbéèrè mi';
+
+  @override
+  String get sosFilterAll => 'Gbogbo';
+
+  @override
+  String get sosOffered => 'O ti fúnni ní ìrànlọ́wọ́';
+
+  @override
+  String get sosHelperDefault => 'Arákùnrin / arábìnrin kan';
+
+  @override
+  String get sosMarkResolved => 'Àìní mi ti di píparí';
+
+  @override
+  String get sosResolveTitle => 'Sàmì sí i pé ó ti parí?';
+
+  @override
+  String get sosResolveText =>
+      'Àwùjọ kò ní rí ìbéèrè rẹ mọ́. Ògo ni fún Ọlọ́run!';
+
+  @override
+  String get sosResolvedToast =>
+      'Ògo ni fún Ọlọ́run! A ti sàmì sí ìbéèrè rẹ pé ó ti parí.';
+
+  @override
+  String get sosNewRequest => 'Ìbéèrè tuntun';
+
+  @override
+  String get sosOfferRequired => 'Kọ ọ̀rọ̀ kúkúrú kí o tó fi ránṣẹ́.';
+
+  @override
+  String get sosLeaderReply => 'Èsì láti ọ̀dọ̀ olórí';
 }

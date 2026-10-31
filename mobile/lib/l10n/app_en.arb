@@ -462,5 +462,26 @@
         "type": "String"
       }
     }
-  }
+  },
+  "sosStepType": "What kind of need?",
+  "sosStepDescribe": "Describe your need",
+  "sosStepPrivacy": "Who can see your request?",
+  "sosAnonymousTitle": "Stay anonymous",
+  "sosAnonymousSub": "Your name won't be shown to the community.",
+  "sosLeadersOnlyTitle": "Leaders only",
+  "sosLeadersOnlySub": "The community won't see your request.",
+  "sosDescribeRequired": "Write a few words about your need.",
+  "sosSentTitle": "Request sent 🙏",
+  "sosSentText": "We are praying for you. Leaders and the family will answer you here.",
+  "sosSeeMyRequests": "See my requests",
+  "sosFilterAll": "All",
+  "sosOffered": "Help offered",
+  "sosHelperDefault": "A brother / a sister",
+  "sosMarkResolved": "My need is met",
+  "sosResolveTitle": "Mark as resolved?",
+  "sosResolveText": "Your request will no longer be visible to the community. Glory to God!",
+  "sosResolvedToast": "Glory to God! Your request is marked as resolved.",
+  "sosNewRequest": "New request",
+  "sosOfferRequired": "Write a short message before sending.",
+  "sosLeaderReply": "Reply from a leader"
 }

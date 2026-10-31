@@ -1181,4 +1181,70 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get roleAdmin => 'Administrateur';
+
+  @override
+  String get sosStepType => 'Quel type de besoin ?';
+
+  @override
+  String get sosStepDescribe => 'Décris ton besoin';
+
+  @override
+  String get sosStepPrivacy => 'Qui peut voir ta demande ?';
+
+  @override
+  String get sosAnonymousTitle => 'Rester anonyme';
+
+  @override
+  String get sosAnonymousSub => 'Ton nom ne sera pas affiché à la communauté.';
+
+  @override
+  String get sosLeadersOnlyTitle => 'Seulement les responsables';
+
+  @override
+  String get sosLeadersOnlySub => 'La communauté ne verra pas ta demande.';
+
+  @override
+  String get sosDescribeRequired => 'Écris quelques mots sur ton besoin.';
+
+  @override
+  String get sosSentTitle => 'Demande envoyée 🙏';
+
+  @override
+  String get sosSentText =>
+      'Nous prions pour toi. Les responsables et la famille te répondront ici.';
+
+  @override
+  String get sosSeeMyRequests => 'Voir mes demandes';
+
+  @override
+  String get sosFilterAll => 'Tous';
+
+  @override
+  String get sosOffered => 'Aide proposée';
+
+  @override
+  String get sosHelperDefault => 'Un frère / une sœur';
+
+  @override
+  String get sosMarkResolved => 'Mon besoin est comblé';
+
+  @override
+  String get sosResolveTitle => 'Marquer comme résolu ?';
+
+  @override
+  String get sosResolveText =>
+      'Ta demande ne sera plus visible par la communauté. Gloire à Dieu !';
+
+  @override
+  String get sosResolvedToast =>
+      'Gloire à Dieu ! Ta demande est marquée comme résolue.';
+
+  @override
+  String get sosNewRequest => 'Nouvelle demande';
+
+  @override
+  String get sosOfferRequired => 'Écris un petit message avant d\'envoyer.';
+
+  @override
+  String get sosLeaderReply => 'Réponse d\'un responsable';
 }

@@ -1169,4 +1169,70 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get roleAdmin => 'Administrator';
+
+  @override
+  String get sosStepType => 'What kind of need?';
+
+  @override
+  String get sosStepDescribe => 'Describe your need';
+
+  @override
+  String get sosStepPrivacy => 'Who can see your request?';
+
+  @override
+  String get sosAnonymousTitle => 'Stay anonymous';
+
+  @override
+  String get sosAnonymousSub => 'Your name won\'t be shown to the community.';
+
+  @override
+  String get sosLeadersOnlyTitle => 'Leaders only';
+
+  @override
+  String get sosLeadersOnlySub => 'The community won\'t see your request.';
+
+  @override
+  String get sosDescribeRequired => 'Write a few words about your need.';
+
+  @override
+  String get sosSentTitle => 'Request sent 🙏';
+
+  @override
+  String get sosSentText =>
+      'We are praying for you. Leaders and the family will answer you here.';
+
+  @override
+  String get sosSeeMyRequests => 'See my requests';
+
+  @override
+  String get sosFilterAll => 'All';
+
+  @override
+  String get sosOffered => 'Help offered';
+
+  @override
+  String get sosHelperDefault => 'A brother / a sister';
+
+  @override
+  String get sosMarkResolved => 'My need is met';
+
+  @override
+  String get sosResolveTitle => 'Mark as resolved?';
+
+  @override
+  String get sosResolveText =>
+      'Your request will no longer be visible to the community. Glory to God!';
+
+  @override
+  String get sosResolvedToast =>
+      'Glory to God! Your request is marked as resolved.';
+
+  @override
+  String get sosNewRequest => 'New request';
+
+  @override
+  String get sosOfferRequired => 'Write a short message before sending.';
+
+  @override
+  String get sosLeaderReply => 'Reply from a leader';
 }

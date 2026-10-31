@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../core/theme.dart';
 import '../../data/models.dart';
@@ -6,9 +7,18 @@ import '../../data/repository.dart';
 import '../../widgets/common.dart';
 import 'sos_widgets.dart';
 
-/// Holy SOS form: type of need, description, anonymity.
+/// "J'ai besoin d'aide": type of need, description, who can see it.
 class SosRequestScreen extends StatefulWidget {
-  const SosRequestScreen({super.key});
+  const SosRequestScreen({super.key, this.submit});
+
+  /// Sends the request. Tests pass their own; the app uses Supabase.
+  final Future<void> Function({
+    required HelpCategory category,
+    required String description,
+    required bool anonymous,
+    required bool leadersOnly,
+  })?
+  submit;
 
   @override
   State<SosRequestScreen> createState() => _SosRequestScreenState();
@@ -20,6 +30,7 @@ class _SosRequestScreenState extends State<SosRequestScreen> {
   bool _anonymous = true;
   bool _leadersOnly = false;
   bool _sending = false;
+  String? _error;
 
   @override
   void dispose() {
@@ -28,23 +39,40 @@ class _SosRequestScreenState extends State<SosRequestScreen> {
   }
 
   Future<void> _send() async {
+    FocusScope.of(context).unfocus();
     final text = _description.text.trim();
-    if (text.isEmpty) return;
-    setState(() => _sending = true);
+    if (text.isEmpty) {
+      setState(() => _error = context.l10n.sosDescribeRequired);
+      return;
+    }
+    setState(() {
+      _sending = true;
+      _error = null;
+    });
     try {
-      await Repo.submitHelpRequest(
+      await (widget.submit ?? Repo.submitHelpRequest)(
         category: _category,
         description: text,
         anonymous: _anonymous,
         leadersOnly: _leadersOnly,
       );
       if (!mounted) return;
-      context.toast(context.l10n.sosSent);
-      Navigator.pop(context);
+      // Sent: stop the spinner before showing the confirmation.
+      setState(() => _sending = false);
+      final seeRequests = await showDialog<bool>(
+        context: context,
+        builder: (_) => const _SentDialog(),
+      );
+      if (!mounted) return;
+      if (seeRequests == true) {
+        context.pushReplacement('/sos/mine');
+      } else {
+        context.pop();
+      }
     } catch (e) {
       if (mounted) {
-        context.toast(context.errorText(e));
         setState(() => _sending = false);
+        context.toast(context.errorText(e));
       }
     }
   }
@@ -52,101 +80,158 @@ class _SosRequestScreenState extends State<SosRequestScreen> {
   @override
   Widget build(BuildContext context) {
     final l = context.l10n;
-    const sectionStyle = AppText.titleSmall;
     return Scaffold(
-      appBar: AppBar(title: Text(l.sosTitle)),
-      body: ListView(
-        padding: const EdgeInsets.fromLTRB(20, 0, 20, 32),
-        children: [
-          const SosBanner(),
-          const SizedBox(height: 8),
-          Text(l.sosQ1, style: sectionStyle),
-          const SizedBox(height: 12),
-          GridView.count(
-            crossAxisCount: 3,
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            mainAxisSpacing: 10,
-            crossAxisSpacing: 10,
-            childAspectRatio: 1.05,
-            children: [
-              for (final c in HelpCategory.values)
-                _CategoryTile(
-                  category: c,
-                  selected: c == _category,
-                  onTap: () => setState(() => _category = c),
-                ),
-            ],
-          ),
-          const SizedBox(height: 20),
-          Text(l.sosQ2, style: sectionStyle),
-          const SizedBox(height: 10),
-          CountedField(
-            controller: _description,
-            hint: l.sosQ2Hint,
-            minLines: 4,
-          ),
-          const SizedBox(height: 8),
-          Row(
-            children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(l.sosQ3, style: sectionStyle),
-                    Text(
-                      l.sosQ3Sub,
-                      style: const TextStyle(color: AppColors.muted),
-                    ),
-                  ],
-                ),
-              ),
-              Switch(
-                value: _anonymous,
-                onChanged: (v) => setState(() => _anonymous = v),
-              ),
-            ],
-          ),
-          const SizedBox(height: 4),
-          CheckboxListTile(
-            contentPadding: EdgeInsets.zero,
-            controlAffinity: ListTileControlAffinity.leading,
-            activeColor: AppColors.purple,
-            value: _leadersOnly,
-            onChanged: (v) => setState(() => _leadersOnly = v ?? false),
-            title: Text(l.sosLeadersOnly),
-          ),
-          const SizedBox(height: 12),
-          AppCard(
-            color: AppColors.lavender,
-            child: Row(
-              children: [
-                const IconBubble(icon: Icons.shield_outlined),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+      backgroundColor: AppColors.warmWhite,
+      body: SafeArea(
+        child: Column(
+          children: [
+            SosTopBar(title: l.sosNeedHelp),
+            Expanded(
+              child: ListView(
+                padding: const EdgeInsets.fromLTRB(20, 8, 20, 24),
+                keyboardDismissBehavior:
+                    ScrollViewKeyboardDismissBehavior.onDrag,
+                children: [
+                  _StepTitle(number: 1, text: l.sosStepType),
+                  const SizedBox(height: 12),
+                  GridView.count(
+                    crossAxisCount: 3,
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    mainAxisSpacing: 10,
+                    crossAxisSpacing: 10,
+                    childAspectRatio: 1.05,
                     children: [
-                      Text(
-                        l.sosVerseRef,
-                        style: AppText.scriptureRef.copyWith(
-                          color: AppColors.goldDark,
+                      for (final c in HelpCategory.values)
+                        _CategoryTile(
+                          category: c,
+                          selected: c == _category,
+                          onTap: () => setState(() => _category = c),
                         ),
-                      ),
-                      Text(l.sosVerse, style: AppText.scripture),
                     ],
                   ),
-                ),
-              ],
+                  const SizedBox(height: 24),
+                  _StepTitle(number: 2, text: l.sosStepDescribe),
+                  const SizedBox(height: 10),
+                  CountedField(
+                    controller: _description,
+                    hint: l.sosQ2Hint,
+                    minLines: 4,
+                  ),
+                  if (_error != null) ...[
+                    const SizedBox(height: 6),
+                    Text(
+                      _error!,
+                      style: AppText.bodySmall.copyWith(
+                        color: AppColors.danger,
+                      ),
+                    ),
+                  ],
+                  const SizedBox(height: 20),
+                  _StepTitle(number: 3, text: l.sosStepPrivacy),
+                  const SizedBox(height: 10),
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(18),
+                      border: Border.all(color: AppColors.border),
+                    ),
+                    child: Column(
+                      children: [
+                        _PrivacySwitch(
+                          icon: Icons.visibility_off_outlined,
+                          title: l.sosAnonymousTitle,
+                          subtitle: l.sosAnonymousSub,
+                          value: _anonymous,
+                          onChanged: (v) => setState(() => _anonymous = v),
+                        ),
+                        const Divider(
+                          height: 1,
+                          indent: 16,
+                          endIndent: 16,
+                          color: AppColors.border,
+                        ),
+                        _PrivacySwitch(
+                          icon: Icons.shield_outlined,
+                          title: l.sosLeadersOnlyTitle,
+                          subtitle: l.sosLeadersOnlySub,
+                          value: _leadersOnly,
+                          onChanged: (v) => setState(() => _leadersOnly = v),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  const SosVerse(),
+                  const SizedBox(height: 20),
+                  SizedBox(
+                    height: 56,
+                    child: FilledButton.icon(
+                      onPressed: _sending ? null : _send,
+                      style: FilledButton.styleFrom(
+                        backgroundColor: AppColors.gold,
+                        foregroundColor: Colors.white,
+                        disabledBackgroundColor: AppColors.gold.withValues(
+                          alpha: 0.6,
+                        ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                      ),
+                      icon: _sending
+                          ? const SizedBox(
+                              width: 20,
+                              height: 20,
+                              child: CircularProgressIndicator(
+                                strokeWidth: 2.2,
+                                color: Colors.white,
+                              ),
+                            )
+                          : const Icon(Icons.send_rounded, size: 20),
+                      label: Text(l.sosSend, style: AppText.labelLarge),
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
-          FilledButton.icon(
-            onPressed: _sending ? null : _send,
-            icon: const Icon(Icons.send_rounded, color: AppColors.gold),
-            label: Text(l.sosSend),
-          ),
-        ],
+          ],
+        ),
       ),
+    );
+  }
+}
+
+class _StepTitle extends StatelessWidget {
+  const _StepTitle({required this.number, required this.text});
+
+  final int number;
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Container(
+          width: 26,
+          height: 26,
+          alignment: Alignment.center,
+          decoration: const BoxDecoration(
+            color: AppColors.gold,
+            shape: BoxShape.circle,
+          ),
+          child: Text(
+            '$number',
+            style: AppText.labelMedium.copyWith(color: Colors.white),
+          ),
+        ),
+        const SizedBox(width: 10),
+        Expanded(
+          child: Text(
+            text,
+            style: AppText.titleSmall.copyWith(color: AppColors.deepPurple),
+          ),
+        ),
+      ],
     );
   }
 }
@@ -165,37 +250,138 @@ class _CategoryTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: selected ? AppColors.purple : Colors.white,
+      color: selected ? AppColors.deepPurple : Colors.white,
       borderRadius: BorderRadius.circular(16),
       child: InkWell(
         borderRadius: BorderRadius.circular(16),
         onTap: onTap,
-        child: Container(
+        child: Ink(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(16),
             border: Border.all(
-              color: selected ? AppColors.purple : AppColors.border,
+              color: selected ? AppColors.gold : AppColors.border,
+              width: selected ? 1.5 : 1,
             ),
           ),
-          padding: const EdgeInsets.all(8),
+          padding: const EdgeInsets.all(6),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(
-                categoryIcon(category),
-                size: 32,
-                color: selected ? AppColors.gold : AppColors.purple,
+              Text(
+                categoryEmoji(category),
+                style: const TextStyle(fontSize: 26),
               ),
-              const SizedBox(height: 8),
+              const SizedBox(height: 6),
               Text(
                 categoryLabel(context, category),
                 textAlign: TextAlign.center,
-                style: AppText.labelMedium.copyWith(
+                maxLines: 2,
+                style: AppText.labelSmall.copyWith(
+                  fontSize: 12,
                   color: selected ? Colors.white : AppColors.ink,
                 ),
               ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class _PrivacySwitch extends StatelessWidget {
+  const _PrivacySwitch({
+    required this.icon,
+    required this.title,
+    required this.subtitle,
+    required this.value,
+    required this.onChanged,
+  });
+
+  final IconData icon;
+  final String title;
+  final String subtitle;
+  final bool value;
+  final ValueChanged<bool> onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    return SwitchListTile(
+      value: value,
+      onChanged: onChanged,
+      activeThumbColor: Colors.white,
+      activeTrackColor: AppColors.deepPurple,
+      contentPadding: const EdgeInsets.fromLTRB(16, 4, 10, 4),
+      secondary: Icon(icon, color: AppColors.deepPurple),
+      title: Text(title, style: AppText.bodyStrong),
+      subtitle: Text(
+        subtitle,
+        style: AppText.bodySmall.copyWith(color: AppColors.muted),
+      ),
+    );
+  }
+}
+
+class _SentDialog extends StatelessWidget {
+  const _SentDialog();
+
+  @override
+  Widget build(BuildContext context) {
+    final l = context.l10n;
+    return Dialog(
+      backgroundColor: AppColors.warmWhite,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(28)),
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(24, 28, 24, 16),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              width: 76,
+              height: 76,
+              decoration: const BoxDecoration(
+                color: AppColors.lavender,
+                shape: BoxShape.circle,
+              ),
+              child: const Icon(
+                Icons.favorite_rounded,
+                color: AppColors.deepPurple,
+                size: 36,
+              ),
+            ),
+            const SizedBox(height: 16),
+            Text(
+              l.sosSentTitle,
+              textAlign: TextAlign.center,
+              style: AppText.titleLarge.copyWith(color: AppColors.deepPurple),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              l.sosSentText,
+              textAlign: TextAlign.center,
+              style: AppText.bodyMedium.copyWith(color: AppColors.muted),
+            ),
+            const SizedBox(height: 20),
+            SizedBox(
+              width: double.infinity,
+              height: 50,
+              child: FilledButton(
+                onPressed: () => Navigator.pop(context, true),
+                style: FilledButton.styleFrom(
+                  backgroundColor: AppColors.deepPurple,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(14),
+                  ),
+                ),
+                child: Text(l.sosSeeMyRequests, style: AppText.labelLarge),
+              ),
+            ),
+            TextButton(
+              onPressed: () => Navigator.pop(context, false),
+              style: TextButton.styleFrom(foregroundColor: AppColors.muted),
+              child: Text(MaterialLocalizations.of(context).okButtonLabel),
+            ),
+          ],
         ),
       ),
     );

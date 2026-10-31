@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../core/theme.dart';
 import '../../data/models.dart';
 import '../../widgets/common.dart';
+import '../auth/auth_widgets.dart';
 
 String categoryLabel(BuildContext context, HelpCategory c) {
   final l = context.l10n;
@@ -15,6 +17,15 @@ String categoryLabel(BuildContext context, HelpCategory c) {
     HelpCategory.other => l.catOther,
   };
 }
+
+String categoryEmoji(HelpCategory c) => switch (c) {
+  HelpCategory.prayer => '🙏',
+  HelpCategory.financial => '💰',
+  HelpCategory.health => '🩺',
+  HelpCategory.emotional => '💜',
+  HelpCategory.studiesWork => '🎓',
+  HelpCategory.other => '✨',
+};
 
 IconData categoryIcon(HelpCategory c) => switch (c) {
   HelpCategory.prayer => Icons.volunteer_activism_rounded,
@@ -44,15 +55,15 @@ class StatusChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = switch (status) {
-      'resolved' || 'closed' => Colors.green.shade700,
-      'in_progress' => AppColors.gold,
-      _ => AppColors.purple,
+      'resolved' || 'closed' => const Color(0xFF2E7D4F),
+      'in_progress' => AppColors.goldDark,
+      _ => AppColors.deepPurple,
     };
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
       decoration: BoxDecoration(
         color: color.withValues(alpha: 0.12),
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(20),
       ),
       child: Text(
         statusLabel(context, status),
@@ -62,66 +73,174 @@ class StatusChip extends StatelessWidget {
   }
 }
 
-/// Purple "Dieu voit. La famille agit." banner.
+/// Back arrow + centred title, used on every Holy SOS page.
+class SosTopBar extends StatelessWidget {
+  const SosTopBar({super.key, required this.title, this.trailing});
+
+  final String title;
+  final Widget? trailing;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(16, 8, 16, 4),
+      child: Row(
+        children: [
+          RoundIconButton(
+            icon: Icons.arrow_back_rounded,
+            onPressed: () =>
+                context.canPop() ? context.pop() : context.go('/home'),
+          ),
+          Expanded(
+            child: Text(
+              title,
+              textAlign: TextAlign.center,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: AppText.titleLarge.copyWith(color: AppColors.deepPurple),
+            ),
+          ),
+          SizedBox(width: 44, child: trailing),
+        ],
+      ),
+    );
+  }
+}
+
+/// Emoji in a soft circle, for a help category.
+class CategoryBadge extends StatelessWidget {
+  const CategoryBadge({super.key, required this.category, this.size = 40});
+
+  final HelpCategory category;
+  final double size;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: size,
+      height: size,
+      alignment: Alignment.center,
+      decoration: const BoxDecoration(
+        color: AppColors.lavender,
+        shape: BoxShape.circle,
+      ),
+      child: Text(
+        categoryEmoji(category),
+        style: TextStyle(fontSize: size * 0.48),
+      ),
+    );
+  }
+}
+
+/// Purple "Dieu voit. La famille agit." card.
 class SosBanner extends StatelessWidget {
   const SosBanner({super.key});
 
   @override
   Widget build(BuildContext context) {
     final l = context.l10n;
-    return AppCard(
-      gradient: AppColors.purpleGradient,
-      padding: const EdgeInsets.all(20),
-      child: Row(
+    return Container(
+      padding: const EdgeInsets.fromLTRB(20, 20, 18, 18),
+      decoration: BoxDecoration(
+        gradient: AppColors.purpleGradient,
+        borderRadius: BorderRadius.circular(24),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            width: 64,
-            height: 64,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              border: Border.all(color: AppColors.gold, width: 2),
-            ),
-            child: const Icon(
-              Icons.favorite_rounded,
-              color: Colors.white,
-              size: 30,
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                child: Text(
+                  l.sosBannerTitle,
+                  style: AppText.titleLarge.copyWith(color: AppColors.gold),
+                ),
+              ),
+              Container(
+                width: 48,
+                height: 48,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(color: AppColors.gold, width: 1.5),
+                ),
+                child: const Icon(
+                  Icons.favorite_rounded,
+                  color: Colors.white,
+                  size: 24,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 8),
+          Text(
+            l.sosBannerText,
+            style: AppText.bodySmall.copyWith(
+              color: Colors.white.withValues(alpha: 0.85),
+              height: 1.45,
             ),
           ),
-          const SizedBox(width: 16),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+          const SizedBox(height: 12),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+            decoration: BoxDecoration(
+              color: AppColors.gold.withValues(alpha: 0.16),
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
               children: [
-                Text(
-                  l.sosBannerTitle,
-                  style: AppText.titleMedium.copyWith(color: Colors.white),
+                const Icon(
+                  Icons.lock_outline_rounded,
+                  color: AppColors.goldLight,
+                  size: 14,
                 ),
-                const SizedBox(height: 6),
-                Text(
-                  l.sosBannerText,
-                  style: AppText.bodySmall.copyWith(color: Colors.white70),
-                ),
-                const SizedBox(height: 8),
-                Row(
-                  children: [
-                    const Icon(
-                      Icons.lock_outline,
-                      color: AppColors.gold,
-                      size: 14,
+                const SizedBox(width: 6),
+                Flexible(
+                  child: Text(
+                    l.sosBannerTags,
+                    style: AppText.labelSmall.copyWith(
+                      color: AppColors.goldLight,
                     ),
-                    const SizedBox(width: 4),
-                    Flexible(
-                      child: Text(
-                        l.sosBannerTags,
-                        style: AppText.bodySmall.copyWith(
-                          color: AppColors.gold,
-                        ),
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
               ],
             ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// Matthieu 6:8, framed, at the bottom of the Holy SOS pages.
+class SosVerse extends StatelessWidget {
+  const SosVerse({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final l = context.l10n;
+    return Container(
+      padding: const EdgeInsets.fromLTRB(16, 12, 16, 12),
+      decoration: BoxDecoration(
+        color: AppColors.lavender.withValues(alpha: 0.6),
+        borderRadius: BorderRadius.circular(16),
+        border: const Border(left: BorderSide(color: AppColors.gold, width: 3)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            l.sosVerse,
+            style: AppText.scripture.copyWith(
+              color: AppColors.deepPurple,
+              fontSize: 15,
+            ),
+          ),
+          const SizedBox(height: 4),
+          Text(
+            l.sosVerseRef,
+            style: AppText.scriptureRef.copyWith(color: AppColors.goldDark),
           ),
         ],
       ),
