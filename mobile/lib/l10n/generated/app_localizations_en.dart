@@ -1105,4 +1105,36 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get prayerShortVerse => 'Pray without ceasing. — 1 Thessalonians 5:17';
+
+  @override
+  String get impactStreakLabel => 'Days in a row';
+
+  @override
+  String get impactTotalLabel => 'Challenges done';
+
+  @override
+  String get impactWeekLabel => 'This week';
+
+  @override
+  String get impactMyWeek => 'My week';
+
+  @override
+  String get impactNoChallengeTitle => 'No challenge today';
+
+  @override
+  String get impactNoChallengeText =>
+      'Come back tomorrow for a new challenge. Meanwhile, carry someone in prayer.';
+
+  @override
+  String get impactConfirmTitle => 'Challenge done?';
+
+  @override
+  String get impactConfirmDone => 'IT\'S DONE!';
+
+  @override
+  String get impactBravoTitle => 'Well done!';
+
+  @override
+  String get impactBravoText =>
+      'Your action matters. May God use it to touch lives today.';
 }

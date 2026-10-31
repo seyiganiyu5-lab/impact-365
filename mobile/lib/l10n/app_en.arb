@@ -435,5 +435,15 @@
   "prayerJournalShort": "My journal",
   "prayerJournalShortSub": "Write what God shows me",
   "prayerSosShortSub": "Ask for or offer help",
-  "prayerShortVerse": "Pray without ceasing. — 1 Thessalonians 5:17"
+  "prayerShortVerse": "Pray without ceasing. — 1 Thessalonians 5:17",
+  "impactStreakLabel": "Days in a row",
+  "impactTotalLabel": "Challenges done",
+  "impactWeekLabel": "This week",
+  "impactMyWeek": "My week",
+  "impactNoChallengeTitle": "No challenge today",
+  "impactNoChallengeText": "Come back tomorrow for a new challenge. Meanwhile, carry someone in prayer.",
+  "impactConfirmTitle": "Challenge done?",
+  "impactConfirmDone": "IT'S DONE!",
+  "impactBravoTitle": "Well done!",
+  "impactBravoText": "Your action matters. May God use it to touch lives today."
 }

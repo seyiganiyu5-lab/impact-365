@@ -330,5 +330,15 @@
   "prayerJournalShort": "Mon journal",
   "prayerJournalShortSub": "Écrire ce que Dieu me montre",
   "prayerSosShortSub": "Demander ou offrir de l'aide",
-  "prayerShortVerse": "Priez sans cesse. — 1 Thessaloniciens 5:17"
+  "prayerShortVerse": "Priez sans cesse. — 1 Thessaloniciens 5:17",
+  "impactStreakLabel": "Jours de suite",
+  "impactTotalLabel": "Défis relevés",
+  "impactWeekLabel": "Cette semaine",
+  "impactMyWeek": "Ma semaine",
+  "impactNoChallengeTitle": "Pas de défi aujourd'hui",
+  "impactNoChallengeText": "Reviens demain pour un nouveau défi. En attendant, porte quelqu'un dans la prière.",
+  "impactConfirmTitle": "Défi relevé ?",
+  "impactConfirmDone": "C'EST FAIT !",
+  "impactBravoTitle": "Bravo !",
+  "impactBravoText": "Ton geste compte. Que Dieu l'utilise pour toucher des vies aujourd'hui."
 }

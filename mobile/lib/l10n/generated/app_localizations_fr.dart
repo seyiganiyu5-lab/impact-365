@@ -1117,4 +1117,36 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get prayerShortVerse => 'Priez sans cesse. — 1 Thessaloniciens 5:17';
+
+  @override
+  String get impactStreakLabel => 'Jours de suite';
+
+  @override
+  String get impactTotalLabel => 'Défis relevés';
+
+  @override
+  String get impactWeekLabel => 'Cette semaine';
+
+  @override
+  String get impactMyWeek => 'Ma semaine';
+
+  @override
+  String get impactNoChallengeTitle => 'Pas de défi aujourd\'hui';
+
+  @override
+  String get impactNoChallengeText =>
+      'Reviens demain pour un nouveau défi. En attendant, porte quelqu\'un dans la prière.';
+
+  @override
+  String get impactConfirmTitle => 'Défi relevé ?';
+
+  @override
+  String get impactConfirmDone => 'C\'EST FAIT !';
+
+  @override
+  String get impactBravoTitle => 'Bravo !';
+
+  @override
+  String get impactBravoText =>
+      'Ton geste compte. Que Dieu l\'utilise pour toucher des vies aujourd\'hui.';
 }

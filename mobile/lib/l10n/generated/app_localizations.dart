@@ -2085,6 +2085,66 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Pray without ceasing. — 1 Thessalonians 5:17'**
   String get prayerShortVerse;
+
+  /// No description provided for @impactStreakLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Days in a row'**
+  String get impactStreakLabel;
+
+  /// No description provided for @impactTotalLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Challenges done'**
+  String get impactTotalLabel;
+
+  /// No description provided for @impactWeekLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'This week'**
+  String get impactWeekLabel;
+
+  /// No description provided for @impactMyWeek.
+  ///
+  /// In en, this message translates to:
+  /// **'My week'**
+  String get impactMyWeek;
+
+  /// No description provided for @impactNoChallengeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No challenge today'**
+  String get impactNoChallengeTitle;
+
+  /// No description provided for @impactNoChallengeText.
+  ///
+  /// In en, this message translates to:
+  /// **'Come back tomorrow for a new challenge. Meanwhile, carry someone in prayer.'**
+  String get impactNoChallengeText;
+
+  /// No description provided for @impactConfirmTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Challenge done?'**
+  String get impactConfirmTitle;
+
+  /// No description provided for @impactConfirmDone.
+  ///
+  /// In en, this message translates to:
+  /// **'IT\'S DONE!'**
+  String get impactConfirmDone;
+
+  /// No description provided for @impactBravoTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Well done!'**
+  String get impactBravoTitle;
+
+  /// No description provided for @impactBravoText.
+  ///
+  /// In en, this message translates to:
+  /// **'Your action matters. May God use it to touch lives today.'**
+  String get impactBravoText;
 }
 
 class _AppLocalizationsDelegate

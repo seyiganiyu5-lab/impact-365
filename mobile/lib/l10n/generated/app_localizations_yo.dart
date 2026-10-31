@@ -1109,4 +1109,36 @@ class AppLocalizationsYo extends AppLocalizations {
 
   @override
   String get prayerShortVerse => 'Ẹ máa gbàdúrà láìsinmi. — 1 Tẹsalóníkà 5:17';
+
+  @override
+  String get impactStreakLabel => 'Ọjọ́ léraléra';
+
+  @override
+  String get impactTotalLabel => 'Ìpèníjà tí o ṣe';
+
+  @override
+  String get impactWeekLabel => 'Ọ̀sẹ̀ yìí';
+
+  @override
+  String get impactMyWeek => 'Ọ̀sẹ̀ mi';
+
+  @override
+  String get impactNoChallengeTitle => 'Kò sí ìpèníjà lónìí';
+
+  @override
+  String get impactNoChallengeText =>
+      'Padà wá lọ́la fún ìpèníjà tuntun. Ní báyìí ná, gbé ẹnìkan sínú àdúrà.';
+
+  @override
+  String get impactConfirmTitle => 'O ti ṣe ìpèníjà náà?';
+
+  @override
+  String get impactConfirmDone => 'MO TI ṢE É!';
+
+  @override
+  String get impactBravoTitle => 'Ẹ kú iṣẹ́!';
+
+  @override
+  String get impactBravoText =>
+      'Ìṣe rẹ ṣe pàtàkì. Kí Ọlọ́run lò ó láti fọwọ́ kan ayé àwọn èèyàn lónìí.';
 }
