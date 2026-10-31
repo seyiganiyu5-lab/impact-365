@@ -2145,6 +2145,66 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Your action matters. May God use it to touch lives today.'**
   String get impactBravoText;
+
+  /// No description provided for @profileSectionAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'My account'**
+  String get profileSectionAccount;
+
+  /// No description provided for @profileSectionCommunity.
+  ///
+  /// In en, this message translates to:
+  /// **'My community'**
+  String get profileSectionCommunity;
+
+  /// No description provided for @profileSectionApp.
+  ///
+  /// In en, this message translates to:
+  /// **'The app'**
+  String get profileSectionApp;
+
+  /// No description provided for @profileEdit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit my profile'**
+  String get profileEdit;
+
+  /// No description provided for @profileVersion.
+  ///
+  /// In en, this message translates to:
+  /// **'IMPACT-365 · version {version}'**
+  String profileVersion(String version);
+
+  /// No description provided for @profileSignOutTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign out?'**
+  String get profileSignOutTitle;
+
+  /// No description provided for @profileSignOutText.
+  ///
+  /// In en, this message translates to:
+  /// **'You can sign back in at any time.'**
+  String get profileSignOutText;
+
+  /// No description provided for @roleLeader.
+  ///
+  /// In en, this message translates to:
+  /// **'Leader'**
+  String get roleLeader;
+
+  /// No description provided for @rolePastor.
+  ///
+  /// In en, this message translates to:
+  /// **'Pastor'**
+  String get rolePastor;
+
+  /// No description provided for @roleAdmin.
+  ///
+  /// In en, this message translates to:
+  /// **'Administrator'**
+  String get roleAdmin;
 }
 
 class _AppLocalizationsDelegate

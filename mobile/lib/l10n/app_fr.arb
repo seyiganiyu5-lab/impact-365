@@ -340,5 +340,15 @@
   "impactConfirmTitle": "Défi relevé ?",
   "impactConfirmDone": "C'EST FAIT !",
   "impactBravoTitle": "Bravo !",
-  "impactBravoText": "Ton geste compte. Que Dieu l'utilise pour toucher des vies aujourd'hui."
+  "impactBravoText": "Ton geste compte. Que Dieu l'utilise pour toucher des vies aujourd'hui.",
+  "profileSectionAccount": "Mon compte",
+  "profileSectionCommunity": "Ma communauté",
+  "profileSectionApp": "L'application",
+  "profileEdit": "Modifier mon profil",
+  "profileVersion": "IMPACT-365 · version {version}",
+  "profileSignOutTitle": "Te déconnecter ?",
+  "profileSignOutText": "Tu pourras te reconnecter à tout moment.",
+  "roleLeader": "Responsable",
+  "rolePastor": "Pasteur",
+  "roleAdmin": "Administrateur"
 }

@@ -1141,4 +1141,36 @@ class AppLocalizationsYo extends AppLocalizations {
   @override
   String get impactBravoText =>
       'Ìṣe rẹ ṣe pàtàkì. Kí Ọlọ́run lò ó láti fọwọ́ kan ayé àwọn èèyàn lónìí.';
+
+  @override
+  String get profileSectionAccount => 'Àkáǹtì mi';
+
+  @override
+  String get profileSectionCommunity => 'Àwùjọ mi';
+
+  @override
+  String get profileSectionApp => 'Ohun èlò náà';
+
+  @override
+  String get profileEdit => 'Ṣàtúnṣe ìwífún mi';
+
+  @override
+  String profileVersion(String version) {
+    return 'IMPACT-365 · ẹ̀dà $version';
+  }
+
+  @override
+  String get profileSignOutTitle => 'Jáde?';
+
+  @override
+  String get profileSignOutText => 'O lè wọlé padà nígbàkúgbà.';
+
+  @override
+  String get roleLeader => 'Olórí';
+
+  @override
+  String get rolePastor => 'Pásítọ̀';
+
+  @override
+  String get roleAdmin => 'Alábòójútó';
 }

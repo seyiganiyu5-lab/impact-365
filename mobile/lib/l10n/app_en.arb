@@ -445,5 +445,22 @@
   "impactConfirmTitle": "Challenge done?",
   "impactConfirmDone": "IT'S DONE!",
   "impactBravoTitle": "Well done!",
-  "impactBravoText": "Your action matters. May God use it to touch lives today."
+  "impactBravoText": "Your action matters. May God use it to touch lives today.",
+  "profileSectionAccount": "My account",
+  "profileSectionCommunity": "My community",
+  "profileSectionApp": "The app",
+  "profileEdit": "Edit my profile",
+  "profileVersion": "IMPACT-365 · version {version}",
+  "profileSignOutTitle": "Sign out?",
+  "profileSignOutText": "You can sign back in at any time.",
+  "roleLeader": "Leader",
+  "rolePastor": "Pastor",
+  "roleAdmin": "Administrator",
+  "@profileVersion": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  }
 }

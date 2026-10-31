@@ -340,5 +340,15 @@
   "impactConfirmTitle": "O ti ṣe ìpèníjà náà?",
   "impactConfirmDone": "MO TI ṢE É!",
   "impactBravoTitle": "Ẹ kú iṣẹ́!",
-  "impactBravoText": "Ìṣe rẹ ṣe pàtàkì. Kí Ọlọ́run lò ó láti fọwọ́ kan ayé àwọn èèyàn lónìí."
+  "impactBravoText": "Ìṣe rẹ ṣe pàtàkì. Kí Ọlọ́run lò ó láti fọwọ́ kan ayé àwọn èèyàn lónìí.",
+  "profileSectionAccount": "Àkáǹtì mi",
+  "profileSectionCommunity": "Àwùjọ mi",
+  "profileSectionApp": "Ohun èlò náà",
+  "profileEdit": "Ṣàtúnṣe ìwífún mi",
+  "profileVersion": "IMPACT-365 · ẹ̀dà {version}",
+  "profileSignOutTitle": "Jáde?",
+  "profileSignOutText": "O lè wọlé padà nígbàkúgbà.",
+  "roleLeader": "Olórí",
+  "rolePastor": "Pásítọ̀",
+  "roleAdmin": "Alábòójútó"
 }

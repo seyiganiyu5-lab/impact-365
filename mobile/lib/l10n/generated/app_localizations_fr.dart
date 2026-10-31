@@ -1149,4 +1149,36 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get impactBravoText =>
       'Ton geste compte. Que Dieu l\'utilise pour toucher des vies aujourd\'hui.';
+
+  @override
+  String get profileSectionAccount => 'Mon compte';
+
+  @override
+  String get profileSectionCommunity => 'Ma communauté';
+
+  @override
+  String get profileSectionApp => 'L\'application';
+
+  @override
+  String get profileEdit => 'Modifier mon profil';
+
+  @override
+  String profileVersion(String version) {
+    return 'IMPACT-365 · version $version';
+  }
+
+  @override
+  String get profileSignOutTitle => 'Te déconnecter ?';
+
+  @override
+  String get profileSignOutText => 'Tu pourras te reconnecter à tout moment.';
+
+  @override
+  String get roleLeader => 'Responsable';
+
+  @override
+  String get rolePastor => 'Pasteur';
+
+  @override
+  String get roleAdmin => 'Administrateur';
 }

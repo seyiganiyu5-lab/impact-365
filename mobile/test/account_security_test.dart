@@ -4,7 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:impact365/core/theme.dart';
 import 'package:impact365/core/yoruba_fallback.dart';
 import 'package:impact365/features/profile/change_password_screen.dart';
-import 'package:impact365/features/profile/profile_screen.dart';
+import 'package:impact365/features/profile/delete_account_dialog.dart';
 import 'package:impact365/l10n/generated/app_localizations.dart';
 
 Widget _app(String lang, Widget home) => MaterialApp(
