@@ -429,5 +429,10 @@
   "profileMethodEmail": "E-mail et mot de passe",
   "profileMemberSince": "Membre depuis {date}",
   "roleMember": "Membre",
-  "profilePrivacyNote": "Seuls toi et les responsables de ton église voyez ces informations."
+  "profilePrivacyNote": "Seuls toi et les responsables de ton église voyez ces informations.",
+  "languageIntro": "Choisis la langue de ton application.",
+  "languageNote": "Les dévotions, les versets et les défis s'affichent aussi dans cette langue.",
+  "langFrench": "Français",
+  "langEnglish": "Anglais",
+  "langYoruba": "Yoruba"
 }

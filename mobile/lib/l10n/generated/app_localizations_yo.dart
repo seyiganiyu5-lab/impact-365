@@ -1431,4 +1431,20 @@ class AppLocalizationsYo extends AppLocalizations {
   @override
   String get profilePrivacyNote =>
       'Ìwọ àti àwọn olórí ìjọ rẹ nìkan ló lè rí àwọn ìsọfúnni yìí.';
+
+  @override
+  String get languageIntro => 'Yan èdè fún áàpù rẹ.';
+
+  @override
+  String get languageNote =>
+      'Àwọn ìfọkànsìn, ẹsẹ Bíbélì àti ìpèníjà náà yóò hàn ní èdè yìí.';
+
+  @override
+  String get langFrench => 'Faransé';
+
+  @override
+  String get langEnglish => 'Gẹ̀ẹ́sì';
+
+  @override
+  String get langYoruba => 'Yorùbá';
 }

@@ -429,5 +429,10 @@
   "profileMethodEmail": "Í-meèlì àti ọ̀rọ̀ aṣínà",
   "profileMemberSince": "Ọmọ ìjọ láti {date}",
   "roleMember": "Ọmọ ìjọ",
-  "profilePrivacyNote": "Ìwọ àti àwọn olórí ìjọ rẹ nìkan ló lè rí àwọn ìsọfúnni yìí."
+  "profilePrivacyNote": "Ìwọ àti àwọn olórí ìjọ rẹ nìkan ló lè rí àwọn ìsọfúnni yìí.",
+  "languageIntro": "Yan èdè fún áàpù rẹ.",
+  "languageNote": "Àwọn ìfọkànsìn, ẹsẹ Bíbélì àti ìpèníjà náà yóò hàn ní èdè yìí.",
+  "langFrench": "Faransé",
+  "langEnglish": "Gẹ̀ẹ́sì",
+  "langYoruba": "Yorùbá"
 }

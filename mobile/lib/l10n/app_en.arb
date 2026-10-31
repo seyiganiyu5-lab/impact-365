@@ -569,5 +569,10 @@
     }
   },
   "roleMember": "Member",
-  "profilePrivacyNote": "Only you and your church leaders can see this information."
+  "profilePrivacyNote": "Only you and your church leaders can see this information.",
+  "languageIntro": "Choose the language of your app.",
+  "languageNote": "Devotions, verses and challenges also appear in this language.",
+  "langFrench": "French",
+  "langEnglish": "English",
+  "langYoruba": "Yoruba"
 }

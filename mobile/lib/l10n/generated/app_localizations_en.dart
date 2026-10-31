@@ -1427,4 +1427,20 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get profilePrivacyNote =>
       'Only you and your church leaders can see this information.';
+
+  @override
+  String get languageIntro => 'Choose the language of your app.';
+
+  @override
+  String get languageNote =>
+      'Devotions, verses and challenges also appear in this language.';
+
+  @override
+  String get langFrench => 'French';
+
+  @override
+  String get langEnglish => 'English';
+
+  @override
+  String get langYoruba => 'Yoruba';
 }

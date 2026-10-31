@@ -2679,6 +2679,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Only you and your church leaders can see this information.'**
   String get profilePrivacyNote;
+
+  /// No description provided for @languageIntro.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose the language of your app.'**
+  String get languageIntro;
+
+  /// No description provided for @languageNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Devotions, verses and challenges also appear in this language.'**
+  String get languageNote;
+
+  /// No description provided for @langFrench.
+  ///
+  /// In en, this message translates to:
+  /// **'French'**
+  String get langFrench;
+
+  /// No description provided for @langEnglish.
+  ///
+  /// In en, this message translates to:
+  /// **'English'**
+  String get langEnglish;
+
+  /// No description provided for @langYoruba.
+  ///
+  /// In en, this message translates to:
+  /// **'Yoruba'**
+  String get langYoruba;
 }
 
 class _AppLocalizationsDelegate
