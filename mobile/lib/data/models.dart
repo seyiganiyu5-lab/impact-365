@@ -368,6 +368,7 @@ class Conversation {
     required this.status,
     required this.lastMessageAt,
     this.lastMessage,
+    this.lastFromStaff = false,
     this.unread = 0,
   });
 
@@ -376,6 +377,9 @@ class Conversation {
   final String status;
   final DateTime lastMessageAt;
   final String? lastMessage;
+
+  /// The last message was written by a leader (otherwise by me).
+  final bool lastFromStaff;
   final int unread;
 
   bool get isOpen => status == 'open';

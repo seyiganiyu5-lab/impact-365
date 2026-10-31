@@ -5,7 +5,7 @@ import '../../core/theme.dart';
 import '../../data/models.dart';
 import '../../data/repository.dart';
 import '../../widgets/common.dart';
-import '../sos/sos_widgets.dart';
+import '../../widgets/page_top_bar.dart';
 
 /// "Messages & Notifications": private chats with leaders + announcements.
 class InboxScreen extends StatefulWidget {
@@ -16,153 +16,360 @@ class InboxScreen extends StatefulWidget {
 }
 
 class _InboxScreenState extends State<InboxScreen> {
-  late Future<List<Conversation>> _conversations = Repo.myConversations();
-  late final Future<List<Announcement>> _announcements = Repo.announcements();
+  late Future<(List<Conversation>, List<Announcement>)> _future = _load();
 
-  void _refresh() => setState(() {
-    _conversations = Repo.myConversations();
+  Future<(List<Conversation>, List<Announcement>)> _load() async {
+    final r = await Future.wait([Repo.myConversations(), Repo.announcements()]);
+    return (r[0] as List<Conversation>, r[1] as List<Announcement>);
+  }
+
+  Future<void> _refresh() async {
+    setState(() {
+      _future = _load();
+    });
+    try {
+      await _future;
+    } catch (_) {
+      // Shown by AsyncView with a "Réessayer" button.
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: AppColors.warmWhite,
+      body: SafeArea(
+        child: AsyncView<(List<Conversation>, List<Announcement>)>(
+          future: _future,
+          onRetry: _refresh,
+          builder: (context, data) => InboxBody(
+            conversations: data.$1,
+            announcements: data.$2,
+            onRefresh: _refresh,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class InboxBody extends StatefulWidget {
+  const InboxBody({
+    super.key,
+    required this.conversations,
+    required this.announcements,
+    required this.onRefresh,
   });
+
+  final List<Conversation> conversations;
+  final List<Announcement> announcements;
+  final Future<void> Function() onRefresh;
+
+  @override
+  State<InboxBody> createState() => _InboxBodyState();
+}
+
+class _InboxBodyState extends State<InboxBody> {
+  int _tab = 0;
+
+  Future<void> _open(String path) async {
+    await context.push(path);
+    await widget.onRefresh();
+  }
 
   @override
   Widget build(BuildContext context) {
     final l = context.l10n;
-    return DefaultTabController(
-      length: 2,
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(l.inboxTitle),
-          bottom: PreferredSize(
-            preferredSize: const Size.fromHeight(64),
-            child: Container(
-              margin: const EdgeInsets.fromLTRB(20, 4, 20, 12),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(16),
-                border: Border.all(color: AppColors.border),
-              ),
-              child: TabBar(
-                indicatorSize: TabBarIndicatorSize.tab,
-                dividerColor: Colors.transparent,
-                indicator: BoxDecoration(
-                  color: AppColors.purple,
-                  borderRadius: BorderRadius.circular(14),
+    final unread = widget.conversations.fold<int>(0, (n, c) => n + c.unread);
+
+    return Column(
+      children: [
+        PageTopBar(title: l.inboxTitle),
+        Padding(
+          padding: const EdgeInsets.fromLTRB(20, 8, 20, 8),
+          child: _Segmented(
+            index: _tab,
+            labels: [l.inboxMessages, l.inboxNotifications],
+            badges: [unread, 0],
+            onChanged: (i) => setState(() => _tab = i),
+          ),
+        ),
+        Expanded(
+          child: RefreshIndicator(
+            onRefresh: widget.onRefresh,
+            child: _tab == 0
+                ? _ConversationList(
+                    conversations: widget.conversations,
+                    onOpen: (c) => _open('/inbox/${c.id}'),
+                    onNew: () => _open('/inbox/new'),
+                  )
+                : _AnnouncementList(announcements: widget.announcements),
+          ),
+        ),
+        if (_tab == 0)
+          SafeArea(
+            top: false,
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(20, 8, 20, 12),
+              child: SizedBox(
+                width: double.infinity,
+                height: 54,
+                child: FilledButton.icon(
+                  onPressed: () => _open('/inbox/new'),
+                  style: FilledButton.styleFrom(
+                    backgroundColor: AppColors.gold,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                  ),
+                  icon: const Icon(Icons.edit_outlined, size: 20),
+                  label: Text(
+                    l.inboxNewConversation,
+                    style: AppText.labelLarge,
+                  ),
                 ),
-                labelColor: Colors.white,
-                unselectedLabelColor: AppColors.ink,
-                tabs: [
-                  Tab(
-                    icon: const Icon(Icons.chat_bubble_outline, size: 18),
-                    iconMargin: EdgeInsets.zero,
-                    text: l.inboxMessages,
-                    height: 48,
-                  ),
-                  Tab(
-                    icon: const Icon(Icons.notifications_none, size: 18),
-                    iconMargin: EdgeInsets.zero,
-                    text: l.inboxNotifications,
-                    height: 48,
-                  ),
-                ],
               ),
             ),
           ),
-        ),
-        floatingActionButton: FloatingActionButton.extended(
-          backgroundColor: AppColors.purple,
-          foregroundColor: Colors.white,
-          icon: const Icon(Icons.edit_outlined, color: AppColors.gold),
-          label: Text(l.inboxNewConversation),
-          onPressed: () async {
-            await context.push('/inbox/new');
-            _refresh();
-          },
-        ),
-        body: TabBarView(
-          children: [
-            RefreshIndicator(
-              onRefresh: () async => _refresh(),
-              child: AsyncView<List<Conversation>>(
-                future: _conversations,
-                onRetry: _refresh,
-                builder: (context, list) {
-                  if (list.isEmpty) {
-                    return ListView(
-                      children: [
-                        EmptyState(
-                          message: l.inboxEmpty,
-                          icon: Icons.forum_outlined,
+      ],
+    );
+  }
+}
+
+/// "Messages | Notifications" switch with an unread badge.
+class _Segmented extends StatelessWidget {
+  const _Segmented({
+    required this.index,
+    required this.labels,
+    required this.badges,
+    required this.onChanged,
+  });
+
+  final int index;
+  final List<String> labels;
+  final List<int> badges;
+  final ValueChanged<int> onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(4),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: AppColors.border),
+      ),
+      child: Row(
+        children: [
+          for (var i = 0; i < labels.length; i++)
+            Expanded(
+              child: GestureDetector(
+                behavior: HitTestBehavior.opaque,
+                onTap: () => onChanged(i),
+                child: AnimatedContainer(
+                  duration: const Duration(milliseconds: 180),
+                  height: 42,
+                  decoration: BoxDecoration(
+                    color: i == index
+                        ? AppColors.deepPurple
+                        : Colors.transparent,
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Flexible(
+                        child: Text(
+                          labels[i],
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: AppText.labelMedium.copyWith(
+                            color: i == index ? Colors.white : AppColors.ink,
+                          ),
                         ),
+                      ),
+                      if (badges[i] > 0) ...[
+                        const SizedBox(width: 6),
+                        _CountBadge(count: badges[i]),
                       ],
-                    );
-                  }
-                  return ListView.builder(
-                    padding: const EdgeInsets.fromLTRB(20, 4, 20, 100),
-                    itemCount: list.length,
-                    itemBuilder: (context, i) =>
-                        _ConversationTile(c: list[i], onReturn: _refresh),
-                  );
-                },
+                    ],
+                  ),
+                ),
               ),
             ),
-            AsyncView<List<Announcement>>(
-              future: _announcements,
-              builder: (context, list) {
-                if (list.isEmpty) {
-                  return EmptyState(
-                    message: l.notificationsEmpty,
-                    icon: Icons.notifications_none,
-                  );
-                }
-                return ListView.builder(
-                  padding: const EdgeInsets.fromLTRB(20, 4, 20, 100),
-                  itemCount: list.length,
-                  itemBuilder: (context, i) {
-                    final a = list[i];
-                    return AppCard(
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const IconBubble(
-                            icon: Icons.campaign_outlined,
-                            light: true,
+        ],
+      ),
+    );
+  }
+}
+
+class _CountBadge extends StatelessWidget {
+  const _CountBadge({required this.count});
+
+  final int count;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      constraints: const BoxConstraints(minWidth: 20),
+      height: 20,
+      padding: const EdgeInsets.symmetric(horizontal: 6),
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+        color: AppColors.gold,
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Text(
+        count > 99 ? '99+' : '$count',
+        style: AppText.labelSmall.copyWith(color: Colors.white, fontSize: 11),
+      ),
+    );
+  }
+}
+
+// ------------------------------------------------------------ conversations
+
+class _ConversationList extends StatelessWidget {
+  const _ConversationList({
+    required this.conversations,
+    required this.onOpen,
+    required this.onNew,
+  });
+
+  final List<Conversation> conversations;
+  final ValueChanged<Conversation> onOpen;
+  final VoidCallback onNew;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = context.l10n;
+    if (conversations.isEmpty) {
+      return ListView(
+        physics: const AlwaysScrollableScrollPhysics(),
+        padding: const EdgeInsets.fromLTRB(32, 56, 32, 24),
+        children: [
+          const Center(child: Text('💬', style: TextStyle(fontSize: 48))),
+          const SizedBox(height: 14),
+          Text(
+            l.inboxEmptyTitle,
+            textAlign: TextAlign.center,
+            style: AppText.titleMedium.copyWith(color: AppColors.deepPurple),
+          ),
+          const SizedBox(height: 6),
+          Text(
+            l.inboxEmpty,
+            textAlign: TextAlign.center,
+            style: AppText.bodySmall.copyWith(color: AppColors.muted),
+          ),
+        ],
+      );
+    }
+    return ListView.separated(
+      physics: const AlwaysScrollableScrollPhysics(),
+      padding: const EdgeInsets.symmetric(vertical: 4),
+      itemCount: conversations.length,
+      separatorBuilder: (_, _) =>
+          const Divider(height: 1, indent: 84, color: AppColors.border),
+      itemBuilder: (context, i) => _ConversationRow(
+        conversation: conversations[i],
+        onTap: () => onOpen(conversations[i]),
+      ),
+    );
+  }
+}
+
+class _ConversationRow extends StatelessWidget {
+  const _ConversationRow({required this.conversation, required this.onTap});
+
+  final Conversation conversation;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = context.l10n;
+    final c = conversation;
+    final unread = c.unread > 0;
+    final preview = c.lastMessage == null
+        ? ''
+        : c.lastFromStaff
+        ? c.lastMessage!
+        : '${l.chatYou} : ${c.lastMessage}';
+
+    return InkWell(
+      onTap: onTap,
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(20, 12, 20, 12),
+        child: Row(
+          children: [
+            const LeadersAvatar(),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          c.subject,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: AppText.titleSmall.copyWith(
+                            color: AppColors.ink,
                           ),
-                          const SizedBox(width: 12),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  children: [
-                                    Expanded(
-                                      child: Text(
-                                        a.title,
-                                        style: AppText.titleSmall,
-                                      ),
-                                    ),
-                                    Text(
-                                      formatShortDate(context, a.createdAt),
-                                      style: AppText.bodySmall.copyWith(
-                                        color: AppColors.muted,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(height: 4),
-                                Text(
-                                  a.body,
-                                  style: const TextStyle(
-                                    color: AppColors.muted,
-                                  ),
-                                ),
-                              ],
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      Text(
+                        formatShortDate(context, c.lastMessageAt),
+                        style: AppText.caption.copyWith(
+                          color: unread ? AppColors.goldDark : AppColors.muted,
+                          fontWeight: unread ? FontWeight.w600 : null,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 4),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          preview,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: AppText.bodySmall.copyWith(
+                            color: unread ? AppColors.ink : AppColors.muted,
+                            fontWeight: unread ? FontWeight.w600 : null,
+                          ),
+                        ),
+                      ),
+                      if (unread) ...[
+                        const SizedBox(width: 8),
+                        _CountBadge(count: c.unread),
+                      ] else if (!c.isOpen) ...[
+                        const SizedBox(width: 8),
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 8,
+                            vertical: 2,
+                          ),
+                          decoration: BoxDecoration(
+                            color: AppColors.beige,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Text(
+                            l.chatClosedChip,
+                            style: AppText.caption.copyWith(
+                              color: AppColors.muted,
+                              fontSize: 11,
                             ),
                           ),
-                        ],
-                      ),
-                    );
-                  },
-                );
-              },
+                        ),
+                      ],
+                    ],
+                  ),
+                ],
+              ),
             ),
           ],
         ),
@@ -171,76 +378,118 @@ class _InboxScreenState extends State<InboxScreen> {
   }
 }
 
-class _ConversationTile extends StatelessWidget {
-  const _ConversationTile({required this.c, required this.onReturn});
+/// Round church logo standing for "the leaders".
+class LeadersAvatar extends StatelessWidget {
+  const LeadersAvatar({super.key, this.size = 52, this.ring = false});
 
-  final Conversation c;
-  final VoidCallback onReturn;
+  final double size;
+
+  /// Gold ring, for when the avatar sits on a purple background.
+  final bool ring;
 
   @override
   Widget build(BuildContext context) {
-    return AppCard(
-      onTap: () async {
-        await context.push('/inbox/${c.id}');
-        onReturn();
-      },
-      child: Row(
+    return Container(
+      width: size,
+      height: size,
+      padding: EdgeInsets.all(size * 0.16),
+      decoration: BoxDecoration(
+        color: AppColors.deepPurple,
+        shape: BoxShape.circle,
+        border: ring ? Border.all(color: AppColors.gold, width: 2) : null,
+      ),
+      child: BrandMark(size: size * 0.68, light: true),
+    );
+  }
+}
+
+// ------------------------------------------------------------ announcements
+
+class _AnnouncementList extends StatelessWidget {
+  const _AnnouncementList({required this.announcements});
+
+  final List<Announcement> announcements;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = context.l10n;
+    if (announcements.isEmpty) {
+      return ListView(
+        physics: const AlwaysScrollableScrollPhysics(),
+        padding: const EdgeInsets.fromLTRB(32, 56, 32, 24),
         children: [
-          const BrandMark(size: 44),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        c.subject,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: AppText.titleSmall,
-                      ),
-                    ),
-                    Text(
-                      formatShortDate(context, c.lastMessageAt),
-                      style: AppText.bodySmall.copyWith(color: AppColors.muted),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 4),
-                Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        c.lastMessage ?? '',
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style: AppText.bodySmall.copyWith(
-                          color: AppColors.muted,
-                        ),
-                      ),
-                    ),
-                    if (c.unread > 0)
-                      CircleAvatar(
-                        radius: 11,
-                        backgroundColor: AppColors.purple,
-                        child: Text(
-                          '${c.unread}',
-                          style: AppText.labelSmall.copyWith(
-                            color: Colors.white,
-                          ),
-                        ),
-                      )
-                    else if (!c.isOpen)
-                      StatusChip(status: c.status),
-                  ],
-                ),
-              ],
-            ),
+          const Center(child: Text('🔔', style: TextStyle(fontSize: 48))),
+          const SizedBox(height: 14),
+          Text(
+            l.notificationsEmpty,
+            textAlign: TextAlign.center,
+            style: AppText.bodyMedium.copyWith(color: AppColors.muted),
           ),
         ],
-      ),
+      );
+    }
+    return ListView.builder(
+      physics: const AlwaysScrollableScrollPhysics(),
+      padding: const EdgeInsets.fromLTRB(20, 8, 20, 24),
+      itemCount: announcements.length,
+      itemBuilder: (context, i) {
+        final a = announcements[i];
+        return Container(
+          margin: const EdgeInsets.only(bottom: 12),
+          padding: const EdgeInsets.fromLTRB(14, 14, 14, 14),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(18),
+            border: Border.all(color: AppColors.border),
+          ),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                width: 40,
+                height: 40,
+                alignment: Alignment.center,
+                decoration: const BoxDecoration(
+                  color: AppColors.goldLight,
+                  shape: BoxShape.circle,
+                ),
+                child: const Text('📣', style: TextStyle(fontSize: 18)),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            a.title,
+                            style: AppText.titleSmall.copyWith(
+                              color: AppColors.deepPurple,
+                            ),
+                          ),
+                        ),
+                        Text(
+                          formatShortDate(context, a.createdAt),
+                          style: AppText.caption.copyWith(
+                            color: AppColors.muted,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      a.body,
+                      style: AppText.bodySmall.copyWith(color: AppColors.ink),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }

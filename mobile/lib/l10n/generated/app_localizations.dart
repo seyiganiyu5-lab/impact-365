@@ -2331,6 +2331,90 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Reply from a leader'**
   String get sosLeaderReply;
+
+  /// No description provided for @chatYou.
+  ///
+  /// In en, this message translates to:
+  /// **'You'**
+  String get chatYou;
+
+  /// No description provided for @chatLeadersSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Pastors & leaders'**
+  String get chatLeadersSubtitle;
+
+  /// No description provided for @chatToday.
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get chatToday;
+
+  /// No description provided for @chatClosedChip.
+  ///
+  /// In en, this message translates to:
+  /// **'Closed'**
+  String get chatClosedChip;
+
+  /// No description provided for @chatSend.
+  ///
+  /// In en, this message translates to:
+  /// **'Send'**
+  String get chatSend;
+
+  /// No description provided for @newConvTopicsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick a topic or write your own'**
+  String get newConvTopicsTitle;
+
+  /// No description provided for @topicAdvice.
+  ///
+  /// In en, this message translates to:
+  /// **'I need some advice'**
+  String get topicAdvice;
+
+  /// No description provided for @topicPrayer.
+  ///
+  /// In en, this message translates to:
+  /// **'Prayer request'**
+  String get topicPrayer;
+
+  /// No description provided for @topicHard.
+  ///
+  /// In en, this message translates to:
+  /// **'I\'m going through a hard time'**
+  String get topicHard;
+
+  /// No description provided for @topicFaith.
+  ///
+  /// In en, this message translates to:
+  /// **'A question about faith'**
+  String get topicFaith;
+
+  /// No description provided for @topicTestimony.
+  ///
+  /// In en, this message translates to:
+  /// **'A testimony to share'**
+  String get topicTestimony;
+
+  /// No description provided for @chatSubjectRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a subject.'**
+  String get chatSubjectRequired;
+
+  /// No description provided for @chatBodyRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Write your message.'**
+  String get chatBodyRequired;
+
+  /// No description provided for @inboxEmptyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your leaders are here for you'**
+  String get inboxEmptyTitle;
 }
 
 class _AppLocalizationsDelegate

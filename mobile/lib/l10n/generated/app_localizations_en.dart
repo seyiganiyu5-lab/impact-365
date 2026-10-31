@@ -1235,4 +1235,46 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get sosLeaderReply => 'Reply from a leader';
+
+  @override
+  String get chatYou => 'You';
+
+  @override
+  String get chatLeadersSubtitle => 'Pastors & leaders';
+
+  @override
+  String get chatToday => 'Today';
+
+  @override
+  String get chatClosedChip => 'Closed';
+
+  @override
+  String get chatSend => 'Send';
+
+  @override
+  String get newConvTopicsTitle => 'Pick a topic or write your own';
+
+  @override
+  String get topicAdvice => 'I need some advice';
+
+  @override
+  String get topicPrayer => 'Prayer request';
+
+  @override
+  String get topicHard => 'I\'m going through a hard time';
+
+  @override
+  String get topicFaith => 'A question about faith';
+
+  @override
+  String get topicTestimony => 'A testimony to share';
+
+  @override
+  String get chatSubjectRequired => 'Add a subject.';
+
+  @override
+  String get chatBodyRequired => 'Write your message.';
+
+  @override
+  String get inboxEmptyTitle => 'Your leaders are here for you';
 }

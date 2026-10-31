@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../core/theme.dart';
 import '../../widgets/common.dart';
+import '../../widgets/page_top_bar.dart';
 import 'sos_widgets.dart';
 
 /// Holy SOS home: ask for help, help someone, or follow my requests.
@@ -17,7 +18,7 @@ class SosHubScreen extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
-            SosTopBar(title: l.sosTitle),
+            PageTopBar(title: l.sosTitle),
             Expanded(
               child: ListView(
                 padding: const EdgeInsets.fromLTRB(20, 8, 20, 24),

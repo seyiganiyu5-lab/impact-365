@@ -1239,4 +1239,46 @@ class AppLocalizationsYo extends AppLocalizations {
 
   @override
   String get sosLeaderReply => 'Èsì láti ọ̀dọ̀ olórí';
+
+  @override
+  String get chatYou => 'Ìwọ';
+
+  @override
+  String get chatLeadersSubtitle => 'Àwọn pásítọ̀ àti olórí';
+
+  @override
+  String get chatToday => 'Òní';
+
+  @override
+  String get chatClosedChip => 'Ó ti parí';
+
+  @override
+  String get chatSend => 'Fi ránṣẹ́';
+
+  @override
+  String get newConvTopicsTitle => 'Yan kókó ọ̀rọ̀ kan tàbí kọ tìrẹ';
+
+  @override
+  String get topicAdvice => 'Mo nílò ìmọ̀ràn';
+
+  @override
+  String get topicPrayer => 'Ìbéèrè àdúrà';
+
+  @override
+  String get topicHard => 'Mo ń la àkókò líle kọjá';
+
+  @override
+  String get topicFaith => 'Ìbéèrè nípa ìgbàgbọ́';
+
+  @override
+  String get topicTestimony => 'Ẹ̀rí láti pín';
+
+  @override
+  String get chatSubjectRequired => 'Kọ kókó ọ̀rọ̀ kan.';
+
+  @override
+  String get chatBodyRequired => 'Kọ ọ̀rọ̀ rẹ.';
+
+  @override
+  String get inboxEmptyTitle => 'Àwọn olórí rẹ wà fún ọ';
 }

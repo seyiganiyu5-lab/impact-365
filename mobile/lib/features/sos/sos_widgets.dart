@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
 import '../../core/theme.dart';
 import '../../data/models.dart';
 import '../../widgets/common.dart';
-import '../auth/auth_widgets.dart';
 
 String categoryLabel(BuildContext context, HelpCategory c) {
   final l = context.l10n;
@@ -68,40 +66,6 @@ class StatusChip extends StatelessWidget {
       child: Text(
         statusLabel(context, status),
         style: AppText.labelSmall.copyWith(color: color),
-      ),
-    );
-  }
-}
-
-/// Back arrow + centred title, used on every Holy SOS page.
-class SosTopBar extends StatelessWidget {
-  const SosTopBar({super.key, required this.title, this.trailing});
-
-  final String title;
-  final Widget? trailing;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 8, 16, 4),
-      child: Row(
-        children: [
-          RoundIconButton(
-            icon: Icons.arrow_back_rounded,
-            onPressed: () =>
-                context.canPop() ? context.pop() : context.go('/home'),
-          ),
-          Expanded(
-            child: Text(
-              title,
-              textAlign: TextAlign.center,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: AppText.titleLarge.copyWith(color: AppColors.deepPurple),
-            ),
-          ),
-          SizedBox(width: 44, child: trailing),
-        ],
       ),
     );
   }

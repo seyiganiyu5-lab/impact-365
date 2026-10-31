@@ -1247,4 +1247,46 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get sosLeaderReply => 'Réponse d\'un responsable';
+
+  @override
+  String get chatYou => 'Toi';
+
+  @override
+  String get chatLeadersSubtitle => 'Pasteurs & responsables';
+
+  @override
+  String get chatToday => 'Aujourd\'hui';
+
+  @override
+  String get chatClosedChip => 'Clôturée';
+
+  @override
+  String get chatSend => 'Envoyer';
+
+  @override
+  String get newConvTopicsTitle => 'Choisis un sujet ou écris le tien';
+
+  @override
+  String get topicAdvice => 'J\'ai besoin d\'un conseil';
+
+  @override
+  String get topicPrayer => 'Demande de prière';
+
+  @override
+  String get topicHard => 'Je traverse une période difficile';
+
+  @override
+  String get topicFaith => 'Une question sur la foi';
+
+  @override
+  String get topicTestimony => 'Un témoignage à partager';
+
+  @override
+  String get chatSubjectRequired => 'Indique un sujet.';
+
+  @override
+  String get chatBodyRequired => 'Écris ton message.';
+
+  @override
+  String get inboxEmptyTitle => 'Tes responsables sont là pour toi';
 }

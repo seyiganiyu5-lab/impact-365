@@ -371,5 +371,19 @@
   "sosResolvedToast": "Gloire à Dieu ! Ta demande est marquée comme résolue.",
   "sosNewRequest": "Nouvelle demande",
   "sosOfferRequired": "Écris un petit message avant d'envoyer.",
-  "sosLeaderReply": "Réponse d'un responsable"
+  "sosLeaderReply": "Réponse d'un responsable",
+  "chatYou": "Toi",
+  "chatLeadersSubtitle": "Pasteurs & responsables",
+  "chatToday": "Aujourd'hui",
+  "chatClosedChip": "Clôturée",
+  "chatSend": "Envoyer",
+  "newConvTopicsTitle": "Choisis un sujet ou écris le tien",
+  "topicAdvice": "J'ai besoin d'un conseil",
+  "topicPrayer": "Demande de prière",
+  "topicHard": "Je traverse une période difficile",
+  "topicFaith": "Une question sur la foi",
+  "topicTestimony": "Un témoignage à partager",
+  "chatSubjectRequired": "Indique un sujet.",
+  "chatBodyRequired": "Écris ton message.",
+  "inboxEmptyTitle": "Tes responsables sont là pour toi"
 }

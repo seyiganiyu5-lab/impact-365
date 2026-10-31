@@ -347,6 +347,7 @@ class Repo {
         status: r['status'] as String,
         lastMessageAt: DateTime.parse(r['last_message_at'] as String),
         lastMessage: msgs.isEmpty ? null : msgs.last['body'] as String,
+        lastFromStaff: msgs.isNotEmpty && msgs.last['is_from_staff'] == true,
         unread: msgs
             .where((m) => m['is_from_staff'] == true && m['read_at'] == null)
             .length,

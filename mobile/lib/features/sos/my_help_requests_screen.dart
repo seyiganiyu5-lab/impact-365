@@ -5,6 +5,7 @@ import '../../core/theme.dart';
 import '../../data/models.dart';
 import '../../data/repository.dart';
 import '../../widgets/common.dart';
+import '../../widgets/page_top_bar.dart';
 import 'sos_widgets.dart';
 
 /// "Mes demandes": my Holy SOS requests, leader replies and offers of help.
@@ -37,7 +38,7 @@ class _MyHelpRequestsScreenState extends State<MyHelpRequestsScreen> {
       body: SafeArea(
         child: Column(
           children: [
-            SosTopBar(
+            PageTopBar(
               title: l.sosMyRequests,
               trailing: IconButton(
                 tooltip: l.sosNewRequest,

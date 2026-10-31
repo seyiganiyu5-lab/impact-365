@@ -483,5 +483,19 @@
   "sosResolvedToast": "Glory to God! Your request is marked as resolved.",
   "sosNewRequest": "New request",
   "sosOfferRequired": "Write a short message before sending.",
-  "sosLeaderReply": "Reply from a leader"
+  "sosLeaderReply": "Reply from a leader",
+  "chatYou": "You",
+  "chatLeadersSubtitle": "Pastors & leaders",
+  "chatToday": "Today",
+  "chatClosedChip": "Closed",
+  "chatSend": "Send",
+  "newConvTopicsTitle": "Pick a topic or write your own",
+  "topicAdvice": "I need some advice",
+  "topicPrayer": "Prayer request",
+  "topicHard": "I'm going through a hard time",
+  "topicFaith": "A question about faith",
+  "topicTestimony": "A testimony to share",
+  "chatSubjectRequired": "Add a subject.",
+  "chatBodyRequired": "Write your message.",
+  "inboxEmptyTitle": "Your leaders are here for you"
 }

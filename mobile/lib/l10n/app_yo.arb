@@ -371,5 +371,19 @@
   "sosResolvedToast": "Ògo ni fún Ọlọ́run! A ti sàmì sí ìbéèrè rẹ pé ó ti parí.",
   "sosNewRequest": "Ìbéèrè tuntun",
   "sosOfferRequired": "Kọ ọ̀rọ̀ kúkúrú kí o tó fi ránṣẹ́.",
-  "sosLeaderReply": "Èsì láti ọ̀dọ̀ olórí"
+  "sosLeaderReply": "Èsì láti ọ̀dọ̀ olórí",
+  "chatYou": "Ìwọ",
+  "chatLeadersSubtitle": "Àwọn pásítọ̀ àti olórí",
+  "chatToday": "Òní",
+  "chatClosedChip": "Ó ti parí",
+  "chatSend": "Fi ránṣẹ́",
+  "newConvTopicsTitle": "Yan kókó ọ̀rọ̀ kan tàbí kọ tìrẹ",
+  "topicAdvice": "Mo nílò ìmọ̀ràn",
+  "topicPrayer": "Ìbéèrè àdúrà",
+  "topicHard": "Mo ń la àkókò líle kọjá",
+  "topicFaith": "Ìbéèrè nípa ìgbàgbọ́",
+  "topicTestimony": "Ẹ̀rí láti pín",
+  "chatSubjectRequired": "Kọ kókó ọ̀rọ̀ kan.",
+  "chatBodyRequired": "Kọ ọ̀rọ̀ rẹ.",
+  "inboxEmptyTitle": "Àwọn olórí rẹ wà fún ọ"
 }

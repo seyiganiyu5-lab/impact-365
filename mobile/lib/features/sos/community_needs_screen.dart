@@ -4,6 +4,7 @@ import '../../core/theme.dart';
 import '../../data/models.dart';
 import '../../data/repository.dart';
 import '../../widgets/common.dart';
+import '../../widgets/page_top_bar.dart';
 import 'sos_widgets.dart';
 
 /// "Je veux aider": needs shared by other members.
@@ -36,7 +37,7 @@ class _CommunityNeedsScreenState extends State<CommunityNeedsScreen> {
       body: SafeArea(
         child: Column(
           children: [
-            SosTopBar(title: l.sosWantHelp),
+            PageTopBar(title: l.sosWantHelp),
             Expanded(
               child: RefreshIndicator(
                 onRefresh: _refresh,

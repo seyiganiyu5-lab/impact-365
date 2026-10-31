@@ -5,6 +5,7 @@ import '../../core/theme.dart';
 import '../../data/models.dart';
 import '../../data/repository.dart';
 import '../../widgets/common.dart';
+import '../../widgets/page_top_bar.dart';
 import 'sos_widgets.dart';
 
 /// "J'ai besoin d'aide": type of need, description, who can see it.
@@ -85,7 +86,7 @@ class _SosRequestScreenState extends State<SosRequestScreen> {
       body: SafeArea(
         child: Column(
           children: [
-            SosTopBar(title: l.sosNeedHelp),
+            PageTopBar(title: l.sosNeedHelp),
             Expanded(
               child: ListView(
                 padding: const EdgeInsets.fromLTRB(20, 8, 20, 24),
