@@ -418,5 +418,16 @@
   "journalUnsaved": "Ṣé o fẹ́ jáde láì fi pamọ́?",
   "journalLeave": "Jáde",
   "journalPrivate": "Ìwọ nìkan lo lè ka ìwé àkọsílẹ̀ rẹ.",
-  "journalThanksHint": "Ẹ ṣé Olúwa fún..."
+  "journalThanksHint": "Ẹ ṣé Olúwa fún...",
+  "profileSectionIdentity": "Ìdánimọ̀ mi",
+  "profileSectionSignIn": "Ìwọlé",
+  "profileNameRequired": "Kọ orúkọ rẹ.",
+  "profilePhoneInvalid": "Nọ́mbà yìí kò dàbí ẹni pé ó tọ́.",
+  "profilePhoneHint": "Kò pọn dandan, pẹ̀lú kóòdù orílẹ̀-èdè",
+  "profileEmailLocked": "A kò lè yí í-meèlì rẹ padà.",
+  "profileSignInMethod": "Ọ̀nà ìwọlé",
+  "profileMethodEmail": "Í-meèlì àti ọ̀rọ̀ aṣínà",
+  "profileMemberSince": "Ọmọ ìjọ láti {date}",
+  "roleMember": "Ọmọ ìjọ",
+  "profilePrivacyNote": "Ìwọ àti àwọn olórí ìjọ rẹ nìkan ló lè rí àwọn ìsọfúnni yìí."
 }

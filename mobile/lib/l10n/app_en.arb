@@ -551,5 +551,23 @@
   "journalUnsaved": "Leave without saving?",
   "journalLeave": "Leave",
   "journalPrivate": "Only you can read your journal.",
-  "journalThanksHint": "Thank you Lord for..."
+  "journalThanksHint": "Thank you Lord for...",
+  "profileSectionIdentity": "My identity",
+  "profileSectionSignIn": "Sign-in",
+  "profileNameRequired": "Enter your name.",
+  "profilePhoneInvalid": "This number doesn't look valid.",
+  "profilePhoneHint": "Optional, with country code",
+  "profileEmailLocked": "Your email can't be changed.",
+  "profileSignInMethod": "Sign-in method",
+  "profileMethodEmail": "Email and password",
+  "profileMemberSince": "Member since {date}",
+  "@profileMemberSince": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "roleMember": "Member",
+  "profilePrivacyNote": "Only you and your church leaders can see this information."
 }

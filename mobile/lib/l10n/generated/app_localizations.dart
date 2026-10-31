@@ -2613,6 +2613,72 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Thank you Lord for...'**
   String get journalThanksHint;
+
+  /// No description provided for @profileSectionIdentity.
+  ///
+  /// In en, this message translates to:
+  /// **'My identity'**
+  String get profileSectionIdentity;
+
+  /// No description provided for @profileSectionSignIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign-in'**
+  String get profileSectionSignIn;
+
+  /// No description provided for @profileNameRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your name.'**
+  String get profileNameRequired;
+
+  /// No description provided for @profilePhoneInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'This number doesn\'t look valid.'**
+  String get profilePhoneInvalid;
+
+  /// No description provided for @profilePhoneHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Optional, with country code'**
+  String get profilePhoneHint;
+
+  /// No description provided for @profileEmailLocked.
+  ///
+  /// In en, this message translates to:
+  /// **'Your email can\'t be changed.'**
+  String get profileEmailLocked;
+
+  /// No description provided for @profileSignInMethod.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign-in method'**
+  String get profileSignInMethod;
+
+  /// No description provided for @profileMethodEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Email and password'**
+  String get profileMethodEmail;
+
+  /// No description provided for @profileMemberSince.
+  ///
+  /// In en, this message translates to:
+  /// **'Member since {date}'**
+  String profileMemberSince(String date);
+
+  /// No description provided for @roleMember.
+  ///
+  /// In en, this message translates to:
+  /// **'Member'**
+  String get roleMember;
+
+  /// No description provided for @profilePrivacyNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Only you and your church leaders can see this information.'**
+  String get profilePrivacyNote;
 }
 
 class _AppLocalizationsDelegate

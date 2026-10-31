@@ -1391,4 +1391,40 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get journalThanksHint => 'Thank you Lord for...';
+
+  @override
+  String get profileSectionIdentity => 'My identity';
+
+  @override
+  String get profileSectionSignIn => 'Sign-in';
+
+  @override
+  String get profileNameRequired => 'Enter your name.';
+
+  @override
+  String get profilePhoneInvalid => 'This number doesn\'t look valid.';
+
+  @override
+  String get profilePhoneHint => 'Optional, with country code';
+
+  @override
+  String get profileEmailLocked => 'Your email can\'t be changed.';
+
+  @override
+  String get profileSignInMethod => 'Sign-in method';
+
+  @override
+  String get profileMethodEmail => 'Email and password';
+
+  @override
+  String profileMemberSince(String date) {
+    return 'Member since $date';
+  }
+
+  @override
+  String get roleMember => 'Member';
+
+  @override
+  String get profilePrivacyNote =>
+      'Only you and your church leaders can see this information.';
 }

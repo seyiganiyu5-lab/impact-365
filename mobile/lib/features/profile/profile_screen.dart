@@ -336,7 +336,7 @@ class _IdentityCard extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _Avatar(name: name, url: profile.avatarUrl),
+          ProfileAvatar(name: name, url: profile.avatarUrl),
           const SizedBox(width: 14),
           Expanded(
             child: Column(
@@ -384,11 +384,18 @@ class _IdentityCard extends StatelessWidget {
   }
 }
 
-class _Avatar extends StatelessWidget {
-  const _Avatar({required this.name, required this.url});
+/// Round photo (or initials) with a gold ring.
+class ProfileAvatar extends StatelessWidget {
+  const ProfileAvatar({
+    super.key,
+    required this.name,
+    required this.url,
+    this.size = 68,
+  });
 
   final String name;
   final String? url;
+  final double size;
 
   String get _initials {
     final parts = name.split(RegExp(r'\s+')).where((p) => p.isNotEmpty);
@@ -398,9 +405,9 @@ class _Avatar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 68,
-      height: 68,
-      padding: const EdgeInsets.all(2.5),
+      width: size,
+      height: size,
+      padding: EdgeInsets.all(size * 0.037),
       decoration: const BoxDecoration(
         color: AppColors.gold,
         shape: BoxShape.circle,
@@ -410,7 +417,10 @@ class _Avatar extends StatelessWidget {
         foregroundImage: url == null ? null : NetworkImage(url!),
         child: Text(
           _initials,
-          style: AppText.titleLarge.copyWith(color: AppColors.deepPurple),
+          style: AppText.titleLarge.copyWith(
+            color: AppColors.deepPurple,
+            fontSize: size * 0.32,
+          ),
         ),
       ),
     );

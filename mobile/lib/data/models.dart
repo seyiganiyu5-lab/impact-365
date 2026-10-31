@@ -175,6 +175,7 @@ class Profile {
     this.avatarUrl,
     this.role = 'member',
     this.preferredLanguage = 'fr',
+    this.createdAt,
   });
 
   final String id;
@@ -183,6 +184,7 @@ class Profile {
   final String? avatarUrl;
   final String role;
   final String preferredLanguage;
+  final DateTime? createdAt;
 
   String get firstName => (fullName ?? '').trim().split(' ').first;
 
@@ -193,6 +195,9 @@ class Profile {
     avatarUrl: j['avatar_url'] as String?,
     role: j['role'] as String? ?? 'member',
     preferredLanguage: j['preferred_language'] as String? ?? 'fr',
+    createdAt: j['created_at'] == null
+        ? null
+        : DateTime.parse(j['created_at'] as String),
   );
 }
 

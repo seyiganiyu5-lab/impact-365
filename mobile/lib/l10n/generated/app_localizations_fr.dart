@@ -1404,4 +1404,40 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get journalThanksHint => 'Merci Seigneur pour...';
+
+  @override
+  String get profileSectionIdentity => 'Mon identité';
+
+  @override
+  String get profileSectionSignIn => 'Connexion';
+
+  @override
+  String get profileNameRequired => 'Indique ton nom.';
+
+  @override
+  String get profilePhoneInvalid => 'Ce numéro ne semble pas valide.';
+
+  @override
+  String get profilePhoneHint => 'Facultatif, avec l\'indicatif du pays';
+
+  @override
+  String get profileEmailLocked => 'L\'e-mail ne peut pas être modifié.';
+
+  @override
+  String get profileSignInMethod => 'Méthode de connexion';
+
+  @override
+  String get profileMethodEmail => 'E-mail et mot de passe';
+
+  @override
+  String profileMemberSince(String date) {
+    return 'Membre depuis $date';
+  }
+
+  @override
+  String get roleMember => 'Membre';
+
+  @override
+  String get profilePrivacyNote =>
+      'Seuls toi et les responsables de ton église voyez ces informations.';
 }

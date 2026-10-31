@@ -1395,4 +1395,40 @@ class AppLocalizationsYo extends AppLocalizations {
 
   @override
   String get journalThanksHint => 'Ẹ ṣé Olúwa fún...';
+
+  @override
+  String get profileSectionIdentity => 'Ìdánimọ̀ mi';
+
+  @override
+  String get profileSectionSignIn => 'Ìwọlé';
+
+  @override
+  String get profileNameRequired => 'Kọ orúkọ rẹ.';
+
+  @override
+  String get profilePhoneInvalid => 'Nọ́mbà yìí kò dàbí ẹni pé ó tọ́.';
+
+  @override
+  String get profilePhoneHint => 'Kò pọn dandan, pẹ̀lú kóòdù orílẹ̀-èdè';
+
+  @override
+  String get profileEmailLocked => 'A kò lè yí í-meèlì rẹ padà.';
+
+  @override
+  String get profileSignInMethod => 'Ọ̀nà ìwọlé';
+
+  @override
+  String get profileMethodEmail => 'Í-meèlì àti ọ̀rọ̀ aṣínà';
+
+  @override
+  String profileMemberSince(String date) {
+    return 'Ọmọ ìjọ láti $date';
+  }
+
+  @override
+  String get roleMember => 'Ọmọ ìjọ';
+
+  @override
+  String get profilePrivacyNote =>
+      'Ìwọ àti àwọn olórí ìjọ rẹ nìkan ló lè rí àwọn ìsọfúnni yìí.';
 }

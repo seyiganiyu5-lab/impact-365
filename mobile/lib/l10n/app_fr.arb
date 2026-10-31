@@ -418,5 +418,16 @@
   "journalUnsaved": "Quitter sans enregistrer ?",
   "journalLeave": "Quitter",
   "journalPrivate": "Seulement toi peux lire ton journal.",
-  "journalThanksHint": "Merci Seigneur pour..."
+  "journalThanksHint": "Merci Seigneur pour...",
+  "profileSectionIdentity": "Mon identité",
+  "profileSectionSignIn": "Connexion",
+  "profileNameRequired": "Indique ton nom.",
+  "profilePhoneInvalid": "Ce numéro ne semble pas valide.",
+  "profilePhoneHint": "Facultatif, avec l'indicatif du pays",
+  "profileEmailLocked": "L'e-mail ne peut pas être modifié.",
+  "profileSignInMethod": "Méthode de connexion",
+  "profileMethodEmail": "E-mail et mot de passe",
+  "profileMemberSince": "Membre depuis {date}",
+  "roleMember": "Membre",
+  "profilePrivacyNote": "Seuls toi et les responsables de ton église voyez ces informations."
 }
