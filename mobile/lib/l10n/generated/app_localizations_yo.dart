@@ -1072,4 +1072,41 @@ class AppLocalizationsYo extends AppLocalizations {
 
   @override
   String get authSigningIn => 'A ń mú ọ wọlé…';
+
+  @override
+  String get prayerHeroTitle => 'Lo àsìkò díẹ̀ pẹ̀lú Baba rẹ';
+
+  @override
+  String get prayerHeroText =>
+      'Kó gbogbo àníyàn rẹ lé E, nítorí Ó ń bìkítà fún ọ.';
+
+  @override
+  String get prayerHeroRef => '1 Pétérù 5:7';
+
+  @override
+  String get prayerOngoing => 'Ń lọ lọ́wọ́';
+
+  @override
+  String get prayerAnsweredShort => 'Ìdáhùn';
+
+  @override
+  String get prayerCommunityTitle => 'Gbàdúrà fún àwọn ẹlòmíì';
+
+  @override
+  String get prayerSeeAll => 'Wo gbogbo rẹ̀';
+
+  @override
+  String get prayerAlsoForYou => 'Fún ọ pẹ̀lú';
+
+  @override
+  String get prayerJournalShort => 'Ìwé ìrántí mi';
+
+  @override
+  String get prayerJournalShortSub => 'Kọ ohun tí Ọlọ́run fi hàn mí';
+
+  @override
+  String get prayerSosShortSub => 'Béèrè tàbí fúnni ní ìrànlọ́wọ́';
+
+  @override
+  String get prayerShortVerse => 'Ẹ máa gbàdúrà láìsinmi. — 1 Tẹsalóníkà 5:17';
 }

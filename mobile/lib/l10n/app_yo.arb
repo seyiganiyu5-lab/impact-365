@@ -318,5 +318,17 @@
   "deleteConfirm": "Pa á rẹ́ pátápátá",
   "deleteDone": "A ti pa àkáǹtì rẹ rẹ́. Ọlọ́run bù kún ọ!",
   "deleteErrLastAdmin": "Ìwọ nìkan ni alábòójútó. Yan alábòójútó mìíràn kí o tó pa àkáǹtì rẹ rẹ́.",
-  "authSigningIn": "A ń mú ọ wọlé…"
+  "authSigningIn": "A ń mú ọ wọlé…",
+  "prayerHeroTitle": "Lo àsìkò díẹ̀ pẹ̀lú Baba rẹ",
+  "prayerHeroText": "Kó gbogbo àníyàn rẹ lé E, nítorí Ó ń bìkítà fún ọ.",
+  "prayerHeroRef": "1 Pétérù 5:7",
+  "prayerOngoing": "Ń lọ lọ́wọ́",
+  "prayerAnsweredShort": "Ìdáhùn",
+  "prayerCommunityTitle": "Gbàdúrà fún àwọn ẹlòmíì",
+  "prayerSeeAll": "Wo gbogbo rẹ̀",
+  "prayerAlsoForYou": "Fún ọ pẹ̀lú",
+  "prayerJournalShort": "Ìwé ìrántí mi",
+  "prayerJournalShortSub": "Kọ ohun tí Ọlọ́run fi hàn mí",
+  "prayerSosShortSub": "Béèrè tàbí fúnni ní ìrànlọ́wọ́",
+  "prayerShortVerse": "Ẹ máa gbàdúrà láìsinmi. — 1 Tẹsalóníkà 5:17"
 }

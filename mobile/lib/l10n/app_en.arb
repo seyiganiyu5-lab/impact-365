@@ -423,5 +423,17 @@
       }
     }
   },
-  "authSigningIn": "Signing you in…"
+  "authSigningIn": "Signing you in…",
+  "prayerHeroTitle": "Take a moment with your Father",
+  "prayerHeroText": "Cast all your care upon Him, for He careth for you.",
+  "prayerHeroRef": "1 Peter 5:7",
+  "prayerOngoing": "Ongoing",
+  "prayerAnsweredShort": "Answered",
+  "prayerCommunityTitle": "Pray for others",
+  "prayerSeeAll": "See all",
+  "prayerAlsoForYou": "Also for you",
+  "prayerJournalShort": "My journal",
+  "prayerJournalShortSub": "Write what God shows me",
+  "prayerSosShortSub": "Ask for or offer help",
+  "prayerShortVerse": "Pray without ceasing. — 1 Thessalonians 5:17"
 }

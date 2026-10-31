@@ -1068,4 +1068,41 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get authSigningIn => 'Signing you in…';
+
+  @override
+  String get prayerHeroTitle => 'Take a moment with your Father';
+
+  @override
+  String get prayerHeroText =>
+      'Cast all your care upon Him, for He careth for you.';
+
+  @override
+  String get prayerHeroRef => '1 Peter 5:7';
+
+  @override
+  String get prayerOngoing => 'Ongoing';
+
+  @override
+  String get prayerAnsweredShort => 'Answered';
+
+  @override
+  String get prayerCommunityTitle => 'Pray for others';
+
+  @override
+  String get prayerSeeAll => 'See all';
+
+  @override
+  String get prayerAlsoForYou => 'Also for you';
+
+  @override
+  String get prayerJournalShort => 'My journal';
+
+  @override
+  String get prayerJournalShortSub => 'Write what God shows me';
+
+  @override
+  String get prayerSosShortSub => 'Ask for or offer help';
+
+  @override
+  String get prayerShortVerse => 'Pray without ceasing. — 1 Thessalonians 5:17';
 }

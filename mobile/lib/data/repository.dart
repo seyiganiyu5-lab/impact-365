@@ -234,13 +234,15 @@ class Repo {
   static Future<void> deletePrayer(String id) =>
       _db.from('prayer_requests').delete().eq('id', id);
 
-  static Future<List<CommunityPrayer>> communityPrayers() async {
+  static Future<List<CommunityPrayer>> communityPrayers({
+    int limit = 100,
+  }) async {
     final rows = await _db
         .from('community_prayers')
         .select()
         .eq('is_answered', false)
         .order('created_at', ascending: false)
-        .limit(100);
+        .limit(limit);
     return rows.map(CommunityPrayer.fromJson).toList();
   }
 

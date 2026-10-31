@@ -318,5 +318,17 @@
   "deleteConfirm": "Supprimer définitivement",
   "deleteDone": "Ton compte a été supprimé. Que Dieu te bénisse !",
   "deleteErrLastAdmin": "Tu es le seul administrateur. Nomme un autre administrateur avant de supprimer ton compte.",
-  "authSigningIn": "Connexion en cours…"
+  "authSigningIn": "Connexion en cours…",
+  "prayerHeroTitle": "Prends un moment avec ton Père",
+  "prayerHeroText": "Dépose sur Lui tous tes soucis, car Il prend soin de toi.",
+  "prayerHeroRef": "1 Pierre 5:7",
+  "prayerOngoing": "En cours",
+  "prayerAnsweredShort": "Exaucées",
+  "prayerCommunityTitle": "Prier pour les autres",
+  "prayerSeeAll": "Voir tout",
+  "prayerAlsoForYou": "Aussi pour toi",
+  "prayerJournalShort": "Mon journal",
+  "prayerJournalShortSub": "Écrire ce que Dieu me montre",
+  "prayerSosShortSub": "Demander ou offrir de l'aide",
+  "prayerShortVerse": "Priez sans cesse. — 1 Thessaloniciens 5:17"
 }

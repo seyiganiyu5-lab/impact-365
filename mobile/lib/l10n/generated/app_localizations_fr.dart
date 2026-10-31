@@ -1080,4 +1080,41 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get authSigningIn => 'Connexion en cours…';
+
+  @override
+  String get prayerHeroTitle => 'Prends un moment avec ton Père';
+
+  @override
+  String get prayerHeroText =>
+      'Dépose sur Lui tous tes soucis, car Il prend soin de toi.';
+
+  @override
+  String get prayerHeroRef => '1 Pierre 5:7';
+
+  @override
+  String get prayerOngoing => 'En cours';
+
+  @override
+  String get prayerAnsweredShort => 'Exaucées';
+
+  @override
+  String get prayerCommunityTitle => 'Prier pour les autres';
+
+  @override
+  String get prayerSeeAll => 'Voir tout';
+
+  @override
+  String get prayerAlsoForYou => 'Aussi pour toi';
+
+  @override
+  String get prayerJournalShort => 'Mon journal';
+
+  @override
+  String get prayerJournalShortSub => 'Écrire ce que Dieu me montre';
+
+  @override
+  String get prayerSosShortSub => 'Demander ou offrir de l\'aide';
+
+  @override
+  String get prayerShortVerse => 'Priez sans cesse. — 1 Thessaloniciens 5:17';
 }

@@ -2013,6 +2013,78 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Signing you in…'**
   String get authSigningIn;
+
+  /// No description provided for @prayerHeroTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Take a moment with your Father'**
+  String get prayerHeroTitle;
+
+  /// No description provided for @prayerHeroText.
+  ///
+  /// In en, this message translates to:
+  /// **'Cast all your care upon Him, for He careth for you.'**
+  String get prayerHeroText;
+
+  /// No description provided for @prayerHeroRef.
+  ///
+  /// In en, this message translates to:
+  /// **'1 Peter 5:7'**
+  String get prayerHeroRef;
+
+  /// No description provided for @prayerOngoing.
+  ///
+  /// In en, this message translates to:
+  /// **'Ongoing'**
+  String get prayerOngoing;
+
+  /// No description provided for @prayerAnsweredShort.
+  ///
+  /// In en, this message translates to:
+  /// **'Answered'**
+  String get prayerAnsweredShort;
+
+  /// No description provided for @prayerCommunityTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Pray for others'**
+  String get prayerCommunityTitle;
+
+  /// No description provided for @prayerSeeAll.
+  ///
+  /// In en, this message translates to:
+  /// **'See all'**
+  String get prayerSeeAll;
+
+  /// No description provided for @prayerAlsoForYou.
+  ///
+  /// In en, this message translates to:
+  /// **'Also for you'**
+  String get prayerAlsoForYou;
+
+  /// No description provided for @prayerJournalShort.
+  ///
+  /// In en, this message translates to:
+  /// **'My journal'**
+  String get prayerJournalShort;
+
+  /// No description provided for @prayerJournalShortSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Write what God shows me'**
+  String get prayerJournalShortSub;
+
+  /// No description provided for @prayerSosShortSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Ask for or offer help'**
+  String get prayerSosShortSub;
+
+  /// No description provided for @prayerShortVerse.
+  ///
+  /// In en, this message translates to:
+  /// **'Pray without ceasing. — 1 Thessalonians 5:17'**
+  String get prayerShortVerse;
 }
 
 class _AppLocalizationsDelegate
