@@ -1447,4 +1447,33 @@ class AppLocalizationsYo extends AppLocalizations {
 
   @override
   String get langYoruba => 'Yorùbá';
+
+  @override
+  String get photoChange => 'Yí fọ́tò padà';
+
+  @override
+  String get photoCamera => 'Ya fọ́tò';
+
+  @override
+  String get photoGallery => 'Yan láti inú àwòrán';
+
+  @override
+  String get photoRemove => 'Yọ fọ́tò kúrò';
+
+  @override
+  String get photoUpdated => 'A ti yí fọ́tò padà';
+
+  @override
+  String get photoRemoved => 'A ti yọ fọ́tò kúrò';
+
+  @override
+  String get photoUnsupported =>
+      'A kò lè lo irú àwòrán yìí. Yan fọ́tò JPG tàbí PNG.';
+
+  @override
+  String get photoTooBig => 'Fọ́tò yìí tóbi jù. Yan òmíràn.';
+
+  @override
+  String get photoPermission =>
+      'Fún áàpù ní àṣẹ láti lo àwòrán tàbí kámẹ́rà nínú ètò fóònù rẹ.';
 }

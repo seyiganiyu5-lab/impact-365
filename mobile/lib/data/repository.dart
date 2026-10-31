@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../core/locale_controller.dart';
@@ -51,7 +53,80 @@ class Repo {
       _db.from('profiles').update({'preferred_language': code}).eq('id', _uid);
 
   /// Deletes the signed-in member's account and all their data.
-  static Future<void> deleteMyAccount() => _db.rpc('delete_my_account');
+  static Future<void> deleteMyAccount() async {
+    // Photos live in Storage, outside the database: remove them first.
+    try {
+      await _removeAvatarFiles();
+    } catch (_) {
+      // Not a reason to keep the account.
+    }
+    await _db.rpc('delete_my_account');
+  }
+
+  // ---------------------------------------------------------- Profile photo
+
+  static const avatarMaxBytes = 2 * 1024 * 1024;
+
+  /// File names in my avatars folder.
+  static Future<List<String>> _avatarFiles() async {
+    final files = await _db.storage.from('avatars').list(path: _uid);
+    return [
+      for (final f in files)
+        if (f.name.isNotEmpty && !f.name.startsWith('.')) '$_uid/${f.name}',
+    ];
+  }
+
+  static Future<void> _removeAvatarFiles({String? keepUrl}) async {
+    final files = await _avatarFiles();
+    final remove = [
+      for (final f in files)
+        if (keepUrl == null || !keepUrl.endsWith('/$f')) f,
+    ];
+    if (remove.isNotEmpty) await _db.storage.from('avatars').remove(remove);
+  }
+
+  /// Uploads a new profile photo and uses it. Returns its URL.
+  static Future<String> uploadAvatar(
+    Uint8List bytes, {
+    required String contentType,
+  }) async {
+    final ext = switch (contentType) {
+      'image/png' => 'png',
+      'image/webp' => 'webp',
+      _ => 'jpg',
+    };
+    final current = (await myProfile()).avatarUrl;
+    // Room for the new file: keep only the photo in use (max 3 allowed).
+    await _removeAvatarFiles(keepUrl: current);
+
+    final path = '$_uid/${DateTime.now().millisecondsSinceEpoch}.$ext';
+    final bucket = _db.storage.from('avatars');
+    await bucket.uploadBinary(
+      path,
+      bytes,
+      fileOptions: FileOptions(contentType: contentType, upsert: false),
+    );
+    final url = bucket.getPublicUrl(path);
+    await _db.from('profiles').update({'avatar_url': url}).eq('id', _uid);
+
+    // The old photo is no longer used.
+    try {
+      await _removeAvatarFiles(keepUrl: url);
+    } catch (_) {
+      // Cleaned up on the next upload.
+    }
+    return url;
+  }
+
+  /// Back to initials.
+  static Future<void> removeAvatar() async {
+    await _db.from('profiles').update({'avatar_url': null}).eq('id', _uid);
+    try {
+      await _removeAvatarFiles();
+    } catch (_) {
+      // Cleaned up on the next upload.
+    }
+  }
 
   static Future<UserStats> myStats() async {
     final res = await _db.rpc('my_stats');

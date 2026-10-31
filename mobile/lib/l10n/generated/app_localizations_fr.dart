@@ -1456,4 +1456,34 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get langYoruba => 'Yoruba';
+
+  @override
+  String get photoChange => 'Changer la photo';
+
+  @override
+  String get photoCamera => 'Prendre une photo';
+
+  @override
+  String get photoGallery => 'Choisir dans la galerie';
+
+  @override
+  String get photoRemove => 'Retirer la photo';
+
+  @override
+  String get photoUpdated => 'Photo mise à jour';
+
+  @override
+  String get photoRemoved => 'Photo retirée';
+
+  @override
+  String get photoUnsupported =>
+      'Ce format d\'image n\'est pas pris en charge. Choisis une photo JPG ou PNG.';
+
+  @override
+  String get photoTooBig =>
+      'Cette photo est trop lourde. Choisis-en une autre.';
+
+  @override
+  String get photoPermission =>
+      'Autorise l\'accès aux photos ou à l\'appareil photo dans les réglages de ton téléphone.';
 }

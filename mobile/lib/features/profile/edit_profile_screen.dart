@@ -7,6 +7,7 @@ import '../../data/models.dart';
 import '../../data/repository.dart';
 import '../../widgets/common.dart';
 import '../../widgets/page_top_bar.dart';
+import 'avatar_picker.dart';
 import 'profile_screen.dart';
 
 /// Phone check: optional; digits with spaces, dots, dashes, brackets and
@@ -46,6 +47,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           provider: user?.appMetadata['provider'] as String? ?? 'email',
           onSave: ({required fullName, required phone}) =>
               Repo.updateProfile(fullName: fullName, phone: phone),
+          onChangePhoto: (camera) =>
+              pickAndUploadAvatar(context, camera: camera),
+          onRemovePhoto: Repo.removeAvatar,
         ),
       ),
     );
@@ -59,6 +63,8 @@ class PersonalInfoView extends StatefulWidget {
     required this.email,
     required this.provider,
     required this.onSave,
+    required this.onChangePhoto,
+    required this.onRemovePhoto,
   });
 
   final Profile profile;
@@ -69,12 +75,19 @@ class PersonalInfoView extends StatefulWidget {
   final Future<void> Function({required String fullName, required String phone})
   onSave;
 
+  /// Picks (camera or gallery) and uploads a photo; returns its URL, or
+  /// null when cancelled.
+  final Future<String?> Function(bool camera) onChangePhoto;
+  final Future<void> Function() onRemovePhoto;
+
   @override
   State<PersonalInfoView> createState() => _PersonalInfoViewState();
 }
 
 class _PersonalInfoViewState extends State<PersonalInfoView> {
   late final _name = TextEditingController(text: widget.profile.fullName);
+  late String? _avatarUrl = widget.profile.avatarUrl;
+  bool _photoBusy = false;
   late final _phone = TextEditingController(text: widget.profile.phone);
   late String _savedName = _name.text.trim();
   late String _savedPhone = _phone.text.trim();
@@ -96,6 +109,87 @@ class _PersonalInfoViewState extends State<PersonalInfoView> {
     _name.dispose();
     _phone.dispose();
     super.dispose();
+  }
+
+  Future<void> _photoMenu() async {
+    final l = context.l10n;
+    final choice = await showModalBottomSheet<String>(
+      context: context,
+      showDragHandle: true,
+      backgroundColor: AppColors.warmWhite,
+      builder: (ctx) => SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Padding(
+                padding: const EdgeInsets.fromLTRB(8, 0, 8, 10),
+                child: Text(
+                  l.photoChange,
+                  style: AppText.titleMedium.copyWith(
+                    color: AppColors.deepPurple,
+                  ),
+                ),
+              ),
+              _SheetAction(
+                icon: Icons.photo_camera_outlined,
+                label: l.photoCamera,
+                onTap: () => Navigator.pop(ctx, 'camera'),
+              ),
+              _SheetAction(
+                icon: Icons.photo_library_outlined,
+                label: l.photoGallery,
+                onTap: () => Navigator.pop(ctx, 'gallery'),
+              ),
+              if (_avatarUrl != null)
+                _SheetAction(
+                  icon: Icons.delete_outline_rounded,
+                  label: l.photoRemove,
+                  danger: true,
+                  onTap: () => Navigator.pop(ctx, 'remove'),
+                ),
+            ],
+          ),
+        ),
+      ),
+    );
+    if (choice == null || !mounted) return;
+    setState(() {
+      _photoBusy = true;
+    });
+    try {
+      if (choice == 'remove') {
+        await widget.onRemovePhoto();
+        if (!mounted) return;
+        setState(() {
+          _avatarUrl = null;
+        });
+        context.toast(l.photoRemoved);
+      } else {
+        final url = await widget.onChangePhoto(choice == 'camera');
+        if (url == null || !mounted) return;
+        setState(() {
+          _avatarUrl = url;
+        });
+        context.toast(l.photoUpdated);
+      }
+    } catch (e) {
+      if (!mounted) return;
+      context.toast(switch (e) {
+        AvatarPickError(:final message) => message,
+        StorageException(statusCode: '413') => l.photoTooBig,
+        StorageException(statusCode: '415') => l.photoUnsupported,
+        _ => context.errorText(e),
+      });
+    } finally {
+      if (mounted) {
+        setState(() {
+          _photoBusy = false;
+        });
+      }
+    }
   }
 
   bool get _dirty =>
@@ -214,10 +308,11 @@ class _PersonalInfoViewState extends State<PersonalInfoView> {
                 children: [
                   // Who I am.
                   Center(
-                    child: ProfileAvatar(
+                    child: _EditableAvatar(
                       name: shownName,
-                      url: p.avatarUrl,
-                      size: 92,
+                      url: _avatarUrl,
+                      busy: _photoBusy,
+                      onTap: _photoBusy ? null : _photoMenu,
                     ),
                   ),
                   const SizedBox(height: 12),
@@ -546,6 +641,118 @@ class _InfoRow extends StatelessWidget {
         ),
         if (trailing != null) ...[const SizedBox(width: 8), trailing!],
       ],
+    );
+  }
+}
+
+class _EditableAvatar extends StatelessWidget {
+  const _EditableAvatar({
+    required this.name,
+    required this.url,
+    required this.busy,
+    required this.onTap,
+  });
+
+  final String name;
+  final String? url;
+  final bool busy;
+  final VoidCallback? onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Semantics(
+      button: true,
+      label: context.l10n.photoChange,
+      child: GestureDetector(
+        onTap: onTap,
+        child: SizedBox(
+          width: 100,
+          height: 96,
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              ProfileAvatar(name: name, url: url, size: 92),
+              if (busy)
+                Container(
+                  width: 92,
+                  height: 92,
+                  decoration: BoxDecoration(
+                    color: Colors.black.withValues(alpha: 0.35),
+                    shape: BoxShape.circle,
+                  ),
+                  child: const Center(
+                    child: SizedBox(
+                      width: 26,
+                      height: 26,
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2.6,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ),
+              Positioned(
+                right: 0,
+                bottom: 0,
+                child: Container(
+                  width: 34,
+                  height: 34,
+                  decoration: BoxDecoration(
+                    color: AppColors.deepPurple,
+                    shape: BoxShape.circle,
+                    border: Border.all(color: AppColors.warmWhite, width: 3),
+                  ),
+                  child: const Icon(
+                    Icons.photo_camera_rounded,
+                    size: 16,
+                    color: AppColors.gold,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _SheetAction extends StatelessWidget {
+  const _SheetAction({
+    required this.icon,
+    required this.label,
+    required this.onTap,
+    this.danger = false,
+  });
+
+  final IconData icon;
+  final String label;
+  final VoidCallback onTap;
+  final bool danger;
+
+  @override
+  Widget build(BuildContext context) {
+    final color = danger ? AppColors.danger : AppColors.deepPurple;
+    return ListTile(
+      onTap: onTap,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+      leading: Container(
+        width: 40,
+        height: 40,
+        decoration: BoxDecoration(
+          color: danger
+              ? AppColors.danger.withValues(alpha: 0.1)
+              : AppColors.lavender,
+          shape: BoxShape.circle,
+        ),
+        child: Icon(icon, color: color, size: 21),
+      ),
+      title: Text(
+        label,
+        style: AppText.bodyStrong.copyWith(
+          color: danger ? AppColors.danger : AppColors.ink,
+        ),
+      ),
     );
   }
 }

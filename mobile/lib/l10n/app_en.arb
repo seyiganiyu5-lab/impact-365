@@ -574,5 +574,14 @@
   "languageNote": "Devotions, verses and challenges also appear in this language.",
   "langFrench": "French",
   "langEnglish": "English",
-  "langYoruba": "Yoruba"
+  "langYoruba": "Yoruba",
+  "photoChange": "Change photo",
+  "photoCamera": "Take a photo",
+  "photoGallery": "Choose from gallery",
+  "photoRemove": "Remove photo",
+  "photoUpdated": "Photo updated",
+  "photoRemoved": "Photo removed",
+  "photoUnsupported": "This image format isn't supported. Choose a JPG or PNG photo.",
+  "photoTooBig": "This photo is too large. Choose another one.",
+  "photoPermission": "Allow access to photos or the camera in your phone settings."
 }

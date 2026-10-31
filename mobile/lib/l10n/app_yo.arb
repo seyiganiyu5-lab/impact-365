@@ -434,5 +434,14 @@
   "languageNote": "Àwọn ìfọkànsìn, ẹsẹ Bíbélì àti ìpèníjà náà yóò hàn ní èdè yìí.",
   "langFrench": "Faransé",
   "langEnglish": "Gẹ̀ẹ́sì",
-  "langYoruba": "Yorùbá"
+  "langYoruba": "Yorùbá",
+  "photoChange": "Yí fọ́tò padà",
+  "photoCamera": "Ya fọ́tò",
+  "photoGallery": "Yan láti inú àwòrán",
+  "photoRemove": "Yọ fọ́tò kúrò",
+  "photoUpdated": "A ti yí fọ́tò padà",
+  "photoRemoved": "A ti yọ fọ́tò kúrò",
+  "photoUnsupported": "A kò lè lo irú àwòrán yìí. Yan fọ́tò JPG tàbí PNG.",
+  "photoTooBig": "Fọ́tò yìí tóbi jù. Yan òmíràn.",
+  "photoPermission": "Fún áàpù ní àṣẹ láti lo àwòrán tàbí kámẹ́rà nínú ètò fóònù rẹ."
 }

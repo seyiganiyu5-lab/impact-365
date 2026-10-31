@@ -63,6 +63,13 @@ with checks(item, ok, hint) as (
   select 'Storage bucket "media" (public)',
          exists (select 1 from storage.buckets where id = 'media' and public),
          'Re-run the migration'
+  union all
+  select 'Profile photos: bucket "avatars" + owner-only rules',
+         exists (select 1 from storage.buckets where id = 'avatars' and public)
+           and (select count(*) from pg_policies
+                where schemaname = 'storage' and tablename = 'objects'
+                  and policyname like 'avatars:%') = 4,
+         'Run supabase/migrations/20261101000000_avatars.sql'
 
   -- Live chat
   union all

@@ -6,14 +6,16 @@ import 'package:go_router/go_router.dart';
 import 'package:impact365/core/theme.dart';
 import 'package:impact365/core/yoruba_fallback.dart';
 import 'package:impact365/data/models.dart';
+import 'package:impact365/features/profile/avatar_picker.dart';
 import 'package:impact365/features/profile/edit_profile_screen.dart';
 import 'package:impact365/l10n/generated/app_localizations.dart';
 
-Profile profile({String role = 'member'}) => Profile(
+Profile profile({String role = 'member', String? avatarUrl}) => Profile(
   id: 'u1',
   fullName: 'Grace Adébáyọ̀',
   phone: '+229 01 97 00 00 00',
   role: role,
+  avatarUrl: avatarUrl,
   createdAt: DateTime(2026, 9, 14),
 );
 
@@ -24,13 +26,18 @@ Widget view({
   String provider = 'email',
   String role = 'member',
   Save? onSave,
+  String? avatarUrl,
+  Future<String?> Function(bool camera)? onChangePhoto,
+  Future<void> Function()? onRemovePhoto,
 }) => Scaffold(
   backgroundColor: AppColors.warmWhite,
   body: PersonalInfoView(
-    profile: profile(role: role),
+    profile: profile(role: role, avatarUrl: avatarUrl),
     email: 'grace@example.com',
     provider: provider,
     onSave: onSave ?? ({required fullName, required phone}) async {},
+    onChangePhoto: onChangePhoto ?? (_) async => null,
+    onRemovePhoto: onRemovePhoto ?? () async {},
   ),
 );
 
@@ -192,5 +199,79 @@ void main() {
     await tester.tap(find.text('Quitter'));
     await tester.pumpAndSettle();
     expect(find.text('OPEN'), findsOneWidget);
+  });
+
+  test('photo type from picker or file name', () {
+    expect(avatarContentType('image/png', 'x.png'), 'image/png');
+    expect(avatarContentType(null, 'IMG_1.JPG'), 'image/jpeg');
+    expect(avatarContentType(null, 'a.webp'), 'image/webp');
+    expect(avatarContentType('image/heic', 'a.heic'), isNull);
+    expect(avatarContentType(null, 'a.gif'), isNull);
+  });
+
+  testWidgets('photo: choose from gallery, then remove', (tester) async {
+    small(tester);
+    final calls = <String>[];
+    await tester.pumpWidget(
+      app(
+        'fr',
+        view(
+          onChangePhoto: (camera) async {
+            calls.add(camera ? 'camera' : 'gallery');
+            return 'https://x.supabase.co/storage/v1/object/public/avatars/u1/1.jpg';
+          },
+          onRemovePhoto: () async => calls.add('remove'),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    // No photo yet: no "remove" option.
+    await tester.tap(find.byIcon(Icons.photo_camera_rounded));
+    await tester.pumpAndSettle();
+    expect(find.text('Prendre une photo'), findsOneWidget);
+    expect(find.text('Retirer la photo'), findsNothing);
+    await tester.tap(find.text('Choisir dans la galerie'));
+    await tester.pumpAndSettle();
+    expect(calls, ['gallery']);
+    expect(find.text('Photo mise à jour'), findsOneWidget);
+
+    await tester.tap(find.byIcon(Icons.photo_camera_rounded));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Retirer la photo'));
+    await tester.pumpAndSettle();
+    expect(calls, ['gallery', 'remove']);
+    expect(find.text('Photo retirée'), findsOneWidget);
+  });
+
+  testWidgets('photo: cancelled picker changes nothing; errors explained', (
+    tester,
+  ) async {
+    small(tester);
+    var fail = false;
+    await tester.pumpWidget(
+      app(
+        'fr',
+        view(
+          onChangePhoto: (_) async {
+            if (fail) throw AvatarPickError('Message clair');
+            return null;
+          },
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+    await tester.tap(find.byIcon(Icons.photo_camera_rounded));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Prendre une photo'));
+    await tester.pumpAndSettle();
+    expect(find.text('Photo mise à jour'), findsNothing);
+
+    fail = true;
+    await tester.tap(find.byIcon(Icons.photo_camera_rounded));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Prendre une photo'));
+    await tester.pumpAndSettle();
+    expect(find.text('Message clair'), findsOneWidget);
   });
 }

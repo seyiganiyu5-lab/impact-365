@@ -434,5 +434,14 @@
   "languageNote": "Les dévotions, les versets et les défis s'affichent aussi dans cette langue.",
   "langFrench": "Français",
   "langEnglish": "Anglais",
-  "langYoruba": "Yoruba"
+  "langYoruba": "Yoruba",
+  "photoChange": "Changer la photo",
+  "photoCamera": "Prendre une photo",
+  "photoGallery": "Choisir dans la galerie",
+  "photoRemove": "Retirer la photo",
+  "photoUpdated": "Photo mise à jour",
+  "photoRemoved": "Photo retirée",
+  "photoUnsupported": "Ce format d'image n'est pas pris en charge. Choisis une photo JPG ou PNG.",
+  "photoTooBig": "Cette photo est trop lourde. Choisis-en une autre.",
+  "photoPermission": "Autorise l'accès aux photos ou à l'appareil photo dans les réglages de ton téléphone."
 }

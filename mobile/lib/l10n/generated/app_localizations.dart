@@ -2709,6 +2709,60 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Yoruba'**
   String get langYoruba;
+
+  /// No description provided for @photoChange.
+  ///
+  /// In en, this message translates to:
+  /// **'Change photo'**
+  String get photoChange;
+
+  /// No description provided for @photoCamera.
+  ///
+  /// In en, this message translates to:
+  /// **'Take a photo'**
+  String get photoCamera;
+
+  /// No description provided for @photoGallery.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose from gallery'**
+  String get photoGallery;
+
+  /// No description provided for @photoRemove.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove photo'**
+  String get photoRemove;
+
+  /// No description provided for @photoUpdated.
+  ///
+  /// In en, this message translates to:
+  /// **'Photo updated'**
+  String get photoUpdated;
+
+  /// No description provided for @photoRemoved.
+  ///
+  /// In en, this message translates to:
+  /// **'Photo removed'**
+  String get photoRemoved;
+
+  /// No description provided for @photoUnsupported.
+  ///
+  /// In en, this message translates to:
+  /// **'This image format isn\'t supported. Choose a JPG or PNG photo.'**
+  String get photoUnsupported;
+
+  /// No description provided for @photoTooBig.
+  ///
+  /// In en, this message translates to:
+  /// **'This photo is too large. Choose another one.'**
+  String get photoTooBig;
+
+  /// No description provided for @photoPermission.
+  ///
+  /// In en, this message translates to:
+  /// **'Allow access to photos or the camera in your phone settings.'**
+  String get photoPermission;
 }
 
 class _AppLocalizationsDelegate

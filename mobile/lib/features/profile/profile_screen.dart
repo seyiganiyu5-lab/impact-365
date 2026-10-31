@@ -415,6 +415,8 @@ class ProfileAvatar extends StatelessWidget {
       child: CircleAvatar(
         backgroundColor: AppColors.goldLight,
         foregroundImage: url == null ? null : NetworkImage(url!),
+        // Photo can't load (offline, removed): the initials stay visible.
+        onForegroundImageError: url == null ? null : (_, _) {},
         child: Text(
           _initials,
           style: AppText.titleLarge.copyWith(
