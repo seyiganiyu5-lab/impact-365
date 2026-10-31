@@ -20,6 +20,7 @@ Widget _app(Widget child) => MaterialApp(
 );
 
 void main() {
+  setUpAll(() => AuthScreen.debugAuthEvents = const Stream.empty());
   testWidgets('sign-in shows required errors and stays put', (tester) async {
     await tester.pumpWidget(_app(const AuthScreen()));
     expect(find.text('Content de te revoir'), findsOneWidget);

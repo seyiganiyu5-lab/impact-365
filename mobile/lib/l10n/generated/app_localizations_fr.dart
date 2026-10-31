@@ -1077,4 +1077,7 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get deleteErrLastAdmin =>
       'Tu es le seul administrateur. Nomme un autre administrateur avant de supprimer ton compte.';
+
+  @override
+  String get authSigningIn => 'Connexion en cours…';
 }

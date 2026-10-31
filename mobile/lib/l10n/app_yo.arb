@@ -317,5 +317,6 @@
   "deleteWord": "DELETE",
   "deleteConfirm": "Pa á rẹ́ pátápátá",
   "deleteDone": "A ti pa àkáǹtì rẹ rẹ́. Ọlọ́run bù kún ọ!",
-  "deleteErrLastAdmin": "Ìwọ nìkan ni alábòójútó. Yan alábòójútó mìíràn kí o tó pa àkáǹtì rẹ rẹ́."
+  "deleteErrLastAdmin": "Ìwọ nìkan ni alábòójútó. Yan alábòójútó mìíràn kí o tó pa àkáǹtì rẹ rẹ́.",
+  "authSigningIn": "A ń mú ọ wọlé…"
 }

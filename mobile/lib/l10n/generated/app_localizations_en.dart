@@ -1065,4 +1065,7 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get deleteErrLastAdmin =>
       'You are the only administrator. Make someone else an administrator before deleting your account.';
+
+  @override
+  String get authSigningIn => 'Signing you in…';
 }

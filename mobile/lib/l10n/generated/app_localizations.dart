@@ -2007,6 +2007,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'You are the only administrator. Make someone else an administrator before deleting your account.'**
   String get deleteErrLastAdmin;
+
+  /// No description provided for @authSigningIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Signing you in…'**
+  String get authSigningIn;
 }
 
 class _AppLocalizationsDelegate

@@ -317,5 +317,6 @@
   "deleteWord": "SUPPRIMER",
   "deleteConfirm": "Supprimer définitivement",
   "deleteDone": "Ton compte a été supprimé. Que Dieu te bénisse !",
-  "deleteErrLastAdmin": "Tu es le seul administrateur. Nomme un autre administrateur avant de supprimer ton compte."
+  "deleteErrLastAdmin": "Tu es le seul administrateur. Nomme un autre administrateur avant de supprimer ton compte.",
+  "authSigningIn": "Connexion en cours…"
 }

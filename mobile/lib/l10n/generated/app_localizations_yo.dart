@@ -1069,4 +1069,7 @@ class AppLocalizationsYo extends AppLocalizations {
   @override
   String get deleteErrLastAdmin =>
       'Ìwọ nìkan ni alábòójútó. Yan alábòójútó mìíràn kí o tó pa àkáǹtì rẹ rẹ́.';
+
+  @override
+  String get authSigningIn => 'A ń mú ọ wọlé…';
 }

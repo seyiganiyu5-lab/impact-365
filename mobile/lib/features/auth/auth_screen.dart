@@ -25,11 +25,15 @@ class AuthScreen extends StatefulWidget {
   /// Show the Apple button (off until Sign in with Apple is set up).
   final bool showApple;
 
+  /// Tests run without Supabase: they set this to their own events.
+  @visibleForTesting
+  static Stream<AuthState>? debugAuthEvents;
+
   @override
   State<AuthScreen> createState() => _AuthScreenState();
 }
 
-class _AuthScreenState extends State<AuthScreen> {
+class _AuthScreenState extends State<AuthScreen> with WidgetsBindingObserver {
   final _formKey = GlobalKey<FormState>();
   final _name = TextEditingController();
   final _email = TextEditingController();
@@ -54,12 +58,69 @@ class _AuthScreenState extends State<AuthScreen> {
   String? _codeSentTo;
   bool _codeForRecovery = false;
 
+  /// The Google / Apple page is open (or the person just came back from
+  /// it): show "Connexion en cours…" instead of the form, so the form does
+  /// not flash before the home screen.
+  bool _oauthWaiting = false;
+  Timer? _oauthTimer;
+  StreamSubscription<AuthState>? _authSub;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+    final events =
+        AuthScreen.debugAuthEvents ??
+        Supabase.instance.client.auth.onAuthStateChange;
+    _authSub = events.listen(
+      (state) {
+        // Signed in: keep the waiting screen, the router opens the home.
+        if (state.event == AuthChangeEvent.signedIn) _oauthTimer?.cancel();
+      },
+      onError: (Object _) {
+        // The provider refused or the link expired: back to the form.
+        if (_oauthWaiting && mounted) {
+          _stopOAuthWaiting(error: context.l10n.authErrOAuth);
+        }
+      },
+    );
+  }
+
   @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    _authSub?.cancel();
+    _oauthTimer?.cancel();
     for (final c in [_name, _email, _password, _confirm]) {
       c.dispose();
     }
     super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    // Back from the browser. If the sign-in went through, the session
+    // arrives within a few seconds; if the person closed the page instead,
+    // show the form again after that.
+    if (state == AppLifecycleState.resumed && _oauthWaiting) {
+      _waitForOAuth(const Duration(seconds: 8));
+    }
+  }
+
+  void _waitForOAuth(Duration max) {
+    _oauthTimer?.cancel();
+    _oauthTimer = Timer(max, () {
+      final signedIn = Supabase.instance.client.auth.currentSession != null;
+      if (mounted && !signedIn) _stopOAuthWaiting();
+    });
+  }
+
+  void _stopOAuthWaiting({String? error}) {
+    _oauthTimer?.cancel();
+    setState(() {
+      _oauthWaiting = false;
+      if (error != null) _error = error;
+    });
   }
 
   void _toggleMode() {
@@ -156,7 +217,13 @@ class _AuthScreenState extends State<AuthScreen> {
                 : null,
           )
           .withAuthTimeout();
-      if (!opened && mounted) {
+      if (!mounted) return;
+      if (opened) {
+        setState(() => _oauthWaiting = true);
+        // Safety net in case the app never hears back (e.g. the in-app
+        // browser was closed without the app going to the background).
+        _waitForOAuth(const Duration(minutes: 3));
+      } else {
         setState(() => _error = context.l10n.authErrOAuth);
       }
     } catch (e) {
@@ -228,7 +295,9 @@ class _AuthScreenState extends State<AuthScreen> {
           SafeArea(
             child: AnimatedSwitcher(
               duration: const Duration(milliseconds: 300),
-              child: _codeSentTo != null
+              child: _oauthWaiting
+                  ? _SigningInView(onCancel: () => _stopOAuthWaiting())
+                  : _codeSentTo != null
                   ? _VerifyCodeView(
                       key: ValueKey('code-$_codeForRecovery'),
                       email: _codeSentTo!,
@@ -817,6 +886,51 @@ class _ResetPasswordSheetState extends State<_ResetPasswordSheet> {
               color: AppColors.deepPurple,
               busy: _busy,
               onPressed: _send,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+/// Shown while Google / Apple sign-in finishes.
+class _SigningInView extends StatelessWidget {
+  const _SigningInView({required this.onCancel});
+
+  final VoidCallback onCancel;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = context.l10n;
+    return Center(
+      key: const ValueKey('signing-in'),
+      child: Padding(
+        padding: const EdgeInsets.all(24),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const BrandMark(size: 64),
+            const SizedBox(height: 28),
+            const SizedBox(
+              width: 28,
+              height: 28,
+              child: CircularProgressIndicator(
+                strokeWidth: 2.6,
+                color: AppColors.deepPurple,
+              ),
+            ),
+            const SizedBox(height: 20),
+            Text(
+              l.authSigningIn,
+              textAlign: TextAlign.center,
+              style: AppText.titleMedium.copyWith(color: AppColors.deepPurple),
+            ),
+            const SizedBox(height: 24),
+            TextButton(
+              onPressed: onCancel,
+              style: TextButton.styleFrom(foregroundColor: AppColors.muted),
+              child: Text(l.commonCancel, style: AppText.labelMedium),
             ),
           ],
         ),
