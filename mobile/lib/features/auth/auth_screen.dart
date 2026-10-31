@@ -11,6 +11,7 @@ import '../../core/locale_controller.dart';
 import '../../core/theme.dart';
 import '../../widgets/common.dart';
 import 'auth_widgets.dart';
+import 'google_native_sign_in.dart';
 
 /// Sign in / create account. Opened from the welcome page.
 class AuthScreen extends StatefulWidget {
@@ -146,6 +147,26 @@ class _AuthScreenState extends State<AuthScreen> {
       _oauthBusy = provider;
       _error = null;
     });
+    // Google inside the app (account picker), when set up on this phone.
+    if (provider == OAuthProvider.google && GoogleNativeSignIn.available) {
+      try {
+        // No time limit here: choosing an account can take a while.
+        await GoogleNativeSignIn.signIn();
+        // Signed in: the router opens the home screen by itself.
+      } catch (e) {
+        if (mounted) {
+          setState(
+            () => _error = isOfflineError(e)
+                ? context.l10n.authErrNetwork
+                : context.l10n.authErrOAuth,
+          );
+        }
+        debugPrint('Google sign-in failed: $e');
+      } finally {
+        if (mounted) setState(() => _oauthBusy = null);
+      }
+      return;
+    }
     try {
       final opened = await Supabase.instance.client.auth
           .signInWithOAuth(

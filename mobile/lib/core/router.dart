@@ -11,6 +11,7 @@ import 'transitions.dart';
 import 'locale_controller.dart';
 
 import '../features/auth/auth_screen.dart';
+import '../features/auth/google_native_sign_in.dart';
 import '../features/auth/reset_password_screen.dart';
 import '../features/auth/signing_in_screen.dart';
 import '../features/devotion/devotion_screen.dart';
@@ -51,6 +52,7 @@ class _AuthListenable extends ChangeNotifier {
           AuthFlow.recoveryPending = true;
         } else if (state.event == AuthChangeEvent.signedOut) {
           AuthFlow.recoveryPending = false;
+          unawaited(GoogleNativeSignIn.signOutQuietly());
         }
         notifyListeners();
       },

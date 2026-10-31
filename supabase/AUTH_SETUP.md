@@ -232,6 +232,25 @@ The **Apple button is hidden** until you turn it on: in `mobile/env.json`, set `
 4. Supabase → Authentication → Sign In / Providers → **Google** → turn it **on**, paste the Client ID and Client secret → **Save**.
 5. Test: tap **Google** in the app, choose your account, and you should land on the home screen.
 
+### Google inside the app (recommended): no web page, no Supabase address
+With only the steps above, Google opens a web page that says *"to continue to xxxx.supabase.co"*. With these extra steps, the app uses **Android's own Google account picker** instead: Google shows "IMPACT-365", and there is no browser.
+
+1. **Android client** — Google Cloud → **Google Auth Platform → Clients → + Create client**:
+   - Application type: **Android**, name `IMPACT-365 Android`
+   - Package name: `com.impact365.impact365`
+   - **SHA-1 certificate fingerprint**: in Git Bash, in the project's `mobile/android` folder, run `./gradlew signingReport` and copy the **SHA1** line under *Variant: debug* (it looks like `AB:CD:12:…`).
+     - Or, if Java's `keytool` is available: `keytool -list -v -keystore ~/.android/debug.keystore -alias androiddebugkey -storepass android -keypass android`
+   - Click **Create**. Nothing to copy from this one.
+2. **env.json** (in `mobile/`) — add the **Web** client's ID (the one already in Supabase):
+   `"GOOGLE_WEB_CLIENT_ID": "1234-abcd.apps.googleusercontent.com"`
+3. Stop the app and run it again (`flutter run --dart-define-from-file=env.json`). Tapping **Google** now opens the account picker.
+
+Later:
+- **When publishing on Google Play**, create a second Android client with the SHA-1 of the Play signing key (Play Console → Test and release → App integrity).
+- **iPhone**: create an **iOS** client (Bundle ID of the app), put its ID in env.json as `GOOGLE_IOS_CLIENT_ID`, add it to Supabase's Google **Client IDs** (after the Web one, separated by a comma), turn on **Skip nonce checks** there, and add its *reversed client ID* as a URL scheme in `ios/Runner/Info.plist`.
+
+If `GOOGLE_WEB_CLIENT_ID` is missing, the app simply uses the web page as before.
+
 ### Apple (needs an Apple Developer account, $99 per year)
 Apple requires a paid **Apple Developer Program** membership. You will need it anyway to publish the app on the App Store, and Apple's rules say an iPhone app that offers Google sign-in must also offer Apple sign-in.
 
@@ -264,6 +283,7 @@ Notes:
 | The app shows an error right after signing in | Run `supabase/verify.sql`: a ❌ line tells you what is missing. |
 | Tapping Google or Apple opens a page saying *"Unsupported provider"* or *"provider is not enabled"* | Turn that provider on in Supabase (step 8). |
 | After choosing the Google account, the browser shows an error instead of coming back to the app | In Google Cloud, the **Authorized redirect URI** must be exactly Supabase's Callback URL; and `impact365://**` must be in Supabase's Redirect URLs (step 2). |
+| Google account picker opens, then "Impossible d'ouvrir la connexion" | Check the Android client's **package name** and **SHA-1** (step "Google inside the app"), and that `GOOGLE_WEB_CLIENT_ID` is the **Web** client's ID, the same one as in Supabase. |
 | "Access blocked: this app's request is invalid" or "app not verified" at Google | Add your Google account as a **Test user**, or **Publish app** in Google Auth Platform (step 8). |
 | "Ce code est incorrect ou a expiré" | Codes last 10 minutes and work once; after **Renvoyer le code**, only the newest code works. |
 | The email shows a code with more than 6 digits | Set **Email OTP Length** to `6` (step 3). |

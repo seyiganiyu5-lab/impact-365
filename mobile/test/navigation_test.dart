@@ -3,6 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
 import 'package:impact365/core/auth_links.dart';
 import 'package:impact365/core/transitions.dart';
+import 'package:impact365/features/auth/google_native_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
@@ -50,5 +51,10 @@ void main() {
       custom.reverseTransitionDuration.inMilliseconds,
       lessThanOrEqualTo(200),
     );
+  });
+
+  test('without the Google client IDs, Google uses the web page', () {
+    // Tests run without env.json: no GOOGLE_WEB_CLIENT_ID.
+    expect(GoogleNativeSignIn.available, isFalse);
   });
 }
