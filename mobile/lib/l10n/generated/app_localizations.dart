@@ -2415,6 +2415,126 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Your leaders are here for you'**
   String get inboxEmptyTitle;
+
+  /// No description provided for @prayerMineTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'My prayers'**
+  String get prayerMineTitle;
+
+  /// No description provided for @prayerPrivate.
+  ///
+  /// In en, this message translates to:
+  /// **'Private'**
+  String get prayerPrivate;
+
+  /// No description provided for @prayerSharedChip.
+  ///
+  /// In en, this message translates to:
+  /// **'Shared'**
+  String get prayerSharedChip;
+
+  /// No description provided for @prayerAnsweredOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Answered on {date}'**
+  String prayerAnsweredOn(String date);
+
+  /// No description provided for @commonDelete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get commonDelete;
+
+  /// No description provided for @prayerDeleteConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete this prayer request?'**
+  String get prayerDeleteConfirm;
+
+  /// No description provided for @prayerAnsweredSheetTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Glory to God! 🙌'**
+  String get prayerAnsweredSheetTitle;
+
+  /// No description provided for @prayerAnsweredSheetText.
+  ///
+  /// In en, this message translates to:
+  /// **'Tell what God has done. Your testimony will strengthen your faith.'**
+  String get prayerAnsweredSheetText;
+
+  /// No description provided for @prayerAnsweredDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Added to your answered prayers ✨'**
+  String get prayerAnsweredDone;
+
+  /// No description provided for @prayerTitleRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Write your prayer request.'**
+  String get prayerTitleRequired;
+
+  /// No description provided for @prayerWhoPrays.
+  ///
+  /// In en, this message translates to:
+  /// **'Who prays with you?'**
+  String get prayerWhoPrays;
+
+  /// No description provided for @prayerOnlyMe.
+  ///
+  /// In en, this message translates to:
+  /// **'Only me'**
+  String get prayerOnlyMe;
+
+  /// No description provided for @prayerOnlyMeSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Between God and you.'**
+  String get prayerOnlyMeSub;
+
+  /// No description provided for @prayerWithCommunity.
+  ///
+  /// In en, this message translates to:
+  /// **'The community'**
+  String get prayerWithCommunity;
+
+  /// No description provided for @prayerWithCommunitySub.
+  ///
+  /// In en, this message translates to:
+  /// **'Members pray with you.'**
+  String get prayerWithCommunitySub;
+
+  /// No description provided for @prayerCommunityVerse.
+  ///
+  /// In en, this message translates to:
+  /// **'Pray for one another. — James 5:16'**
+  String get prayerCommunityVerse;
+
+  /// No description provided for @prayerCommunityIntro.
+  ///
+  /// In en, this message translates to:
+  /// **'Every prayer counts. Let them know you prayed.'**
+  String get prayerCommunityIntro;
+
+  /// No description provided for @prayerTestimonyLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'My testimony'**
+  String get prayerTestimonyLabel;
+
+  /// No description provided for @prayerEmptyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Share your first prayer'**
+  String get prayerEmptyTitle;
+
+  /// No description provided for @prayerAnsweredEmptyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'God is faithful'**
+  String get prayerAnsweredEmptyTitle;
 }
 
 class _AppLocalizationsDelegate

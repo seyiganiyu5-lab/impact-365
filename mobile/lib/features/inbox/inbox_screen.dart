@@ -6,6 +6,7 @@ import '../../data/models.dart';
 import '../../data/repository.dart';
 import '../../widgets/common.dart';
 import '../../widgets/page_top_bar.dart';
+import '../../widgets/segmented_switch.dart';
 
 /// "Messages & Notifications": private chats with leaders + announcements.
 class InboxScreen extends StatefulWidget {
@@ -87,7 +88,7 @@ class _InboxBodyState extends State<InboxBody> {
         PageTopBar(title: l.inboxTitle),
         Padding(
           padding: const EdgeInsets.fromLTRB(20, 8, 20, 8),
-          child: _Segmented(
+          child: SegmentedSwitch(
             index: _tab,
             labels: [l.inboxMessages, l.inboxNotifications],
             badges: [unread, 0],
@@ -137,96 +138,6 @@ class _InboxBodyState extends State<InboxBody> {
 }
 
 /// "Messages | Notifications" switch with an unread badge.
-class _Segmented extends StatelessWidget {
-  const _Segmented({
-    required this.index,
-    required this.labels,
-    required this.badges,
-    required this.onChanged,
-  });
-
-  final int index;
-  final List<String> labels;
-  final List<int> badges;
-  final ValueChanged<int> onChanged;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(4),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppColors.border),
-      ),
-      child: Row(
-        children: [
-          for (var i = 0; i < labels.length; i++)
-            Expanded(
-              child: GestureDetector(
-                behavior: HitTestBehavior.opaque,
-                onTap: () => onChanged(i),
-                child: AnimatedContainer(
-                  duration: const Duration(milliseconds: 180),
-                  height: 42,
-                  decoration: BoxDecoration(
-                    color: i == index
-                        ? AppColors.deepPurple
-                        : Colors.transparent,
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Flexible(
-                        child: Text(
-                          labels[i],
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: AppText.labelMedium.copyWith(
-                            color: i == index ? Colors.white : AppColors.ink,
-                          ),
-                        ),
-                      ),
-                      if (badges[i] > 0) ...[
-                        const SizedBox(width: 6),
-                        _CountBadge(count: badges[i]),
-                      ],
-                    ],
-                  ),
-                ),
-              ),
-            ),
-        ],
-      ),
-    );
-  }
-}
-
-class _CountBadge extends StatelessWidget {
-  const _CountBadge({required this.count});
-
-  final int count;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      constraints: const BoxConstraints(minWidth: 20),
-      height: 20,
-      padding: const EdgeInsets.symmetric(horizontal: 6),
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        color: AppColors.gold,
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Text(
-        count > 99 ? '99+' : '$count',
-        style: AppText.labelSmall.copyWith(color: Colors.white, fontSize: 11),
-      ),
-    );
-  }
-}
-
 // ------------------------------------------------------------ conversations
 
 class _ConversationList extends StatelessWidget {
@@ -345,7 +256,7 @@ class _ConversationRow extends StatelessWidget {
                       ),
                       if (unread) ...[
                         const SizedBox(width: 8),
-                        _CountBadge(count: c.unread),
+                        CountBadge(count: c.unread),
                       ] else if (!c.isOpen) ...[
                         const SizedBox(width: 8),
                         Container(

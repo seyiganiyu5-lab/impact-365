@@ -497,5 +497,32 @@
   "topicTestimony": "A testimony to share",
   "chatSubjectRequired": "Add a subject.",
   "chatBodyRequired": "Write your message.",
-  "inboxEmptyTitle": "Your leaders are here for you"
+  "inboxEmptyTitle": "Your leaders are here for you",
+  "prayerMineTitle": "My prayers",
+  "prayerPrivate": "Private",
+  "prayerSharedChip": "Shared",
+  "prayerAnsweredOn": "Answered on {date}",
+  "@prayerAnsweredOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "commonDelete": "Delete",
+  "prayerDeleteConfirm": "Delete this prayer request?",
+  "prayerAnsweredSheetTitle": "Glory to God! 🙌",
+  "prayerAnsweredSheetText": "Tell what God has done. Your testimony will strengthen your faith.",
+  "prayerAnsweredDone": "Added to your answered prayers ✨",
+  "prayerTitleRequired": "Write your prayer request.",
+  "prayerWhoPrays": "Who prays with you?",
+  "prayerOnlyMe": "Only me",
+  "prayerOnlyMeSub": "Between God and you.",
+  "prayerWithCommunity": "The community",
+  "prayerWithCommunitySub": "Members pray with you.",
+  "prayerCommunityVerse": "Pray for one another. — James 5:16",
+  "prayerCommunityIntro": "Every prayer counts. Let them know you prayed.",
+  "prayerTestimonyLabel": "My testimony",
+  "prayerEmptyTitle": "Share your first prayer",
+  "prayerAnsweredEmptyTitle": "God is faithful"
 }

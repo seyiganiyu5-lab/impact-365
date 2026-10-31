@@ -1277,4 +1277,68 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get inboxEmptyTitle => 'Your leaders are here for you';
+
+  @override
+  String get prayerMineTitle => 'My prayers';
+
+  @override
+  String get prayerPrivate => 'Private';
+
+  @override
+  String get prayerSharedChip => 'Shared';
+
+  @override
+  String prayerAnsweredOn(String date) {
+    return 'Answered on $date';
+  }
+
+  @override
+  String get commonDelete => 'Delete';
+
+  @override
+  String get prayerDeleteConfirm => 'Delete this prayer request?';
+
+  @override
+  String get prayerAnsweredSheetTitle => 'Glory to God! 🙌';
+
+  @override
+  String get prayerAnsweredSheetText =>
+      'Tell what God has done. Your testimony will strengthen your faith.';
+
+  @override
+  String get prayerAnsweredDone => 'Added to your answered prayers ✨';
+
+  @override
+  String get prayerTitleRequired => 'Write your prayer request.';
+
+  @override
+  String get prayerWhoPrays => 'Who prays with you?';
+
+  @override
+  String get prayerOnlyMe => 'Only me';
+
+  @override
+  String get prayerOnlyMeSub => 'Between God and you.';
+
+  @override
+  String get prayerWithCommunity => 'The community';
+
+  @override
+  String get prayerWithCommunitySub => 'Members pray with you.';
+
+  @override
+  String get prayerCommunityVerse => 'Pray for one another. — James 5:16';
+
+  @override
+  String get prayerCommunityIntro =>
+      'Every prayer counts. Let them know you prayed.';
+
+  @override
+  String get prayerTestimonyLabel => 'My testimony';
+
+  @override
+  String get prayerEmptyTitle => 'Share your first prayer';
+
+  @override
+  String get prayerAnsweredEmptyTitle => 'God is faithful';
 }

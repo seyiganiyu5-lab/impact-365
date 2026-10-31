@@ -227,6 +227,7 @@ class PrayerRequest {
     this.isAnonymous = false,
     this.isAnswered = false,
     this.testimony,
+    this.answeredAt,
   });
 
   final String id;
@@ -237,6 +238,7 @@ class PrayerRequest {
   final bool isAnswered;
   final String? testimony;
   final DateTime createdAt;
+  final DateTime? answeredAt;
 
   factory PrayerRequest.fromJson(Map<String, dynamic> j) => PrayerRequest(
     id: j['id'] as String,
@@ -247,6 +249,9 @@ class PrayerRequest {
     isAnswered: j['is_answered'] as bool? ?? false,
     testimony: j['testimony'] as String?,
     createdAt: DateTime.parse(j['created_at'] as String),
+    answeredAt: j['answered_at'] == null
+        ? null
+        : DateTime.parse(j['answered_at'] as String),
   );
 }
 

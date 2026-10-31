@@ -6,6 +6,7 @@ import '../../data/models.dart';
 import '../../data/repository.dart';
 import '../../widgets/common.dart';
 import 'add_prayer_sheet.dart';
+import 'prayer_widgets.dart';
 
 /// What the Prière tab shows (public so tests can render it).
 class PrayerRoomData {
@@ -179,7 +180,7 @@ class PrayerRoomBody extends StatelessWidget {
           )
         else
           for (final p in data.community) ...[
-            _CommunityPrayerCard(prayer: p),
+            CommunityPrayerCard(prayer: p),
             const SizedBox(height: 10),
           ],
         const SizedBox(height: 20),
@@ -368,159 +369,6 @@ class _CountTile extends StatelessWidget {
 }
 
 /// One shared prayer with an "J'ai prié" toggle that works right here.
-class _CommunityPrayerCard extends StatefulWidget {
-  const _CommunityPrayerCard({required this.prayer});
-
-  final CommunityPrayer prayer;
-
-  @override
-  State<_CommunityPrayerCard> createState() => _CommunityPrayerCardState();
-}
-
-class _CommunityPrayerCardState extends State<_CommunityPrayerCard> {
-  late bool _prayed = widget.prayer.iPrayed;
-  late int _count = widget.prayer.intercessionCount;
-  bool _saving = false;
-
-  Future<void> _toggle() async {
-    if (_saving) return;
-    final next = !_prayed;
-    setState(() {
-      _prayed = next;
-      _count += next ? 1 : -1;
-      _saving = true;
-    });
-    try {
-      await Repo.setIPrayed(widget.prayer.id, next);
-    } catch (e) {
-      if (!mounted) return;
-      setState(() {
-        _prayed = !next;
-        _count += next ? -1 : 1;
-      });
-      context.toast(context.errorText(e));
-    } finally {
-      if (mounted) setState(() => _saving = false);
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final l = context.l10n;
-    final p = widget.prayer;
-    return Container(
-      padding: const EdgeInsets.fromLTRB(16, 14, 12, 12),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(18),
-        border: Border.all(color: AppColors.border),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Icon(
-                p.authorName == null
-                    ? Icons.visibility_off_outlined
-                    : Icons.person_outline_rounded,
-                size: 16,
-                color: AppColors.muted,
-              ),
-              const SizedBox(width: 6),
-              Expanded(
-                child: Text(
-                  p.authorName ?? l.anonymous,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppText.caption.copyWith(color: AppColors.muted),
-                ),
-              ),
-              Text(
-                formatDay(context, p.createdAt),
-                style: AppText.caption.copyWith(color: AppColors.muted),
-              ),
-            ],
-          ),
-          const SizedBox(height: 8),
-          Text(
-            p.title,
-            style: AppText.titleSmall.copyWith(color: AppColors.ink),
-          ),
-          if ((p.details ?? '').isNotEmpty) ...[
-            const SizedBox(height: 4),
-            Text(
-              p.details!,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              style: AppText.bodySmall.copyWith(color: AppColors.muted),
-            ),
-          ],
-          const SizedBox(height: 10),
-          Row(
-            children: [
-              Expanded(
-                child: Text(
-                  l.prayerPrayedCount(_count),
-                  style: AppText.caption.copyWith(color: AppColors.muted),
-                ),
-              ),
-              _PrayedButton(
-                prayed: _prayed,
-                label: l.prayerIPrayed,
-                onTap: _toggle,
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _PrayedButton extends StatelessWidget {
-  const _PrayedButton({
-    required this.prayed,
-    required this.label,
-    required this.onTap,
-  });
-
-  final bool prayed;
-  final String label;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return Material(
-      color: prayed ? AppColors.gold : Colors.white,
-      shape: StadiumBorder(
-        side: BorderSide(color: prayed ? AppColors.gold : AppColors.deepPurple),
-      ),
-      child: InkWell(
-        customBorder: const StadiumBorder(),
-        onTap: onTap,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 7),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(prayed ? '🙏' : '🤲', style: const TextStyle(fontSize: 14)),
-              const SizedBox(width: 6),
-              Text(
-                label,
-                style: AppText.labelSmall.copyWith(
-                  fontSize: 12,
-                  color: prayed ? Colors.white : AppColors.deepPurple,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
 /// Small card: "Mon journal" / "Holy SOS".
 class _ShortcutTile extends StatelessWidget {
   const _ShortcutTile({

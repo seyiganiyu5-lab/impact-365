@@ -1289,4 +1289,69 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get inboxEmptyTitle => 'Tes responsables sont là pour toi';
+
+  @override
+  String get prayerMineTitle => 'Mes prières';
+
+  @override
+  String get prayerPrivate => 'Privée';
+
+  @override
+  String get prayerSharedChip => 'Partagée';
+
+  @override
+  String prayerAnsweredOn(String date) {
+    return 'Exaucée le $date';
+  }
+
+  @override
+  String get commonDelete => 'Supprimer';
+
+  @override
+  String get prayerDeleteConfirm => 'Supprimer ce sujet de prière ?';
+
+  @override
+  String get prayerAnsweredSheetTitle => 'Gloire à Dieu ! 🙌';
+
+  @override
+  String get prayerAnsweredSheetText =>
+      'Raconte ce que Dieu a fait. Ton témoignage fortifiera ta foi.';
+
+  @override
+  String get prayerAnsweredDone => 'Ajoutée à tes prières exaucées ✨';
+
+  @override
+  String get prayerTitleRequired => 'Écris ton sujet de prière.';
+
+  @override
+  String get prayerWhoPrays => 'Qui prie avec toi ?';
+
+  @override
+  String get prayerOnlyMe => 'Seulement moi';
+
+  @override
+  String get prayerOnlyMeSub => 'Entre Dieu et toi.';
+
+  @override
+  String get prayerWithCommunity => 'La communauté';
+
+  @override
+  String get prayerWithCommunitySub => 'Les membres prient avec toi.';
+
+  @override
+  String get prayerCommunityVerse =>
+      'Priez les uns pour les autres. — Jacques 5:16';
+
+  @override
+  String get prayerCommunityIntro =>
+      'Chaque prière compte. Dis-leur que tu as prié.';
+
+  @override
+  String get prayerTestimonyLabel => 'Mon témoignage';
+
+  @override
+  String get prayerEmptyTitle => 'Dépose ton premier sujet';
+
+  @override
+  String get prayerAnsweredEmptyTitle => 'Dieu est fidèle';
 }

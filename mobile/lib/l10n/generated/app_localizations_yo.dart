@@ -1281,4 +1281,69 @@ class AppLocalizationsYo extends AppLocalizations {
 
   @override
   String get inboxEmptyTitle => 'Àwọn olórí rẹ wà fún ọ';
+
+  @override
+  String get prayerMineTitle => 'Àwọn àdúrà mi';
+
+  @override
+  String get prayerPrivate => 'Ìkọ̀kọ̀';
+
+  @override
+  String get prayerSharedChip => 'Pínpín';
+
+  @override
+  String prayerAnsweredOn(String date) {
+    return 'Ó gbà á ní $date';
+  }
+
+  @override
+  String get commonDelete => 'Pa rẹ́';
+
+  @override
+  String get prayerDeleteConfirm => 'Ṣé kí a pa kókó àdúrà yìí rẹ́?';
+
+  @override
+  String get prayerAnsweredSheetTitle => 'Ògo ni fún Ọlọ́run! 🙌';
+
+  @override
+  String get prayerAnsweredSheetText =>
+      'Sọ ohun tí Ọlọ́run ṣe. Ẹ̀rí rẹ yóò fún ìgbàgbọ́ rẹ lókun.';
+
+  @override
+  String get prayerAnsweredDone => 'A ti fi kún àwọn àdúrà rẹ tí a gbà ✨';
+
+  @override
+  String get prayerTitleRequired => 'Kọ kókó àdúrà rẹ.';
+
+  @override
+  String get prayerWhoPrays => 'Ta ló ń gbàdúrà pẹ̀lú rẹ?';
+
+  @override
+  String get prayerOnlyMe => 'Èmi nìkan';
+
+  @override
+  String get prayerOnlyMeSub => 'Láàárín ìwọ àti Ọlọ́run.';
+
+  @override
+  String get prayerWithCommunity => 'Àwùjọ';
+
+  @override
+  String get prayerWithCommunitySub => 'Àwọn ọmọ ìjọ ń gbàdúrà pẹ̀lú rẹ.';
+
+  @override
+  String get prayerCommunityVerse =>
+      'Ẹ máa gbàdúrà fún ara yín. — Jákọ́bù 5:16';
+
+  @override
+  String get prayerCommunityIntro =>
+      'Gbogbo àdúrà ló ṣe pàtàkì. Jẹ́ kí wọ́n mọ̀ pé o ti gbàdúrà.';
+
+  @override
+  String get prayerTestimonyLabel => 'Ẹ̀rí mi';
+
+  @override
+  String get prayerEmptyTitle => 'Kọ àdúrà rẹ àkọ́kọ́';
+
+  @override
+  String get prayerAnsweredEmptyTitle => 'Olóòótọ́ ni Ọlọ́run';
 }
