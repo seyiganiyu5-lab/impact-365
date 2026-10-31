@@ -186,6 +186,17 @@ class Repo {
     return row == null ? JournalEntry() : JournalEntry.fromJson(row);
   }
 
+  /// My journal pages, newest first.
+  static Future<List<JournalEntry>> journalEntries({int limit = 120}) async {
+    final rows = await _db
+        .from('journal_entries')
+        .select()
+        .eq('user_id', _uid)
+        .order('entry_date', ascending: false)
+        .limit(limit);
+    return rows.map(JournalEntry.fromJson).where((e) => !e.isEmpty).toList();
+  }
+
   static Future<void> saveJournal(DateTime day, JournalEntry e) =>
       _db.from('journal_entries').upsert({
         'user_id': _uid,

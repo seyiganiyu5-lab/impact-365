@@ -7,10 +7,18 @@ import '../features/auth/auth_widgets.dart';
 /// Back arrow + centred title for pages opened on top of the tabs
 /// (Holy SOS, Messages...).
 class PageTopBar extends StatelessWidget {
-  const PageTopBar({super.key, required this.title, this.trailing});
+  const PageTopBar({
+    super.key,
+    required this.title,
+    this.trailing,
+    this.onBack,
+  });
 
   final String title;
   final Widget? trailing;
+
+  /// Replaces the default "go back" (e.g. to ask before leaving).
+  final VoidCallback? onBack;
 
   @override
   Widget build(BuildContext context) {
@@ -20,8 +28,9 @@ class PageTopBar extends StatelessWidget {
         children: [
           RoundIconButton(
             icon: Icons.arrow_back_rounded,
-            onPressed: () =>
-                context.canPop() ? context.pop() : context.go('/home'),
+            onPressed:
+                onBack ??
+                () => context.canPop() ? context.pop() : context.go('/home'),
           ),
           Expanded(
             // Long titles shrink a little instead of being cut.

@@ -405,5 +405,18 @@
   "prayerCommunityIntro": "Gbogbo àdúrà ló ṣe pàtàkì. Jẹ́ kí wọ́n mọ̀ pé o ti gbàdúrà.",
   "prayerTestimonyLabel": "Ẹ̀rí mi",
   "prayerEmptyTitle": "Kọ àdúrà rẹ àkọ́kọ́",
-  "prayerAnsweredEmptyTitle": "Olóòótọ́ ni Ọlọ́run"
+  "prayerAnsweredEmptyTitle": "Olóòótọ́ ni Ọlọ́run",
+  "journalTodayPrompt": "Kí ni Ọlọ́run ń sọ fún ọ lónìí?",
+  "journalStart": "Kọ ọ́",
+  "journalContinue": "Tẹ̀síwájú",
+  "journalPages": "Àwọn ojú-ewé mi",
+  "journalEmpty": "Ìwé àkọsílẹ̀ rẹ ṣófo. Kọ ojú-ewé rẹ àkọ́kọ́ lónìí.",
+  "journalStreak": "{count, plural, other{Ọjọ́ {count} léraléra}}",
+  "journalFilled": "{count}/4 ti parí",
+  "journalThisWeek": "Ọ̀sẹ̀ yìí",
+  "journalPickDay": "Yan ọjọ́ kan",
+  "journalUnsaved": "Ṣé o fẹ́ jáde láì fi pamọ́?",
+  "journalLeave": "Jáde",
+  "journalPrivate": "Ìwọ nìkan lo lè ka ìwé àkọsílẹ̀ rẹ.",
+  "journalThanksHint": "Ẹ ṣé Olúwa fún..."
 }

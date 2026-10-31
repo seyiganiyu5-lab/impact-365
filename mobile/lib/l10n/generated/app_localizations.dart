@@ -2535,6 +2535,84 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'God is faithful'**
   String get prayerAnsweredEmptyTitle;
+
+  /// No description provided for @journalTodayPrompt.
+  ///
+  /// In en, this message translates to:
+  /// **'What is God telling you today?'**
+  String get journalTodayPrompt;
+
+  /// No description provided for @journalStart.
+  ///
+  /// In en, this message translates to:
+  /// **'Write'**
+  String get journalStart;
+
+  /// No description provided for @journalContinue.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue'**
+  String get journalContinue;
+
+  /// No description provided for @journalPages.
+  ///
+  /// In en, this message translates to:
+  /// **'My pages'**
+  String get journalPages;
+
+  /// No description provided for @journalEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Your journal is empty. Write your first page today.'**
+  String get journalEmpty;
+
+  /// No description provided for @journalStreak.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 day in a row} other{{count} days in a row}}'**
+  String journalStreak(int count);
+
+  /// No description provided for @journalFilled.
+  ///
+  /// In en, this message translates to:
+  /// **'{count}/4 done'**
+  String journalFilled(int count);
+
+  /// No description provided for @journalThisWeek.
+  ///
+  /// In en, this message translates to:
+  /// **'This week'**
+  String get journalThisWeek;
+
+  /// No description provided for @journalPickDay.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick a day'**
+  String get journalPickDay;
+
+  /// No description provided for @journalUnsaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Leave without saving?'**
+  String get journalUnsaved;
+
+  /// No description provided for @journalLeave.
+  ///
+  /// In en, this message translates to:
+  /// **'Leave'**
+  String get journalLeave;
+
+  /// No description provided for @journalPrivate.
+  ///
+  /// In en, this message translates to:
+  /// **'Only you can read your journal.'**
+  String get journalPrivate;
+
+  /// No description provided for @journalThanksHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Thank you Lord for...'**
+  String get journalThanksHint;
 }
 
 class _AppLocalizationsDelegate

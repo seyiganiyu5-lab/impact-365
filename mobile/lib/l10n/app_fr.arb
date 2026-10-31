@@ -405,5 +405,18 @@
   "prayerCommunityIntro": "Chaque prière compte. Dis-leur que tu as prié.",
   "prayerTestimonyLabel": "Mon témoignage",
   "prayerEmptyTitle": "Dépose ton premier sujet",
-  "prayerAnsweredEmptyTitle": "Dieu est fidèle"
+  "prayerAnsweredEmptyTitle": "Dieu est fidèle",
+  "journalTodayPrompt": "Qu'est-ce que Dieu te dit aujourd'hui ?",
+  "journalStart": "Écrire",
+  "journalContinue": "Continuer",
+  "journalPages": "Mes pages",
+  "journalEmpty": "Ton journal est vide. Écris ta première page aujourd'hui.",
+  "journalStreak": "{count, plural, =1{1 jour d'affilée} other{{count} jours d'affilée}}",
+  "journalFilled": "{count}/4 complétés",
+  "journalThisWeek": "Cette semaine",
+  "journalPickDay": "Choisir un jour",
+  "journalUnsaved": "Quitter sans enregistrer ?",
+  "journalLeave": "Quitter",
+  "journalPrivate": "Seulement toi peux lire ton journal.",
+  "journalThanksHint": "Merci Seigneur pour..."
 }

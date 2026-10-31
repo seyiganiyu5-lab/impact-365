@@ -21,6 +21,7 @@ import '../features/impact/impact_screen.dart';
 import '../features/inbox/chat_screen.dart';
 import '../features/inbox/inbox_screen.dart';
 import '../features/inbox/new_conversation_screen.dart';
+import '../features/journal/journal_entry_screen.dart';
 import '../features/journal/journal_screen.dart';
 import '../features/onboarding/onboarding_screen.dart';
 import '../features/prayer/community_prayers_screen.dart';
@@ -249,6 +250,20 @@ final appRouter = GoRouter(
       parentNavigatorKey: _rootKey,
       path: '/journal',
       pageBuilder: (_, s) => appPage(s, const JournalScreen()),
+    ),
+    GoRoute(
+      parentNavigatorKey: _rootKey,
+      path: '/journal/:date',
+      pageBuilder: (_, s) {
+        final today = DateTime.now();
+        final parsed = DateTime.tryParse(s.pathParameters['date'] ?? '');
+        // Never a future day.
+        final day = parsed == null || parsed.isAfter(today) ? today : parsed;
+        return appPage(
+          s,
+          JournalEntryScreen(day: DateTime(day.year, day.month, day.day)),
+        );
+      },
     ),
     GoRoute(
       parentNavigatorKey: _rootKey,

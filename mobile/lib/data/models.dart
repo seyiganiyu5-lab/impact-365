@@ -202,6 +202,7 @@ class JournalEntry {
     this.mustChange = '',
     this.prayFor = '',
     this.gratitude = '',
+    this.date,
   });
 
   final String godShows;
@@ -209,11 +210,29 @@ class JournalEntry {
   final String prayFor;
   final String gratitude;
 
+  /// The day of the page (null for a page not saved yet).
+  final DateTime? date;
+
+  List<String> get _parts => [godShows, mustChange, prayFor, gratitude];
+
+  /// How many of the 4 sections have something written.
+  int get filledCount => _parts.where((s) => s.trim().isNotEmpty).length;
+
+  bool get isEmpty => filledCount == 0;
+
+  /// First thing written, for previews.
+  String get preview => _parts
+      .map((s) => s.trim())
+      .firstWhere((s) => s.isNotEmpty, orElse: () => '');
+
   factory JournalEntry.fromJson(Map<String, dynamic> j) => JournalEntry(
     godShows: j['god_shows'] as String? ?? '',
     mustChange: j['must_change'] as String? ?? '',
     prayFor: j['pray_for'] as String? ?? '',
     gratitude: j['gratitude'] as String? ?? '',
+    date: j['entry_date'] == null
+        ? null
+        : DateTime.parse(j['entry_date'] as String),
   );
 }
 

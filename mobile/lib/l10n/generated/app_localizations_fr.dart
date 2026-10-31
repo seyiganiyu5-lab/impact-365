@@ -1354,4 +1354,54 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get prayerAnsweredEmptyTitle => 'Dieu est fidèle';
+
+  @override
+  String get journalTodayPrompt => 'Qu\'est-ce que Dieu te dit aujourd\'hui ?';
+
+  @override
+  String get journalStart => 'Écrire';
+
+  @override
+  String get journalContinue => 'Continuer';
+
+  @override
+  String get journalPages => 'Mes pages';
+
+  @override
+  String get journalEmpty =>
+      'Ton journal est vide. Écris ta première page aujourd\'hui.';
+
+  @override
+  String journalStreak(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count jours d\'affilée',
+      one: '1 jour d\'affilée',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String journalFilled(int count) {
+    return '$count/4 complétés';
+  }
+
+  @override
+  String get journalThisWeek => 'Cette semaine';
+
+  @override
+  String get journalPickDay => 'Choisir un jour';
+
+  @override
+  String get journalUnsaved => 'Quitter sans enregistrer ?';
+
+  @override
+  String get journalLeave => 'Quitter';
+
+  @override
+  String get journalPrivate => 'Seulement toi peux lire ton journal.';
+
+  @override
+  String get journalThanksHint => 'Merci Seigneur pour...';
 }

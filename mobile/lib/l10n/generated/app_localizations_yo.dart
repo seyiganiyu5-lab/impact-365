@@ -1346,4 +1346,53 @@ class AppLocalizationsYo extends AppLocalizations {
 
   @override
   String get prayerAnsweredEmptyTitle => 'Olóòótọ́ ni Ọlọ́run';
+
+  @override
+  String get journalTodayPrompt => 'Kí ni Ọlọ́run ń sọ fún ọ lónìí?';
+
+  @override
+  String get journalStart => 'Kọ ọ́';
+
+  @override
+  String get journalContinue => 'Tẹ̀síwájú';
+
+  @override
+  String get journalPages => 'Àwọn ojú-ewé mi';
+
+  @override
+  String get journalEmpty =>
+      'Ìwé àkọsílẹ̀ rẹ ṣófo. Kọ ojú-ewé rẹ àkọ́kọ́ lónìí.';
+
+  @override
+  String journalStreak(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Ọjọ́ $count léraléra',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String journalFilled(int count) {
+    return '$count/4 ti parí';
+  }
+
+  @override
+  String get journalThisWeek => 'Ọ̀sẹ̀ yìí';
+
+  @override
+  String get journalPickDay => 'Yan ọjọ́ kan';
+
+  @override
+  String get journalUnsaved => 'Ṣé o fẹ́ jáde láì fi pamọ́?';
+
+  @override
+  String get journalLeave => 'Jáde';
+
+  @override
+  String get journalPrivate => 'Ìwọ nìkan lo lè ka ìwé àkọsílẹ̀ rẹ.';
+
+  @override
+  String get journalThanksHint => 'Ẹ ṣé Olúwa fún...';
 }

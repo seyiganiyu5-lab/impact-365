@@ -1341,4 +1341,54 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get prayerAnsweredEmptyTitle => 'God is faithful';
+
+  @override
+  String get journalTodayPrompt => 'What is God telling you today?';
+
+  @override
+  String get journalStart => 'Write';
+
+  @override
+  String get journalContinue => 'Continue';
+
+  @override
+  String get journalPages => 'My pages';
+
+  @override
+  String get journalEmpty =>
+      'Your journal is empty. Write your first page today.';
+
+  @override
+  String journalStreak(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count days in a row',
+      one: '1 day in a row',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String journalFilled(int count) {
+    return '$count/4 done';
+  }
+
+  @override
+  String get journalThisWeek => 'This week';
+
+  @override
+  String get journalPickDay => 'Pick a day';
+
+  @override
+  String get journalUnsaved => 'Leave without saving?';
+
+  @override
+  String get journalLeave => 'Leave';
+
+  @override
+  String get journalPrivate => 'Only you can read your journal.';
+
+  @override
+  String get journalThanksHint => 'Thank you Lord for...';
 }
