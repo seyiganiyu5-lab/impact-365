@@ -1,7 +1,24 @@
 import type { NextConfig } from "next";
 
-const supabase = process.env.NEXT_PUBLIC_SUPABASE_URL ?? "";
-const supabaseHost = supabase ? new URL(supabase).host : "";
+const supabase = (process.env.NEXT_PUBLIC_SUPABASE_URL ?? "").trim();
+
+/** Host of the Supabase project, with a clear message if the setting is wrong. */
+function hostOf(url: string): string {
+  if (!url) return "";
+  try {
+    const u = new URL(url);
+    if (u.protocol === "https:" || u.hostname === "localhost") return u.host;
+  } catch {
+    // Explained below.
+  }
+  throw new Error(
+    `NEXT_PUBLIC_SUPABASE_URL must be your Supabase address, like ` +
+      `https://xxxx.supabase.co (Supabase → Project Settings → API). ` +
+      `Current value: "${url}". On Vercel: Settings → Environment Variables.`,
+  );
+}
+
+const supabaseHost = hostOf(supabase);
 const isDev = process.env.NODE_ENV !== "production";
 
 // Browser-side protections for the admin website.
