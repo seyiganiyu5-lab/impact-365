@@ -443,5 +443,6 @@
   "photoRemoved": "A ti yọ fọ́tò kúrò",
   "photoUnsupported": "A kò lè lo irú àwòrán yìí. Yan fọ́tò JPG tàbí PNG.",
   "photoTooBig": "Fọ́tò yìí tóbi jù. Yan òmíràn.",
-  "photoPermission": "Fún áàpù ní àṣẹ láti lo àwòrán tàbí kámẹ́rà nínú ètò fóònù rẹ."
+  "photoPermission": "Fún áàpù ní àṣẹ láti lo àwòrán tàbí kámẹ́rà nínú ètò fóònù rẹ.",
+  "profilePrivacy": "Àṣírí"
 }

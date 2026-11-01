@@ -1476,4 +1476,7 @@ class AppLocalizationsYo extends AppLocalizations {
   @override
   String get photoPermission =>
       'Fún áàpù ní àṣẹ láti lo àwòrán tàbí kámẹ́rà nínú ètò fóònù rẹ.';
+
+  @override
+  String get profilePrivacy => 'Àṣírí';
 }

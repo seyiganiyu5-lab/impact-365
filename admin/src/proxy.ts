@@ -6,7 +6,25 @@ import { NextResponse, type NextRequest } from "next/server";
  * signed-out visitors to /login. Role checks (admin / pastor / leader) happen
  * in the dashboard layout and, most importantly, in the database (RLS).
  */
+/** Pages anyone can open, signed in or not (required by the app stores). */
+const PUBLIC_PAGES = ["/confidentialite", "/privacy", "/suppression-compte", "/delete-account"];
+
+/** The main domain (impact365jours.com) only shows the public pages. */
+const PUBLIC_ONLY_HOSTS = ["impact365jours.com", "www.impact365jours.com"];
+
+function isPublicPage(path: string) {
+  return PUBLIC_PAGES.some((p) => path === p || path.startsWith(`${p}/`));
+}
+
 export async function proxy(request: NextRequest) {
+  const path = request.nextUrl.pathname;
+  const host = (request.headers.get("host") ?? "").split(":")[0].toLowerCase();
+
+  if (isPublicPage(path)) return NextResponse.next({ request });
+  if (PUBLIC_ONLY_HOSTS.includes(host)) {
+    return NextResponse.redirect(new URL("/confidentialite", request.url));
+  }
+
   let response = NextResponse.next({ request });
 
   const supabase = createServerClient(
@@ -32,7 +50,6 @@ export async function proxy(request: NextRequest) {
 
   const { data } = await supabase.auth.getClaims();
   const signedIn = !!data?.claims;
-  const path = request.nextUrl.pathname;
   const onLogin = path.startsWith("/login");
 
   // Google sign-in comes back here before the session exists.

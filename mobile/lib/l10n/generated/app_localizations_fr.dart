@@ -1486,4 +1486,7 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get photoPermission =>
       'Autorise l\'accès aux photos ou à l\'appareil photo dans les réglages de ton téléphone.';
+
+  @override
+  String get profilePrivacy => 'Confidentialité';
 }

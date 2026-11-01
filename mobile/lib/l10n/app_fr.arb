@@ -443,5 +443,6 @@
   "photoRemoved": "Photo retirée",
   "photoUnsupported": "Ce format d'image n'est pas pris en charge. Choisis une photo JPG ou PNG.",
   "photoTooBig": "Cette photo est trop lourde. Choisis-en une autre.",
-  "photoPermission": "Autorise l'accès aux photos ou à l'appareil photo dans les réglages de ton téléphone."
+  "photoPermission": "Autorise l'accès aux photos ou à l'appareil photo dans les réglages de ton téléphone.",
+  "profilePrivacy": "Confidentialité"
 }

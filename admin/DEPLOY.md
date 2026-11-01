@@ -98,3 +98,15 @@ Rollback** goes back to an earlier one if needed.
 
 - The Hobby plan is meant for non-commercial projects. If Vercel ever asks,
   the **Pro** plan removes that limit.
+
+## Public pages (no sign-in)
+
+- Privacy policy: `/confidentialite` (FR) · `/privacy` (EN)
+- Account deletion: `/suppression-compte` (FR) · `/delete-account` (EN)
+
+Texts live in `src/lib/legal.ts`: update them whenever the data the app
+uses, the providers or the access rules change.
+
+Optional: add `impact365jours.com` (and `www`) to the same Vercel project
+under **Settings → Domains**. That address only ever shows the public
+pages; the leaders' area stays on `admin.`.

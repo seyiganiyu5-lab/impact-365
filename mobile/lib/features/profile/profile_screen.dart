@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../core/legal_links.dart';
 import '../../core/locale_controller.dart';
 import '../../core/theme.dart';
 import '../../data/models.dart';
@@ -209,6 +210,16 @@ class ProfileBody extends StatelessWidget {
               icon: Icons.slideshow_outlined,
               label: l.onbReplay,
               onTap: () => context.go('/onboarding'),
+            ),
+            _Row(
+              icon: Icons.privacy_tip_outlined,
+              label: l.profilePrivacy,
+              onTap: () async {
+                final ok = await openWebPage(
+                  LegalLinks.privacy(LocaleController.instance.languageCode),
+                );
+                if (!ok && context.mounted) context.toast(l.commonError);
+              },
             ),
             _Row(
               icon: Icons.info_outline_rounded,

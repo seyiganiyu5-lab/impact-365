@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
+import 'package:impact365/core/legal_links.dart';
 import 'package:impact365/core/locale_controller.dart';
 import 'package:impact365/core/theme.dart';
 import 'package:impact365/core/yoruba_fallback.dart';
@@ -108,6 +109,22 @@ void main() {
     expect(find.text('42'), findsOneWidget);
     expect(find.text('Français'), findsOneWidget);
     expect(find.text('IMPACT-365 · version 1.0.0'), findsOneWidget);
+    expect(find.text('Confidentialité'), findsOneWidget);
+  });
+
+  test('privacy and deletion pages follow the language', () {
+    expect(
+      LegalLinks.privacy('fr').toString(),
+      'https://admin.impact365jours.com/confidentialite',
+    );
+    expect(
+      LegalLinks.privacy('yo').toString(),
+      'https://admin.impact365jours.com/privacy',
+    );
+    expect(
+      LegalLinks.deleteAccount('en').toString(),
+      'https://admin.impact365jours.com/delete-account',
+    );
   });
 
   for (final (label, path) in [

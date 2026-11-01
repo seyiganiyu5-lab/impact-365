@@ -583,5 +583,6 @@
   "photoRemoved": "Photo removed",
   "photoUnsupported": "This image format isn't supported. Choose a JPG or PNG photo.",
   "photoTooBig": "This photo is too large. Choose another one.",
-  "photoPermission": "Allow access to photos or the camera in your phone settings."
+  "photoPermission": "Allow access to photos or the camera in your phone settings.",
+  "profilePrivacy": "Privacy"
 }

@@ -1472,4 +1472,7 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get photoPermission =>
       'Allow access to photos or the camera in your phone settings.';
+
+  @override
+  String get profilePrivacy => 'Privacy';
 }

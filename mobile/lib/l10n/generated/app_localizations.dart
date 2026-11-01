@@ -2763,6 +2763,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Allow access to photos or the camera in your phone settings.'**
   String get photoPermission;
+
+  /// No description provided for @profilePrivacy.
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy'**
+  String get profilePrivacy;
 }
 
 class _AppLocalizationsDelegate
