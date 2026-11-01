@@ -102,12 +102,6 @@ class _DevotionViewState extends State<DevotionView> {
   bool _saving = false;
   String? _loadedAudio;
 
-  /// Height of the photo behind the title and verse (below the status bar).
-  static const _photoHeight = 240.0;
-
-  /// How far the white sheet rises over the photo.
-  static const _sheetOverlap = 40.0;
-
   Devotion get d => widget.devotion;
 
   @override
@@ -187,26 +181,40 @@ class _DevotionViewState extends State<DevotionView> {
     }
   }
 
+  /// Height of the photo header below the status bar.
+  static const _headerHeight = 250.0;
+
+  /// How far the sheet rises over the photo.
+  static const _overlap = 28.0;
+
+  String _slotLabel(BuildContext context) {
+    final l = context.l10n;
+    return switch (d.slot) {
+      DevotionSlot.morning => '🌅  ${l.slotMorning}',
+      DevotionSlot.afternoon => '☀️  ${l.slotAfternoon}',
+      DevotionSlot.night => '🌙  ${l.slotNight}',
+    };
+  }
+
   @override
   Widget build(BuildContext context) {
     final l = context.l10n;
-    final top = MediaQuery.paddingOf(context).top;
-    final photoBottom = top + _photoHeight;
-    final sheetTop = photoBottom - _sheetOverlap;
+    final media = MediaQuery.of(context);
+    final top = media.padding.top;
+    final headerBottom = top + _headerHeight;
+    final theme = (d.theme ?? '').trim();
 
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle.dark,
       child: SingleChildScrollView(
-        padding: EdgeInsets.only(
-          bottom: MediaQuery.paddingOf(context).bottom + 24,
-        ),
         child: Stack(
           children: [
-            // Photo with a light fade at the top (title stays readable) and
-            // a darker one at the bottom left (white verse stays readable).
-            SizedBox(
-              height: photoBottom,
-              width: double.infinity,
+            // Photo header: theme of the day, reference, date.
+            Positioned(
+              left: 0,
+              right: 0,
+              top: 0,
+              height: headerBottom,
               child: Stack(
                 fit: StackFit.expand,
                 children: [
@@ -227,6 +235,8 @@ class _DevotionViewState extends State<DevotionView> {
                       'assets/images/home_hero.jpg',
                       fit: BoxFit.cover,
                     ),
+                  // Light at the top (title bar), deep purple at the bottom
+                  // (white text stays readable on any photo).
                   const DecoratedBox(
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
@@ -235,151 +245,166 @@ class _DevotionViewState extends State<DevotionView> {
                         colors: [
                           Color(0xF2F9F9F6),
                           Color(0x00F9F9F6),
-                          Color(0x00000000),
-                          Color(0x8C1A0B3D),
+                          Color(0x261A0B3D),
+                          Color(0xD91A0B3D),
                         ],
-                        stops: [0, 0.32, 0.5, 1],
+                        stops: [0, 0.3, 0.5, 1],
                       ),
                     ),
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      SizedBox(height: top),
+                      _TopBar(
+                        title: l.devotionTitle,
+                        onBack: _back,
+                        menu: _menu(context),
+                      ),
+                      const Spacer(),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(
+                          20,
+                          0,
+                          20,
+                          _overlap + 18,
+                        ),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  _GlassChip(label: _slotLabel(context)),
+                                  const SizedBox(height: 10),
+                                  Text(
+                                    theme.isNotEmpty ? theme : d.verseReference,
+                                    maxLines: 3,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: AppText.headline.copyWith(
+                                      color: Colors.white,
+                                      fontSize: 26,
+                                      height: 1.15,
+                                      shadows: _textShadow,
+                                    ),
+                                  ),
+                                  if (theme.isNotEmpty) ...[
+                                    const SizedBox(height: 6),
+                                    Text(
+                                      d.verseReference,
+                                      style: AppText.scriptureRef.copyWith(
+                                        color: AppColors.gold,
+                                        fontSize: 15,
+                                        shadows: _textShadow,
+                                      ),
+                                    ),
+                                  ],
+                                ],
+                              ),
+                            ),
+                            const SizedBox(width: 14),
+                            _DateBadge(date: d.date),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
             ),
 
-            // Cream frame with a golden glow behind the sheet (full width).
-            Positioned(
-              left: 0,
-              right: 0,
-              top: sheetTop + 36,
-              bottom: 0,
-              child: DecoratedBox(
-                decoration: BoxDecoration(
-                  gradient: const LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [Color(0xFFF3EBD3), Color(0xFFF9F7F0)],
-                    stops: [0, 0.35],
-                  ),
-                  borderRadius: const BorderRadius.vertical(
-                    top: Radius.circular(48),
-                  ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: AppColors.gold.withValues(alpha: 0.25),
-                      blurRadius: 24,
+            // The sheet: verse, the three steps, actions.
+            Padding(
+              padding: EdgeInsets.only(top: headerBottom - _overlap),
+              child: ConstrainedBox(
+                constraints: BoxConstraints(
+                  minHeight: media.size.height - headerBottom + _overlap,
+                ),
+                child: DecoratedBox(
+                  decoration: const BoxDecoration(
+                    color: AppColors.warmWhite,
+                    borderRadius: BorderRadius.vertical(
+                      top: Radius.circular(28),
                     ),
-                  ],
-                ),
-              ),
-            ),
-
-            // Page content: header text, then the white sheet.
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                SizedBox(height: top),
-                _TopBar(
-                  title: l.devotionTitle,
-                  onBack: _back,
-                  menu: _menu(context),
-                ),
-                SizedBox(
-                  height: sheetTop - top - 56,
+                  ),
                   child: Padding(
-                    // Right padding leaves room for the date badge.
-                    padding: const EdgeInsets.fromLTRB(20, 4, 112, 12),
+                    padding: EdgeInsets.fromLTRB(
+                      18,
+                      22,
+                      18,
+                      media.padding.bottom + 28,
+                    ),
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        Text(
-                          d.verseReference,
-                          style: AppText.headline.copyWith(
-                            color: Colors.white,
-                            fontSize: 24,
-                            shadows: _textShadow,
-                          ),
+                        _VerseCard(
+                          text: d.verseText,
+                          reference: d.verseReference,
                         ),
-                        const SizedBox(height: 8),
-                        Flexible(
-                          child: Text(
-                            d.verseText,
-                            maxLines: 5,
-                            overflow: TextOverflow.ellipsis,
-                            style: AppText.bodySmall.copyWith(
-                              color: Colors.white,
-                              fontStyle: FontStyle.italic,
-                              height: 1.35,
-                              shadows: _textShadow,
-                            ),
+                        const SizedBox(height: 18),
+                        _Step(
+                          number: 1,
+                          icon: Icons.menu_book_rounded,
+                          title: l.devotionGodSays,
+                          body: d.godSays,
+                        ),
+                        _Step(
+                          number: 2,
+                          icon: Icons.lightbulb_outline_rounded,
+                          title: l.devotionIUnderstand,
+                          body: d.iUnderstand,
+                        ),
+                        _Step(
+                          number: 3,
+                          icon: Icons.directions_walk_rounded,
+                          title: l.devotionIDo,
+                          body: d.iDo,
+                          highlight: true,
+                          last: true,
+                        ),
+                        const SizedBox(height: 22),
+                        _UnderstoodButton(
+                          label: _completed
+                              ? l.devotionCompleted.toUpperCase()
+                              : l.devotionDone,
+                          done: _completed,
+                          busy: _saving,
+                          onPressed: _completed || _saving ? null : _complete,
+                        ),
+                        if (d.audioUrl != null) ...[
+                          const SizedBox(height: 12),
+                          StreamBuilder<bool>(
+                            stream: _player.playingStream,
+                            builder: (context, snap) {
+                              final playing = snap.data ?? false;
+                              return _AudioButton(
+                                label: playing
+                                    ? l.devotionPause
+                                    : l.devotionListen,
+                                icon: playing
+                                    ? Icons.pause_rounded
+                                    : Icons.headphones_rounded,
+                                onPressed: () => _toggleAudio(d.audioUrl!),
+                              );
+                            },
+                          ),
+                        ],
+                        const SizedBox(height: 22),
+                        _QuestionCard(
+                          onAsk: () => context.push(
+                            Uri(
+                              path: '/inbox/new',
+                              queryParameters: {'subject': d.verseReference},
+                            ).toString(),
                           ),
                         ),
                       ],
                     ),
                   ),
                 ),
-                _Sheet(
-                  children: [
-                    _Section(
-                      icon: const _BibleIcon(),
-                      title: l.devotionGodSays,
-                      body: d.godSays,
-                    ),
-                    const _SectionDivider(),
-                    _Section(
-                      icon: const Icon(
-                        Icons.psychology_outlined,
-                        size: 52,
-                        color: AppColors.ink,
-                      ),
-                      title: l.devotionIUnderstand,
-                      body: d.iUnderstand,
-                    ),
-                    const _SectionDivider(),
-                    _Section(
-                      icon: const _HandCheckIcon(),
-                      title: l.devotionIDo,
-                      body: d.iDo,
-                    ),
-                    const SizedBox(height: 12),
-                    _UnderstoodButton(
-                      label: _completed
-                          ? l.devotionCompleted.toUpperCase()
-                          : l.devotionDone,
-                      done: _completed,
-                      busy: _saving,
-                      onPressed: _completed || _saving ? null : _complete,
-                    ),
-                    const SizedBox(height: 12),
-                    if (d.audioUrl != null)
-                      StreamBuilder<bool>(
-                        stream: _player.playingStream,
-                        builder: (context, snap) {
-                          final playing = snap.data ?? false;
-                          return _AudioButton(
-                            label: playing ? l.devotionPause : l.devotionListen,
-                            icon: playing
-                                ? Icons.pause_rounded
-                                : Icons.headphones_outlined,
-                            onPressed: () => _toggleAudio(d.audioUrl!),
-                          );
-                        },
-                      )
-                    else
-                      _AudioButton(
-                        label: l.devotionAudioSoon,
-                        icon: Icons.headphones_outlined,
-                        onPressed: null,
-                      ),
-                  ],
-                ),
-              ],
-            ),
-
-            // Date badge, overlapping the photo and the sheet.
-            Positioned(
-              right: 20,
-              top: sheetTop - 90,
-              child: _DateBadge(date: d.date),
+              ),
             ),
           ],
         ),
@@ -388,7 +413,7 @@ class _DevotionViewState extends State<DevotionView> {
   }
 
   static const _textShadow = [
-    Shadow(color: Color(0x80000000), blurRadius: 10, offset: Offset(0, 1)),
+    Shadow(color: Color(0x66000000), blurRadius: 12, offset: Offset(0, 1)),
   ];
 
   Widget _menu(BuildContext context) {
@@ -520,19 +545,23 @@ class _DateBadge extends StatelessWidget {
     final l = context.l10n;
     final day = l.weekdaysLong.split(',')[date.weekday - 1];
     final month = l.monthsShort.split(',')[date.month - 1].replaceAll('.', '');
-    final gold = AppText.bodyMedium.copyWith(color: AppColors.gold);
+    final small = AppText.labelSmall.copyWith(
+      color: AppColors.gold,
+      fontSize: 11,
+      letterSpacing: 0.6,
+    );
     return Container(
-      width: 88,
-      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 12),
+      width: 74,
+      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 10),
       decoration: BoxDecoration(
         color: AppColors.deepPurple,
         borderRadius: BorderRadius.circular(18),
         border: Border.all(color: AppColors.gold, width: 1.5),
         boxShadow: const [
           BoxShadow(
-            color: Color(0x33000000),
-            blurRadius: 12,
-            offset: Offset(0, 4),
+            color: Color(0x40000000),
+            blurRadius: 14,
+            offset: Offset(0, 6),
           ),
         ],
       ),
@@ -541,163 +570,255 @@ class _DateBadge extends StatelessWidget {
         children: [
           FittedBox(
             fit: BoxFit.scaleDown,
-            child: Text(day.toUpperCase(), maxLines: 1, style: gold),
+            child: Text(day.toUpperCase(), maxLines: 1, style: small),
           ),
           Text(
             date.day.toString().padLeft(2, '0'),
             style: AppText.display.copyWith(
               color: AppColors.gold,
+              fontSize: 30,
               fontWeight: FontWeight.w800,
-              height: 1.1,
+              height: 1.15,
             ),
           ),
-          Text(month.toUpperCase(), style: gold),
+          Text(month.toUpperCase(), style: small),
         ],
       ),
     );
   }
 }
 
-/// White sheet with rounded top corners and a soft golden glow.
-class _Sheet extends StatelessWidget {
-  const _Sheet({required this.children});
+/// Small translucent label on the photo ("🌅 Matin").
+class _GlassChip extends StatelessWidget {
+  const _GlassChip({required this.label});
 
-  final List<Widget> children;
+  final String label;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 18),
-      padding: const EdgeInsets.fromLTRB(16, 26, 16, 20),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
       decoration: BoxDecoration(
-        color: AppColors.warmWhite,
-        borderRadius: const BorderRadius.vertical(
-          top: Radius.circular(40),
-          bottom: Radius.circular(28),
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: AppColors.gold.withValues(alpha: 0.28),
-            blurRadius: 28,
-            offset: const Offset(0, -2),
-          ),
-        ],
+        color: Colors.white.withValues(alpha: 0.18),
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: Colors.white.withValues(alpha: 0.35)),
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: children,
+      child: Text(
+        label.toUpperCase(),
+        style: AppText.labelSmall.copyWith(
+          color: Colors.white,
+          fontSize: 11.5,
+          letterSpacing: 0.8,
+        ),
       ),
     );
   }
 }
 
-class _Section extends StatelessWidget {
-  const _Section({required this.icon, required this.title, required this.body});
+/// The Bible verse, in the scripture font, like a quote.
+class _VerseCard extends StatelessWidget {
+  const _VerseCard({required this.text, required this.reference});
 
-  final Widget icon;
-  final String title;
-  final String body;
+  final String text;
+  final String reference;
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 14),
-      child: Row(
+    return Container(
+      padding: const EdgeInsets.fromLTRB(20, 16, 20, 18),
+      decoration: BoxDecoration(
+        color: AppColors.beige,
+        borderRadius: BorderRadius.circular(22),
+        border: Border.all(color: AppColors.gold.withValues(alpha: 0.35)),
+      ),
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(width: 60, child: Center(child: icon)),
+          Text(
+            '“',
+            style: AppText.scriptureLarge.copyWith(
+              color: AppColors.gold,
+              fontSize: 48,
+              height: 0.9,
+            ),
+          ),
+          Text(
+            text,
+            style: AppText.scriptureLarge.copyWith(
+              color: AppColors.ink,
+              fontSize: 19,
+              height: 1.5,
+            ),
+          ),
+          const SizedBox(height: 12),
+          Row(
+            children: [
+              Container(width: 22, height: 2, color: AppColors.gold),
+              const SizedBox(width: 8),
+              Flexible(
+                child: Text(
+                  reference,
+                  style: AppText.scriptureRef.copyWith(
+                    color: AppColors.goldDark,
+                    fontSize: 14,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// One of the three steps, joined by a thin line like a path.
+class _Step extends StatelessWidget {
+  const _Step({
+    required this.number,
+    required this.icon,
+    required this.title,
+    required this.body,
+    this.highlight = false,
+    this.last = false,
+  });
+
+  final int number;
+  final IconData icon;
+  final String title;
+  final String body;
+
+  /// "Ce que je fais": the step to live today, in gold.
+  final bool highlight;
+  final bool last;
+
+  @override
+  Widget build(BuildContext context) {
+    return IntrinsicHeight(
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          SizedBox(
+            width: 44,
+            child: Column(
+              children: [
+                Container(
+                  width: 44,
+                  height: 44,
+                  decoration: BoxDecoration(
+                    color: highlight ? AppColors.gold : AppColors.deepPurple,
+                    shape: BoxShape.circle,
+                  ),
+                  child: Icon(icon, color: Colors.white, size: 22),
+                ),
+                if (!last)
+                  Expanded(
+                    child: Container(
+                      width: 2,
+                      margin: const EdgeInsets.symmetric(vertical: 6),
+                      color: AppColors.lavender,
+                    ),
+                  ),
+              ],
+            ),
+          ),
           const SizedBox(width: 14),
+          Expanded(
+            child: Padding(
+              padding: EdgeInsets.only(bottom: last ? 0 : 18),
+              child: Container(
+                padding: const EdgeInsets.fromLTRB(16, 14, 16, 16),
+                decoration: BoxDecoration(
+                  color: highlight
+                      ? AppColors.gold.withValues(alpha: 0.12)
+                      : Colors.white,
+                  borderRadius: BorderRadius.circular(18),
+                  border: Border.all(
+                    color: highlight
+                        ? AppColors.gold.withValues(alpha: 0.5)
+                        : AppColors.border,
+                  ),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      '$number · $title',
+                      style: AppText.labelSmall.copyWith(
+                        color: highlight
+                            ? AppColors.goldDark
+                            : AppColors.deepPurple,
+                        letterSpacing: 0.6,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      body,
+                      style: AppText.bodyLarge.copyWith(
+                        color: AppColors.ink,
+                        height: 1.55,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// "Une question ?" → private message to a leader.
+class _QuestionCard extends StatelessWidget {
+  const _QuestionCard({required this.onAsk});
+
+  final VoidCallback onAsk;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = context.l10n;
+    return Container(
+      padding: const EdgeInsets.fromLTRB(16, 14, 12, 14),
+      decoration: BoxDecoration(
+        color: AppColors.lavender,
+        borderRadius: BorderRadius.circular(18),
+      ),
+      child: Row(
+        children: [
+          const Text('💬', style: TextStyle(fontSize: 26)),
+          const SizedBox(width: 12),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  title,
+                  l.devotionQuestionTitle,
                   style: AppText.titleSmall.copyWith(
                     color: AppColors.deepPurple,
-                    fontWeight: FontWeight.w700,
-                    letterSpacing: 0.2,
                   ),
                 ),
-                const SizedBox(height: 6),
+                const SizedBox(height: 2),
                 Text(
-                  body,
-                  style: AppText.bodyMedium.copyWith(
-                    color: AppColors.deepPurple,
-                    height: 1.45,
-                  ),
+                  l.devotionQuestionText,
+                  style: AppText.bodySmall.copyWith(color: AppColors.muted),
                 ),
               ],
             ),
           ),
-        ],
-      ),
-    );
-  }
-}
-
-class _SectionDivider extends StatelessWidget {
-  const _SectionDivider();
-
-  @override
-  Widget build(BuildContext context) => const Divider(
-    height: 8,
-    indent: 20,
-    endIndent: 20,
-    color: Color(0xFFB9B4C7),
-  );
-}
-
-/// Open Bible with a cross above it (line style, like the design).
-class _BibleIcon extends StatelessWidget {
-  const _BibleIcon();
-
-  @override
-  Widget build(BuildContext context) {
-    return const SizedBox(
-      width: 56,
-      height: 56,
-      child: Stack(
-        alignment: Alignment.bottomCenter,
-        children: [
-          Icon(Icons.menu_book_outlined, size: 50, color: AppColors.ink),
-          Positioned(
-            top: 0,
-            child: Icon(Icons.add, size: 20, color: AppColors.ink),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-/// Raised hand with a check mark: "what I do".
-class _HandCheckIcon extends StatelessWidget {
-  const _HandCheckIcon();
-
-  @override
-  Widget build(BuildContext context) {
-    return const SizedBox(
-      width: 56,
-      height: 56,
-      child: Stack(
-        children: [
-          Positioned(
-            left: 0,
-            top: 0,
-            child: Icon(
-              Icons.back_hand_outlined,
-              size: 44,
-              color: AppColors.ink,
+          const SizedBox(width: 8),
+          TextButton(
+            onPressed: onAsk,
+            style: TextButton.styleFrom(
+              foregroundColor: AppColors.deepPurple,
+              backgroundColor: Colors.white,
+              shape: const StadiumBorder(),
+              padding: const EdgeInsets.symmetric(horizontal: 14),
             ),
-          ),
-          Positioned(
-            right: 0,
-            bottom: 0,
-            child: Icon(
-              Icons.check_circle_outline_rounded,
-              size: 22,
-              color: AppColors.ink,
+            child: Text(
+              l.devotionAskQuestion,
+              style: AppText.labelSmall.copyWith(fontSize: 12.5),
             ),
           ),
         ],

@@ -85,10 +85,40 @@ void main() {
       'CE QUE JE COMPRENDS',
       'CE QUE JE FAIS',
       "J'AI COMPRIS",
-      'AUDIO BIENTÔT DISPONIBLE',
+      'Une question ?',
     ]) {
-      expect(find.text(t), findsOneWidget, reason: t);
+      expect(find.textContaining(t), findsWidgets, reason: t);
     }
+    // No audio for this devotion: no audio button at all.
+    expect(find.text('ÉCOUTER EN AUDIO'), findsNothing);
+    expect(find.text('AUDIO BIENTÔT DISPONIBLE'), findsNothing);
+  });
+
+  testWidgets('shows the theme of the day and the moment', (tester) async {
+    tester.view.physicalSize = const Size(360, 1600) * 3;
+    tester.view.devicePixelRatio = 3;
+    addTearDown(tester.view.reset);
+    final d = sampleDevotion();
+    await tester.pumpWidget(
+      devotionApp(
+        'fr',
+        Devotion(
+          id: d.id,
+          date: d.date,
+          slot: DevotionSlot.night,
+          verseReference: d.verseReference,
+          verseText: d.verseText,
+          godSays: d.godSays,
+          iUnderstand: d.iUnderstand,
+          iDo: d.iDo,
+          theme: 'Chercher Dieu en premier',
+        ),
+      ),
+    );
+    await tester.pump();
+    expect(find.text('Chercher Dieu en premier'), findsOneWidget);
+    expect(find.textContaining('SOIR'), findsOneWidget);
+    expect(tester.takeException(), isNull);
   });
 
   testWidgets('audio button is active when the devotion has audio', (
