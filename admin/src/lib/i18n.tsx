@@ -25,6 +25,9 @@ const fr = {
     password: "Mot de passe",
     submit: "Se connecter",
     error: "E-mail ou mot de passe incorrect.",
+    or: "ou",
+    google: "Continuer avec Google",
+    googleError: "La connexion avec Google n'a pas abouti. Réessaie.",
   },
   denied: {
     title: "Accès réservé",
@@ -192,6 +195,9 @@ const en: Dict = {
     password: "Password",
     submit: "Sign in",
     error: "Wrong email or password.",
+    or: "or",
+    google: "Continue with Google",
+    googleError: "Google sign-in didn't complete. Please try again.",
   },
   denied: {
     title: "Restricted access",

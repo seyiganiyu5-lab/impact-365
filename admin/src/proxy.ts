@@ -32,7 +32,11 @@ export async function proxy(request: NextRequest) {
 
   const { data } = await supabase.auth.getClaims();
   const signedIn = !!data?.claims;
-  const onLogin = request.nextUrl.pathname.startsWith("/login");
+  const path = request.nextUrl.pathname;
+  const onLogin = path.startsWith("/login");
+
+  // Google sign-in comes back here before the session exists.
+  if (path.startsWith("/auth/callback")) return response;
 
   if (!signedIn && !onLogin) {
     return NextResponse.redirect(new URL("/login", request.url));

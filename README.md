@@ -150,4 +150,4 @@ impact-365/
 - Push notifications (Firebase Cloud Messaging) for new devotions, replies and reminders (*Rappels* screen)
 - *Mon groupe* (groups, discussions, group challenges)
 - Audio teaching library (*Lecture audio*) and offline downloads
-- Deploying the admin website (e.g. Vercel) and publishing the app to the stores
+- Deploying the admin website: see [`admin/DEPLOY.md`](admin/DEPLOY.md) · publishing the app to the stores
