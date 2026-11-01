@@ -1,10 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { HandHeart, Trash2 } from "lucide-react";
+import { EyeOff, Trash2 } from "lucide-react";
 import { supabase } from "@/lib/supabase/client";
 import { useI18n } from "@/lib/i18n";
-import { Empty, Loading, PageHeader, formatDateTime } from "@/components/ui";
+import { Avatar, Chip, Empty, Loading, PageHeader, Segmented, formatRelative } from "@/components/ui";
 
 type Prayer = {
   id: string;
@@ -14,7 +14,7 @@ type Prayer = {
   is_answered: boolean;
   testimony: string | null;
   created_at: string;
-  member: { full_name: string | null } | null;
+  member: { full_name: string | null; avatar_url: string | null } | null;
   prayer_intercessions: { count: number }[];
 };
 
@@ -23,7 +23,7 @@ async function fetchPrayers() {
     .from("prayer_requests")
     .select(
       "id, title, details, is_anonymous, is_answered, testimony, created_at, " +
-        "member:profiles!prayer_requests_user_id_fkey(full_name), prayer_intercessions(count)",
+        "member:profiles!prayer_requests_user_id_fkey(full_name, avatar_url), prayer_intercessions(count)",
     )
     .eq("is_shared", true)
     .order("created_at", { ascending: false })
@@ -34,6 +34,7 @@ async function fetchPrayers() {
 export default function PrayersPage() {
   const { t, lang } = useI18n();
   const [rows, setRows] = useState<Prayer[] | null>(null);
+  const [filter, setFilter] = useState<"ongoing" | "answered" | "all">("ongoing");
 
   const [reload, setReload] = useState(0);
   const load = () => setReload((n) => n + 1);
@@ -48,41 +49,72 @@ export default function PrayersPage() {
     load();
   }
 
+  const shown = (rows ?? []).filter((p) =>
+    filter === "all" ? true : filter === "answered" ? p.is_answered : !p.is_answered,
+  );
+
   return (
     <>
       <PageHeader title={t.prayers.title} subtitle={t.prayers.subtitle} />
+      <div className="mb-5">
+        <Segmented
+          value={filter}
+          onChange={setFilter}
+          options={[
+            { value: "ongoing", label: t.sos.status.in_progress },
+            { value: "answered", label: t.prayers.answered },
+            { value: "all", label: t.common.all },
+          ]}
+        />
+      </div>
       {rows === null ? (
         <Loading />
-      ) : rows.length === 0 ? (
-        <Empty />
+      ) : shown.length === 0 ? (
+        <Empty emoji="🙏" />
       ) : (
-        <div className="grid gap-4 md:grid-cols-2">
-          {rows.map((p) => (
-            <div key={p.id} className="card space-y-2">
-              <div className="flex items-center gap-2 text-xs text-muted">
-                <span className="font-semibold text-ink">{p.member?.full_name}</span>
-                {p.is_anonymous && <span className="badge bg-beige">{t.common.anonymous}</span>}
-                {p.is_answered && <span className="badge bg-green-100 text-green-800">{t.prayers.answered}</span>}
-                <span className="ml-auto">{formatDateTime(p.created_at, lang)}</span>
+        <div className="grid gap-5 md:grid-cols-2">
+          {shown.map((p) => (
+            <article key={p.id} className="card flex flex-col gap-3 p-5">
+              <div className="flex items-center gap-3">
+                <Avatar name={p.member?.full_name} url={p.member?.avatar_url} size={38} />
+                <div className="min-w-0 flex-1">
+                  <div className="truncate text-sm font-semibold">{p.member?.full_name ?? "—"}</div>
+                  <div className="text-xs text-muted">{formatRelative(p.created_at, lang, t.ui.yesterday)}</div>
+                </div>
+                {p.is_answered ? (
+                  <Chip tone="green">✓ {t.prayers.answered}</Chip>
+                ) : (
+                  p.is_anonymous && (
+                    <Chip tone="muted" icon={<EyeOff className="h-3 w-3" />}>
+                      {t.common.anonymous}
+                    </Chip>
+                  )
+                )}
               </div>
-              <div className="font-semibold">{p.title}</div>
-              {p.details && <p className="text-sm text-muted">{p.details}</p>}
+              <div>
+                <h3 className="font-bold text-ink">{p.title}</h3>
+                {p.details && <p className="mt-1 text-sm leading-relaxed text-muted">{p.details}</p>}
+              </div>
               {p.testimony && (
-                <p className="rounded-lg bg-cream p-3 text-sm">
-                  <span className="font-semibold text-gold">{t.prayers.testimony}: </span>
+                <blockquote className="rounded-xl bg-beige px-4 py-3 text-sm italic text-ink">
+                  <span className="mb-1 block text-xs font-bold not-italic text-[#9a7a17]">✨ {t.prayers.testimony}</span>
                   {p.testimony}
-                </p>
+                </blockquote>
               )}
-              <div className="flex items-center justify-between pt-1">
+              <div className="mt-auto flex items-center justify-between border-t border-line pt-3">
                 <span className="flex items-center gap-1.5 text-sm text-muted">
-                  <HandHeart className="h-4 w-4 text-gold" />
-                  {p.prayer_intercessions[0]?.count ?? 0} {t.prayers.intercessions}
+                  🙏 <strong className="text-ink">{p.prayer_intercessions[0]?.count ?? 0}</strong> {t.prayers.intercessions}
                 </span>
-                <button onClick={() => remove(p.id)} className="btn-danger px-2.5 py-1.5" aria-label={t.common.delete}>
+                <button
+                  onClick={() => remove(p.id)}
+                  className="cursor-pointer rounded-lg p-2 text-muted transition hover:bg-red-50 hover:text-red-700"
+                  aria-label={t.common.delete}
+                  title={t.common.delete}
+                >
                   <Trash2 className="h-4 w-4" />
                 </button>
               </div>
-            </div>
+            </article>
           ))}
         </div>
       )}

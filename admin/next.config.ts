@@ -2,12 +2,14 @@ import type { NextConfig } from "next";
 
 const supabase = (process.env.NEXT_PUBLIC_SUPABASE_URL ?? "").trim();
 
-/** Host of the Supabase project, with a clear message if the setting is wrong. */
-function hostOf(url: string): string {
+/** Origin of the Supabase project, with a clear message if the setting is wrong. */
+function originOf(url: string): string {
   if (!url) return "";
   try {
     const u = new URL(url);
-    if (u.protocol === "https:" || u.hostname === "localhost") return u.host;
+    const local = u.hostname === "localhost" || u.hostname === "127.0.0.1";
+    // https in production; http only for a local Supabase (supabase start).
+    if (u.protocol === "https:" || local) return u.origin;
   } catch {
     // Explained below.
   }
@@ -18,7 +20,8 @@ function hostOf(url: string): string {
   );
 }
 
-const supabaseHost = hostOf(supabase);
+const supabaseOrigin = originOf(supabase);
+const supabaseSocket = supabaseOrigin.replace(/^http/, "ws");
 const isDev = process.env.NODE_ENV !== "production";
 
 // Browser-side protections for the admin website.
@@ -33,7 +36,7 @@ const contentSecurityPolicy = [
   "media-src 'self' blob: https:",
   "font-src 'self' data:",
   // Only our own Supabase project (REST, auth, storage, realtime).
-  `connect-src 'self' https://accounts.google.com/gsi/${supabaseHost ? ` https://${supabaseHost} wss://${supabaseHost}` : ""}`,
+  `connect-src 'self' https://accounts.google.com/gsi/${supabaseOrigin ? ` ${supabaseOrigin} ${supabaseSocket}` : ""}`,
   "frame-ancestors 'none'",
   "base-uri 'self'",
   "form-action 'self'",

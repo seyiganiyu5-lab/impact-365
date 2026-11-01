@@ -3,7 +3,7 @@
 import { Suspense, useEffect, useState } from "react";
 import Link from "next/link";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
-import { ArrowLeft, Trash2 } from "lucide-react";
+import { Trash2 } from "lucide-react";
 import { supabase } from "@/lib/supabase/client";
 import { useStaff } from "@/lib/staff";
 import { CONTENT_LANGS, SLOTS, useI18n, type ContentLang, type Slot } from "@/lib/i18n";
@@ -179,10 +179,8 @@ function DevotionEditor() {
 
   return (
     <>
-      <Link href="/devotions" className="mb-4 inline-flex items-center gap-1 text-sm text-muted hover:text-purple">
-        <ArrowLeft className="h-4 w-4" /> {t.common.back}
-      </Link>
       <PageHeader
+        back={{ href: "/devotions", label: t.common.back }}
         title={isNew ? t.devotions.newDevotion : t.devotions.editDevotion}
         action={
           !isNew && (
@@ -194,7 +192,7 @@ function DevotionEditor() {
       />
 
       <div className="grid gap-6 lg:grid-cols-[320px_1fr]">
-        <div className="card h-fit space-y-4">
+        <div className="card h-fit space-y-5 p-5 lg:sticky lg:top-6">
           <div>
             <label className="label">{t.common.date}</label>
             <input type="date" className="input" value={date} onChange={(e) => setDate(e.target.value)} />
@@ -218,18 +216,18 @@ function DevotionEditor() {
             <label className="label">{t.devotions.image}</label>
             <MediaUpload value={imageUrl} onChange={setImageUrl} accept="image/*" folder="devotions" />
           </div>
-          <label className="flex items-start gap-2 text-sm">
+          <label className="flex cursor-pointer items-start gap-3 rounded-xl bg-cream p-3 text-sm">
             <input type="checkbox" className="mt-0.5 h-4 w-4 accent-purple" checked={published} onChange={(e) => setPublished(e.target.checked)} />
             {t.devotions.publish}
           </label>
         </div>
 
-        <div className="card space-y-4">
+        <div className="card space-y-5 p-5">
           <div>
             <h2 className="font-bold">{t.devotions.translations}</h2>
             <p className="text-sm text-muted">{t.devotions.translationHint}</p>
           </div>
-          <div className="flex gap-2 border-b border-line">
+          <div className="flex flex-wrap gap-2">
             {CONTENT_LANGS.map((l) => {
               const tr = translations[l];
               const state = isBlank(tr) ? "missing" : isComplete(tr) ? "filled" : "partial";
@@ -238,8 +236,8 @@ function DevotionEditor() {
                   key={l}
                   type="button"
                   onClick={() => setTab(l)}
-                  className={`-mb-px flex cursor-pointer items-center gap-2 border-b-2 px-3 py-2 text-sm font-semibold ${
-                    tab === l ? "border-purple text-purple" : "border-transparent text-muted"
+                  className={`flex cursor-pointer items-center gap-2 rounded-xl px-3.5 py-2 text-sm font-semibold transition ${
+                    tab === l ? "bg-purple text-white" : "border border-line bg-white text-ink/70 hover:bg-lavender"
                   }`}
                 >
                   {t.langs[l]}
@@ -257,7 +255,7 @@ function DevotionEditor() {
           {field("theme", t.devotions.theme)}
           <div className="grid gap-4 md:grid-cols-[220px_1fr]">
             {field("verse_reference", t.devotions.verseReference, 0, t.devotions.verseReferencePh)}
-            {field("verse_text", t.devotions.verseText, 2)}
+            {field("verse_text", t.devotions.verseText, 3)}
           </div>
           {field("god_says", t.devotions.godSays, 3)}
           {field("i_understand", t.devotions.iUnderstand, 3)}
@@ -274,9 +272,9 @@ function DevotionEditor() {
           </div>
 
           <ErrorText message={error} />
-          <div className="flex justify-end gap-3 pt-2">
+          <div className="flex justify-end gap-3 border-t border-line pt-4">
             <Link href="/devotions" className="btn-ghost">{t.common.cancel}</Link>
-            <button onClick={save} disabled={saving} className="btn-primary">
+            <button onClick={save} disabled={saving} className="btn-gold px-6">
               {saving ? t.common.saving : t.common.save}
             </button>
           </div>

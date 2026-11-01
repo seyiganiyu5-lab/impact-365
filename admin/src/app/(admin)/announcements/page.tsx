@@ -1,11 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Trash2 } from "lucide-react";
+import { Megaphone, Trash2 } from "lucide-react";
 import { supabase } from "@/lib/supabase/client";
 import { useStaff } from "@/lib/staff";
 import { CONTENT_LANGS, useI18n, type ContentLang } from "@/lib/i18n";
-import { Empty, ErrorText, Loading, PageHeader, formatDateTime } from "@/components/ui";
+import { Chip, Empty, ErrorText, Loading, PageHeader, formatRelative } from "@/components/ui";
 
 type Announcement = {
   id: string;
@@ -67,16 +67,18 @@ export default function AnnouncementsPage() {
   return (
     <>
       <PageHeader title={t.announcements.title} subtitle={t.announcements.subtitle} />
-      <div className="grid gap-6 lg:grid-cols-[380px_1fr]">
-        <form onSubmit={publish} className="card h-fit space-y-4">
-          <h2 className="font-bold">{t.announcements.newAnnouncement}</h2>
+      <div className="grid items-start gap-6 lg:grid-cols-[400px_1fr]">
+        <form onSubmit={publish} className="card space-y-4 p-5 lg:sticky lg:top-6">
+          <h2 className="flex items-center gap-2 font-bold text-purple">
+            <Megaphone className="h-5 w-5 text-gold" /> {t.announcements.newAnnouncement}
+          </h2>
           <div>
             <label className="label">{t.announcements.titleField}</label>
-            <input className="input" value={title} onChange={(e) => setTitle(e.target.value)} />
+            <input className="input" maxLength={120} value={title} onChange={(e) => setTitle(e.target.value)} />
           </div>
           <div>
             <label className="label">{t.announcements.body}</label>
-            <textarea rows={5} className="input" value={body} onChange={(e) => setBody(e.target.value)} />
+            <textarea rows={5} className="input" maxLength={2000} value={body} onChange={(e) => setBody(e.target.value)} />
           </div>
           <div>
             <label className="label">{t.announcements.audience}</label>
@@ -87,31 +89,57 @@ export default function AnnouncementsPage() {
               ))}
             </select>
           </div>
+
+          {/* Same look as the "Notifications" tab of the app */}
+          <div>
+            <div className="mb-2 text-xs font-bold uppercase tracking-wide text-muted">{t.ui.preview}</div>
+            <div className="rounded-2xl bg-cream p-3">
+              <div className="flex gap-3 rounded-2xl border border-line bg-white p-3.5">
+                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-lavender text-lg">📣</span>
+                <div className="min-w-0">
+                  <div className={`font-bold ${title.trim() ? "text-ink" : "text-muted/60"}`}>
+                    {title.trim() || t.ui.previewTitle}
+                  </div>
+                  <p className={`mt-0.5 whitespace-pre-wrap text-sm ${body.trim() ? "text-muted" : "text-muted/50"}`}>
+                    {body.trim() || t.ui.previewBody}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <ErrorText message={error} />
-          <button type="submit" disabled={busy || !title.trim() || !body.trim()} className="btn-gold w-full">
-            {t.announcements.publish}
+          <button type="submit" disabled={busy || !title.trim() || !body.trim()} className="btn-gold w-full py-3">
+            {busy ? t.common.saving : t.announcements.publish}
           </button>
         </form>
+
         <div className="space-y-3">
           {rows === null ? (
             <Loading />
           ) : rows.length === 0 ? (
-            <Empty />
+            <Empty emoji="📣" />
           ) : (
             rows.map((a) => (
-              <div key={a.id} className="card flex gap-4">
+              <article key={a.id} className="card flex gap-4 p-5">
+                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-lavender text-xl">📣</span>
                 <div className="min-w-0 flex-1">
                   <div className="flex flex-wrap items-center gap-2">
-                    <span className="font-semibold">{a.title}</span>
-                    <span className="badge bg-lavender text-purple">{a.lang ? t.langs[a.lang] : t.announcements.everyone}</span>
-                    <span className="text-xs text-muted">{formatDateTime(a.created_at, lang)}</span>
+                    <h3 className="font-bold text-ink">{a.title}</h3>
+                    <Chip tone={a.lang ? "purple" : "gold"}>{a.lang ? t.langs[a.lang] : t.announcements.everyone}</Chip>
                   </div>
-                  <p className="mt-1 whitespace-pre-wrap text-sm text-muted">{a.body}</p>
+                  <p className="mt-1 whitespace-pre-wrap text-sm leading-relaxed text-muted">{a.body}</p>
+                  <div className="mt-2 text-xs text-muted">{formatRelative(a.created_at, lang, t.ui.yesterday)}</div>
                 </div>
-                <button onClick={() => remove(a.id)} className="btn-danger h-fit px-2.5 py-1.5" aria-label={t.common.delete}>
+                <button
+                  onClick={() => remove(a.id)}
+                  className="h-fit cursor-pointer rounded-lg p-2 text-muted transition hover:bg-red-50 hover:text-red-700"
+                  aria-label={t.common.delete}
+                  title={t.common.delete}
+                >
                   <Trash2 className="h-4 w-4" />
                 </button>
-              </div>
+              </article>
             ))
           )}
         </div>
