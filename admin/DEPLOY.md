@@ -61,7 +61,26 @@ Keep the app's existing entries. Do **not** change the *Site URL*.
 Nothing to change in Google Cloud: Google returns to Supabase, and Supabase
 returns to the website.
 
-## 4. Check
+## 4. Show your address on the Google page (instead of supabase.co)
+
+The website uses Google's own sign-in button, so Google's window shows
+your site's address. It needs one more setting:
+
+1. **Google Cloud Console → APIs & Services → Credentials** → open your
+   **Web** OAuth client (the one whose ID and secret are in Supabase →
+   Authentication → Providers → Google).
+2. **Authorized JavaScript origins** → **Add URI**:
+   `https://admin.impact365jours.com` (and `http://localhost:3000` to test
+   on your computer) → **Save**.
+3. Copy that **Client ID** (`…apps.googleusercontent.com`).
+4. Vercel → **Settings → Environment Variables** → add
+   `NEXT_PUBLIC_GOOGLE_CLIENT_ID` = that Client ID, **Type: Config** (a
+   client ID is public, not a secret) → **Save** → **Redeploy**.
+
+Without this variable the website still works: the Google button then goes
+through Supabase's address, as before.
+
+## 5. Check
 
 - Open https://admin.impact365jours.com → you land on the login page.
 - Sign in with your admin account (email + password, or **Continuer avec
@@ -77,9 +96,5 @@ Rollback** goes back to an earlier one if needed.
 
 ## Good to know
 
-- On the Google page, Google shows your Supabase address
-  (`xxxx.supabase.co`). The app avoids this with native Google sign-in; on
-  the website it can only be changed with a Supabase **custom domain** (a
-  paid add-on).
 - The Hobby plan is meant for non-commercial projects. If Vercel ever asks,
   the **Pro** plan removes that limit.

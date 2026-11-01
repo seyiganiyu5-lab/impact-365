@@ -6,9 +6,10 @@ import { supabase } from "@/lib/supabase/client";
 import { useI18n } from "@/lib/i18n";
 import { Logo } from "@/components/Logo";
 import { LangSwitch } from "@/components/LangSwitch";
+import { GoogleButton, googleClientId } from "@/components/GoogleButton";
 
 export default function LoginPage() {
-  const { t } = useI18n();
+  const { t, lang } = useI18n();
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -25,6 +26,26 @@ export default function LoginPage() {
   );
   const shownError = error ?? (googleFailed && !tried ? t.login.googleError : null);
 
+  // Google's own button: Google shows this website's address.
+  async function onGoogleToken(idToken: string, nonce: string) {
+    setTried(true);
+    setBusy(true);
+    setError(null);
+    const { error } = await supabase().auth.signInWithIdToken({
+      provider: "google",
+      token: idToken,
+      nonce,
+    });
+    if (error) {
+      setBusy(false);
+      setError(t.login.googleError);
+      return;
+    }
+    router.replace("/");
+    router.refresh();
+  }
+
+  // Fallback (no Google client ID set): goes through Supabase's address.
   async function onGoogle() {
     setTried(true);
     setBusy(true);
@@ -100,15 +121,27 @@ export default function LoginPage() {
             {t.login.or}
             <span className="h-px flex-1 bg-current opacity-20" />
           </div>
-          <button
-            type="button"
-            onClick={onGoogle}
-            disabled={busy}
-            className="flex w-full items-center justify-center gap-3 rounded-xl border border-black/10 bg-white py-3 font-semibold text-ink transition hover:bg-black/[0.03] disabled:opacity-60"
-          >
-            <GoogleMark />
-            {t.login.google}
-          </button>
+          {googleClientId ? (
+            <GoogleButton
+              lang={lang}
+              disabled={busy}
+              onToken={onGoogleToken}
+              onError={() => {
+                setTried(true);
+                setError(t.login.googleError);
+              }}
+            />
+          ) : (
+            <button
+              type="button"
+              onClick={onGoogle}
+              disabled={busy}
+              className="flex w-full items-center justify-center gap-3 rounded-xl border border-black/10 bg-white py-3 font-semibold text-ink transition hover:bg-black/[0.03] disabled:opacity-60"
+            >
+              <GoogleMark />
+              {t.login.google}
+            </button>
+          )}
         </form>
       </div>
     </main>
