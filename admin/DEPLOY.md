@@ -58,8 +58,8 @@ Keep the app's existing entries. Do **not** change the *Site URL*.
 (Optional: to test Google sign-in on the `….vercel.app` address too, add
 `https://YOUR-ADDRESS.vercel.app/auth/callback` the same way.)
 
-Nothing to change in Google Cloud: Google returns to Supabase, and Supabase
-returns to the website.
+(This return address is used by the fallback Google sign-in; step 4 below
+sets up the better one.)
 
 ## 4. Show your address on the Google page (instead of supabase.co)
 
