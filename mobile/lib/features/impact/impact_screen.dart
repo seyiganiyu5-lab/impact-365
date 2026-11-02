@@ -50,6 +50,8 @@ class _ImpactScreenState extends State<ImpactScreen> {
     return Scaffold(
       backgroundColor: AppColors.warmWhite,
       body: SafeArea(
+        // Content scrolls under the floating menu bar (like Home).
+        bottom: false,
         child: RefreshIndicator(
           onRefresh: _refresh,
           child: AsyncView<ImpactData>(
@@ -80,7 +82,13 @@ class ImpactBody extends StatelessWidget {
 
     return ListView(
       physics: const AlwaysScrollableScrollPhysics(),
-      padding: const EdgeInsets.fromLTRB(20, 8, 20, 24),
+      // Room at the end so the last item clears the floating menu bar.
+      padding: EdgeInsets.fromLTRB(
+        20,
+        8,
+        20,
+        24 + MediaQuery.paddingOf(context).bottom,
+      ),
       children: [
         const SizedBox(height: 12),
         Text(

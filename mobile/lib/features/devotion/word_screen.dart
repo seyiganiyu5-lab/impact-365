@@ -33,6 +33,8 @@ class _WordScreenState extends State<WordScreen> {
     return Scaffold(
       backgroundColor: AppColors.warmWhite,
       body: SafeArea(
+        // Content scrolls under the floating menu bar (like Home).
+        bottom: false,
         child: RefreshIndicator(
           onRefresh: _refresh,
           child: AsyncView<List<Devotion>>(
@@ -69,7 +71,13 @@ class WordBody extends StatelessWidget {
 
     return ListView(
       physics: const AlwaysScrollableScrollPhysics(),
-      padding: const EdgeInsets.fromLTRB(20, 8, 20, 24),
+      // Room at the end so the last item clears the floating menu bar.
+      padding: EdgeInsets.fromLTRB(
+        20,
+        8,
+        20,
+        24 + MediaQuery.paddingOf(context).bottom,
+      ),
       children: [
         // Title, centred, with the info button on the right.
         Row(
