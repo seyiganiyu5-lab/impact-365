@@ -126,30 +126,11 @@ class PrayerRoomBody extends StatelessWidget {
         ),
         const SizedBox(height: 14),
 
-        // My prayers: ongoing / answered.
-        IntrinsicHeight(
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: _CountTile(
-                  icon: Icons.local_fire_department_outlined,
-                  count: s.prayersOpen,
-                  label: l.prayerOngoing,
-                  onTap: () => open('/prayers/mine'),
-                ),
-              ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: _CountTile(
-                  icon: Icons.emoji_events_outlined,
-                  count: s.prayersAnswered,
-                  label: l.prayerAnsweredShort,
-                  onTap: () => open('/prayers/answered'),
-                ),
-              ),
-            ],
-          ),
+        // My prayers: one card, both counts, one page (with its two tabs).
+        _MyPrayersCard(
+          ongoing: s.prayersOpen,
+          answered: s.prayersAnswered,
+          onTap: () => open('/prayers/mine'),
         ),
         const SizedBox(height: 28),
 
@@ -304,21 +285,20 @@ class _PrayHeroCard extends StatelessWidget {
 }
 
 /// "3 · En cours" / "2 · Exaucées".
-class _CountTile extends StatelessWidget {
-  const _CountTile({
-    required this.icon,
-    required this.count,
-    required this.label,
+class _MyPrayersCard extends StatelessWidget {
+  const _MyPrayersCard({
+    required this.ongoing,
+    required this.answered,
     required this.onTap,
   });
 
-  final IconData icon;
-  final int count;
-  final String label;
+  final int ongoing;
+  final int answered;
   final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
+    final l = context.l10n;
     return Material(
       color: Colors.white,
       borderRadius: BorderRadius.circular(18),
@@ -326,7 +306,7 @@ class _CountTile extends StatelessWidget {
         borderRadius: BorderRadius.circular(18),
         onTap: onTap,
         child: Ink(
-          padding: const EdgeInsets.fromLTRB(14, 14, 10, 14),
+          padding: const EdgeInsets.fromLTRB(16, 14, 10, 14),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(18),
             border: Border.all(color: AppColors.border),
@@ -334,31 +314,49 @@ class _CountTile extends StatelessWidget {
           child: Row(
             children: [
               Container(
-                width: 40,
-                height: 40,
+                width: 44,
+                height: 44,
                 decoration: const BoxDecoration(
                   color: AppColors.lavender,
                   shape: BoxShape.circle,
                 ),
-                child: Icon(icon, color: AppColors.deepPurple, size: 22),
+                child: const Icon(
+                  Icons.volunteer_activism_rounded,
+                  color: AppColors.deepPurple,
+                  size: 22,
+                ),
               ),
-              const SizedBox(width: 10),
+              const SizedBox(width: 12),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      '$count',
-                      style: AppText.titleLarge.copyWith(
-                        color: AppColors.deepPurple,
-                        height: 1.1,
-                      ),
-                    ),
-                    Text(
-                      label,
+                      l.prayerMineTitle,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: AppText.bodySmall.copyWith(color: AppColors.muted),
+                      style: AppText.titleSmall.copyWith(
+                        color: AppColors.deepPurple,
+                      ),
+                    ),
+                    const SizedBox(height: 6),
+                    Wrap(
+                      spacing: 14,
+                      runSpacing: 4,
+                      children: [
+                        _Count(
+                          icon: Icons.local_fire_department_rounded,
+                          color: AppColors.deepPurple,
+                          count: ongoing,
+                          label: l.prayerOngoing,
+                        ),
+                        _Count(
+                          icon: Icons.emoji_events_rounded,
+                          color: AppColors.goldDark,
+                          count: answered,
+                          label: l.prayerAnsweredShort,
+                        ),
+                      ],
                     ),
                   ],
                 ),
@@ -366,12 +364,44 @@ class _CountTile extends StatelessWidget {
               const Icon(
                 Icons.chevron_right_rounded,
                 color: AppColors.muted,
-                size: 22,
+                size: 24,
               ),
             ],
           ),
         ),
       ),
+    );
+  }
+}
+
+/// "🔥 3 En cours" inside the "Mes prières" card.
+class _Count extends StatelessWidget {
+  const _Count({
+    required this.icon,
+    required this.color,
+    required this.count,
+    required this.label,
+  });
+
+  final IconData icon;
+  final Color color;
+  final int count;
+  final String label;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Icon(icon, size: 16, color: color),
+        const SizedBox(width: 4),
+        Text(
+          '$count',
+          style: AppText.labelLarge.copyWith(color: AppColors.ink),
+        ),
+        const SizedBox(width: 4),
+        Text(label, style: AppText.bodySmall.copyWith(color: AppColors.muted)),
+      ],
     );
   }
 }

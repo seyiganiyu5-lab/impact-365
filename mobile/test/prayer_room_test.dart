@@ -110,8 +110,7 @@ void main() {
   });
 
   for (final (label, path) in [
-    ('En cours', '/prayers/mine'),
-    ('Exaucées', '/prayers/answered'),
+    ('Mes prières', '/prayers/mine'),
     ('Voir tout', '/prayers/community'),
     ('Mon journal', '/journal'),
     ('Holy SOS', '/sos'),
