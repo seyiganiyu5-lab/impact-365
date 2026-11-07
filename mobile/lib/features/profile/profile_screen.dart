@@ -135,41 +135,44 @@ class ProfileBody extends StatelessWidget {
         ),
         const SizedBox(height: 14),
 
-        // Four small counters.
-        Row(
-          children: [
-            Expanded(
-              child: _MiniStat(
-                emoji: '🔥',
-                value: s.streak,
-                label: l.profileStreak,
+        // Four small counters, all as tall as the tallest one.
+        IntrinsicHeight(
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: _MiniStat(
+                  emoji: '🔥',
+                  value: s.streak,
+                  label: l.profileStreak,
+                ),
               ),
-            ),
-            const SizedBox(width: 8),
-            Expanded(
-              child: _MiniStat(
-                emoji: '📖',
-                value: s.devotionsCompleted,
-                label: l.profileDevotions,
+              const SizedBox(width: 8),
+              Expanded(
+                child: _MiniStat(
+                  emoji: '📖',
+                  value: s.devotionsCompleted,
+                  label: l.profileDevotions,
+                ),
               ),
-            ),
-            const SizedBox(width: 8),
-            Expanded(
-              child: _MiniStat(
-                emoji: '🎯',
-                value: s.challengesCompleted,
-                label: l.profileImpacts,
+              const SizedBox(width: 8),
+              Expanded(
+                child: _MiniStat(
+                  emoji: '🎯',
+                  value: s.challengesCompleted,
+                  label: l.profileImpacts,
+                ),
               ),
-            ),
-            const SizedBox(width: 8),
-            Expanded(
-              child: _MiniStat(
-                emoji: '🏆',
-                value: s.prayersAnswered,
-                label: l.profileAnswered,
+              const SizedBox(width: 8),
+              Expanded(
+                child: _MiniStat(
+                  emoji: '🏆',
+                  value: s.prayersAnswered,
+                  label: l.profileAnswered,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
         const SizedBox(height: 24),
 
@@ -347,22 +350,24 @@ class _IdentityCard extends StatelessWidget {
     final role = _roleLabel(context);
 
     return Container(
-      padding: const EdgeInsets.fromLTRB(18, 18, 10, 18),
       decoration: BoxDecoration(
         gradient: AppColors.purpleGradient,
         borderRadius: BorderRadius.circular(24),
       ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: Stack(
         children: [
-          ProfileAvatar(name: name, url: profile.avatarUrl),
-          const SizedBox(width: 14),
-          Expanded(
+          // Centred: photo, then name, email and badges on the full width.
+          Container(
+            width: double.infinity,
+            padding: const EdgeInsets.fromLTRB(20, 22, 20, 20),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                ProfileAvatar(name: name, url: profile.avatarUrl, size: 84),
+                const SizedBox(height: 12),
                 Text(
-                  name,
+                  // Non-breaking hyphens: "Al-hassan" never splits.
+                  name.replaceAll('-', '\u2011'),
+                  textAlign: TextAlign.center,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   style: AppText.titleLarge.copyWith(color: Colors.white),
@@ -371,15 +376,17 @@ class _IdentityCard extends StatelessWidget {
                   const SizedBox(height: 2),
                   Text(
                     email!,
+                    textAlign: TextAlign.center,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: AppText.bodySmall.copyWith(color: Colors.white70),
                   ),
                 ],
-                const SizedBox(height: 10),
+                const SizedBox(height: 12),
                 Wrap(
-                  spacing: 6,
-                  runSpacing: 6,
+                  alignment: WrapAlignment.center,
+                  spacing: 8,
+                  runSpacing: 8,
                   children: [
                     _Pill(
                       text: l.profileImpacterSince(days),
@@ -392,10 +399,14 @@ class _IdentityCard extends StatelessWidget {
               ],
             ),
           ),
-          IconButton(
-            tooltip: l.profileEdit,
-            onPressed: onEdit,
-            icon: const Icon(Icons.edit_outlined, color: Colors.white),
+          Positioned(
+            top: 6,
+            right: 6,
+            child: IconButton(
+              tooltip: l.profileEdit,
+              onPressed: onEdit,
+              icon: const Icon(Icons.edit_outlined, color: Colors.white),
+            ),
           ),
         ],
       ),
@@ -458,7 +469,8 @@ class _Pill extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+      constraints: const BoxConstraints(maxWidth: 260),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
       decoration: BoxDecoration(
         color: outlined ? null : color.withValues(alpha: 0.18),
         border: outlined
@@ -466,10 +478,15 @@ class _Pill extends StatelessWidget {
             : null,
         borderRadius: BorderRadius.circular(20),
       ),
-      child: Text(
-        text,
-        style: AppText.labelSmall.copyWith(
-          color: outlined ? color : AppColors.goldLight,
+      // One line each; shrinks slightly on very narrow phones / large text.
+      child: FittedBox(
+        fit: BoxFit.scaleDown,
+        child: Text(
+          text,
+          maxLines: 1,
+          style: AppText.labelSmall.copyWith(
+            color: outlined ? color : AppColors.goldLight,
+          ),
         ),
       ),
     );
@@ -491,8 +508,9 @@ class _MiniStat extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // No fixed height: grows with the phone's text size.
     return Container(
-      height: 104,
+      constraints: const BoxConstraints(minHeight: 104),
       padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 10),
       decoration: BoxDecoration(
         color: Colors.white,
@@ -500,6 +518,7 @@ class _MiniStat extends StatelessWidget {
         border: Border.all(color: AppColors.border),
       ),
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
           Text(emoji, style: const TextStyle(fontSize: 18)),
           const SizedBox(height: 4),
@@ -508,21 +527,56 @@ class _MiniStat extends StatelessWidget {
             style: AppText.titleMedium.copyWith(color: AppColors.deepPurple),
           ),
           const SizedBox(height: 2),
-          Expanded(
-            child: Text(
-              label,
-              textAlign: TextAlign.center,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              style: AppText.caption.copyWith(
-                color: AppColors.muted,
-                fontSize: 10.5,
-                height: 1.2,
-              ),
+          _WordFitLabel(
+            label,
+            style: AppText.caption.copyWith(
+              color: AppColors.muted,
+              fontSize: 10.5,
+              height: 1.2,
             ),
           ),
         ],
       ),
+    );
+  }
+}
+
+/// Centred label of up to 2 lines whose longest word always fits: the
+/// font shrinks a little (never below 8 pt) instead of cutting a word
+/// like "consécutifs" with "…".
+class _WordFitLabel extends StatelessWidget {
+  const _WordFitLabel(this.text, {required this.style});
+
+  final String text;
+  final TextStyle style;
+
+  @override
+  Widget build(BuildContext context) {
+    final scaler = MediaQuery.textScalerOf(context);
+    // Width inside one of the four boxes: screen minus the page padding
+    // (2 x 20), the three gaps (3 x 8), then each box's own padding.
+    final maxWidth = (MediaQuery.sizeOf(context).width - 40 - 24) / 4 - 16;
+    var size = style.fontSize ?? 12;
+    var widest = 0.0;
+    for (final word in text.split(RegExp(r'\s+'))) {
+      final p = TextPainter(
+        text: TextSpan(text: word, style: style),
+        textDirection: TextDirection.ltr,
+        textScaler: scaler,
+        maxLines: 1,
+      )..layout();
+      if (p.width > widest) widest = p.width;
+      p.dispose();
+    }
+    if (widest > maxWidth && maxWidth > 0) {
+      size = (size * maxWidth / widest).clamp(8.0, size);
+    }
+    return Text(
+      text,
+      textAlign: TextAlign.center,
+      maxLines: 2,
+      overflow: TextOverflow.ellipsis,
+      style: style.copyWith(fontSize: size),
     );
   }
 }

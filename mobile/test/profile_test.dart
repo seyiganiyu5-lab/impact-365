@@ -102,7 +102,8 @@ void main() {
     addTearDown(tester.view.reset);
     await tester.pumpWidget(profileApp('fr', sample(role: 'pastor')));
     await tester.pumpAndSettle();
-    expect(find.text('Jean-Baptiste Adéyẹmí'), findsOneWidget);
+    // Shown with non-breaking hyphens (never split across lines).
+    expect(find.text('Jean\u2011Baptiste Adéyẹmí'), findsOneWidget);
     expect(find.text('JA'), findsOneWidget);
     expect(find.text('Pasteur'), findsOneWidget);
     expect(find.text('Impacteur depuis 182 jours'), findsOneWidget);
