@@ -356,52 +356,76 @@ class _IdentityCard extends StatelessWidget {
       ),
       child: Stack(
         children: [
-          // Centred: photo, then name, email and badges on the full width.
-          Container(
-            width: double.infinity,
-            padding: const EdgeInsets.fromLTRB(20, 22, 20, 20),
-            child: Column(
+          // Photo on the left; name, email and badges on the right, each
+          // on a single line (shrinks slightly rather than wrapping).
+          Padding(
+            padding: const EdgeInsets.fromLTRB(18, 20, 18, 20),
+            child: Row(
               children: [
-                ProfileAvatar(name: name, url: profile.avatarUrl, size: 84),
-                const SizedBox(height: 12),
-                Text(
-                  // Non-breaking hyphens: "Al-hassan" never splits.
-                  name.replaceAll('-', '\u2011'),
-                  textAlign: TextAlign.center,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppText.titleLarge.copyWith(color: Colors.white),
+                // Smaller photo on narrow phones: more room for the text.
+                ProfileAvatar(
+                  name: name,
+                  url: profile.avatarUrl,
+                  size: MediaQuery.sizeOf(context).width < 360 ? 58 : 76,
                 ),
-                if ((email ?? '').isNotEmpty) ...[
-                  const SizedBox(height: 2),
-                  Text(
-                    email!,
-                    textAlign: TextAlign.center,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppText.bodySmall.copyWith(color: Colors.white70),
+                SizedBox(
+                  width: MediaQuery.sizeOf(context).width < 360 ? 12 : 14,
+                ),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Padding(
+                        // Room for the edit button in the corner.
+                        padding: const EdgeInsets.only(right: 30),
+                        child: _OneLine(
+                          name,
+                          style: AppText.titleLarge.copyWith(
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                      if ((email ?? '').isNotEmpty) ...[
+                        const SizedBox(height: 2),
+                        _OneLine(
+                          email!,
+                          style: AppText.bodySmall.copyWith(
+                            color: Colors.white70,
+                          ),
+                        ),
+                      ],
+                      const SizedBox(height: 10),
+                      FittedBox(
+                        fit: BoxFit.scaleDown,
+                        alignment: Alignment.centerLeft,
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            _Pill(
+                              text: l.profileImpacterSince(days),
+                              color: AppColors.gold,
+                            ),
+                            if (role != null) ...[
+                              const SizedBox(width: 6),
+                              _Pill(
+                                text: role,
+                                color: Colors.white,
+                                outlined: true,
+                              ),
+                            ],
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
-                ],
-                const SizedBox(height: 12),
-                Wrap(
-                  alignment: WrapAlignment.center,
-                  spacing: 8,
-                  runSpacing: 8,
-                  children: [
-                    _Pill(
-                      text: l.profileImpacterSince(days),
-                      color: AppColors.gold,
-                    ),
-                    if (role != null)
-                      _Pill(text: role, color: Colors.white, outlined: true),
-                  ],
                 ),
               ],
             ),
           ),
           Positioned(
-            top: 6,
-            right: 6,
+            top: 4,
+            right: 4,
             child: IconButton(
               tooltip: l.profileEdit,
               onPressed: onEdit,
@@ -469,7 +493,6 @@ class _Pill extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      constraints: const BoxConstraints(maxWidth: 260),
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
       decoration: BoxDecoration(
         color: outlined ? null : color.withValues(alpha: 0.18),
@@ -478,15 +501,12 @@ class _Pill extends StatelessWidget {
             : null,
         borderRadius: BorderRadius.circular(20),
       ),
-      // One line each; shrinks slightly on very narrow phones / large text.
-      child: FittedBox(
-        fit: BoxFit.scaleDown,
-        child: Text(
-          text,
-          maxLines: 1,
-          style: AppText.labelSmall.copyWith(
-            color: outlined ? color : AppColors.goldLight,
-          ),
+      child: Text(
+        text,
+        maxLines: 1,
+        softWrap: false,
+        style: AppText.labelSmall.copyWith(
+          color: outlined ? color : AppColors.goldLight,
         ),
       ),
     );
@@ -541,6 +561,44 @@ class _MiniStat extends StatelessWidget {
   }
 }
 
+/// One line of text that shrinks to fit (down to 60%) instead of wrapping;
+/// only if still too long after that does it end with "…".
+class _OneLine extends StatelessWidget {
+  const _OneLine(this.text, {required this.style});
+
+  final String text;
+  final TextStyle style;
+
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(
+      builder: (context, box) {
+        final scaler = MediaQuery.textScalerOf(context);
+        final p = TextPainter(
+          text: TextSpan(text: text, style: style),
+          textDirection: TextDirection.ltr,
+          textScaler: scaler,
+          maxLines: 1,
+        )..layout();
+        final width = p.width;
+        p.dispose();
+        var size = style.fontSize ?? 14;
+        if (width > box.maxWidth) {
+          // 0.97: a little margin so rounding never tips it into "…".
+          size = (size * box.maxWidth / width * 0.97).clamp(size * 0.6, size);
+        }
+        return Text(
+          text,
+          maxLines: 1,
+          softWrap: false,
+          overflow: TextOverflow.ellipsis,
+          style: style.copyWith(fontSize: size),
+        );
+      },
+    );
+  }
+}
+
 /// Centred label of up to 2 lines whose longest word always fits: the
 /// font shrinks a little (never below 8 pt) instead of cutting a word
 /// like "consécutifs" with "…".
@@ -569,7 +627,7 @@ class _WordFitLabel extends StatelessWidget {
       p.dispose();
     }
     if (widest > maxWidth && maxWidth > 0) {
-      size = (size * maxWidth / widest).clamp(8.0, size);
+      size = (size * maxWidth / widest).clamp(7.0, size);
     }
     return Text(
       text,
