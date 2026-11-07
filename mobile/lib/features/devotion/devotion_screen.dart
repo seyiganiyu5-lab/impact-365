@@ -7,6 +7,7 @@ import '../../core/theme.dart';
 import '../../data/models.dart';
 import '../../data/repository.dart';
 import '../../widgets/common.dart';
+import '../auth/auth_widgets.dart';
 
 /// "5 MINUTES AVEC DIEU": one devotion — verse, what God says, what I
 /// understand, what I do.
@@ -60,7 +61,13 @@ class _DevotionScreenState extends State<DevotionScreen> {
                 children: [
                   Align(
                     alignment: Alignment.centerLeft,
-                    child: BackButton(color: AppColors.deepPurple),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8),
+                      child: RoundIconButton(
+                        icon: Icons.arrow_back_rounded,
+                        onPressed: () => Navigator.maybePop(context),
+                      ),
+                    ),
                   ),
                   Expanded(
                     child: EmptyState(message: context.l10n.devotionNotFound),
@@ -487,16 +494,8 @@ class _TopBar extends StatelessWidget {
       height: 56,
       child: Row(
         children: [
-          const SizedBox(width: 4),
-          IconButton(
-            tooltip: MaterialLocalizations.of(context).backButtonTooltip,
-            onPressed: onBack,
-            icon: const Icon(
-              Icons.arrow_back_rounded,
-              color: AppColors.deepPurple,
-              size: 28,
-            ),
-          ),
+          const SizedBox(width: 10),
+          RoundIconButton(icon: Icons.arrow_back_rounded, onPressed: onBack),
           Expanded(
             child: Text(
               title,

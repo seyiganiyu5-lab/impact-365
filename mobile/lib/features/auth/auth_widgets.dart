@@ -170,31 +170,56 @@ class AuthButton extends StatelessWidget {
   }
 }
 
+/// The app's round icon button (back arrow, close, calendar...): a small
+/// lavender circle with a purple icon, the same everywhere. The visible
+/// circle is 38 px; the tappable area stays 44 px.
 class RoundIconButton extends StatelessWidget {
   const RoundIconButton({
     super.key,
     required this.icon,
     required this.onPressed,
+    this.tooltip,
   });
 
   final IconData icon;
   final VoidCallback onPressed;
+  final String? tooltip;
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: Colors.white,
-      shape: const CircleBorder(side: BorderSide(color: AppColors.border)),
-      child: InkWell(
-        customBorder: const CircleBorder(),
+    final label =
+        tooltip ??
+        (icon == Icons.arrow_back_rounded
+            ? MaterialLocalizations.of(context).backButtonTooltip
+            : null);
+    final button = Semantics(
+      button: true,
+      label: label,
+      child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
         onTap: onPressed,
         child: SizedBox(
           width: 44,
           height: 44,
-          child: Icon(icon, color: AppColors.ink, size: 22),
+          child: Center(
+            child: Material(
+              color: AppColors.lavender,
+              shape: const CircleBorder(),
+              child: InkWell(
+                customBorder: const CircleBorder(),
+                onTap: onPressed,
+                child: SizedBox(
+                  width: 38,
+                  height: 38,
+                  child: Icon(icon, color: AppColors.deepPurple, size: 20),
+                ),
+              ),
+            ),
+          ),
         ),
       ),
     );
+    return label == null ? button : Tooltip(message: label, child: button);
   }
 }
 
