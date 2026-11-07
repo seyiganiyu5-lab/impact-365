@@ -77,7 +77,7 @@ export default function SosPage() {
       ) : rows.length === 0 ? (
         <Empty emoji="🌿" />
       ) : (
-        <div className="grid gap-5 xl:grid-cols-2">
+        <div className="grid grid-cols-1 gap-5 xl:grid-cols-2">
           {rows.map((r) => (
             <SosCard key={r.id} r={r} lang={lang} onPatch={(v) => patch(r.id, v)} />
           ))}
@@ -138,14 +138,14 @@ function SosCard({
       <p className="whitespace-pre-wrap text-[15px] leading-relaxed text-ink">{r.description}</p>
 
       {/* Member (always visible to leaders, even when anonymous) */}
-      <div className="flex items-center gap-3 rounded-xl bg-cream px-3 py-2.5">
+      <div className="flex flex-wrap items-center gap-3 rounded-xl bg-cream px-3 py-2.5">
         <Avatar name={r.member?.full_name} url={r.member?.avatar_url} size={36} />
-        <div className="min-w-0 flex-1">
+        <div className="min-w-[140px] flex-1">
           <div className="truncate text-sm font-semibold">{r.member?.full_name ?? "—"}</div>
-          {r.member?.phone && <div className="text-xs text-muted">{r.member.phone}</div>}
+          {r.member?.phone && <div className="whitespace-nowrap text-xs text-muted">{r.member.phone}</div>}
         </div>
         {r.member?.phone && (
-          <a href={`tel:${r.member.phone.replace(/[^+\d]/g, "")}`} className="btn-ghost px-3 py-1.5">
+          <a href={`tel:${r.member.phone.replace(/[^+\d]/g, "")}`} className="btn-ghost ml-auto min-h-10 px-3 py-2">
             <Phone className="h-4 w-4" /> {t.ui.call}
           </a>
         )}
@@ -191,7 +191,7 @@ function SosCard({
                 type="button"
                 onClick={() => s !== r.status && onPatch({ status: s })}
                 aria-pressed={r.status === s}
-                className={`cursor-pointer rounded-lg px-3 py-1.5 text-xs font-semibold transition ${
+                className={`cursor-pointer rounded-lg px-3 py-2.5 text-xs font-semibold transition ${
                   r.status === s ? "bg-purple text-white" : "text-muted hover:bg-lavender"
                 }`}
               >

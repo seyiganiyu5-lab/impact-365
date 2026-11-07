@@ -107,7 +107,7 @@ export default function DashboardPage() {
             <CheckCircle2 className="h-5 w-5 text-emerald-600" /> {t.ui.allCaughtUp}
           </div>
         ) : (
-          <div className="grid gap-4 md:grid-cols-2">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             <TodoCard
               href="/concerns"
               icon={<MessageCircle className="h-6 w-6" />}
@@ -130,11 +130,11 @@ export default function DashboardPage() {
       <section>
         <div className="mb-3 flex items-center justify-between gap-3">
           <h2 className="text-lg font-bold text-purple">{t.ui.todayContent}</h2>
-          <Link href="/devotions" className="text-sm font-semibold text-[#9a7a17] hover:underline">
+          <Link href="/devotions" className="-mr-2 inline-flex min-h-10 items-center rounded-lg px-2 text-sm font-semibold text-[#9a7a17] hover:underline">
             {t.nav.devotions} →
           </Link>
         </div>
-        <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
           {SLOTS.map((slot) => {
             const d = devotions?.find((x) => x.slot === slot);
             const ref =

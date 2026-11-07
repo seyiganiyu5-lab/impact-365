@@ -191,7 +191,7 @@ function DevotionEditor() {
         }
       />
 
-      <div className="grid gap-6 lg:grid-cols-[320px_1fr]">
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-[320px_1fr]">
         <div className="card h-fit space-y-5 p-5 lg:sticky lg:top-6">
           <div>
             <label className="label">{t.common.date}</label>
@@ -217,7 +217,7 @@ function DevotionEditor() {
             <MediaUpload value={imageUrl} onChange={setImageUrl} accept="image/*" folder="devotions" />
           </div>
           <label className="flex cursor-pointer items-start gap-3 rounded-xl bg-cream p-3 text-sm">
-            <input type="checkbox" className="mt-0.5 h-4 w-4 accent-purple" checked={published} onChange={(e) => setPublished(e.target.checked)} />
+            <input type="checkbox" className="mt-0.5 h-5 w-5 shrink-0 accent-purple" checked={published} onChange={(e) => setPublished(e.target.checked)} />
             {t.devotions.publish}
           </label>
         </div>
@@ -253,7 +253,7 @@ function DevotionEditor() {
           </div>
 
           {field("theme", t.devotions.theme)}
-          <div className="grid gap-4 md:grid-cols-[220px_1fr]">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-[220px_1fr]">
             {field("verse_reference", t.devotions.verseReference, 0, t.devotions.verseReferencePh)}
             {field("verse_text", t.devotions.verseText, 3)}
           </div>

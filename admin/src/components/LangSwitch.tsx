@@ -10,7 +10,7 @@ export function LangSwitch({ dark = false }: { dark?: boolean }) {
         <button
           key={l}
           onClick={() => setLang(l)}
-          className={`cursor-pointer rounded-md px-2.5 py-1 uppercase ${
+          className={`min-h-8 min-w-9 cursor-pointer rounded-md px-2.5 py-1.5 uppercase ${
             lang === l ? "bg-gold text-white" : dark ? "text-white/70" : "text-muted"
           }`}
         >

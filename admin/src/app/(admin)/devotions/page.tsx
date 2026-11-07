@@ -75,7 +75,7 @@ export default function DevotionsPage() {
                 <h2 className="font-bold text-ink first-letter:uppercase">{formatDate(date, lang)}</h2>
                 {date === today && <Chip tone="gold">{t.ui.today}</Chip>}
               </div>
-              <div className="grid gap-3 md:grid-cols-3">
+              <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
                 {SLOTS.map((slot) => {
                   const d = byDate.get(date)?.[slot];
                   if (!d) {

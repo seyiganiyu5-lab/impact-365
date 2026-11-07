@@ -72,7 +72,7 @@ export default function PrayersPage() {
       ) : shown.length === 0 ? (
         <Empty emoji="🙏" />
       ) : (
-        <div className="grid gap-5 md:grid-cols-2">
+        <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
           {shown.map((p) => (
             <article key={p.id} className="card flex flex-col gap-3 p-5">
               <div className="flex items-center gap-3">

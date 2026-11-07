@@ -20,6 +20,8 @@
 body {
   background: var(--color-cream);
   color: var(--color-ink);
+  /* Long words or links typed by members wrap instead of widening the page. */
+  overflow-wrap: break-word;
 }
 
 /* Small shared building blocks */

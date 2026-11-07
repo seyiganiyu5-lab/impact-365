@@ -97,7 +97,7 @@ export default function ConcernsPage() {
       <div className={selected ? "hidden lg:block" : ""}>
         <PageHeader title={t.concerns.title} subtitle={t.concerns.subtitle} />
       </div>
-      <div className="grid gap-5 lg:h-[calc(100vh-15rem)] lg:min-h-[520px] lg:grid-cols-[360px_1fr]">
+      <div className="grid grid-cols-1 gap-5 lg:h-[calc(100vh-15rem)] lg:min-h-[520px] lg:grid-cols-[360px_1fr]">
         {/* List */}
         <div className={`flex min-h-0 flex-col gap-3 ${selected ? "hidden lg:flex" : ""}`}>
           <Segmented
@@ -246,7 +246,11 @@ function Thread({
     };
   }, [conversation.id]);
 
-  useEffect(() => bottom.current?.scrollIntoView({ behavior: "smooth" }), [messages.length]);
+  // Braces: effects must not return the value of scrollIntoView (newer
+  // browsers return a Promise, which React would try to call on cleanup).
+  useEffect(() => {
+    bottom.current?.scrollIntoView({ behavior: "smooth", block: "end" });
+  }, [messages.length]);
 
   async function send(e: React.FormEvent) {
     e.preventDefault();
@@ -285,12 +289,12 @@ function Thread({
         </div>
         <div className="flex shrink-0 flex-wrap justify-end gap-2">
           {conversation.assigned_to !== staff.id && !closed && (
-            <button onClick={onAssign} className="btn-ghost px-3 py-1.5" title={t.concerns.assignMe}>
+            <button onClick={onAssign} className="btn-ghost min-h-10 px-3 py-2" title={t.concerns.assignMe}>
               <UserCheck className="h-4 w-4" />
               <span className="hidden sm:inline">{t.concerns.assignMe}</span>
             </button>
           )}
-          <button onClick={onClose} className="btn-ghost px-3 py-1.5" title={closed ? t.concerns.reopen : t.concerns.close}>
+          <button onClick={onClose} className="btn-ghost min-h-10 px-3 py-2" title={closed ? t.concerns.reopen : t.concerns.close}>
             {closed ? <RotateCcw className="h-4 w-4" /> : <CheckCircle2 className="h-4 w-4" />}
             <span className="hidden sm:inline">{closed ? t.concerns.reopen : t.concerns.close}</span>
           </button>

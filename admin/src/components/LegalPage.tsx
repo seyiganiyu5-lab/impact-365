@@ -105,10 +105,10 @@ export function LegalPage({
         {showContents && (
           <nav aria-label={t.contents} className="card mb-6">
             <h2 className="mb-3 text-sm font-bold uppercase tracking-wide text-muted">{t.contents}</h2>
-            <ol className="grid gap-1.5 text-sm sm:grid-cols-2">
+            <ol className="grid grid-cols-1 gap-1.5 text-sm sm:grid-cols-2">
               {doc.sections.map((s) => (
                 <li key={s.id}>
-                  <a href={`#${s.id}`} className="text-purple hover:underline">
+                  <a href={`#${s.id}`} className="inline-block py-1.5 text-purple hover:underline">
                     {s.title}
                   </a>
                 </li>

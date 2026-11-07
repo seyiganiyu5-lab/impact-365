@@ -67,7 +67,7 @@ export default function AnnouncementsPage() {
   return (
     <>
       <PageHeader title={t.announcements.title} subtitle={t.announcements.subtitle} />
-      <div className="grid items-start gap-6 lg:grid-cols-[400px_1fr]">
+      <div className="grid grid-cols-1 items-start gap-6 lg:grid-cols-[400px_1fr]">
         <form onSubmit={publish} className="card space-y-4 p-5 lg:sticky lg:top-6">
           <h2 className="flex items-center gap-2 font-bold text-purple">
             <Megaphone className="h-5 w-5 text-gold" /> {t.announcements.newAnnouncement}

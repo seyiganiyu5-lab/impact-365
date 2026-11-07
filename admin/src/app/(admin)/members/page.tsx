@@ -106,16 +106,16 @@ export default function MembersPage() {
           {/* Phone: cards */}
           <div className="space-y-3 md:hidden">
             {filtered.map((m) => (
-              <div key={m.id} className="card flex items-center gap-3 p-4">
+              <div key={m.id} className="card flex flex-wrap items-center gap-3 p-4">
                 <Avatar name={m.full_name} url={m.avatar_url} size={44} />
-                <div className="min-w-0 flex-1">
+                <div className="min-w-[150px] flex-1">
                   <div className="truncate font-semibold">{m.full_name ?? "—"}</div>
                   <div className="truncate text-xs text-muted">
                     {t.langs[m.preferred_language]}
                     {m.phone ? ` · ${m.phone}` : ""}
                   </div>
                 </div>
-                {roleControl(m)}
+                <div className="ml-auto">{roleControl(m)}</div>
               </div>
             ))}
           </div>

@@ -145,7 +145,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           <LangSwitch dark />
           <button
             onClick={signOut}
-            className="flex cursor-pointer items-center gap-1.5 rounded-lg px-2 py-1 text-xs text-white/75 hover:bg-white/10 hover:text-white"
+            className="flex min-h-9 cursor-pointer items-center gap-1.5 rounded-lg px-2.5 py-2 text-xs text-white/75 hover:bg-white/10 hover:text-white"
           >
             <LogOut className="h-4 w-4" /> {t.common.signOut}
           </button>
