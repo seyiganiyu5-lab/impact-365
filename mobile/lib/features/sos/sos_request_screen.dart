@@ -95,13 +95,17 @@ class _SosRequestScreenState extends State<SosRequestScreen> {
                 children: [
                   _StepTitle(number: 1, text: l.sosStepType),
                   const SizedBox(height: 12),
-                  GridView.count(
-                    crossAxisCount: 3,
+                  GridView(
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
-                    mainAxisSpacing: 10,
-                    crossAxisSpacing: 10,
-                    childAspectRatio: 1.05,
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 3,
+                      mainAxisSpacing: 10,
+                      crossAxisSpacing: 10,
+                      // Square-ish tiles that grow with the phone's text
+                      // size (emoji + 2-line label always fit).
+                      mainAxisExtent: _tileHeight(context),
+                    ),
                     children: [
                       for (final c in HelpCategory.values)
                         _CategoryTile(
@@ -200,6 +204,15 @@ class _SosRequestScreenState extends State<SosRequestScreen> {
       ),
     );
   }
+}
+
+/// Category tile height: about square, never shorter than its content.
+double _tileHeight(BuildContext context) {
+  final width = MediaQuery.sizeOf(context).width;
+  final tile = (width - 40 - 20) / 3;
+  final scale = MediaQuery.textScalerOf(context).scale(10) / 10;
+  final content = 12 + 6 + 4 + 38 * scale + 2 * 18 * scale;
+  return tile / 1.05 > content ? tile / 1.05 : content;
 }
 
 class _StepTitle extends StatelessWidget {

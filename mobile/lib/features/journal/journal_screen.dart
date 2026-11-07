@@ -234,24 +234,31 @@ class JournalProgress extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
+    // Wrap: on narrow phones the label goes under the bars.
+    return Wrap(
+      spacing: 8,
+      runSpacing: 4,
+      crossAxisAlignment: WrapCrossAlignment.center,
       children: [
-        for (var i = 0; i < 4; i++)
-          Container(
-            width: 18,
-            height: 5,
-            margin: const EdgeInsets.only(right: 4),
-            decoration: BoxDecoration(
-              color: i < count
-                  ? AppColors.gold
-                  : onDark
-                  ? Colors.white.withValues(alpha: 0.22)
-                  : AppColors.border,
-              borderRadius: BorderRadius.circular(3),
-            ),
-          ),
-        const SizedBox(width: 4),
+        Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            for (var i = 0; i < 4; i++)
+              Container(
+                width: 18,
+                height: 5,
+                margin: EdgeInsets.only(right: i < 3 ? 4 : 0),
+                decoration: BoxDecoration(
+                  color: i < count
+                      ? AppColors.gold
+                      : onDark
+                      ? Colors.white.withValues(alpha: 0.22)
+                      : AppColors.border,
+                  borderRadius: BorderRadius.circular(3),
+                ),
+              ),
+          ],
+        ),
         Text(
           context.l10n.journalFilled(count),
           style: AppText.caption.copyWith(

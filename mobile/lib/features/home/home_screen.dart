@@ -697,8 +697,9 @@ class _HeroVerse extends StatelessWidget {
         final scaler = MediaQuery.textScalerOf(context);
         final lineHeight = scaler.scale(14.5) * 1.3;
         final refHeight = scaler.scale(12) * 1.4 + 4;
+        // 0 = only the reference fits (small phone with large text).
         final lines = ((box.maxHeight - refHeight) / lineHeight).floor().clamp(
-          1,
+          0,
           4,
         );
         return Column(
@@ -708,13 +709,17 @@ class _HeroVerse extends StatelessWidget {
           children: [
             // Reference first, then the verse.
             Text(reference, maxLines: 1, style: refStyle),
-            const SizedBox(height: 4),
-            Text(
-              context.l10n.homeVerseQuote(text),
-              maxLines: lines,
-              overflow: TextOverflow.ellipsis,
-              style: _verseStyle,
-            ),
+            if (lines > 0) ...[
+              const SizedBox(height: 4),
+              Flexible(
+                child: Text(
+                  context.l10n.homeVerseQuote(text),
+                  maxLines: lines,
+                  overflow: TextOverflow.ellipsis,
+                  style: _verseStyle,
+                ),
+              ),
+            ],
           ],
         );
       },
