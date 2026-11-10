@@ -141,13 +141,13 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             <div className="text-xs text-gold">{t.members.roles[profile.role]}</div>
           </div>
         </div>
-        <div className="mt-3 flex items-center justify-between">
+        <div className="mt-3 flex items-center justify-between gap-2">
           <LangSwitch dark />
           <button
             onClick={signOut}
-            className="flex min-h-9 cursor-pointer items-center gap-1.5 rounded-lg px-2.5 py-2 text-xs text-white/75 hover:bg-white/10 hover:text-white"
+            className="flex min-h-9 shrink-0 cursor-pointer items-center gap-1.5 whitespace-nowrap rounded-lg px-2 py-2 text-xs text-white/75 hover:bg-white/10 hover:text-white"
           >
-            <LogOut className="h-4 w-4" /> {t.common.signOut}
+            <LogOut className="h-4 w-4 shrink-0" /> {t.common.signOut}
           </button>
         </div>
       </div>
