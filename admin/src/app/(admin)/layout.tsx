@@ -32,6 +32,30 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   // Gold counters in the menu: things waiting for a leader.
   const [counts, setCounts] = useState<{ concerns: number; sos: number }>({ concerns: 0, sos: 0 });
 
+  // Phone menu open: the page behind must not scroll. Otherwise the scroll
+  // passes through, the browser's address bar hides/shows, the screen
+  // height changes and the menu jumps.
+  useEffect(() => {
+    if (!menuOpen) return;
+    const desktop = window.matchMedia("(min-width: 1024px)");
+    // Wide screen: the phone menu is hidden there, nothing to lock.
+    if (desktop.matches) return;
+    const html = document.documentElement;
+    const before = { html: html.style.overflow, body: document.body.style.overflow };
+    html.style.overflow = "hidden";
+    document.body.style.overflow = "hidden";
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setMenuOpen(false);
+    const onWide = () => desktop.matches && setMenuOpen(false);
+    window.addEventListener("keydown", onKey);
+    desktop.addEventListener("change", onWide);
+    return () => {
+      html.style.overflow = before.html;
+      document.body.style.overflow = before.body;
+      window.removeEventListener("keydown", onKey);
+      desktop.removeEventListener("change", onWide);
+    };
+  }, [menuOpen]);
+
   useEffect(() => {
     if (!profile || profile.role === "member") return;
     supabase()
@@ -109,7 +133,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           <X className="h-5 w-5" />
         </button>
       </div>
-      <nav className="flex-1 space-y-1 overflow-y-auto">
+      <nav className="min-h-0 flex-1 space-y-1 overflow-y-auto overscroll-contain">
         {nav.map(({ href, label, icon: Icon, count }) => {
           const active = isActive(href);
           return (
@@ -159,9 +183,15 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       <div className="flex min-h-screen">
         <div className="sticky top-0 hidden h-screen lg:block">{sidebar}</div>
         {menuOpen && (
-          <div className="fixed inset-0 z-40 flex lg:hidden">
+          // h-dvh: the height actually visible on the phone (follows the
+          // address bar) so the menu never jumps.
+          <div className="fixed inset-x-0 top-0 z-40 flex h-dvh overscroll-contain lg:hidden">
             {sidebar}
-            <div className="flex-1 bg-black/40" onClick={() => setMenuOpen(false)} />
+            <div
+              className="flex-1 touch-none bg-black/40"
+              onClick={() => setMenuOpen(false)}
+              aria-hidden
+            />
           </div>
         )}
         <div className="min-w-0 flex-1">
